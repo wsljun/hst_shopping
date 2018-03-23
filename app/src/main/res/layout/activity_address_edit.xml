@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/price_bg"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/update_name_label1"
+                style="@style/setting_item_configure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="0dp"
+                android:text="@string/address_name"
+                android:textColor="@color/colorTexthintGrey" />
+
+            <ImageButton
+                android:id="@+id/address_clear"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/quxiaoxuanze22" />
+
+            <EditText
+                android:id="@+id/address_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:layout_toLeftOf="@id/address_clear"
+                android:layout_toRightOf="@id/update_name_label1"
+                android:background="@null"
+                android:textColor="@color/colorTexthintGrey2"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/colorTextLineGrey"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/update_name_label2"
+                style="@style/setting_item_configure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="0dp"
+                android:text="@string/address_phone"
+                android:textColor="@color/colorTexthintGrey" />
+
+
+            <EditText
+                android:id="@+id/address_phone_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:layout_toRightOf="@id/update_name_label2"
+                android:background="@null"
+                android:inputType="phone"
+                android:textColor="@color/colorTexthintGrey2"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/colorTextLineGrey"></View>
+
+        <RelativeLayout
+            android:id="@+id/address_dz_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/update_name_label3"
+                style="@style/setting_item_configure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="0dp"
+                android:text="@string/address_dz"
+                android:textColor="@color/colorTexthintGrey" />
+
+            <ImageButton
+                android:id="@+id/address_dz_ib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/quanbuyou" />
+
+            <TextView
+                android:id="@+id/address_dz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:layout_toLeftOf="@id/address_dz_ib"
+                android:layout_toRightOf="@id/update_name_label3"
+                android:background="@null"
+                android:textColor="@color/colorTexthintGrey2"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+
+            android:background="@color/colorTextLineGrey"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/update_name_label4"
+                style="@style/setting_item_configure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="0dp"
+                android:text="@string/address_dz_detail"
+                android:textColor="@color/colorTexthintGrey" />
+
+
+            <EditText
+                android:id="@+id/address_dz_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:layout_toRightOf="@id/update_name_label4"
+                android:background="@null"
+                android:textColor="@color/colorTexthintGrey2"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/colorTextLineGrey"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/update_name_label5"
+                style="@style/setting_item_configure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="0dp"
+                android:text="@string/address_logo"
+                android:textColor="@color/colorTexthintGrey" />
+
+
+            <EditText
+                android:id="@+id/address_logo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:layout_toRightOf="@id/update_name_label5"
+                android:background="@null"
+                android:textColor="@color/colorTexthintGrey2"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/address_save"
+        style="@style/normal_tv_btn"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/textview_normal_btn"
+        android:text="@string/save"
+        android:textColor="@color/colorWhite" />
+
+</LinearLayout>

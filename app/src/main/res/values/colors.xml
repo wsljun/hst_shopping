@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="load_red">#fa007a</color>
+    <color name="load_purple">#935fe7</color>
+    <color name="load_yellow">#f9b11f</color>
+    <color name="load_blue">#009cfa</color>
+
+    <color name="tab_unselect">#c9c9c9</color>
+    <color name="main_color">#00b763</color>
+
+
+    <color name="colorPrimary">#050405</color>
+    <color name="colorPrimaryDark">#050405</color>
+    <color name="colorAccent">#050405</color>
+
+    <color name="colorBlack">#050405</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorTexthintGrey2">#616161</color>
+    <color name="colorTexthintGrey">#C3C3C3</color>
+    <color name="colorTextLineGrey">#d8d8d8</color>
+    <color name="colorBackground">#F6F6F6</color>
+    <color name="colorButton">#DAA520</color>
+    <color name="colorTextRed">#FF3300</color>
+    <color name="colorTextRed2">#FF0000</color>
+</resources>

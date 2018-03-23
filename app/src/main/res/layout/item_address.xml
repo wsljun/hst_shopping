@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/price_bg"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/address_name"
+            style="@style/setting_item_configure"
+            android:layout_marginStart="0dp"
+            android:text="@string/update_phone_n" />
+
+        <TextView
+            android:id="@+id/address_phone"
+            style="@style/setting_item_configure"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="0dp"
+            android:text="154564645645" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/dizhi" />
+
+        <TextView
+            android:id="@+id/address_detail"
+            style="@style/setting_item_configure"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="4dp"
+            android:text="但是这种简单的方式可能有时候不能满足某些比较较真的需求"
+            android:textColor="@color/colorTexthintGrey2"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        android:background="@color/colorTextLineGrey"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/address_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:drawableLeft="@drawable/address_check"
+            android:drawablePadding="8dp"
+            android:text="@string/address_check"
+            android:textColor="@color/colorTexthintGrey2"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/address_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/textview_gray_btn"
+            android:paddingBottom="2dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="2dp"
+            android:text="@string/delete"
+            android:textColor="@color/colorTexthintGrey2" />
+
+        <TextView
+            android:id="@+id/address_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/address_delete"
+            android:background="@drawable/textview_gray_btn"
+            android:paddingBottom="2dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="2dp"
+            android:text="@string/edit"
+            android:textColor="@color/colorTexthintGrey2" />
+    </RelativeLayout>
+</LinearLayout>

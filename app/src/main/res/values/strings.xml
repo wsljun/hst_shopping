@@ -1,0 +1,113 @@
+<resources>
+    <string name="app_name">hst</string>
+
+    <string name="lead_login">用户登录</string>
+    <string name="lead_register">新用户注册</string>
+
+    <string name="login">登录</string>
+    <string name="login_phone_hint">请输入手机号</string>
+    <string name="login_pwd_hint">请输入密码</string>
+    <string name="login_lose">忘记密码？</string>
+    <string name="login_title">欢迎登陆</string>
+
+    <string name="update_pwd">确认密码</string>
+    <string name="next">下一步</string>
+    <string name="getcode">获取验证码</string>
+    <string name="register">注册</string>
+    <string name="register_title">欢迎注册</string>
+
+    <string name="home">首页</string>
+    <string name="all">全部商品</string>
+    <string name="friends">圈子</string>
+    <string name="friends_publish">发表</string>
+    <string name="car">购物车</string>
+    <string name="mine">我的</string>
+    <string name="mine_tuihuo">退货</string>
+    <string name="mine_daifukuan">待付款</string>
+    <string name="mine_daifahuo">待发货</string>
+    <string name="mine_daiqueren">待确认</string>
+    <string name="mine_daipingjia">待评价</string>
+
+    <string name="mine_qianbao">钱包</string>
+    <string name="mine_youhuiquan">优惠券</string>
+    <string name="mine_wodeshoucang">我的收藏</string>
+    <string name="mine_liulanlishi">浏览历史</string>
+    <string name="mine_bagnzhuzhongxin">帮助中心</string>
+    <string name="mine_guanuwomen">关于我们</string>
+    <string name="mine_kehufuwu">客户服务</string>
+
+    <string name="my">个人信息</string>
+    <string name="camera">拍照</string>
+    <string name="album">从相机中选择</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="my_update_name">修改昵称</string>
+    <string name="my_add_phone">账号与安全</string>
+    <string name="my_update_phone">绑定手机号</string>
+    <string name="my_update_pwd">修改密码</string>
+    <string name="my_icon">头像</string>
+    <string name="my_name">昵称</string>
+    <string name="my_name2">昵称:</string>
+    <string name="my_sex">性别</string>
+    <string name="my_phone">手机</string>
+    <string name="my_phone_null">未绑定</string>
+    <string name="my_address">收货地址</string>
+    <string name="my_logout">退出登陆</string>
+
+    <string name="address">管理收货地址</string>
+    <string name="address_edit">编辑地址</string>
+    <string name="address_check">设为默认地址</string>
+    <string name="address_add">新增收货地址</string>
+    <string name="delete">删除</string>
+    <string name="edit">编辑</string>
+    <string name="save">保存</string>
+    <string name="back">返回</string>
+    <string name="address_name">收货人&#160;&#160;&#160;&#160;</string>
+    <string name="address_phone">联系方式</string>
+    <string name="address_dz">收货地址</string>
+    <string name="address_dz_detail">详细地址</string>
+    <string name="address_logo">店名&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+
+    <string name="update_name_hint">*以英文字母或汉字开头，限4-16个字符一个汉字为2个字符</string>
+    <string name="phone_number">手机号</string>
+    <string name="code">验证码</string>
+    <string name="update_phone_do">立即绑定</string>
+    <string name="update_phone_n">当前手机号:</string>
+
+    <string name="undone_time">下单时间</string>
+    <string name="undone_refund">申请退款</string>
+    <string name="undone_take">确认收货</string>
+
+    <string name="refund_hint">温馨提示:订单一旦取消,无法恢复</string>
+    <string name="refund_cause">退款原因:</string>
+    <string name="refund_user">退款联系人:</string>
+    <string name="refund_phone">联系方式:</string>
+
+    <string name="refund_detail_number">订单编号:</string>
+    <string name="refund_detail_cause">取消/退款原因:</string>
+    <string name="refund_detail_progress">取消/退款进度:</string>
+    <string name="refund_detail_the">退款明细</string>
+    <string name="refund_detail_online">在线支付:</string>
+
+    <string name="wallet">钱包</string>
+    <string name="wallet_remain">余额:</string>
+    <string name="wallet_yuan">元</string>
+    <string name="wallet_get">提现</string>
+    <string name="wallet_rule">*提现规则</string>
+    <string name="net_error">网络访问错误，请稍后再试</string>
+    <string name="empty">还没有数据哦</string>
+    <string name="loading">请稍后</string>
+    <string name="reload">重新尝试</string>
+    <string name="no_net">网络不可用,请检查你的网络</string>
+
+
+
+    <string name="home_tv">/&#160;&#160;商&#160;&#160;品&#160;&#160;推&#160;&#160;荐&#160;&#160;/</string>
+    <string name="home_search">请输入您想搜索的内容</string>
+
+    <string name="search_all">综合</string>
+    <string name="search_price">价格</string>
+    <string name="search_hot">热门</string>
+    <string name="search_new">新品</string>
+
+</resources>

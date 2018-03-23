@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+    <include layout="@layout/layout_title" />
+    <TextView
+        android:id="@+id/update_login"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/textview_normal_btn"
+        android:text="@string/login"
+        android:textColor="@color/colorWhite"
+        style="@style/normal_tv_btn"/>
+
+
+    <EditText
+        android:id="@+id/update_pwd1"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:background="@null"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:gravity="center"
+        android:drawableBottom="@drawable/editview_line"
+        android:hint="@string/login_phone_hint"
+        android:inputType="textPassword"
+        android:maxLength="11"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/update_pwd2"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:background="@null"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"
+        android:gravity="center"
+        android:drawableBottom="@drawable/editview_line"
+        android:hint="@string/update_pwd"
+        android:inputType="textPassword"
+        android:maxLength="11"
+        android:maxLines="1" />
+
+</RelativeLayout>

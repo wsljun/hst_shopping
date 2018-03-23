@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <include layout="@layout/layout_title"
+        android:id="@+id/my_title"/>
+
+    <ScrollView
+        android:layout_below="@id/my_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/my_icon_fl"
+                style="@style/mine_frame"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/my_icon" />
+
+                <ImageView
+                    android:id="@+id/my_icon_iv"
+                    android:layout_width="43dp"
+                    android:layout_height="43dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginRight="28dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView style="@style/mine_text_colorsize" />
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:id="@+id/my_name_fl"
+                style="@style/mine_frame">
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/my_name" />
+
+                <TextView
+                    android:id="@+id/my_name_tv"
+                    style="@style/mine_text_colorsize"
+                    android:text="狗蛋" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/my_sex_fl"
+                style="@style/mine_frame">
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/my_sex" />
+
+                <TextView
+                    android:id="@+id/my_sex_tv"
+                    style="@style/mine_text_colorsize"
+                    android:text="男" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/my_phone_fl"
+                style="@style/mine_frame">
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/my_phone" />
+
+                <TextView
+                    android:id="@+id/my_phone_tv"
+                    style="@style/mine_text_colorsize"
+                    android:drawableEnd="@null"
+                    android:text="@string/my_phone_null"
+                    android:textColor="@color/colorButton" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/my_update_pwd_fl"
+                style="@style/mine_frame">
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/my_update_pwd" />
+
+                <TextView
+                    android:id="@+id/my_update_pwd_tv"
+                    style="@style/mine_text_colorsize" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/my_address_fl"
+                style="@style/mine_frame">
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/my_address" />
+
+                <TextView
+                    android:id="@+id/my_address_tv"
+                    style="@style/mine_text_colorsize" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tv_signout"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="@string/my_logout"
+        android:textSize="14sp" />
+</RelativeLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:background="@mipmap/shouji" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp">
+
+        <TextView
+            android:id="@+id/update_phone_n"
+            style="@style/setting_item_configure"
+            android:layout_marginStart="0dp"
+            android:text="@string/update_phone_n" />
+
+        <TextView
+            android:id="@+id/update_phone_number"
+            style="@style/setting_item_configure"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="0dp"
+            android:layout_toRightOf="@id/update_phone_n"
+            android:text="1545445847" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/phone_do"
+        style="@style/normal_tv_btn"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="30dp"
+        android:background="@drawable/textview_white_btn"
+        android:text="@string/update_phone_do"
+        android:textColor="@color/colorButton" />
+</LinearLayout>

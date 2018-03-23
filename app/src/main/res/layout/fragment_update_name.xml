@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/price_bg"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/update_name_label"
+            style="@style/setting_item_configure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="0dp"
+            android:text="@string/my_name2" />
+
+        <ImageButton
+            android:id="@+id/update_name_ib"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/quxiao22" />
+
+        <EditText
+            android:id="@+id/update_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:textSize="14sp"
+            android:layout_toLeftOf="@id/update_name_ib"
+            android:layout_toRightOf="@id/update_name_label"
+            android:background="@null"
+            android:maxLength="8"
+            android:textColor="@color/colorTexthintGrey" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/update_name_hint"
+        android:textSize="10sp" />
+</LinearLayout>
