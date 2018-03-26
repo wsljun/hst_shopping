@@ -18,7 +18,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp">
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp">
 
             <TextView
                 android:id="@+id/update_name_label1"
@@ -60,8 +61,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp">
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp">
 
             <TextView
                 android:id="@+id/update_name_label2"
@@ -96,8 +97,8 @@
             android:id="@+id/address_dz_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp">
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp">
 
             <TextView
                 android:id="@+id/update_name_label3"
@@ -134,14 +135,13 @@
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-
             android:background="@color/colorTextLineGrey"></View>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp">
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp">
 
             <TextView
                 android:id="@+id/update_name_label4"
@@ -174,8 +174,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="12dp">
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp">
 
             <TextView
                 android:id="@+id/update_name_label5"

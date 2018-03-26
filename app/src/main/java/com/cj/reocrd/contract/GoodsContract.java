@@ -17,6 +17,6 @@ public interface GoodsContract {
     }
 
     abstract static class Presenter extends BasePresenter<View> {
-        public abstract  void getGoodsTest(int size,int page);
+        public abstract void getGoodsTest(int size, int page);
     }
 }

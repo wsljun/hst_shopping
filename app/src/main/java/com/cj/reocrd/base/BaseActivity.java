@@ -48,6 +48,7 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         if(mPresenter!=null){
             mPresenter.mContext=this;
         }
+        initPresenter();
         init();
     }
 

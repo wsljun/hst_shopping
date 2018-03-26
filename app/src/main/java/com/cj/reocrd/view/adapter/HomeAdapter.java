@@ -1,7 +1,6 @@
 package com.cj.reocrd.view.adapter;
 
 
-
 import android.widget.ImageView;
 
 import com.cj.reocrd.R;
@@ -16,7 +15,7 @@ import java.util.List;
 
 /**
  * Created by Lyndon.Li on 2018/3/22.
- *  login register
+ * login register
  */
 public class HomeAdapter extends BaseQuickAdapter {
 
@@ -26,8 +25,7 @@ public class HomeAdapter extends BaseQuickAdapter {
 
     @Override
     protected void convert(BaseViewHolder helper, Object item, int position) {
-        FirstBean data=(FirstBean)item;
-        ImageLoaderUtils.display(mContext,(ImageView) helper.getView(R.id.good_pic)
-                ,data.getUrl());
+        FirstBean data = (FirstBean) item;
+        ImageLoaderUtils.display(mContext, (ImageView) helper.getView(R.id.good_pic), data.getUrl());
     }
 }
