@@ -71,5 +71,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.10'
 
-
+    //地址选择器 https://github.com/ywp0919/AddressPickerLib
+    compile 'com.github.ywp0919:AddressPickerLib:1.0.1'
+    //https://github.com/qstumn/BadgeView
+    compile 'q.rorbin:badgeview:1.1.3'
 }

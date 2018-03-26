@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <include layout="@layout/layout_title" />
 
@@ -30,15 +29,15 @@
                     android:id="@+id/home_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="6dp"
-                    android:paddingTop="6dp"
-                    android:paddingLeft="10dp"
-                    android:drawableLeft="@mipmap/sousuo"
-                    android:drawablePadding="10dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/textview_home_search"
+                    android:drawableLeft="@mipmap/sousuo"
+                    android:drawablePadding="10dp"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="6dp"
                     android:text="@string/home_search" />
 
             </FrameLayout>
@@ -48,38 +47,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="16dp"
+                android:layout_margin="14dp"
                 android:text="@string/home_tv"
                 android:textColor="@color/colorButton"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <!--加载页面显示不全，加一个这个lelative-->
             <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:descendantFocusability="blocksDescendants">-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:descendantFocusability="blocksDescendants">-->
 
-                <!--<android.support.v7.widget.RecyclerView-->
-                    <!--android:id="@+id/home_recycler"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_marginRight="10dp">-->
+            <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/home_recycler"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp">-->
 
-                <!--</android.support.v7.widget.RecyclerView>-->
+            <!--</android.support.v7.widget.RecyclerView>-->
 
             <!--</RelativeLayout>-->
 
             <com.cj.reocrd.view.refresh.RefreshLayout
+                android:id="@+id/refresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/refresh"
-                android:descendantFocusability="blocksDescendants">
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_content"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </android.support.v7.widget.RecyclerView>
+                    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
             </com.cj.reocrd.view.refresh.RefreshLayout>
 
         </LinearLayout>
