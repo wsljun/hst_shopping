@@ -48,14 +48,27 @@
         android:maxLength="11"
         android:maxLines="1" />
 
-    <TextView
-        android:id="@+id/login_lose"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/login_password"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:hint="@string/login_lose" />
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/login_lose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:hint="@string/login_lose" />
+
+        <TextView
+            android:id="@+id/login_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/login_code" />
+    </RelativeLayout>
+
 
 </RelativeLayout>
