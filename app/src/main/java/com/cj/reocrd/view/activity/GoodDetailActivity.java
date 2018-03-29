@@ -103,6 +103,7 @@ public class GoodDetailActivity extends BaseActivity {
         View view = getLayoutInflater().inflate(R.layout.dialog_good_detail, null);
         //布局中的控件
         dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
+
         dialog.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         Window window = dialog.getWindow();
         // 设置显示动画
@@ -110,7 +111,7 @@ public class GoodDetailActivity extends BaseActivity {
             window.setWindowAnimations(R.style.main_menu_animstyle);
             WindowManager.LayoutParams wl = window.getAttributes();
             wl.x = 0;
-            wl.y = getWindowManager().getDefaultDisplay().getHeight();
+            wl.y = 0;
             // 以下这两句是为了保证按钮可以水平满屏
             wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
             wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;

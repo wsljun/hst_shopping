@@ -20,6 +20,7 @@ import butterknife.OnClick;
 
 public class RegisterFragment extends BaseFragment<IndexPresenter> implements
         IndexContract.View, VerificationCodeInput.Listener {
+
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)

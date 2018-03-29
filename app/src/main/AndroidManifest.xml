@@ -38,11 +38,7 @@
             android:value="1280"></meta-data>
 
         <activity android:name=".view.IndexActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="com.cj.reocrd.view.activity.MainActivity">
 
@@ -59,7 +55,11 @@
         </activity>
         <activity android:name=".view.activity.SearchActivity"></activity>
         <activity android:name=".view.activity.GoodDetailActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".view.activity.WalletActivity">
 
