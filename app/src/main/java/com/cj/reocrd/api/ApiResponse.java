@@ -1,54 +1,61 @@
 package com.cj.reocrd.api;
 
+import java.util.List;
+
 /**
  * Api响应结果的封装类.
  * @version 1.0
  */
 public class ApiResponse<T> {
-    private String event;    // 返回码，true为成功
-    private String msg;      // 返回信息
-    private T obj;           // 单个对象
-    private T objList;       // 数组对象
+    private String statusCode;    // 返回码，//1成功 2失败
+    private String message;      // 返回信息
+    private T results;           // results 单个对象
+    private List<T> dataList;    // 数组
 
     //构造函数
-    public ApiResponse(String event, String msg) {
-        this.event = event;
-        this.msg = msg;
-    }
+//    public ApiResponse(String statusCode, String message) {
+//        this.statusCode = statusCode;
+//        this.message = message;
+//    }
+//
+//    ApiResponse(){
+//
+//    }
 
     public boolean isSuccess() {
-        return event.equals("true");
+        return statusCode.equals("1");
     }
 
-    public String getEvent() {
-        return event;
+    public String getStatusCode() {
+        return statusCode;
     }
 
-    public void setEvent(String event) {
-        this.event = event;
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public T getObj() {
-        return obj;
+    public T getResults() {
+        return results;
     }
 
-    public void setObj(T obj) {
-        this.obj = obj;
+    public void setResults(T results) {
+        this.results = results;
     }
 
-    public T getObjList() {
-        return objList;
+    public List<T> getDataList() {
+        return dataList;
     }
 
-    public void setObjList(T objList) {
-        this.objList = objList;
+    public void setDataList(List<T> dataList) {
+        this.dataList = dataList;
     }
+
 }

@@ -45,31 +45,29 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     //首页底部导航 https://github.com/peng8350/JPTabBar
     implementation 'com.jpeng:JPTabBar:1.4.0'
-
     compile 'com.android.support:multidex:1.0.3'
     //屏幕适配
     compile 'com.zhy:autolayout:1.4.5'
-
     ///////retrofit2 , okhttp3//////
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-//    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0-RC3'
-
+    compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    //    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0-RC3'
     /////////recyclerview ////////////
     compile 'com.android.support:recyclerview-v7:26.1.0'
     //glide
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     //轮播图 https://github.com/youth5201314/banner
     implementation 'com.youth.banner:banner:1.4.10'
-
     // RxPermissions https://github.com/tbruyelle/RxPermissions
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
-
     ///rxjava2
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.10'
+    implementation files('libs/selenium-common-2.0a4.jar')
 
-
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.alibaba:fastjson:1.1.68.android'
 }

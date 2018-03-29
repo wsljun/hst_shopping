@@ -1,5 +1,6 @@
 package com.cj.reocrd.view.activity;
 
+import android.os.Bundle;
 import android.view.KeyEvent;
 
 import com.cj.reocrd.R;
@@ -27,6 +28,12 @@ public class MyActivity extends BaseActivity {
     @BindView(R.id.my_viewPager)
     MViewPager myViewPager;
     List<BaseFragment> fragments = new ArrayList<>();
+
+    @Override
+    public void initFragment(Bundle savedInstanceState) {
+
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_my;

@@ -26,20 +26,23 @@ public class GoodsPresenter extends GoodsContract.Presenter {
 
     @Override
     public void getGoodsTest(int size, int page) {
-        ApiModel.getInstance().getListData(size,page ,new Callback<GirlData>() {
-            @Override
-            public void onResponse(Call<GirlData> call, Response<GirlData> response) {
-                if(response.code() == 200){
-                    List<FirstBean> girlDataList = (List<FirstBean>) response.body().getResults();
-                    mView.onSuccess(girlDataList);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<GirlData> call, Throwable t) {
-
-            }
-        });
+//        ApiModel.getInstance().getListData(size,page ,new Callback<GirlData>() {
+//            @Override
+//            public void onResponse(Call<GirlData> call, Response<GirlData> response) {
+//                if(response.code() == 200){
+//                    List<FirstBean> girlDataList = (List<FirstBean>) response.body().getResults();
+//                    if(isViewAttached()){
+//                        mView.onSuccess(girlDataList);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<GirlData> call, Throwable t) {
+//
+//            }
+//        });
     }
 
 }

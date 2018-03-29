@@ -119,6 +119,8 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
             case R.id.title_left:
                 getMainActivity().getViewPager().setCurrentItem(0);
                 break;
+                default:
+                    break;
         }
     }
 

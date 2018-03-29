@@ -6,5 +6,8 @@ package com.cj.reocrd.api;
 
 public class UrlConstants {
     //BaseURl
-    public final static String BASE_URL = "http://gank.io/api/";
+//    public final static String BASE_URL = "http://gank.io/api/";
+    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
+    public final static String URL = "";
+
 }

@@ -1,5 +1,6 @@
 package com.cj.reocrd.view.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,6 +32,11 @@ public class AddressEditActivity extends BaseActivity {
     EditText addressDzDetail;
     @BindView(R.id.address_logo)
     EditText addressLogo;
+
+    @Override
+    public void initFragment(Bundle savedInstanceState) {
+
+    }
 
     @Override
     public int getLayoutId() {

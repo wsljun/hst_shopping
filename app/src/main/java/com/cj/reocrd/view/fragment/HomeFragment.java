@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.model.entity.FirstBean;
 import com.cj.reocrd.presenter.HomePresenter;
 import com.cj.reocrd.utils.GlideImageLoader;
+import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.GoodsAdapter;
 import com.cj.reocrd.view.adapter.HomeAdapter;
@@ -58,7 +60,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     private Context mContext;
     private HomeAdapter mHomeTabAdapter;
     private int size = 20;
-
+    private final static String TAG = "HomeFragment";
 
 
     @Override
@@ -83,6 +85,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void initView() {
+        LogUtil.e(TAG,"initview");
         titleLeft.setVisibility(View.GONE);
         titleCenter.setText(getString(R.string.home));
         titleRight.setBackgroundResource(R.mipmap.gouwuche);
@@ -145,7 +148,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void onFailureMessage(String msg) {
-
+         ToastUtil.showShort(msg);
     }
 
     @Override
@@ -170,5 +173,24 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void OnBannerClick(int position) {
         ToastUtil.showShort("Banner : " +position);
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LogUtil.e(TAG,"onCreate");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LogUtil.e(TAG,"onStart");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LogUtil.e(TAG,"onStart");
     }
 }
