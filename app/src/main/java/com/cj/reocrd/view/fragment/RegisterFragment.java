@@ -1,11 +1,7 @@
 package com.cj.reocrd.view.fragment;
 
-import android.media.MediaPlayer;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,14 +14,13 @@ import com.cj.reocrd.utils.CountDownTimerUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
 import com.dalimao.corelibrary.VerificationCodeInput;
-import com.zhy.autolayout.utils.L;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-public class RegisterFragment extends BaseFragment<IndexPresenter> implements IndexContract.View, VerificationCodeInput.Listener {
+public class RegisterFragment extends BaseFragment<IndexPresenter> implements
+        IndexContract.View, VerificationCodeInput.Listener {
+
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)

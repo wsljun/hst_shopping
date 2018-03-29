@@ -3,9 +3,19 @@ package com.cj.reocrd.model.entity;
 
 import java.util.List;
 
-public class GirlData {
+public class GirlData<T> {
     private boolean isError;
-    private List<FirstBean> results;
+    private T results;
+
+    public List<T> getDataList() {
+        return dataList;
+    }
+
+    public void setDataList(List<T> dataList) {
+        this.dataList = dataList;
+    }
+
+    private List<T> dataList;
 
     public boolean isError() {
         return isError;
@@ -15,11 +25,11 @@ public class GirlData {
         isError = error;
     }
 
-    public void setResults(List<FirstBean> results) {
+    public void setResults(T results) {
         this.results = results;
     }
 
-    public List<FirstBean> getResults() {
+    public T getResults() {
         return results;
     }
 }

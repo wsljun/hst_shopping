@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.TUtil;
 import com.cj.reocrd.view.IndexActivity;
 import com.cj.reocrd.view.activity.MainActivity;
@@ -26,25 +28,26 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     public BaseActivity mActivity;
     public Unbinder unbinder;
     public T mPresenter;
-
+    private final String TAG = "BaseFragment";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = (BaseActivity) getActivity();
+        LogUtil.e(TAG, "onCreateView: ");
         if (savedInstanceState != null) {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            if (ft != null && isAdded()) {
-                ft.remove(this);
-                ft.commit();
-            }
-            if (getParentFragment() != null) {
-                FragmentTransaction pft = getParentFragment().getChildFragmentManager().beginTransaction();
-                if (pft != null && isAdded()) {
-                    pft.remove(this);
-                    pft.commit();
-                }
-            }
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            if (ft != null && isAdded()) {
+//                ft.remove(this);
+//                ft.commit();
+//            }
+//            if (getParentFragment() != null) {
+//                FragmentTransaction pft = getParentFragment().getChildFragmentManager().beginTransaction();
+//                if (pft != null && isAdded()) {
+//                    pft.remove(this);
+//                    pft.commit();
+//                }
+//            }
         }
 
         mPresenter = TUtil.getT(this, 0);
@@ -62,6 +65,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
         unbinder = ButterKnife.bind(this, view);
+        LogUtil.e(TAG, "onCreateView: ");
         init();
         return view;
     }
@@ -81,7 +85,11 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (mPresenter != null){
+//            mPresenter.onDestroy();
+        }
         unbinder.unbind();
+        LogUtil.e(TAG, "onCreateView: ");
     }
 
     public IndexActivity getIndexActivity() {

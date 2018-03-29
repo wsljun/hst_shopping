@@ -38,7 +38,7 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
     public Unbinder unbinder;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         doBeforeSetcontentView();
         setContentView(getLayoutId());
@@ -48,9 +48,14 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         if(mPresenter!=null){
             mPresenter.mContext=this;
         }
-        initPresenter();
+//        initFragment(savedInstanceState);
         init();
+
     }
+    // todo 需要时重写即可
+    public void initFragment(Bundle savedInstanceState) {
+
+    };
 
     public abstract int getLayoutId();
 

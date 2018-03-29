@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,11 @@ public class AddressActivity extends BaseActivity implements AddressAdapter.OnIt
     RecyclerView addressRecycler;
     AddressAdapter addressAdapter;
     List<String> mDatas;
+
+    @Override
+    public void initFragment(Bundle savedInstanceState) {
+
+    }
 
     @Override
     public int getLayoutId() {

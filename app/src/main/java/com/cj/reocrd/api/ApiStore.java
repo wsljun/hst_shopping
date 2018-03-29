@@ -21,6 +21,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * Created by Lyndon.Li on 2018/3/17.
@@ -59,8 +60,9 @@ public class ApiStore {
         if(null == retrofit){
             retrofit = new Retrofit.Builder()
                     .client(getOkHttpClient())
-                    .addConverterFactory(GsonConverterFactory.create(getGson()))
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                    .addConverterFactory(GsonConverterFactory.create(getGson()))
+//                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(ScalarsConverterFactory.create())
                     .baseUrl(UrlConstants.BASE_URL)
                     .build();
         }

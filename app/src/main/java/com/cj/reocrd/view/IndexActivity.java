@@ -1,5 +1,6 @@
 package com.cj.reocrd.view;
 
+import android.os.Bundle;
 import android.view.KeyEvent;
 
 import com.cj.reocrd.R;
@@ -22,6 +23,11 @@ public class IndexActivity extends BaseActivity {
     @BindView(R.id.vp_index)
     MViewPager vpIndex;
     List<BaseFragment> fragments = new ArrayList<>();
+
+    @Override
+    public void initFragment(Bundle savedInstanceState) {
+
+    }
 
     @Override
     public int getLayoutId() {

@@ -20,7 +20,7 @@ public interface IndexContract {
     abstract static class Presenter extends BasePresenter<View> {
         public abstract  void loginRequest();
         public abstract  void registerRequest();
-        public abstract void getCode(int phoneName);
+        public abstract void getCode(String por,String  phoneName,String type);
 
     }
 }
