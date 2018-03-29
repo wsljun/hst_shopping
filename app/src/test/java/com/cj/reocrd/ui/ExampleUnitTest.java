@@ -72,7 +72,7 @@ public class ExampleUnitTest {
         HashMap<String,Object> map = new HashMap<>();
         map.put("phone",phone);   // 请求接口
         map.put("type",pid); // 设备唯一码
-        ApiModel.getInstance().getData("101",pid,map,FirstBean.class);
+//        ApiModel.getInstance().getData("101",pid,map,FirstBean.class);
 
     }
 

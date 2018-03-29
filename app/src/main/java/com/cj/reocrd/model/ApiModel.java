@@ -10,6 +10,7 @@ import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.ApiStore;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.model.entity.GirlData;
+import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.utils.DESedeUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.google.gson.Gson;

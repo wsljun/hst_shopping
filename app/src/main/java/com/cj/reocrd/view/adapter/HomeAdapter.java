@@ -8,6 +8,8 @@ import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.BaseViewHolder;
 import com.cj.reocrd.model.entity.FirstBean;
 import com.cj.reocrd.model.entity.GirlData;
+import com.cj.reocrd.model.entity.GoodsBean;
+import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 
 import java.util.List;
@@ -19,13 +21,13 @@ import java.util.List;
  */
 public class HomeAdapter extends BaseQuickAdapter {
 
-    public HomeAdapter(int layoutResId, List<GirlData> listData) {
+    public HomeAdapter(int layoutResId, List<GoodsBean> listData) {
         super(layoutResId, listData);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, Object item, int position) {
-        FirstBean data = (FirstBean) item;
-        ImageLoaderUtils.display(mContext, (ImageView) helper.getView(R.id.good_pic), data.getUrl());
+        GoodsBean data = (GoodsBean) item;
+        ImageLoaderUtils.display(mContext, (ImageView) helper.getView(R.id.good_pic), data.getImageurl());
     }
 }

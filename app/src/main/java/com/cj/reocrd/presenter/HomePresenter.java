@@ -1,23 +1,15 @@
 package com.cj.reocrd.presenter;
 
-import android.net.Uri;
-
 import com.cj.reocrd.api.ApiCallback;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.model.ApiModel;
-import com.cj.reocrd.model.entity.FirstBean;
-import com.cj.reocrd.model.entity.GirlData;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.cj.reocrd.model.entity.HomeBean;
 
 import java.util.HashMap;
-import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by Lyndon.Li on 2018/3/20.
@@ -52,12 +44,36 @@ public class HomePresenter extends HomeContract.Presenter {
 //
 //            }
 //        });
-        getCodeData("101","15311780968","1");
     }
 
     @Override
-    public void getCodeData(String por, String phone, String type) {
+    public void getHomeData(int pageSize, int pageno) {
+        // ToDO  map 可以提取到Base中去
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("pagesize",pageSize);
+        map.put("pageno",pageno);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.GET_HOME_DATA, map
+                , HomeBean.class, new ApiCallback<HomeBean>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if(null != apiResponse && isViewAttached()){
+                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                        HomeBean homeBean = (HomeBean) apiResponse.getResults();
+                        mView.onRefreshHomeData(homeBean);
+                    }else{
+                        mView.onFailureMessage(apiResponse.getMessage());
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                if(isViewAttached()){
+                    mView.onFailureMessage(t.toString());
+                }
+            }
+        });
     }
+
 
 }

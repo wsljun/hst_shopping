@@ -10,10 +10,13 @@ public class UrlConstants {
     public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
     public final static String URL = "app/outinterface";
     public final static String PID = "123222212121";  //  TODO  pid
+    public final static String SUCCESE_CODE = "1"; // 返回结果成功
 
    public  static class UrLType {
         // 发送验证码
         public static final  String GET_CODE = "101";
         //todo add more url type
-    }
+        public static final  String GET_HOME_DATA = "201";
+
+   }
 }
