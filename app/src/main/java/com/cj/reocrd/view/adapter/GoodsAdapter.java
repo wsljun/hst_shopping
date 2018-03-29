@@ -26,8 +26,7 @@ public class GoodsAdapter extends BaseQuickAdapter {
     @Override
     protected void convert(BaseViewHolder helper, Object item, int position) {
         FirstBean data=(FirstBean)item;
-        ImageLoaderUtils.display(mContext,(ImageView) helper.getView(R.id.good_pic)
-                ,data.getUrl());
+        ImageLoaderUtils.display(mContext,(ImageView) helper.getView(R.id.two_pic),data.getUrl());
     }
 
 }

@@ -7,57 +7,110 @@
 
     <include layout="@layout/layout_title" />
 
-    <TextView
-        android:id="@+id/register"
-        style="@style/normal_tv_btn"
+
+    <RelativeLayout
+        android:id="@+id/register_code_rl"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/textview_normal_btn"
-        android:text="@string/register"
-        android:textColor="@color/colorWhite" />
-
-
-    <EditText
-        android:id="@+id/register_phone"
-        android:layout_width="220dp"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-        android:background="@null"
-        android:drawableBottom="@drawable/editview_line"
-        android:gravity="center"
-        android:hint="@string/login_phone_hint"
-        android:inputType="phone"
-        android:maxLength="11"
-        android:maxLines="1" />
-
-
-    <com.dalimao.corelibrary.VerificationCodeInput
-        android:id="@+id/register_code"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/register_phone"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
-        android:drawableBottom="@drawable/editview_line"
-        ver:child_h_padding="5dp" />
+        android:layout_marginBottom="20dp">
 
-    <TextView
-        android:id="@+id/register_getcode"
-        style="@style/normal_tv_btn"
-        android:layout_height="40dp"
-        android:layout_below="@+id/register_code"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="110dp"
-        android:layout_marginRight="110dp"
-        android:layout_marginTop="27dp"
-        android:background="@drawable/textview_stroke_btn"
-        android:text="@string/getcode"
-        android:textColor="@color/colorButton" />
+        <TextView
+            android:id="@+id/register_next"
+            style="@style/normal_tv_btn"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/textview_normal_btn"
+            android:text="@string/next"
+            android:textColor="@color/colorWhite" />
+
+        <EditText
+            android:id="@+id/register_phone"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
+            android:background="@null"
+            android:drawableBottom="@drawable/editview_line"
+            android:gravity="center"
+            android:hint="@string/login_phone_hint"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:maxLines="1" />
 
 
+        <com.dalimao.corelibrary.VerificationCodeInput
+            android:id="@+id/register_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/register_phone"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="48dp"
+            android:drawableBottom="@drawable/editview_line"
+            ver:child_h_padding="5dp" />
+
+        <TextView
+            android:id="@+id/register_getcode"
+            style="@style/normal_tv_btn"
+            android:layout_height="40dp"
+            android:layout_below="@+id/register_code"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="110dp"
+            android:layout_marginRight="110dp"
+            android:layout_marginTop="27dp"
+            android:background="@drawable/textview_stroke_btn"
+            android:text="@string/getcode"
+            android:textColor="@color/colorButton" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/register_pwd_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/register"
+            style="@style/normal_tv_btn"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/textview_normal_btn"
+            android:text="@string/register"
+            android:textColor="@color/colorWhite" />
+
+        <EditText
+            android:id="@+id/update_pwd1"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
+            android:background="@null"
+            android:drawableBottom="@drawable/editview_line"
+            android:gravity="center"
+            android:hint="@string/login_pwd_hint"
+            android:inputType="textPassword"
+            android:maxLength="11"
+            android:maxLines="1" />
+
+        <EditText
+            android:id="@+id/update_pwd2"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="250dp"
+            android:background="@null"
+            android:drawableBottom="@drawable/editview_line"
+            android:gravity="center"
+            android:hint="@string/update_pwd"
+            android:inputType="textPassword"
+            android:maxLength="11"
+            android:maxLines="1" />
+    </RelativeLayout>
 </RelativeLayout>

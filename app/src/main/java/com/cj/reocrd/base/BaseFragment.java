@@ -51,8 +51,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         }
 
         mPresenter = TUtil.getT(this, 0);
-        if(mPresenter!=null){
-            mPresenter.mContext=this.getActivity();
+        if (mPresenter != null) {
+            mPresenter.mContext = this.getActivity();
         }
         initPresenter();
     }
@@ -152,8 +152,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         }
         startActivity(intent);
     }
-
-
 
 
 }

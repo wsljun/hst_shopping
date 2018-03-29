@@ -17,6 +17,7 @@ import com.cj.reocrd.presenter.HomePresenter;
 import com.cj.reocrd.utils.GlideImageLoader;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.view.activity.SearchActivity;
 import com.cj.reocrd.view.adapter.GoodsAdapter;
 import com.cj.reocrd.view.adapter.HomeAdapter;
 import com.cj.reocrd.view.refresh.NormalRefreshViewHolder;
@@ -50,14 +51,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     RecyclerView recyclerViewContent;
     @BindView(R.id.banner)
     Banner banner;
-//    @BindView(R.id.home_recycler)
-    RecyclerView homeRecycler;
-    GoodsAdapter goodAdapter;
     List<String> images;
     List<String> mDatas;
 
-
-    private Context mContext;
     private HomeAdapter mHomeTabAdapter;
     private int size = 20;
     private final static String TAG = "HomeFragment";
@@ -70,7 +66,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public int getLayoutId() {
-        mContext = getActivity();
         return R.layout.fragment_home;
     }
 
@@ -105,7 +100,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     private void initRecycleView() {
         mHomeTabAdapter = new HomeAdapter(R.layout.item_good,null);
-        recyclerViewContent.setLayoutManager(new GridLayoutManager(mContext,2));
+        recyclerViewContent.setLayoutManager(new GridLayoutManager(mActivity,2));
         recyclerViewContent.setHasFixedSize(true);
         //设置适配器加载动画
         mHomeTabAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
@@ -114,7 +109,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         mHomeTabAdapter.setOnLoadMoreListener(this);
         //设置下拉、上拉
         mRefreshLayout.setDelegate(this);
-        mRefreshLayout.setRefreshViewHolder(new NormalRefreshViewHolder(mContext,true));
+        mRefreshLayout.setRefreshViewHolder(new NormalRefreshViewHolder(mActivity,true));
 
         mPresenter.getListDataTest(20,1);
 
@@ -129,9 +124,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     }
 
-    @OnClick({R.id.title_right})
+    @OnClick({R.id.home_search,R.id.title_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.home_search:
+                startActivity(SearchActivity.class);
+                break;
             case R.id.title_right:
                 getMainActivity().getViewPager().setCurrentItem(3);
                 break;

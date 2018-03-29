@@ -8,8 +8,10 @@ import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.view.adapter.ViewPagerAdapter;
 import com.cj.reocrd.view.fragment.LeadFragment;
-import com.cj.reocrd.view.fragment.LoginFragment;
+import com.cj.reocrd.view.fragment.LoginCodeFragment;
+import com.cj.reocrd.view.fragment.LoginPwdFragment;
 import com.cj.reocrd.view.fragment.RegisterFragment;
+import com.cj.reocrd.view.fragment.UpdatePwdFragment;
 import com.cj.reocrd.view.view.MViewPager;
 
 import java.util.ArrayList;
@@ -34,9 +36,11 @@ public class IndexActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        fragments.add(new LeadFragment());
-        fragments.add(new LoginFragment());
-        fragments.add(new RegisterFragment());
+        fragments.add(new LeadFragment());//0
+        fragments.add(new LoginPwdFragment());//1密码登陆
+        fragments.add(new RegisterFragment());//2注册
+        fragments.add(new LoginCodeFragment());//3验证码登陆
+        fragments.add(new UpdatePwdFragment());//4忘记密码，修改密码
         vpIndex.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, null));
     }
 

@@ -87,7 +87,7 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
     }
 
     private void initRecycleView() {
-        mGoodsAdapter = new GoodsAdapter(R.layout.item_good,null);
+        mGoodsAdapter = new GoodsAdapter(R.layout.item_all_two,null);
         recyclerViewContent.setLayoutManager(new GridLayoutManager(mContext,3));
         recyclerViewContent.setHasFixedSize(true);
         //设置适配器加载动画

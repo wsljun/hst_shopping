@@ -11,7 +11,6 @@ import com.cj.reocrd.view.fragment.AddPhoneFragment;
 import com.cj.reocrd.view.fragment.MyFragment;
 import com.cj.reocrd.view.fragment.UpdateNameFragment;
 import com.cj.reocrd.view.fragment.UpdatePhoneFragment;
-import com.cj.reocrd.view.fragment.UpdatePwdCodeFragment;
 import com.cj.reocrd.view.fragment.UpdatePwdFragment;
 import com.cj.reocrd.view.view.MViewPager;
 
@@ -48,7 +47,6 @@ public class MyActivity extends BaseActivity {
         fragments.add(new UpdateNameFragment());
         fragments.add(new AddPhoneFragment());
         fragments.add(new UpdatePhoneFragment());
-        fragments.add(new UpdatePwdCodeFragment());
         fragments.add(new UpdatePwdFragment());
         myViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragments,null));
     }

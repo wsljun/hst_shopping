@@ -57,8 +57,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="@string/search_all"
-            />
+            android:text="@string/search_all" />
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -66,8 +65,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="@string/search_price"
-            />
+            android:text="@string/search_price" />
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -75,28 +73,30 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="@string/search_hot"
-          />
-<!--  android:textColor="@drawable/search_radio_color" -->
+            android:text="@string/search_hot" />
+        <!--  android:textColor="@drawable/search_radio_color" -->
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="@string/search_new"
-            />
+            android:text="@string/search_new" />
 
     </RadioGroup>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/search_recycler"
+    <com.cj.reocrd.view.refresh.RefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    </com.cj.reocrd.view.refresh.RefreshLayout>
 
 
 </LinearLayout>
