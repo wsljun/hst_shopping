@@ -17,5 +17,6 @@ public interface HomeContract {
 
     abstract static class Presenter extends BasePresenter<View> {
         public abstract  void getListDataTest(int size,int page);
+        public abstract  void getCodeData(String por,String phone,String type);
     }
 }

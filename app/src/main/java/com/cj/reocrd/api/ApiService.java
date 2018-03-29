@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -35,12 +36,12 @@ public interface ApiService {
     //普通请求
     @FormUrlEncoded
     @POST(UrlConstants.URL)
-    Call<ApiResponse> getData(@FieldMap ArrayMap<String, Object> options);
+    Call<String> getData(@Field("data") String data);
 
-//    //普通请求
-//    @FormUrlEncoded
-//    @POST(UrlConstants.URL)
-//    Call<ApiResponse> getDataTest(@Query("por")String pot,@Query("por")String pot);
+    //普通请求
+    @FormUrlEncoded
+    @POST(UrlConstants.URL)
+    Call<ApiResponse> getDataTest(@Query("data")String data);
 
     //带有文件or 图片
     @Multipart

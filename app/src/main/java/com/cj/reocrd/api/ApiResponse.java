@@ -13,14 +13,14 @@ public class ApiResponse<T> {
     private List<T> dataList;    // 数组
 
     //构造函数
-//    public ApiResponse(String statusCode, String message) {
-//        this.statusCode = statusCode;
-//        this.message = message;
-//    }
-//
-//    ApiResponse(){
-//
-//    }
+    public ApiResponse(String statusCode, String message) {
+        this.statusCode = statusCode;
+        this.message = message;
+    }
+
+    public ApiResponse(){
+
+    }
 
     public boolean isSuccess() {
         return statusCode.equals("1");

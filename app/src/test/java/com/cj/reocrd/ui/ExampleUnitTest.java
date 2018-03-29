@@ -1,5 +1,7 @@
 package com.cj.reocrd.ui;
 
+import android.util.ArrayMap;
+
 import com.alibaba.fastjson.JSONObject;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.model.ApiModel;
@@ -8,6 +10,7 @@ import com.cj.reocrd.model.entity.FirstBean;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.http.Query;
@@ -55,4 +58,22 @@ public class ExampleUnitTest {
         ApiResponse apiResponse1 = ApiModel.parseFastJson(JSONObject.toJSONString(apiResponse), User.class);
 //        System.out.println("");
     }
+
+
+    @Test
+    public void getData(){
+        // 说明参数
+        String phone = "15311780968";
+        int type = 1;
+        // 封装cipher秘文
+        String data = "{\"phone\":\"" + phone + "\",\"type\":\"" + type + "\"}";
+        String pid = "123222212121";
+
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("phone",phone);   // 请求接口
+        map.put("type",pid); // 设备唯一码
+        ApiModel.getInstance().getData("101",pid,map,FirstBean.class);
+
+    }
+
 }

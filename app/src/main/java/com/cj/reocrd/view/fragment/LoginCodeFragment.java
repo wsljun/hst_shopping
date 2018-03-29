@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.contract.IndexContract;
 import com.cj.reocrd.presenter.IndexPresenter;
@@ -65,7 +66,7 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
 
     @Override
     public void onFailureMessage(String msg) {
-
+            ToastUtil.showShort(msg);
     }
 
 
@@ -73,13 +74,14 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login:
-
+                 ToastUtil.showShort(" login ");
                 break;
             case R.id.login_getcode:
                 phone = loginPhone.getText().toString();
                 if (!TextUtils.isEmpty(phone)) {
                     if (Utils.checkMobileNumber(phone)) {
                         // todo get code
+                          mPresenter.getCode(UrlConstants.UrLType.GET_CODE,phone,"1");
                     } else {
                         ToastUtil.showToastS(mActivity, R.string.format_not_correct);
                     }
