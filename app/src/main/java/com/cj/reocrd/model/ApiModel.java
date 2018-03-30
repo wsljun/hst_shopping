@@ -11,6 +11,7 @@ import com.cj.reocrd.api.ApiStore;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseApplication;
 import com.cj.reocrd.model.entity.GirlData;
+import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.utils.DESedeUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;

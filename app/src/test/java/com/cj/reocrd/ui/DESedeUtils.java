@@ -1,5 +1,7 @@
 package com.test;
 
+import com.cj.reocrd.api.UrlConstants;
+
 import java.io.UnsupportedEncodingException;
 
 import javax.crypto.Cipher;
@@ -124,10 +126,39 @@ public class DESedeUtils {
 
 	@Test
 	public void decode(){
-		String str = "gGOy3BZWRo4kiXv1p/9XSQWxDHkFKMGBBdFGZ3aSh7fHggU1X8So/0soJIKWdmCI+65h5A02bd6R\n" +
-				"+xmcu1p+F5r6ZN+naKTp";
-		String text = getdeCrypt(str,  "123222212121");
+		String str = "gGOy3BZWRo4kiXv1p/9XSQWxDHkFKMGB0oLBjeHw8aKncOIt4Y0dDEW/TM3PYzRkgry8SKZyhbmw\n" +
+				"TD4eBvEVXNzsBqzlgQu1ejL1Ratye1uCJAdSFMRWhIBMCBMruzbeHXygjLA+mWYEHEcmKHEbqK0k\n" +
+				"FmkUeFNfPVTSps3bmNZY7yZ+b1QarUAufmEQvXg5jAfl3eTIm5pHwXuaN6eA4uv3vUaXVhmIefGn\n" +
+				"yp6Ws/CDelRhr1xJAB1cXm9B0m27zBwotemHcMgQU2Dqxt5bvuJvd8BZGjUJSWV+UEPY96fXuntW\n" +
+				"n8gd7644eVuyLs+WWwyBy7tapyyJf6HDU3rnYRyP3rNf10MmlIHdfc9YKdYzkVYrzW4HOmEJwYMI\n" +
+				"811UTVxNh3o0vOwsUe/+Cp5mD7piEwjUZQi6kFp0gIkN2InCg23qOQB/pmEMa22Clq4Bc4hUn8gG\n" +
+				"ZYN2gclYyw3vdbmIWtVBw2woAMDKEoa5rNpqntXqOuFgOIo4/DzOeQa3+ylIbjt6Y5HUOobpqO9i\n" +
+				"UtQbzOT4gGPHk4PVa39clu0=";
+		String text = getdeCrypt(str,  UrlConstants.PID);
 		System.out.println("解密-->>" + text);
+	}
+
+
+	/**
+	 * {
+	 "pagesize": "20 ",   //页宽
+	 "pageno": "0"  //页码
+
+	 }
+	 *
+	 * */
+	@Test
+	public void test_url201(){
+        // 说明参数
+		String pagesize = "20";
+		int pageno = 1;
+		// 封装cipher秘文
+		String data = "{\"pagesize\":\"" + pagesize + "\",\"pageno\":\"" + pageno + "\"}";
+		String cipher = getDesede(data, UrlConstants.PID);
+		System.out.println("密文-->>" + getDesede(data, UrlConstants.PID));
+		// 求情参数data
+		String sendData = "{\"pid\":\"" + UrlConstants.PID + "\",\"por\":\"" + 201 + "\",\"cipher\":\"" + cipher + "\"}";
+		System.out.println("请求参数-->>" + sendData);
 	}
 
 }

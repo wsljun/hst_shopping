@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.OnItemClickListener;
 import com.cj.reocrd.contract.HomeContract;
+import com.cj.reocrd.model.entity.BannerData;
 import com.cj.reocrd.model.entity.FirstBean;
+import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.presenter.HomePresenter;
 import com.cj.reocrd.utils.GlideImageLoader;
 import com.cj.reocrd.utils.LogUtil;
@@ -51,11 +55,14 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     RecyclerView recyclerViewContent;
     @BindView(R.id.banner)
     Banner banner;
+    @BindView(R.id.fl_home_banner)
+    FrameLayout flHomeBannerLyout;
     List<String> images;
     List<String> mDatas;
 
     private HomeAdapter mHomeTabAdapter;
-    private int size = 20;
+    private int size = 20;  //pageSize
+    private int pageno = 1; // 页码
     private final static String TAG = "HomeFragment";
 
 
@@ -86,6 +93,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         titleRight.setBackgroundResource(R.mipmap.gouwuche);
         titleRight.setVisibility(View.VISIBLE);
 
+        initRecycleView();
+    }
+
+    private void setBannerView(List<String> images){
         //轮播图
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         banner.setIndicatorGravity(BannerConfig.CENTER);
@@ -94,8 +105,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         banner.setIndicatorGravity(BannerConfig.CENTER);
         banner.setOnBannerListener(this);
         banner.start();
-
-        initRecycleView();
     }
 
     private void initRecycleView() {
@@ -111,8 +120,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         mRefreshLayout.setDelegate(this);
         mRefreshLayout.setRefreshViewHolder(new NormalRefreshViewHolder(mActivity,true));
 
-        mPresenter.getListDataTest(20,1);
-
         //条目的点击事件
         recyclerViewContent.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -121,6 +128,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 ToastUtil.showShort("position == "+position);
             }
         });
+
+        mPresenter.getHomeData(size,pageno);
 
     }
 
@@ -138,10 +147,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void onSuccess(Object data) {
-        List<FirstBean> girlDataList = (List<FirstBean>) data;
-        mHomeTabAdapter.setNewData(girlDataList);
-        mRefreshLayout.endRefreshing();
-        mRefreshLayout.endLoadingMore();
+//        List<FirstBean> girlDataList = (List<FirstBean>) data;
+//        mHomeTabAdapter.setNewData(girlDataList);
+//        mRefreshLayout.endRefreshing();
+//        mRefreshLayout.endLoadingMore();
     }
 
     @Override
@@ -158,13 +167,13 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void onRefreshLayoutBeginRefreshing(RefreshLayout refreshLayout) {
         // 开始刷新
         System.out.println("onRefreshLayoutBeginRefreshing===");
-        mPresenter.getListDataTest(size,1);
+//        mPresenter.getListDataTest(size,1);
     }
 
     @Override
     public boolean onRefreshLayoutBeginLoadingMore(RefreshLayout refreshLayout) {
         size += 20;
-        mPresenter.getListDataTest(size,1);
+//        mPresenter.getListDataTest(size,1);
         return false;
     }
 
@@ -190,5 +199,27 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void onDestroy() {
         super.onDestroy();
         LogUtil.e(TAG,"onStart");
+    }
+
+    @Override
+    public void onRefreshHomeData(HomeBean homeBean) {
+        if(null!=homeBean.getMlist()&&homeBean.getMlist().size()>0){
+            mHomeTabAdapter.setNewData(homeBean.getMlist());
+            mRefreshLayout.endRefreshing();
+            mRefreshLayout.endLoadingMore();
+        }else{
+            ToastUtil.showShort("暂时没有商品信息");
+            mHomeTabAdapter.loadComplete();
+            mRefreshLayout.endRefreshing();
+            mRefreshLayout.endLoadingMore();
+        }
+        if(null!=homeBean.getBlist()&&homeBean.getBlist().size()>0){
+            images.clear();
+            for (BannerData uri  : homeBean.getBlist()) {
+                  images.add(UrlConstants.BASE_URL+uri.getImgurl());
+            }
+            setBannerView(images);
+//            banner.update(images);
+        }
     }
 }

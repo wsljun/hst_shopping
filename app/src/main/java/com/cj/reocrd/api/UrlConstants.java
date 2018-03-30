@@ -10,6 +10,7 @@ public class UrlConstants {
     public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
     public final static String URL = "app/outinterface";
     public final static String PID = "123222212121";  //  TODO  pid
+    public final static String SUCCESE_CODE = "1"; // 返回结果成功
 
     public static class key {
         public static final String USERID = "userid";
@@ -29,5 +30,9 @@ public class UrlConstants {
         public static final String GET_CODE = "101";
         // 注册
         public static final String REGISTER= "104";
-    }
+        //todo add more url type
+        public static final  String GET_HOME_DATA = "201";
+
+   }
+
 }

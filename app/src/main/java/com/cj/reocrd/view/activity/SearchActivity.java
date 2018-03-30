@@ -15,6 +15,7 @@ import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.OnItemClickListener;
 import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.model.entity.FirstBean;
+import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.presenter.HomePresenter;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.GoodsAdapter;
@@ -135,4 +136,8 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
         return false;
     }
 
+    @Override
+    public void onRefreshHomeData(HomeBean homeBean) {
+
+    }
 }
