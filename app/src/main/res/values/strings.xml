@@ -13,6 +13,7 @@
     <string name="format_not_correct">手机号码格式不正确</string>
     <string name="input_phone">请输入手机号码</string>
     <string name="verification_code_empty">验证码不能为空</string>
+    <string name="verification_code_fault">验证码错误</string>
     <string name="password_cannot_empty">密码不能为空</string>
     <string name="passwords_match">密码不一致</string>
     <string name="password_can_only">密码6~8位,只能包含数字字母下划线</string>

@@ -9,10 +9,13 @@ import com.cj.reocrd.api.ApiCallback;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.ApiStore;
 import com.cj.reocrd.api.UrlConstants;
+import com.cj.reocrd.base.BaseApplication;
 import com.cj.reocrd.model.entity.GirlData;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.utils.DESedeUtils;
 import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.SPUtils;
+import com.cj.reocrd.utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -70,18 +73,19 @@ public class ApiModel  {
      */
     public   <T>ApiResponse getData(String por,HashMap<String,Object> dMap, final Class<T> clz,ApiCallback apiCallback) {
         ApiResponse apiResponse = new ApiResponse();
-        String  cipher =  DESedeUtils.getDesede(toJsonStr(dMap), UrlConstants.PID);
+        String imei = (String) SPUtils.get(BaseApplication.getAppContext(),UrlConstants.key.PID,"");
+        String  cipher =  DESedeUtils.getDesede(toJsonStr(dMap), imei);
         LogUtil.d(TAG, "getData:cipher；"+cipher);
         HashMap<String,Object> map = new HashMap<>();
         map.put("por",por);   // 请求接口
-        map.put("pid",UrlConstants.PID); // 设备唯一码
+        map.put("pid",imei); // 设备唯一码
         map.put("cipher",cipher); // c参数密文
         String data = toJsonStr(map);
         ApiStore.getInstance().getApiService().getData(data).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 //                System.out.println("onResponse: String 密文= "+response.body());
-                String result = DESedeUtils.getdeCrypt((response.body()),UrlConstants.PID);
+                String result = DESedeUtils.getdeCrypt((response.body()),imei);
 //                System.out.println( "onResponse: String 解密= "+result);
                 if(!TextUtils.isEmpty(result)){
                     //todo  apicallback
@@ -115,17 +119,17 @@ public class ApiModel  {
         String msg = "请求错误，请稍后重试！";
         ApiResponse apiResponse = null; // new ApiResponse("2","请求错误，请稍后重试！") ;
         if(jsonStr != null && jsonStr.trim().length() >0 ){
-            JSONObject jsonObject = JSON.parseObject(jsonStr);
-            if (jsonObject.containsKey("statusCode")){
-                code = jsonObject.getString("statusCode");
-            }
-            if (jsonObject.containsKey("message")){
-                msg = jsonObject.getString("message");
-            }
-            apiResponse = new ApiResponse(code,msg);
-            jsonObject.remove("statusCode");
-            jsonObject.remove("message");
-            if(jsonObject.isEmpty()){
+                JSONObject jsonObject = JSON.parseObject(jsonStr);
+                if (jsonObject.containsKey("statusCode")){
+                    code = jsonObject.getString("statusCode");
+                }
+                if (jsonObject.containsKey("message")){
+                    msg = jsonObject.getString("message");
+                }
+                apiResponse = new ApiResponse(code,msg);
+                jsonObject.remove("statusCode");
+                jsonObject.remove("message");
+                if(jsonObject.isEmpty()){
                 return  apiResponse;
             }else{
                 T t = JSONObject.parseObject(JSONObject.toJSONString(jsonObject), clz);

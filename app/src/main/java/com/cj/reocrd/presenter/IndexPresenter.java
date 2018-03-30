@@ -16,7 +16,7 @@ import retrofit2.Response;
 
 /**
  * Created by Lyndon.Li on 2018/3/20.
- *  login register
+ * login register
  */
 
 public class IndexPresenter extends IndexContract.Presenter {
@@ -32,23 +32,43 @@ public class IndexPresenter extends IndexContract.Presenter {
     }
 
     @Override
-    public void registerRequest() {
+    public void registerRequest(String por, String phone, String password, String code) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("phone", phone);
+        map.put("password", password);
+        map.put("code", code);
+        ApiModel.getInstance().getData(por, map, String.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse) {
+                    if (isViewAttached()) {
+                        mView.onSuccess(apiResponse);
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+
+        });
     }
 
+
     @Override
-    public void getCode(String por,String  phoneName,String type) {
+    public void getCode(String por, String phoneName, String type) {
         // TODO 获取验证码
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("phone",phoneName);   //
-        map.put("type",type); // 设备唯一码
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("phone", phoneName);   //
+        map.put("type", type); //
         // TODO test
         ApiModel.getInstance().getData(por, map, String.class, new ApiCallback<String>() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
-                if(null != apiResponse){
-                    if(isViewAttached()){
-                        mView.onFailureMessage(apiResponse.getMessage());
+                if (null != apiResponse) {
+                    if (isViewAttached()) {
+                        mView.onSuccess(apiResponse);
                     }
                 }
             }

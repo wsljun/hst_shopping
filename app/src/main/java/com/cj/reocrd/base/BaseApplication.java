@@ -11,6 +11,7 @@ import com.zhy.autolayout.config.AutoLayoutConifg;
  */
 public class BaseApplication extends MultiDexApplication {
     private static BaseApplication baseApplication;
+
     @Override
     public void onCreate() {
         super.onCreate();
