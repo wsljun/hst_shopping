@@ -90,7 +90,7 @@
             android:maxLines="1" />
 
 
-        <com.dalimao.corelibrary.VerificationCodeInput
+        <com.cj.reocrd.view.view.VerificationCode.VerificationCodeInput
             android:id="@+id/update_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -17,7 +17,7 @@ import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.IndexActivity;
 import com.cj.reocrd.view.activity.MainActivity;
 import com.cj.reocrd.view.activity.MyActivity;
-import com.dalimao.corelibrary.VerificationCodeInput;
+import com.cj.reocrd.view.view.VerificationCode.VerificationCodeInput;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

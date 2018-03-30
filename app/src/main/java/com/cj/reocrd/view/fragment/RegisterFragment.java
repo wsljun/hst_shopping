@@ -7,13 +7,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.ApiResponse;
+import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.contract.IndexContract;
 import com.cj.reocrd.presenter.IndexPresenter;
 import com.cj.reocrd.utils.CountDownTimerUtils;
+import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
-import com.dalimao.corelibrary.VerificationCodeInput;
+import com.cj.reocrd.view.activity.MainActivity;
+import com.cj.reocrd.view.view.VerificationCode.VerificationCodeInput;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,9 +50,11 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
     EditText updatePwd2;
     @BindView(R.id.register_pwd_rl)
     RelativeLayout registerPwdRl;
-
+    private final String TAG = "RegisterFragment";
     private String phone;
     private String code;
+    private String responseCode;
+    private int type;
 
     @Override
     protected void initPresenter() {
@@ -62,7 +69,6 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
     @Override
     public void initView() {
         titleCenter.setText(R.string.register_title);
-        registerNext.setClickable(false);
         registerCode.setOnCompleteListener(this);
     }
 
@@ -85,12 +91,22 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                     break;
                 }
                 // todo do register
+                type = 2;
+                mPresenter.registerRequest(UrlConstants.UrLType.REGISTER, phone, pwd, code);
                 break;
             case R.id.register_next:
-                if (TextUtils.isEmpty(registerCode.toString())) {
+                phone = registerPhone.getText().toString();
+                if (TextUtils.isEmpty(phone)) {
+                    ToastUtil.showToastS(mActivity, R.string.input_phone);
+                    break;
+                }
+                if (TextUtils.isEmpty(code)) {
                     ToastUtil.showShort(R.string.verification_code_empty);
                     break;
                 }
+//                if(TextUtils.isEmpty(responseCode)&&!responseCode.equals(code)){
+//                    ToastUtil.showShort(R.string.verification_code_fault);
+//                }
                 registerCodeRl.setVisibility(View.GONE);
                 registerPwdRl.setVisibility(View.VISIBLE);
                 break;
@@ -99,6 +115,8 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                 if (!TextUtils.isEmpty(phone)) {
                     if (Utils.checkMobileNumber(phone)) {
                         // todo get code
+                        type = 1;
+                        mPresenter.getCode(UrlConstants.UrLType.GET_CODE, phone, UrlConstants.codeType.REGISTER);
                         CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(registerGetcode, 60000, 1000);
                         mCountDownTimerUtils.start();
                     } else {
@@ -116,18 +134,37 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
 
     @Override
     public void onSuccess(Object data) {
-
+        ApiResponse response = (ApiResponse) data;
+        switch (type) {
+            case 1:
+                ToastUtil.showToastS(mActivity, response.getMessage());
+                if ("1".equals(response.getStatusCode())) {
+                    responseCode = (String) response.getResults();
+                    LogUtil.e(TAG, responseCode);
+                }
+                break;
+            case 2:
+                ToastUtil.showToastS(mActivity, response.getMessage());
+                if ("1".equals(response.getStatusCode())) {
+                    String userid = (String) response.getResults();
+                    LogUtil.e(TAG, userid);
+                    SPUtils.put(mActivity, UrlConstants.key.USERID, userid);
+                    startActivity(MainActivity.class);
+                    mActivity.finish();
+                }
+                break;
+        }
     }
 
     @Override
     public void onFailureMessage(String msg) {
-
+        ToastUtil.showToastS(mActivity, msg);
     }
 
     //验证码输入完成监听
     @Override
     public void onComplete(String s) {
-        registerNext.setClickable(true);
+        registerCode.setEnabled(false);
         code = s;
     }
 }
