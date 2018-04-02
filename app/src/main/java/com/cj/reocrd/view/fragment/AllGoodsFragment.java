@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -76,6 +77,21 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
     }
 
     @Override
+    public void getArgumentData(Bundle arguments) {
+        super.getArgumentData(arguments);
+        ToastUtil.showShort(arguments.getString("key"));
+    }
+
+    @Override
+    public void putArgumentData(BaseFragment baseFragment, int position) {
+        super.putArgumentData(this, position);
+        Bundle  b = new Bundle();
+        b.putCharSequence("key",position+"; This is AllGoods Fragment");
+        baseFragment.setArguments(b);
+    }
+
+
+    @Override
     public void initView() {
         titleCenter.setText(getString(R.string.all));
 
@@ -128,6 +144,7 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
     public void onSuccess(Object data) {
         List<FirstBean> girlDataList = (List<FirstBean>) data;
         mGoodsAdapter.setNewData(girlDataList);
+        mGoodsAdapter.loadComplete();
         mRefreshLayout.endRefreshing();
         mRefreshLayout.endLoadingMore();
     }

@@ -96,6 +96,20 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         initRecycleView();
     }
 
+    @Override
+    public void getArgumentData(Bundle arguments) {
+        super.getArgumentData(arguments);
+        ToastUtil.showShort(arguments.getString("key"));
+    }
+
+    @Override
+    public void putArgumentData(BaseFragment baseFragment, int position) {
+        super.putArgumentData(this, position);
+        Bundle  b = new Bundle();
+        b.putCharSequence("key",position+"; This is Home Fragment");
+        baseFragment.setArguments(b);
+    }
+
     private void setBannerView(List<String> images){
         //轮播图
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);

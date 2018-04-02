@@ -1,5 +1,6 @@
 package com.cj.reocrd.view.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -48,4 +49,19 @@ public class FriendsFragment extends BaseFragment {
                 break;
         }
     }
+
+    @Override
+    public void getArgumentData(Bundle arguments) {
+        super.getArgumentData(arguments);
+        ToastUtil.showShort(arguments.getString("key"));
+    }
+
+    @Override
+    public void putArgumentData(BaseFragment baseFragment, int position) {
+        super.putArgumentData(this, position);
+        Bundle  b = new Bundle();
+        b.putCharSequence("key",position+"; This is Friends Fragment");
+        baseFragment.setArguments(b);
+    }
+
 }

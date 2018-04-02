@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseFragment;
+import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.activity.MyActivity;
 import com.cj.reocrd.view.activity.UndoneActivity;
 
@@ -83,6 +85,21 @@ public class MineFragment extends BaseFragment {
     protected void initPresenter() {
 
     }
+
+    @Override
+    public void getArgumentData(Bundle arguments) {
+        super.getArgumentData(arguments);
+        ToastUtil.showShort(arguments.getString("key"));
+    }
+
+    @Override
+    public void putArgumentData(BaseFragment baseFragment, int position) {
+        super.putArgumentData(this, position);
+        Bundle  b = new Bundle();
+        b.putCharSequence("key",position+"; This is Mine Fragment");
+        baseFragment.setArguments(b);
+    }
+
 
     @Override
     public int getLayoutId() {

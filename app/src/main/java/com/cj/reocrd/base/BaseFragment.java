@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.TUtil;
+import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.IndexActivity;
 import com.cj.reocrd.view.activity.MainActivity;
 import com.cj.reocrd.view.activity.MyActivity;
@@ -29,6 +30,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     public Unbinder unbinder;
     public T mPresenter;
     private final String TAG = "BaseFragment";
+    private String mParam1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,10 +66,25 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
+        if (getArguments() != null) {
+            getArgumentData(getArguments());
+        }
         unbinder = ButterKnife.bind(this, view);
         LogUtil.e(TAG, "onCreateView: ");
         init();
         return view;
+    }
+
+    public void getArgumentData(Bundle arguments) {
+        mParam1 = getArguments().getString("key");
+//        ToastUtil.showShort(mParam1);
+    }
+    public void putArgumentData(BaseFragment baseFragment,int position) {
+        Bundle  b = new Bundle();
+        b.putCharSequence("key",baseFragment.getClass().getName()+position);
+        baseFragment.setArguments(b);
+        LogUtil.e(TAG,baseFragment.getClass().getName()+" ; "+position);
+//        ToastUtil.showShort(mParam1);
     }
 
     private final void init() {

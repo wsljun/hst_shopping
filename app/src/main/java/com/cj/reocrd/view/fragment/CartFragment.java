@@ -1,10 +1,12 @@
 package com.cj.reocrd.view.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseFragment;
+import com.cj.reocrd.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,4 +46,19 @@ public class CartFragment extends BaseFragment {
                 break;
         }
     }
+
+    @Override
+    public void getArgumentData(Bundle arguments) {
+        super.getArgumentData(arguments);
+        ToastUtil.showShort(arguments.getString("key"));
+    }
+
+    @Override
+    public void putArgumentData(BaseFragment baseFragment, int position) {
+        super.putArgumentData(this, position);
+        Bundle  b = new Bundle();
+        b.putCharSequence("key",position+"; This is Cart Fragment");
+        baseFragment.setArguments(b);
+    }
+
 }

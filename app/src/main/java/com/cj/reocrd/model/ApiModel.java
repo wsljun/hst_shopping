@@ -11,11 +11,9 @@ import com.cj.reocrd.api.ApiStore;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseApplication;
 import com.cj.reocrd.model.entity.GirlData;
-import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.utils.DESedeUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
-import com.cj.reocrd.utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -119,17 +117,17 @@ public class ApiModel  {
         String msg = "请求错误，请稍后重试！";
         ApiResponse apiResponse = null; // new ApiResponse("2","请求错误，请稍后重试！") ;
         if(jsonStr != null && jsonStr.trim().length() >0 ){
-                JSONObject jsonObject = JSON.parseObject(jsonStr);
-                if (jsonObject.containsKey("statusCode")){
-                    code = jsonObject.getString("statusCode");
-                }
-                if (jsonObject.containsKey("message")){
-                    msg = jsonObject.getString("message");
-                }
-                apiResponse = new ApiResponse(code,msg);
-                jsonObject.remove("statusCode");
-                jsonObject.remove("message");
-                if(jsonObject.isEmpty()){
+            JSONObject jsonObject = JSON.parseObject(jsonStr);
+            if (jsonObject.containsKey("statusCode")){
+                code = jsonObject.getString("statusCode");
+            }
+            if (jsonObject.containsKey("message")){
+                msg = jsonObject.getString("message");
+            }
+            apiResponse = new ApiResponse(code,msg);
+            jsonObject.remove("statusCode");
+            jsonObject.remove("message");
+            if(jsonObject.isEmpty()){
                 return  apiResponse;
             }else{
                 T t = JSONObject.parseObject(JSONObject.toJSONString(jsonObject), clz);
@@ -154,28 +152,4 @@ public class ApiModel  {
         }
         return  apiResponse;
     }
-
-
-    // gson 暂时不用 解析存在bug
-    public static  <T>ApiResponse parse(ApiResponse request, Class<T> clz){
-//        if(jsonStr != null && request.getResults().trim().length() >0 ){
-        Gson gson = new Gson();
-//            GirlData request = gson.fromJson(jsonStr,GirlData.class);
-        if(request != null && request.getDataList() != null){
-            Object data = null;
-            if(request.getDataList() instanceof List){
-                List<T> list =gson.fromJson(gson.toJson(request.getDataList()),
-                        new TypeToken<List<T>>() {}.getType());
-                data = list;
-                request.setDataList(list);
-            }else{
-                T t = gson.fromJson(gson.toJson(request.getDataList()), clz);
-                data = t;
-            }
-            return request;
-        }
-        return request;
-    }
-
-
 }
