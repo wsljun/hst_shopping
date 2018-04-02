@@ -19,6 +19,7 @@ import retrofit2.http.Url;
 
 public class WelcomeActivity extends BaseActivity {
     private final String TAG = "WelcomeActivity";
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_welcome;
@@ -28,14 +29,14 @@ public class WelcomeActivity extends BaseActivity {
     public void initData() {
         super.initData();
         //获取手机的imei 存到sp
-        SPUtils.put(this, UrlConstants.key.PID, Utils.getIMEI(this));
-        LogUtil.e(TAG, Utils.getIMEI(this));
+        BaseActivity.pid = Utils.getIMEI();
         // 检查userid是否存在
         String userid = (String) SPUtils.get(this, UrlConstants.key.USERID, "");
-        LogUtil.e(TAG, userid);
+        //添加到base里，全局用
         if (TextUtils.isEmpty(userid)) {
             startActivity(IndexActivity.class);
         } else {
+            BaseActivity.uid = userid;
             startActivity(MainActivity.class);
         }
         finish();

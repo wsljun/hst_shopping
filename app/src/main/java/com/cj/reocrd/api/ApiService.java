@@ -45,6 +45,6 @@ public interface ApiService {
 
     //带有文件or 图片
     @Multipart
-    @POST(UrlConstants.URL)
-    Call<ApiResponse> getUpdatePortraitInfo(@Query("uid") String uid, @Part MultipartBody.Part filePrta);
+    @POST(UrlConstants.UrLType.UPDATE_PHOTO)
+    Call<String> getUpdatePortraitInfo(@Query("uid") String uid, @Part MultipartBody.Part filePrta);
 }

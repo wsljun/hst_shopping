@@ -4,13 +4,14 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <include layout="@layout/layout_title"
-        android:id="@+id/my_title"/>
+    <include
+        android:id="@+id/my_title"
+        layout="@layout/layout_title" />
 
     <ScrollView
-        android:layout_below="@id/my_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_title">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,8 +34,7 @@
                     android:layout_width="43dp"
                     android:layout_height="43dp"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_marginRight="28dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:layout_marginRight="28dp" />
 
                 <TextView style="@style/mine_text_colorsize" />
             </FrameLayout>
@@ -52,8 +52,7 @@
 
                 <TextView
                     android:id="@+id/my_name_tv"
-                    style="@style/mine_text_colorsize"
-                    android:text="狗蛋" />
+                    style="@style/mine_text_colorsize" />
             </FrameLayout>
 
             <FrameLayout
@@ -68,8 +67,7 @@
 
                 <TextView
                     android:id="@+id/my_sex_tv"
-                    style="@style/mine_text_colorsize"
-                    android:text="男" />
+                    style="@style/mine_text_colorsize" />
             </FrameLayout>
 
             <FrameLayout
@@ -86,7 +84,6 @@
                     android:id="@+id/my_phone_tv"
                     style="@style/mine_text_colorsize"
                     android:drawableEnd="@null"
-                    android:text="@string/my_phone_null"
                     android:textColor="@color/colorButton" />
             </FrameLayout>
 

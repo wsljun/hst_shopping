@@ -22,28 +22,30 @@ import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.cj.reocrd.base.BaseActivity.pid;
+
 
 /**
  * Created by Lyndon.Li on 2018/3/17.
- *
  */
 
-public class ApiModel  {
+public class ApiModel {
     private static final String TAG = "ApiModel";
 
     public static volatile ApiModel apiModel = null;
 
-    private ApiModel(){
+    private ApiModel() {
     }
 
-    public static ApiModel getInstance(){
-        if(null == apiModel ){
-            synchronized (ApiModel.class){
-                if( null == apiModel){
+    public static ApiModel getInstance() {
+        if (null == apiModel) {
+            synchronized (ApiModel.class) {
+                if (null == apiModel) {
                     apiModel = new ApiModel();
                 }
             }
@@ -52,8 +54,7 @@ public class ApiModel  {
     }
 
 
-
-    public void getListData(int size, int page,Callback<GirlData> apiCallback) {
+    public void getListData(int size, int page, Callback<GirlData> apiCallback) {
         ApiStore.getInstance().getApiService().getListData(size, page).enqueue(apiCallback);
     }
 
@@ -65,76 +66,96 @@ public class ApiModel  {
 
     /**
      * @param por  url type 必传
-     *  pid  设备唯一码 ，app 开启时生成，固定值，可不传
+     *             pid  设备唯一码 ，app 开启时生成，固定值，可不传
      * @param dMap
      * @param clz  class 将 返回结果进行拆分除去 stutasCode && message 剩下的部分 单独封装为一个 javabean
      * @param <T>
      * @return
      */
-    public   <T>ApiResponse getData(String por,HashMap<String,Object> dMap, final Class<T> clz,ApiCallback apiCallback) {
+    public <T> ApiResponse getData(String por, HashMap<String, Object> dMap, final Class<T> clz, ApiCallback apiCallback) {
         ApiResponse apiResponse = new ApiResponse();
-        String imei = (String) SPUtils.get(BaseApplication.getAppContext(),UrlConstants.key.PID,"");
-        String  cipher =  DESedeUtils.getDesede(toJsonStr(dMap), imei);
-        LogUtil.d(TAG, "getData:cipher；"+cipher);
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("por",por);   // 请求接口
-        map.put("pid",imei); // 设备唯一码
-        map.put("cipher",cipher); // c参数密文
+//        String imei = (String) SPUtils.get(BaseApplication.getAppContext(), UrlConstants.key.PID, "");
+        String cipher = DESedeUtils.getDesede(toJsonStr(dMap), pid);
+        LogUtil.d(TAG, "getData:cipher；" + cipher);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("por", por);   // 请求接口
+        map.put("pid", pid); // 设备唯一码
+        map.put("cipher", cipher); // c参数密文
         String data = toJsonStr(map);
         ApiStore.getInstance().getApiService().getData(data).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 //                System.out.println("onResponse: String 密文= "+response.body());
-                String result = DESedeUtils.getdeCrypt((response.body()),imei);
+                String result = DESedeUtils.getdeCrypt((response.body()), pid);
 //                System.out.println( "onResponse: String 解密= "+result);
-                if(!TextUtils.isEmpty(result)){
+                if (!TextUtils.isEmpty(result)) {
                     //todo  apicallback
-                    apiCallback.onSuccess(parseFastJson(result,clz));
+                    apiCallback.onSuccess(parseFastJson(result, clz));
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                apiCallback.onFailure(call,t);
+                apiCallback.onFailure(call, t);
             }
         });
 
         return apiResponse;
     }
 
-    public static String toJsonStr(Object object){
+    public <T> ApiResponse uploadPhoto(String uid, MultipartBody.Part filePrta, final Class<T> clz, ApiCallback apiCallback) {
+        ApiResponse apiResponse = new ApiResponse();
+        ApiStore.getInstance().getApiService().getUpdatePortraitInfo(uid, filePrta).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (!TextUtils.isEmpty(response.toString())) {
+                    apiCallback.onSuccess(parseFastJson(response.body().toString(), clz));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                apiCallback.onFailure(call, t);
+            }
+        });
+
+        return apiResponse;
+    }
+
+
+    public static String toJsonStr(Object object) {
         String str_json = JSONObject.toJSONString(object);
-        LogUtil.d(TAG, "toJsonStr: "+str_json);
+        LogUtil.d(TAG, "toJsonStr: " + str_json);
         return str_json;
     }
 
     /**
-     * @param jsonStr  接口返回数据 解密后 的 json 字符串
-     * @param clz class 将 返回结果进行拆分除去 stutasCode && message 剩下的部分 单独封装为一个 javabean
-     * @param <T>  javabean
-     * @return  ApiResponse<> t : obj
+     * @param jsonStr 接口返回数据 解密后 的 json 字符串
+     * @param clz     class 将 返回结果进行拆分除去 stutasCode && message 剩下的部分 单独封装为一个 javabean
+     * @param <T>     javabean
+     * @return ApiResponse<> t : obj
      */
-    public static <T> ApiResponse parseFastJson(String jsonStr, Class<T> clz){
+    public static <T> ApiResponse parseFastJson(String jsonStr, Class<T> clz) {
         String code = "2"; // 1
         String msg = "请求错误，请稍后重试！";
         ApiResponse apiResponse = null; // new ApiResponse("2","请求错误，请稍后重试！") ;
-        if(jsonStr != null && jsonStr.trim().length() >0 ){
-                JSONObject jsonObject = JSON.parseObject(jsonStr);
-                if (jsonObject.containsKey("statusCode")){
-                    code = jsonObject.getString("statusCode");
-                }
-                if (jsonObject.containsKey("message")){
-                    msg = jsonObject.getString("message");
-                }
-                apiResponse = new ApiResponse(code,msg);
-                jsonObject.remove("statusCode");
-                jsonObject.remove("message");
-                if(jsonObject.isEmpty()){
-                return  apiResponse;
-            }else{
+        if (jsonStr != null && jsonStr.trim().length() > 0) {
+            JSONObject jsonObject = JSON.parseObject(jsonStr);
+            if (jsonObject.containsKey("statusCode")) {
+                code = jsonObject.getString("statusCode");
+            }
+            if (jsonObject.containsKey("message")) {
+                msg = jsonObject.getString("message");
+            }
+            apiResponse = new ApiResponse(code, msg);
+            jsonObject.remove("statusCode");
+            jsonObject.remove("message");
+            if (jsonObject.isEmpty()) {
+                return apiResponse;
+            } else {
                 T t = JSONObject.parseObject(JSONObject.toJSONString(jsonObject), clz);
                 apiResponse.setResults(t);
-                return  apiResponse;
+                return apiResponse;
                 // TODO  obj or list<obj>
                /* *String jsonText = JSONObject.toJSONString(jsonObject);
                 request = JSONObject.parseObject(jsonText,ApiResponse.class);
@@ -152,23 +173,24 @@ public class ApiModel  {
                 }*/
             }
         }
-        return  apiResponse;
+        return apiResponse;
     }
 
 
     // gson 暂时不用 解析存在bug
-    public static  <T>ApiResponse parse(ApiResponse request, Class<T> clz){
+    public static <T> ApiResponse parse(ApiResponse request, Class<T> clz) {
 //        if(jsonStr != null && request.getResults().trim().length() >0 ){
         Gson gson = new Gson();
 //            GirlData request = gson.fromJson(jsonStr,GirlData.class);
-        if(request != null && request.getDataList() != null){
+        if (request != null && request.getDataList() != null) {
             Object data = null;
-            if(request.getDataList() instanceof List){
-                List<T> list =gson.fromJson(gson.toJson(request.getDataList()),
-                        new TypeToken<List<T>>() {}.getType());
+            if (request.getDataList() instanceof List) {
+                List<T> list = gson.fromJson(gson.toJson(request.getDataList()),
+                        new TypeToken<List<T>>() {
+                        }.getType());
                 data = list;
                 request.setDataList(list);
-            }else{
+            } else {
                 T t = gson.fromJson(gson.toJson(request.getDataList()), clz);
                 data = t;
             }

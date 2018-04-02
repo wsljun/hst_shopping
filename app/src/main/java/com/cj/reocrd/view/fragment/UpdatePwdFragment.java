@@ -10,8 +10,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.ApiResponse;
+import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.contract.IndexContract;
+import com.cj.reocrd.model.entity.UserBean;
+import com.cj.reocrd.presenter.IndexPresenter;
+import com.cj.reocrd.utils.CountDownTimerUtils;
+import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.IndexActivity;
@@ -28,7 +35,7 @@ import butterknife.Unbinder;
  * 修改密码，并登陆
  */
 
-public class UpdatePwdFragment extends BaseFragment<IndexContract.Presenter> implements IndexContract.View, VerificationCodeInput.Listener {
+public class UpdatePwdFragment extends BaseFragment<IndexPresenter> implements IndexContract.View, VerificationCodeInput.Listener {
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -51,13 +58,13 @@ public class UpdatePwdFragment extends BaseFragment<IndexContract.Presenter> imp
     TextView updateGetcode;
     @BindView(R.id.update_code_rl)
     RelativeLayout updateCodeRl;
-
+    private final String TAG = "UpdatePwdFragment";
     private String phone;
     private String code;
-
+    private int type;
     @Override
     protected void initPresenter() {
-
+        mPresenter.setVM(this);
     }
 
     @Override
@@ -74,6 +81,7 @@ public class UpdatePwdFragment extends BaseFragment<IndexContract.Presenter> imp
     @Override
     public void initView() {
         titleCenter.setText(getString(R.string.my_update_pwd));
+        updateCode.setOnCompleteListener(this);
     }
 
 
@@ -95,7 +103,9 @@ public class UpdatePwdFragment extends BaseFragment<IndexContract.Presenter> imp
                     ToastUtil.showToastS(mActivity, R.string.password_can_only);
                     break;
                 }
-                // todo do login
+                type = 2;
+                //跟注册请求一样，返回处理不一样
+                mPresenter.registerRequest(UrlConstants.UrLType.UPDATE_PWD, phone, pwd, code);
                 if(mActivity instanceof IndexActivity){
                     startActivity(MainActivity.class);
                     mActivity.finish();
@@ -117,7 +127,10 @@ public class UpdatePwdFragment extends BaseFragment<IndexContract.Presenter> imp
                 if (!TextUtils.isEmpty(phone)) {
                     if (Utils.checkMobileNumber(phone)) {
                         // todo get code
-
+                        type = 1;
+                        mPresenter.getCode(UrlConstants.UrLType.GET_CODE, phone, UrlConstants.codeType.UPDATE_PWD);
+                        CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(updateGetcode, 60000, 1000);
+                        mCountDownTimerUtils.start();
                     } else {
                         ToastUtil.showToastS(mActivity, R.string.format_not_correct);
                     }
@@ -133,7 +146,24 @@ public class UpdatePwdFragment extends BaseFragment<IndexContract.Presenter> imp
 
     @Override
     public void onSuccess(Object data) {
-
+        ApiResponse response = (ApiResponse) data;
+        switch (type) {
+            case 1:
+                ToastUtil.showToastS(mActivity, response.getMessage());
+                if ("1".equals(response.getStatusCode())) {
+                    UserBean userBean = (UserBean) response.getResults();
+                    if(userBean!=null){
+                        //todo
+                    }
+                }
+                break;
+            case 2:
+                ToastUtil.showToastS(mActivity, response.getMessage());
+                if ("1".equals(response.getStatusCode())) {
+                    getIndexActivity().getVpLogin().setCurrentItem(1);
+                }
+                break;
+        }
     }
 
     @Override
@@ -143,7 +173,6 @@ public class UpdatePwdFragment extends BaseFragment<IndexContract.Presenter> imp
 
     @Override
     public void onComplete(String s) {
-        updateNext.setClickable(true);
         code = s;
     }
 }

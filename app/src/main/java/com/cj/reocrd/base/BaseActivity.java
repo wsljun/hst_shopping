@@ -36,7 +36,8 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
     public T mPresenter;
     public Context mContext;
     public Unbinder unbinder;
-
+    public static String uid = "";
+    public static String pid = "";
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +49,21 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         if(mPresenter!=null){
             mPresenter.mContext=this;
         }
+        if (savedInstanceState != null) {
+            uid = savedInstanceState.getString("uid");
+            pid = savedInstanceState.getString("pid");
+        }
 //        initFragment(savedInstanceState);
         init();
-
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("uid", uid);
+        outState.putString("pid", pid);
+        super.onSaveInstanceState(outState);
+    }
+
     // todo 需要时重写即可
     public void initFragment(Bundle savedInstanceState) {
 

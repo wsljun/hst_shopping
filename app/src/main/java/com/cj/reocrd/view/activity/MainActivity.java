@@ -14,6 +14,7 @@ import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.base.BaseFragmentAdapter;
 import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.ViewPagerAdapter;
 import com.cj.reocrd.view.fragment.AllGoodsFragment;
 import com.cj.reocrd.view.fragment.CartFragment;
@@ -23,11 +24,15 @@ import com.cj.reocrd.view.fragment.MineFragment;
 import com.cj.reocrd.view.view.MViewPager;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Administrator on 2018/3/16.
@@ -46,29 +51,30 @@ public class MainActivity extends BaseActivity {
     private CartFragment mCartFragment;
     private MineFragment mMineFragment;
     private String TAG = "MainActivity";
+    public static MainActivity mainActivity = null;
 
     @Override
     public void initFragment(Bundle savedInstanceState) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        int currentTabPosition=0;
-        if(null==savedInstanceState){
+        int currentTabPosition = 0;
+        if (null == savedInstanceState) {
             mHomeFragment = new HomeFragment();
             mAllGoodsFragment = new AllGoodsFragment();
             mFriendsFragment = new FriendsFragment();
             mCartFragment = new CartFragment();
             mMineFragment = new MineFragment();
-            
-            fragmentTransaction.add(R.id.fl_body,mHomeFragment,"mHomeFragment");
-            fragmentTransaction.add(R.id.fl_body,mAllGoodsFragment,"mAllGoodsFragment");
-            fragmentTransaction.add(R.id.fl_body,mFriendsFragment,"mFriendsFragment");
-            fragmentTransaction.add(R.id.fl_body,mCartFragment,"mCartFragment");
-            fragmentTransaction.add(R.id.fl_body,mMineFragment,"mMineFragment");
-        }else{
+
+            fragmentTransaction.add(R.id.fl_body, mHomeFragment, "mHomeFragment");
+            fragmentTransaction.add(R.id.fl_body, mAllGoodsFragment, "mAllGoodsFragment");
+            fragmentTransaction.add(R.id.fl_body, mFriendsFragment, "mFriendsFragment");
+            fragmentTransaction.add(R.id.fl_body, mCartFragment, "mCartFragment");
+            fragmentTransaction.add(R.id.fl_body, mMineFragment, "mMineFragment");
+        } else {
             mHomeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag("mHomeFragment");
             mAllGoodsFragment = (AllGoodsFragment) getSupportFragmentManager().findFragmentByTag("mAllGoodsFragment");
             mFriendsFragment = (FriendsFragment) getSupportFragmentManager().findFragmentByTag("mFriendsFragment");
-            mCartFragment= (CartFragment) getSupportFragmentManager().findFragmentByTag("mCartFragment");
-            mMineFragment= (MineFragment) getSupportFragmentManager().findFragmentByTag("mMineFragment");
+            mCartFragment = (CartFragment) getSupportFragmentManager().findFragmentByTag("mCartFragment");
+            mMineFragment = (MineFragment) getSupportFragmentManager().findFragmentByTag("mMineFragment");
         }
         fragmentTransaction.commit();
         SwitchTo(currentTabPosition);
@@ -77,7 +83,7 @@ public class MainActivity extends BaseActivity {
     private void SwitchTo(int position) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        switch (position){
+        switch (position) {
             case 0:
                 transaction.show(mHomeFragment);
                 transaction.hide(mAllGoodsFragment);
@@ -118,7 +124,7 @@ public class MainActivity extends BaseActivity {
                 transaction.show(mMineFragment);
                 transaction.commitAllowingStateLoss();
                 break;
-                default:
+            default:
         }
     }
 
@@ -133,14 +139,54 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void initData() {
+        super.initData();
+        mainActivity = this;
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull Permission permission) throws Exception {
+                        switch (permission.name) {
+                            case Manifest.permission.WRITE_EXTERNAL_STORAGE:
+                                if (permission.granted) {
+                                } else if (permission.shouldShowRequestPermissionRationale) {
+                                    ToastUtil.showToastS(mContext, "取消存储授权,不能存储图片文件");
+                                } else {
+                                    ToastUtil.showToastS(mContext, "您已经禁止弹出存储的授权操作,请在设置中手动开启");
+                                }
+                                break;
+                            case Manifest.permission.CAMERA:
+                                if (permission.granted) {
+                                } else if (permission.shouldShowRequestPermissionRationale) {
+                                    ToastUtil.showToastS(mContext, "取消照相机授权");
+                                } else {
+                                    ToastUtil.showToastS(mContext, "您已经禁止弹出照相机的授权操作,请在设置中手动开启");
+                                }
+                                break;
+                        }
 
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                        Log.i("--->>", "onError", throwable);
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                });
+    }
 
     @Override
     public void initView() {
-        LogUtil.e(TAG,"initview");
+        LogUtil.e(TAG, "initview");
         // todo test permissions
-        if(hasPermissions(this, Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.CAMERA)){
+        if (hasPermissions(this, Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.CAMERA)) {
             requestPerminssions(Manifest.permission.RECORD_AUDIO,
                     Manifest.permission.CAMERA);
         }

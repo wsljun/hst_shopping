@@ -1,20 +1,30 @@
 package com.cj.reocrd.view.fragment;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.ApiResponse;
+import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseFragment;
+import com.cj.reocrd.contract.MyContract;
+import com.cj.reocrd.model.entity.UserBean;
+import com.cj.reocrd.presenter.MyPrresenter;
+import com.cj.reocrd.utils.ImageLoaderUtils;
+import com.cj.reocrd.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.cj.reocrd.base.BaseActivity.uid;
 
 /**
  * Created by Administrator on 2018/3/17.
  */
 
-public class UpdateNameFragment extends BaseFragment {
+public class UpdateNameFragment extends BaseFragment<MyPrresenter> implements MyContract.View {
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -26,7 +36,7 @@ public class UpdateNameFragment extends BaseFragment {
 
     @Override
     protected void initPresenter() {
-
+        mPresenter.setVM(this);
     }
 
     @Override
@@ -42,17 +52,41 @@ public class UpdateNameFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.title_left,R.id.title_right, R.id.update_name_ib})
+    @OnClick({R.id.title_left, R.id.title_right, R.id.update_name_ib})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
                 getMyActivity().getViewPager().setCurrentItem(0);
                 break;
             case R.id.title_right:
+                String name = updateNameEt.getText().toString();
+                if (TextUtils.isEmpty(name)) {
+                    ToastUtil.showToastS(mActivity, getString(R.string.update_name_hint2));
+                    break;
+                }
+                if (name.length() < 2) {
+                    ToastUtil.showToastS(mActivity, getString(R.string.update_name_hint));
+                    break;
+                }
+                mPresenter.updateName(UrlConstants.UrLType.UPDATE_NAME, uid, name);
                 break;
             case R.id.update_name_ib:
                 updateNameEt.setText("");
                 break;
         }
+    }
+
+    @Override
+    public void onSuccess(Object data) {
+        ApiResponse response = (ApiResponse) data;
+        ToastUtil.showToastS(mActivity, response.getMessage());
+        if ("1".equals(response.getStatusCode())) {
+            getMyActivity().getViewPager().setCurrentItem(0);
+        }
+    }
+
+    @Override
+    public void onFailureMessage(String msg) {
+        ToastUtil.showToastS(mActivity, msg);
     }
 }
