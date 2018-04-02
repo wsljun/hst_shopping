@@ -11,12 +11,17 @@ import android.widget.TextView;
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
+import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.contract.IndexContract;
+import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.presenter.IndexPresenter;
+import com.cj.reocrd.utils.CountDownTimerUtils;
 import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
+import com.cj.reocrd.view.activity.MainActivity;
 import com.cj.reocrd.view.view.VerificationCode.VerificationCodeInput;
 
 import butterknife.BindView;
@@ -41,9 +46,10 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
     VerificationCodeInput loginCode;
     @BindView(R.id.login_getcode)
     TextView loginGetcode;
-
+    private final String TAG = "LoginCodeFragment";
     private String phone;
     private String code;
+    private int type;
 
     @Override
     protected void initPresenter() {
@@ -58,11 +64,37 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
     @Override
     public void initView() {
         titleCenter.setText(R.string.login_title);
+        loginCode.setOnCompleteListener(this);
     }
 
 
     @Override
     public void onSuccess(Object data) {
+        ApiResponse response = (ApiResponse) data;
+        switch (type) {
+            case 1:
+                ToastUtil.showToastS(mActivity, response.getMessage());
+                if ("1".equals(response.getStatusCode())) {
+                    UserBean userBean = (UserBean) response.getResults();
+                    if (userBean != null) {
+                        //todo
+                    }
+                }
+                break;
+            case 2:
+                ToastUtil.showToastS(mActivity, response.getMessage());
+                if ("1".equals(response.getStatusCode())) {
+                    UserBean userBean = (UserBean) response.getResults();
+                    if (userBean != null) {
+                        LogUtil.e(TAG, userBean.getId());
+                        SPUtils.put(mActivity, UrlConstants.key.USERID, userBean.getId());
+                        BaseActivity.uid = userBean.getId();
+                        startActivity(MainActivity.class);
+                        mActivity.finish();
+                    }
+                }
+                break;
+        }
 
     }
 
@@ -76,14 +108,28 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login:
-                ToastUtil.showShort(" login ");
+                phone = loginPhone.getText().toString();
+                if (TextUtils.isEmpty(phone)) {
+                    ToastUtil.showToastS(mActivity, R.string.input_phone);
+                    break;
+                }
+                if (TextUtils.isEmpty(code)) {
+                    ToastUtil.showShort(R.string.verification_code_empty);
+                    break;
+                }
+                type = 2;
+                mPresenter.loginRequestCode(UrlConstants.UrLType.LOGIN_CODE, phone, code);
                 break;
             case R.id.login_getcode:
                 phone = loginPhone.getText().toString();
+
                 if (!TextUtils.isEmpty(phone)) {
                     if (Utils.checkMobileNumber(phone)) {
                         // todo get code
+                        type = 1;
                         mPresenter.getCode(UrlConstants.UrLType.GET_CODE, phone, UrlConstants.codeType.LOGIN);
+                        CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(loginGetcode, 60000, 1000);
+                        mCountDownTimerUtils.start();
                     } else {
                         ToastUtil.showToastS(mActivity, R.string.format_not_correct);
                     }
@@ -97,7 +143,6 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
     //验证码输入完成监听
     @Override
     public void onComplete(String s) {
-        loginCode.setClickable(true);
         code = s;
     }
 }

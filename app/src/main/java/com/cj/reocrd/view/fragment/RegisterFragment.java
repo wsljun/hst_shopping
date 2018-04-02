@@ -9,8 +9,10 @@ import android.widget.TextView;
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
+import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.contract.IndexContract;
+import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.presenter.IndexPresenter;
 import com.cj.reocrd.utils.CountDownTimerUtils;
 import com.cj.reocrd.utils.LogUtil;
@@ -139,18 +141,25 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
             case 1:
                 ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
-                    responseCode = (String) response.getResults();
-                    LogUtil.e(TAG, responseCode);
+                    UserBean userBean = (UserBean) response.getResults();
+                    if(userBean!=null){
+                        //todo
+                        responseCode = userBean.getId();
+                        LogUtil.e(TAG, responseCode);
+                    }
                 }
                 break;
             case 2:
                 ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
-                    String userid = (String) response.getResults();
-                    LogUtil.e(TAG, userid);
-                    SPUtils.put(mActivity, UrlConstants.key.USERID, userid);
-                    startActivity(MainActivity.class);
-                    mActivity.finish();
+                    UserBean userBean = (UserBean) response.getResults();
+                    if(userBean!=null){
+                        LogUtil.e(TAG, userBean.getId());
+                        SPUtils.put(mActivity, UrlConstants.key.USERID, userBean.getId());
+                        BaseActivity.uid = userBean.getId();
+                        startActivity(MainActivity.class);
+                        mActivity.finish();
+                    }
                 }
                 break;
         }

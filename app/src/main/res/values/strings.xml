@@ -22,7 +22,8 @@
     <string name="getcode">获取验证码</string>
     <string name="register">注册</string>
     <string name="register_title">欢迎注册</string>
-
+    <string name="man">男</string>
+    <string name="gril">女</string>
     <string name="home">首页</string>
     <string name="all">全部商品</string>
     <string name="friends">圈子</string>
@@ -48,6 +49,7 @@
     <string name="album">从相机中选择</string>
     <string name="cancel">取消</string>
     <string name="confirm">确定</string>
+    <string name="logout_confirm">确定退出当前用户吗？</string>
     <string name="my_update_name">修改昵称</string>
     <string name="my_add_phone">账号与安全</string>
     <string name="my_update_phone">绑定手机号</string>
@@ -76,6 +78,7 @@
     <string name="address_logo">店名&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
 
     <string name="update_name_hint">*以英文字母或汉字开头，限4-16个字符一个汉字为2个字符</string>
+    <string name="update_name_hint2">昵称不能为空</string>
     <string name="phone_number">手机号</string>
     <string name="code">验证码</string>
     <string name="update_phone_do">立即绑定</string>
