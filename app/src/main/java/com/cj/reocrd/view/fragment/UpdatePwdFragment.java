@@ -75,13 +75,13 @@ public class UpdatePwdFragment extends BaseFragment<IndexPresenter> implements I
     @Override
     public void initData() {
         super.initData();
-
     }
 
     @Override
     public void initView() {
         titleCenter.setText(getString(R.string.my_update_pwd));
         updateCode.setOnCompleteListener(this);
+
     }
 
 

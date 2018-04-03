@@ -51,6 +51,8 @@ public class UrlConstants {
         public static final String UPDATE_SEX = "305";
         //修改手机
         public static final String UPDATE_PHONE = "306";
+        //验证原手机号验证码
+        public static final String CHECK_PHONE = "307";
    }
 
 }

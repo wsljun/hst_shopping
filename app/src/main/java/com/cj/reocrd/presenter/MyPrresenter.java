@@ -106,6 +106,48 @@ public class MyPrresenter extends MyContract.Presenter {
 
     @Override
     public void updatePhone(String por, String uid, String phone, String code) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);   //
+        map.put("phone", phone);   //
+        map.put("code", code); //
+        ApiModel.getInstance().getData(por, map, UserBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+
+        });
+    }
+
+    @Override
+    public void getCode(String por, String phoneName, String type) {
+        // TODO 获取验证码
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("phone", phoneName);   //
+        map.put("type", type); //
+        // TODO test
+        ApiModel.getInstance().getData(por, map, UserBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+
+        });
+
 
     }
 }

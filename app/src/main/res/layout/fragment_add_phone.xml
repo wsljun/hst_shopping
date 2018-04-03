@@ -59,6 +59,8 @@
                 android:layout_toRightOf="@id/update_phone_label1"
                 android:background="@null"
                 android:inputType="phone"
+                android:maxLength="11"
+                android:maxLines="1"
                 android:textColor="@color/colorTexthintGrey"
                 android:textSize="14sp" />
 
@@ -125,6 +127,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
         android:background="@drawable/textview_normal_btn"
-        android:text="@string/update_phone_do"
+        android:text="@string/next"
         android:textColor="@color/colorWhite" />
+
 </LinearLayout>

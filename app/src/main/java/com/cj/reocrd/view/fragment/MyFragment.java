@@ -54,6 +54,7 @@ import okhttp3.RequestBody;
 
 import static android.app.Activity.RESULT_OK;
 import static com.cj.reocrd.base.BaseActivity.uid;
+import static com.cj.reocrd.view.activity.MyActivity.pNumber;
 
 /**
  * Created by Administrator on 2018/3/17.
@@ -383,7 +384,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                 if ("1".equals(response.getStatusCode())) {
                     UserBean userBean = (UserBean) response.getResults();
                     if (!TextUtils.isEmpty(userBean.getPhoto())) {
-                        ImageLoaderUtils.display(mActivity, myIconIv, UrlConstants.BASE_URL + userBean.getPhoto());
+                        ImageLoaderUtils.displayRound(mActivity, myIconIv, UrlConstants.BASE_URL + userBean.getPhoto());
                     }
                 }
                 break;
@@ -392,7 +393,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                     UserBean userBean = (UserBean) response.getResults();
                     if (userBean != null) {
                         if (!TextUtils.isEmpty(userBean.getPhoto())) {
-                            ImageLoaderUtils.display(mActivity, myIconIv, UrlConstants.BASE_URL + userBean.getPhoto());
+                            ImageLoaderUtils.displayRound(mActivity, myIconIv, UrlConstants.BASE_URL + userBean.getPhoto());
                         }
                         if (!TextUtils.isEmpty(userBean.getName())) {
                             myNameTv.setText(userBean.getName());
@@ -402,6 +403,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                         }
                         if (!TextUtils.isEmpty(userBean.getPhone())) {
                             myPhoneTv.setText(userBean.getPhone());
+                            pNumber = userBean.getPhone();
                         }
                     }
                 }

@@ -52,7 +52,7 @@
     <string name="logout_confirm">确定退出当前用户吗？</string>
     <string name="my_update_name">修改昵称</string>
     <string name="my_add_phone">账号与安全</string>
-    <string name="my_update_phone">绑定手机号</string>
+    <string name="my_update_phone">更换手机号</string>
     <string name="my_update_pwd">修改密码</string>
     <string name="my_icon">头像</string>
     <string name="my_name">昵称</string>
@@ -79,9 +79,11 @@
 
     <string name="update_name_hint">*以英文字母或汉字开头，限4-16个字符一个汉字为2个字符</string>
     <string name="update_name_hint2">昵称不能为空</string>
-    <string name="phone_number">手机号</string>
+    <string name="phone_number">当前手机号</string>
+    <string name="phone_number_new">新的手机号</string>
     <string name="code">验证码</string>
-    <string name="update_phone_do">立即绑定</string>
+    <string name="update_phone_do">确认更换</string>
+    <string name="update_phone_next">更换手机号</string>
     <string name="update_phone_n">当前手机号:</string>
 
     <string name="undone_time">下单时间</string>

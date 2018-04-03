@@ -29,5 +29,7 @@ public interface MyContract {
         public abstract void updateSex(String por,String uid, String sex);
 
         public abstract void updatePhone(String por,String uid, String phone, String code);
+
+        public abstract void getCode(String por,String  phoneName,String type);
     }
 }
