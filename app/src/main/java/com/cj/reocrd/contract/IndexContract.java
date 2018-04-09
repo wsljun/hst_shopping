@@ -18,7 +18,8 @@ public interface IndexContract {
     }
 
     abstract static class Presenter extends BasePresenter<View> {
-        public abstract  void loginRequest();
+        public abstract  void loginRequest(String por,String phone,String password);
+        public abstract  void loginRequestCode(String por,String phone,String code);
         public abstract  void registerRequest(String por,String phone,String password,String code);
         public abstract void getCode(String por,String  phoneName,String type);
 

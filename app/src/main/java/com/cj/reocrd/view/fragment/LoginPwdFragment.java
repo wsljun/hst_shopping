@@ -9,9 +9,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.ApiResponse;
+import com.cj.reocrd.api.UrlConstants;
+import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.contract.IndexContract;
+import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.presenter.IndexPresenter;
+import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.activity.MainActivity;
 
@@ -36,7 +42,7 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
     EditText loginPhone;
     @BindView(R.id.login_password)
     EditText loginPassword;
-
+    private final String TAG = "LoginPwdFragment";
     @Override
     protected void initPresenter() {
         mPresenter.setVM(this);
@@ -70,7 +76,7 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
                     ToastUtil.showToastS(mActivity, R.string.password_cannot_empty);
                     break;
                 }
-                startActivity(MainActivity.class);
+                mPresenter.loginRequest(UrlConstants.UrLType.LOGIN_PWD, phone, pwd);
                 break;
             case R.id.title_left:
                 getIndexActivity().getVpLogin().setCurrentItem(0);
@@ -83,7 +89,16 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
 
     @Override
     public void onSuccess(Object data) {
-
+        ApiResponse response = (ApiResponse) data;
+        ToastUtil.showToastS(mActivity, response.getMessage());
+        if ("1".equals(response.getStatusCode())) {
+            UserBean userBean = (UserBean) response.getResults();
+            LogUtil.e(TAG, userBean.getId());
+            SPUtils.put(mActivity, UrlConstants.key.USERID, userBean.getId());
+            BaseActivity.uid = userBean.getId();
+            startActivity(MainActivity.class);
+            mActivity.finish();
+        }
     }
 
     @Override

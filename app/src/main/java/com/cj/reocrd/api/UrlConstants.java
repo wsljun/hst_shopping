@@ -28,11 +28,29 @@ public class UrlConstants {
     public static class UrLType {
         // 发送验证码
         public static final String GET_CODE = "101";
+        // 登陆-密码
+        public static final String LOGIN_PWD = "102";
+        // 登陆-验证码
+        public static final String LOGIN_CODE = "103";
         // 注册
         public static final String REGISTER= "104";
-        //todo add more url type
+        //修改密码
+        public static final String UPDATE_PWD= "106";
+        //首页
         public static final  String GET_HOME_DATA = "201";
 
+        //我的首页
+        public static final  String MY_HOME = "301";
+        //userinfo
+        public static final  String USERINFO = "302";
+        //修改头像
+        public static final String UPDATE_PHOTO = "clientupload/updateUserPhoto";
+        //修改名字
+        public static final String UPDATE_NAME = "304";
+        //修改性别
+        public static final String UPDATE_SEX = "305";
+        //修改手机
+        public static final String UPDATE_PHONE = "306";
    }
 
 }
