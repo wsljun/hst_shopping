@@ -1,6 +1,5 @@
 package com.cj.reocrd.view.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,14 +14,12 @@ import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.OnItemClickListener;
 import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.model.entity.BannerData;
-import com.cj.reocrd.model.entity.FirstBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.presenter.HomePresenter;
 import com.cj.reocrd.utils.GlideImageLoader;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.activity.SearchActivity;
-import com.cj.reocrd.view.adapter.GoodsAdapter;
 import com.cj.reocrd.view.adapter.HomeAdapter;
 import com.cj.reocrd.view.refresh.NormalRefreshViewHolder;
 import com.cj.reocrd.view.refresh.RefreshLayout;
@@ -62,7 +59,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     private HomeAdapter mHomeTabAdapter;
     private int size = 20;  //pageSize
-    private int pageno = 1; // 页码
+    private int pageno = 0; // 页码
     private final static String TAG = "HomeFragment";
 
 
@@ -187,7 +184,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public boolean onRefreshLayoutBeginLoadingMore(RefreshLayout refreshLayout) {
         size += 20;
-//        mPresenter.getListDataTest(size,1);
+        mPresenter.getHomeData(size,pageno);
         return false;
     }
 

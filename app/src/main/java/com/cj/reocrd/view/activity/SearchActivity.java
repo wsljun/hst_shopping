@@ -1,10 +1,17 @@
 package com.cj.reocrd.view.activity;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.nfc.Tag;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 
@@ -15,8 +22,11 @@ import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.OnItemClickListener;
 import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.model.entity.FirstBean;
+import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.presenter.HomePresenter;
+import com.cj.reocrd.utils.CollectionUtils;
+import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.GoodsAdapter;
 import com.cj.reocrd.view.adapter.HomeAdapter;
@@ -28,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2018/3/19.
@@ -41,15 +52,27 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
     TextView titleCenter;
     @BindView(R.id.title_right)
     TextView titleRight;
-    @BindView(R.id.search)
-    EditText search;
+    @BindView(R.id.et_search)
+    EditText editTextSearch;
     @BindView(R.id.refresh)
     RefreshLayout mRefreshLayout;
     @BindView(R.id.rv_content)
     RecyclerView recyclerViewContent;
-    List<String> mDatas;
+    @BindView(R.id.rg_search_label)
+    RadioGroup rgSearchLabel;
+
+    List<GoodsBean> mDatas;
     private HomeAdapter mHomeTabAdapter;
-    private int size = 20;
+    private int pagesize = 20;
+    private int pageno = 0;
+    private String label = "0";  // 价格0，热门1，新品2，促销3
+    private final String SORT_ASC = "asc"; // 升序
+    private final String SORT_DESC= "desc"; // 降序
+    private String sort_label = SORT_ASC; // 默认值
+    private String searchStr = "好货";
+    private final String TAG = "SearchActivity";
+    private List<RadioButton> radioButtons = new ArrayList<>();
+    private Drawable drawableLabel;
 
     @Override
     public int getLayoutId() {
@@ -59,11 +82,36 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
     @Override
     public void initData() {
         super.initData();
+        drawableLabel =getResources().getDrawable(R.mipmap.zonghexuanze);
+        mPresenter.getSearchData(searchStr,sort_label,label,pagesize, pageno);
     }
 
     @Override
     public void initView() {
         titleCenter.setText("五谷杂粮");
+        rgSearchLabel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioButton = findViewById(checkedId);
+                radioButton.setTextColor(getColor(R.color.colorButton));
+                if(!radioButtons.contains(radioButton)){
+                    radioButtons.add(radioButton);
+                }
+                for (RadioButton rb : radioButtons){
+                    if(rb.getId()!=radioButton.getId()){
+                        rb.setTextColor(getColor(R.color.colorBlack));
+                        rb.setCompoundDrawables(null,null,null,null);
+                    }else{
+                        drawableLabel.setBounds(0,0,30,30);
+                        radioButton.setCompoundDrawables(null,null, drawableLabel, null);
+                    }
+                }
+                ToastUtil.showShort(radioButton.getText()+" , "+radioButton.getTag());
+                label = String.valueOf(radioButton.getTag());
+                updateData();
+            }
+        });
         //商品列表
         initRecycleView();
     }
@@ -78,10 +126,10 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
         //设置适配器可以上拉加载
         mHomeTabAdapter.setOnLoadMoreListener(this);
         //设置下拉、上拉
-        mRefreshLayout.setDelegate(this);
+//        mRefreshLayout.setDelegate(this);
         mRefreshLayout.setRefreshViewHolder(new NormalRefreshViewHolder(this, true));
 
-        mPresenter.getListDataTest(20, 1);
+//        mPresenter.getListDataTest(20, 1);
 
         //条目的点击事件
         recyclerViewContent.addOnItemTouchListener(new OnItemClickListener() {
@@ -99,17 +147,52 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
         mPresenter.setVM(this);
     }
 
+    @OnClick({R.id.search_iv,R.id.title_right})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.search_iv:
+                setSearchStr();
+                break;
+            case R.id.rg_search_label:
+                //todo
+                ToastUtil.showShort("rg");
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void setSearchStr() {
+        String et_str = editTextSearch.getText().toString();
+        if("".equals(et_str)) {
+            searchStr = "";
+        }else{
+            searchStr = et_str;
+        }
+        updateData();
+    }
+
+    private void  updateData(){
+        mPresenter.getSearchData(searchStr,sort_label,label,pagesize, pageno);
+    }
+
+
     @Override
     public void onSuccess(Object data) {
-        List<FirstBean> girlDataList = (List<FirstBean>) data;
-        mHomeTabAdapter.setNewData(girlDataList);
+        HomeBean homeBean = (HomeBean) data;
+        if(!CollectionUtils.isNullOrEmpty(homeBean.getMlist())){
+            mHomeTabAdapter.setNewData(homeBean.getMlist());
+        }else{
+            ToastUtil.showShort("暂时没有数据！");
+        }
         mRefreshLayout.endRefreshing();
         mRefreshLayout.endLoadingMore();
+        mHomeTabAdapter.loadComplete();
     }
 
     @Override
     public void onFailureMessage(String msg) {
-
+        ToastUtil.showShort(msg);
     }
 
     @Override
@@ -119,20 +202,21 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
 
     @Override
     public void onLoadMoreRequested() {
-
+        LogUtil.d(TAG,"onLoadMoreRequested");
+//        pagesize += 20;
+        mPresenter.getSearchData(searchStr,sort_label,label,pagesize, pageno);
     }
 
     @Override
     public void onRefreshLayoutBeginRefreshing(RefreshLayout refreshLayout) {
         // 开始刷新
-        System.out.println("onRefreshLayoutBeginRefreshing===");
-        mPresenter.getListDataTest(size, 1);
+//        mPresenter.getSearchData(searchStr,sort_label,label,pagesize, 0);
     }
 
     @Override
     public boolean onRefreshLayoutBeginLoadingMore(RefreshLayout refreshLayout) {
-        size += 20;
-        mPresenter.getListDataTest(size, 1);
+//        pagesize += 20;
+//        mPresenter.getSearchData(searchStr,sort_label,label,pagesize, 0);
         return false;
     }
 

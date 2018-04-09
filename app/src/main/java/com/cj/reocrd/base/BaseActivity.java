@@ -43,6 +43,7 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         super.onCreate(savedInstanceState);
         doBeforeSetcontentView();
         setContentView(getLayoutId());
+        mContext = this.getApplicationContext();
         unbinder = ButterKnife.bind(this);
         ButterKnife.bind(this);
         mPresenter = TUtil.getT(this, 0);
@@ -54,6 +55,7 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
             pid = savedInstanceState.getString("pid");
         }
 //        initFragment(savedInstanceState);
+        initPresenter();
         init();
     }
 

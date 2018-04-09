@@ -9,7 +9,7 @@ public class UrlConstants {
 //    public final static String BASE_URL = "http://gank.io/api/";
     public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
     public final static String URL = "app/outinterface";
-    public final static String PID = "123222212121";  //  TODO  pid
+//    public final static String PID = "123222212121";  //  TODO  pid
     public final static String SUCCESE_CODE = "1"; // 返回结果成功
 
     public static class key {
@@ -38,6 +38,14 @@ public class UrlConstants {
         public static final String UPDATE_PWD= "106";
         //首页
         public static final  String GET_HOME_DATA = "201";
+        //搜索
+        public static final String  URL_SEARCH = "202"; // todo search
+        //获取分类
+        public static final String  URL_ALL_GOODS_TYPE = "203";
+        //全部商品
+        public static final String  URL_ALL_GOODS = "204";
+        //商品详情
+        public static final String  URL_GOODS_DETAIL = "205"; // todo all goods
 
         //我的首页
         public static final  String MY_HOME = "301";

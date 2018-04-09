@@ -38,18 +38,18 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         mActivity = (BaseActivity) getActivity();
         LogUtil.e(TAG, "onCreateView: ");
         if (savedInstanceState != null) {
-//            FragmentTransaction ft = getFragmentManager().beginTransaction();
-//            if (ft != null && isAdded()) {
-//                ft.remove(this);
-//                ft.commit();
-//            }
-//            if (getParentFragment() != null) {
-//                FragmentTransaction pft = getParentFragment().getChildFragmentManager().beginTransaction();
-//                if (pft != null && isAdded()) {
-//                    pft.remove(this);
-//                    pft.commit();
-//                }
-//            }
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            if (ft != null && isAdded()) {
+                ft.remove(this);
+                ft.commit();
+            }
+            if (getParentFragment() != null) {
+                FragmentTransaction pft = getParentFragment().getChildFragmentManager().beginTransaction();
+                if (pft != null && isAdded()) {
+                    pft.remove(this);
+                    pft.commit();
+                }
+            }
         }
 
         mPresenter = TUtil.getT(this, 0);
@@ -66,8 +66,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
-        if (getArguments() != null) {
-            getArgumentData(getArguments());
+        if (getArguments() != null) { // todo 此功能存在bug
+//            getArgumentData(getArguments());
         }
         unbinder = ButterKnife.bind(this, view);
         LogUtil.e(TAG, "onCreateView: ");
@@ -80,10 +80,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
 //        ToastUtil.showShort(mParam1);
     }
     public void putArgumentData(BaseFragment baseFragment,int position) {
-        Bundle  b = new Bundle();
-        b.putCharSequence("key",baseFragment.getClass().getName()+position);
-        baseFragment.setArguments(b);
-        LogUtil.e(TAG,baseFragment.getClass().getName()+" ; "+position);
+//        Bundle  b = new Bundle();
+//        b.putCharSequence("key",baseFragment.getClass().getName()+position);
+//        baseFragment.setArguments(b);
+//        LogUtil.e(TAG,baseFragment.getClass().getName()+" ; "+position);
 //        ToastUtil.showShort(mParam1);
     }
 

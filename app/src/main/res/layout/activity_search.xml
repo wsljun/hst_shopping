@@ -20,7 +20,7 @@
 
 
         <EditText
-            android:id="@+id/search"
+            android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -43,6 +43,7 @@
     </RelativeLayout>
 
     <RadioGroup
+        android:id="@+id/rg_search_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -57,7 +58,10 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="@string/search_all" />
+            android:text="@string/search_price"
+            android:tag="0"
+            android:textSize="16sp"
+            />
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -65,14 +69,8 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="@string/search_price" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
+            android:textSize="16sp"
+            android:tag="1"
             android:text="@string/search_hot" />
         <!--  android:textColor="@drawable/search_radio_color" -->
         <RadioButton
@@ -80,8 +78,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
+            android:textSize="16sp"
+            android:tag="2"
             android:gravity="center"
             android:text="@string/search_new" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:tag="3"
+            android:text="@string/search_promotion" />
 
     </RadioGroup>
 
@@ -95,7 +105,10 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent">
+
+
+        </android.support.v7.widget.RecyclerView>
     </com.cj.reocrd.view.refresh.RefreshLayout>
 
 

@@ -1,6 +1,8 @@
 package com.cj.reocrd.view.activity;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -11,16 +13,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
+import com.cj.reocrd.contract.GoodsContract;
+import com.cj.reocrd.contract.GoodsDetailContract;
+import com.cj.reocrd.model.entity.GoodsDetailsBean;
+import com.cj.reocrd.model.entity.GoodsType;
+import com.cj.reocrd.presenter.GoodsDetailPresenter;
+import com.cj.reocrd.utils.GlideImageLoader;
+import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
 import com.ywp.addresspickerlib.AddressPickerView;
+
+import org.w3c.dom.Text;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +46,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2018/3/18.
  */
 
-public class GoodDetailActivity extends BaseActivity {
+public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> implements GoodsDetailContract.View {
 
     @BindView(R.id.title_left)
     TextView titleLeft;
@@ -38,8 +54,8 @@ public class GoodDetailActivity extends BaseActivity {
     TextView titleCenter;
     @BindView(R.id.title_right)
     TextView titleRight;
-    @BindView(R.id.banner)
-    Banner banner;
+    @BindView(R.id.iv_good_detail)
+    ImageView imgGoodDetail;
     @BindView(R.id.good_name)
     TextView goodName;
     @BindView(R.id.good_price)
@@ -60,7 +76,9 @@ public class GoodDetailActivity extends BaseActivity {
     TextView goodShitTv;
     @BindView(R.id.good_brand)
     TextView goodBrand;
-    @BindView(R.id.good_address)
+    @BindView(R.id.good_brand_tv)
+    TextView goodBrandTv;
+    @BindView(R.id.good_address_tv)
     TextView goodAddress;
     @BindView(R.id.good_car)
     ImageView goodCar;
@@ -74,6 +92,8 @@ public class GoodDetailActivity extends BaseActivity {
     RelativeLayout rlBottomView;
 
     private Dialog dialog;
+    private static String goodsID = "";// 商品ID
+    private GoodsDetailsBean goodsDetailsBean;
 
     @Override
     public int getLayoutId() {
@@ -81,15 +101,49 @@ public class GoodDetailActivity extends BaseActivity {
     }
 
     @Override
-    public void initView() {
-        goodOldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
+    public void initData() {
+        super.initData();
 
     }
 
     @Override
-    public void initPresenter() {
-
+    public void initView() {
+        goodOldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
+//        updateView();
     }
+
+    private void updateView() {
+        goodName.setText(goodsDetailsBean.getName());
+        goodBrandTv.setText(goodsDetailsBean.getBrand());
+        goodPrice.setText(goodsDetailsBean.getPrice());
+        goodSales.setText("销量："+goodsDetailsBean.getBlocknum());
+        goodAddress.setText(goodsDetailsBean.getPlace());
+        ImageLoaderUtils.display(getContext(),imgGoodDetail, UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
+    }
+
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setVM(this);
+        goodsID = getIntent().getStringExtra("goodsID");
+        // TODO get goods details
+        mPresenter.getGoodsDetail(goodsID);
+    }
+
+    public static Intent newIntent(Context context, String goodsID) {
+        Intent intent = new Intent(context, GoodDetailActivity.class);
+        intent.putExtra("goodsID", goodsID);
+        return intent;
+    }
+
+    /**
+     * @param context
+     * @param goodsID 商品id
+     */
+    public static void intentTo(Context context, String goodsID) {
+        context.startActivity(newIntent(context, goodsID));
+    }
+
 
     @OnClick({R.id.good_conllect_iv, R.id.good_num_rl, R.id.good_buy, R.id.good_addcar})
     public void onViewClicked(View view) {
@@ -153,4 +207,21 @@ public class GoodDetailActivity extends BaseActivity {
         // 第三和第四个参数分别是PopupWindow相对父View的x、y偏移
         // window.showAtLocation(parent, gravity, x, y);
     }
+
+    @Override
+    public void onSuccess(Object data) {
+         goodsDetailsBean = (GoodsDetailsBean) data;
+         updateView();
+    }
+
+    @Override
+    public void onFailureMessage(String msg) {
+
+    }
+
+    @Override
+    public Context getContext() {
+        return mContext;
+    }
+
 }

@@ -8,18 +8,17 @@ import java.util.List;
 
 
 /**
- * Created by Lyndon.Li on 2018/3/23
- * 全部商品
+ * Created by Lyndon.Li on 2018/4/3
+ * 商品
  */
 
-public interface GoodsContract {
+public interface GoodsDetailContract {
 
     interface View extends BaseView {
         //返回获取的数据
-       public abstract void saveGoodsType(List<GoodsType> list);
     }
 
     abstract static class Presenter extends BasePresenter<View> {
-        public abstract void getGoodsData(String tid, int pageno, int pagesize);
+        public abstract void getGoodsDetail(String goodID);
     }
 }

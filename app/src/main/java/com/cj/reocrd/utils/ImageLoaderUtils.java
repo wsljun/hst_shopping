@@ -30,7 +30,7 @@ public class ImageLoaderUtils {
         }
         Glide.with(context).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
+                .fitCenter()
                 .placeholder(R.mipmap.ic_image_loading)
                 .error(R.mipmap.ic_empty_picture)
                 .crossFade().into(imageView);

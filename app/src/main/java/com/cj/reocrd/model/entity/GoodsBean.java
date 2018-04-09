@@ -16,7 +16,7 @@ package com.cj.reocrd.model.entity;
 public class GoodsBean {
     private String id ;
     private String name ;
-    private String imageurl; // 图片地址
+    private String imgurl; // 图片地址
     private String pirce ;   // 价格
     private String blocknum; // 售出数量
 
@@ -36,12 +36,12 @@ public class GoodsBean {
         this.name = name;
     }
 
-    public String getImageurl() {
-        return imageurl;
+    public String getImgurl() {
+        return imgurl;
     }
 
-    public void setImageurl(String imageUrl) {
-        this.imageurl = imageUrl;
+    public void setImgurl(String imgUrl) {
+        this.imgurl = imgUrl;
     }
 
     public String getPirce() {

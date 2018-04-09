@@ -2,6 +2,8 @@ package com.cj.reocrd.base;
 
 import android.content.Context;
 
+import java.util.HashMap;
+
 
 /**
  * 描述:基类presenter
@@ -9,9 +11,11 @@ import android.content.Context;
 public abstract class BasePresenter<T>{
     public Context mContext;
     public T mView;
+    public HashMap<String,Object> baseMap;
 
     public void setVM(T v) {
         this.mView = v;
+        this.baseMap = new HashMap<>();
         this.onStart();
     }
     public void onStart(){
@@ -23,6 +27,8 @@ public abstract class BasePresenter<T>{
      */
     public void onDestroy() {
         this.mView = null;
+        this.baseMap.clear();
+        this.baseMap = null;
     }
     /**
      * 是否与View建立连接

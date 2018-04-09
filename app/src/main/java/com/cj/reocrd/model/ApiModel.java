@@ -72,9 +72,8 @@ public class ApiModel {
      */
     public <T> ApiResponse getData(String por, HashMap<String, Object> dMap, final Class<T> clz, ApiCallback apiCallback) {
         ApiResponse apiResponse = new ApiResponse();
-//        String imei = (String) SPUtils.get(BaseApplication.getAppContext(), UrlConstants.key.PID, "");
         String cipher = DESedeUtils.getDesede(toJsonStr(dMap), pid);
-        LogUtil.d(TAG, "getData:cipher；" + cipher);
+        LogUtil.d(TAG, "data:cipher；" + cipher);
         HashMap<String, Object> map = new HashMap<>();
         map.put("por", por);   // 请求接口
         map.put("pid", pid); // 设备唯一码
@@ -83,9 +82,8 @@ public class ApiModel {
         ApiStore.getInstance().getApiService().getData(data).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-//                System.out.println("onResponse: String 密文= "+response.body());
                 String result = DESedeUtils.getdeCrypt((response.body()), pid);
-//                System.out.println( "onResponse: String 解密= "+result);
+                LogUtil.d( TAG,"onResponse: result 解密= "+result);
                 if (!TextUtils.isEmpty(result)) {
                     //todo  apicallback
                     apiCallback.onSuccess(parseFastJson(result, clz));
@@ -94,6 +92,7 @@ public class ApiModel {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+                LogUtil.d( TAG,"onResponse: result Throwable= "+t.toString());
                 apiCallback.onFailure(call,t);
             }
         });
