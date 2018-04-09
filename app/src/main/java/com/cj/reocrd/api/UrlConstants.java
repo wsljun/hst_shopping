@@ -36,6 +36,8 @@ public class UrlConstants {
         public static final String REGISTER= "104";
         //修改密码
         public static final String UPDATE_PWD= "106";
+        //验证推荐号码是否存在
+        public static final String CHECK_RECOMMEND= "107";
         //首页
         public static final  String GET_HOME_DATA = "201";
 
@@ -51,6 +53,10 @@ public class UrlConstants {
         public static final String UPDATE_SEX = "305";
         //修改手机
         public static final String UPDATE_PHONE = "306";
+        //验证原手机号验证码
+        public static final String CHECK_PHONE = "307";
+        //修改身份证号
+        public static final String UPDATE_IC = "308";
    }
 
 }

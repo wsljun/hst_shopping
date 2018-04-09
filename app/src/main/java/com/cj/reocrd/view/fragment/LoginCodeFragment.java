@@ -122,7 +122,6 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
                 break;
             case R.id.login_getcode:
                 phone = loginPhone.getText().toString();
-
                 if (!TextUtils.isEmpty(phone)) {
                     if (Utils.checkMobileNumber(phone)) {
                         // todo get code

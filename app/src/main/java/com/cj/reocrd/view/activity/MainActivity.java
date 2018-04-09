@@ -184,12 +184,6 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initView() {
         LogUtil.e(TAG, "initview");
-        // todo test permissions
-        if (hasPermissions(this, Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.CAMERA)) {
-            requestPerminssions(Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.CAMERA);
-        }
         fragments.add(new HomeFragment());
         fragments.add(new AllGoodsFragment());
         fragments.add(new FriendsFragment());
