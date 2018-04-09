@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.presenter.IndexPresenter;
 import com.cj.reocrd.presenter.MyPrresenter;
+import com.cj.reocrd.utils.IDCard;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
@@ -42,6 +44,7 @@ import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
+import java.text.ParseException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -75,6 +78,8 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
     TextView mySexTv;
     @BindView(R.id.my_phone_tv)
     TextView myPhoneTv;
+    @BindView(R.id.my_update_ic_tv)
+    TextView myUpdateIcTv;
     private Dialog dialog;
     private File file;
     private Uri imageUri;
@@ -105,7 +110,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
         titleCenter.setText(getString(R.string.my));
     }
 
-    @OnClick({R.id.title_left, R.id.my_icon_fl, R.id.my_name_fl, R.id.my_sex_fl, R.id.my_phone_fl, R.id.my_update_pwd_fl, R.id.my_address_fl, R.id.tv_signout})
+    @OnClick({R.id.my_update_ic_fl, R.id.title_left, R.id.my_icon_fl, R.id.my_name_fl, R.id.my_sex_fl, R.id.my_phone_fl, R.id.my_update_pwd_fl, R.id.my_address_fl, R.id.tv_signout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
@@ -137,6 +142,9 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                 break;
             case R.id.tv_signout:
                 showNormalDialog();
+                break;
+            case R.id.my_update_ic_fl:
+                inputTitleDialog();
                 break;
         }
     }
@@ -341,6 +349,46 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
         builder.show();
     }
 
+
+    private void inputTitleDialog() {
+
+        final EditText inputServer = new EditText(getContext());
+        inputServer.setLines(1);
+        inputServer.setMaxEms(18);
+        inputServer.setPadding(50, 50, 50, 50);
+        inputServer.setFocusable(true);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(getString(R.string.my_update_ic)).setView(inputServer).setNegativeButton(R.string.cancel, null);
+        builder.setPositiveButton(R.string.confirm,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String inputName = inputServer.getText().toString();
+                        if (TextUtils.isEmpty(inputName)) {
+                            ToastUtil.showToastS(mActivity, getString(R.string.my_update_ic));
+                            return;
+                        }
+                        String oldIc = myUpdateIcTv.getText().toString();
+                        if(oldIc.equals(inputName)){
+                            ToastUtil.showToastS(mActivity, getString(R.string.my_update_again));
+                            return;
+                        }
+                        try {
+                            String error = IDCard.IDCardValidate(inputName);
+                            if (!TextUtils.isEmpty(error)) {
+                                ToastUtil.showToastS(mActivity, error);
+                                return;
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        type = 4;
+                        mPresenter.updateIc(UrlConstants.UrLType.UPDATE_IC, uid, inputName);
+                    }
+                });
+        builder.show();
+    }
+
     /**
      * 退出登陆
      */
@@ -374,7 +422,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                 ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
                     UserBean userBean = (UserBean) response.getResults();
-                    if (!TextUtils.isEmpty(userBean.getSex())) {
+                    if (userBean != null && !TextUtils.isEmpty(userBean.getSex())) {
                         mySexTv.setText("1".equals(userBean.getSex()) ? getString(R.string.man) : getString(R.string.gril));
                     }
                 }
@@ -383,12 +431,13 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                 ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
                     UserBean userBean = (UserBean) response.getResults();
-                    if (!TextUtils.isEmpty(userBean.getPhoto())) {
+                    if (userBean != null && !TextUtils.isEmpty(userBean.getPhoto())) {
                         ImageLoaderUtils.displayRound(mActivity, myIconIv, UrlConstants.BASE_URL + userBean.getPhoto());
                     }
                 }
                 break;
             case 3://get userinfo
+                ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
                     UserBean userBean = (UserBean) response.getResults();
                     if (userBean != null) {
@@ -405,6 +454,18 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                             myPhoneTv.setText(userBean.getPhone());
                             pNumber = userBean.getPhone();
                         }
+                        if (!TextUtils.isEmpty(userBean.getIc())) {
+                            myUpdateIcTv.setText(userBean.getIc());
+                        }
+                    }
+                }
+                break;
+            case 4:
+                ToastUtil.showToastS(mActivity, response.getMessage());
+                if ("1".equals(response.getStatusCode())) {
+                    UserBean userBean = (UserBean) response.getResults();
+                    if (userBean != null && !TextUtils.isEmpty(userBean.getIc())) {
+                        myUpdateIcTv.setText(userBean.getIc());
                     }
                 }
                 break;

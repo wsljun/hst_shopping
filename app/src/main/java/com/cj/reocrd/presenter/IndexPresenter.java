@@ -71,11 +71,12 @@ public class IndexPresenter extends IndexContract.Presenter {
     }
 
     @Override
-    public void registerRequest(String por, String phone, String password, String code) {
+    public void registerRequest(String por, String phone, String password, String code,String recommend) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("phone", phone);
         map.put("password", password);
         map.put("code", code);
+        map.put("recommend", recommend);
         ApiModel.getInstance().getData(por, map, UserBean.class, new ApiCallback<String>() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
@@ -88,7 +89,6 @@ public class IndexPresenter extends IndexContract.Presenter {
             public void onFailure(Call<String> call, Throwable t) {
                 mView.onFailureMessage(t.toString());
             }
-
         });
     }
 
@@ -114,7 +114,48 @@ public class IndexPresenter extends IndexContract.Presenter {
             }
 
         });
-
-
     }
+
+    @Override
+    public void checkRecommend(String por, String recommend) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("recommend", recommend);   //
+        ApiModel.getInstance().getData(por, map, UserBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+
+        });
+    }
+
+    @Override
+    public void updatePwd(String por, String phone, String password, String code) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("phone", phone);
+        map.put("password", password);
+        map.put("code", code);
+        ApiModel.getInstance().getData(por, map, UserBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+        });
+    }
+
+
 }

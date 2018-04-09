@@ -52,10 +52,13 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
     EditText updatePwd2;
     @BindView(R.id.register_pwd_rl)
     RelativeLayout registerPwdRl;
+    @BindView(R.id.register_recommend)
+    TextView registerRecommend;
     private final String TAG = "RegisterFragment";
     private String phone;
     private String code;
     private String responseCode;
+    private String recommend;
     private int type;
 
     @Override
@@ -94,7 +97,7 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                 }
                 // todo do register
                 type = 2;
-                mPresenter.registerRequest(UrlConstants.UrLType.REGISTER, phone, pwd, code);
+                mPresenter.registerRequest(UrlConstants.UrLType.REGISTER, phone, pwd, code,recommend);
                 break;
             case R.id.register_next:
                 phone = registerPhone.getText().toString();
@@ -109,8 +112,14 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
 //                if(TextUtils.isEmpty(responseCode)&&!responseCode.equals(code)){
 //                    ToastUtil.showShort(R.string.verification_code_fault);
 //                }
-                registerCodeRl.setVisibility(View.GONE);
-                registerPwdRl.setVisibility(View.VISIBLE);
+                recommend = registerRecommend.getText().toString();
+                if (TextUtils.isEmpty(recommend)) {
+                    registerCodeRl.setVisibility(View.GONE);
+                    registerPwdRl.setVisibility(View.VISIBLE);
+                } else {
+                    type = 3;
+                    mPresenter.checkRecommend(UrlConstants.UrLType.CHECK_RECOMMEND, recommend);
+                }
                 break;
             case R.id.register_getcode:
                 phone = registerPhone.getText().toString();
@@ -142,7 +151,7 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                 ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
                     UserBean userBean = (UserBean) response.getResults();
-                    if(userBean!=null){
+                    if (userBean != null) {
                         //todo
                         responseCode = userBean.getId();
                         LogUtil.e(TAG, responseCode);
@@ -153,13 +162,20 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                 ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
                     UserBean userBean = (UserBean) response.getResults();
-                    if(userBean!=null){
+                    if (userBean != null) {
                         LogUtil.e(TAG, userBean.getId());
                         SPUtils.put(mActivity, UrlConstants.key.USERID, userBean.getId());
                         BaseActivity.uid = userBean.getId();
                         startActivity(MainActivity.class);
                         mActivity.finish();
                     }
+                }
+                break;
+            case 3:
+                ToastUtil.showToastS(mActivity, response.getMessage());
+                if ("1".equals(response.getStatusCode())) {
+                    registerCodeRl.setVisibility(View.GONE);
+                    registerPwdRl.setVisibility(View.VISIBLE);
                 }
                 break;
         }
