@@ -48,8 +48,12 @@ public class GlideRoundTransformUtil extends BitmapTransformation {
         return result;
     }
 
-    @Override
     public String getId() {
         return getClass().getName();
+    }
+
+    @Override
+    public void updateDiskCacheKey(MessageDigest messageDigest) {
+
     }
 }

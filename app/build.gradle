@@ -10,7 +10,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //开启分包模式
-        multiDexEnabled=true
+        multiDexEnabled = true
     }
 
     packagingOptions {
@@ -39,7 +39,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     //验证码输入框 https://github.com/liuguangli/VerificationCodeInput
-//    implementation 'com.github.liuguangli:VerificationCodeInput:1.3'
+    //    implementation 'com.github.liuguangli:VerificationCodeInput:1.3'
     //控件绑定
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
@@ -48,34 +48,39 @@ dependencies {
     compile 'com.android.support:multidex:1.0.3'
     //屏幕适配
     compile 'com.zhy:autolayout:1.4.5'
-
     ///////retrofit2 , okhttp3//////
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-//    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0-RC3'
+    //    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0-RC3'
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-scalars
-    compile group: 'com.squareup.retrofit2', name: 'converter-scalars', version: '2.3.0'
-
+    compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
     /////////recyclerview ////////////
     compile 'com.android.support:recyclerview-v7:26.1.0'
     //glide
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:4.3.0'
     //轮播图 https://github.com/youth5201314/banner
     implementation 'com.youth.banner:banner:1.4.10'
     // RxPermissions https://github.com/tbruyelle/RxPermissions
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
-
     ///rxjava2
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.10'
     implementation files('libs/selenium-common-2.0a4.jar')
-
     //地址选择器 https://github.com/ywp0919/AddressPickerLib
     compile 'com.github.ywp0919:AddressPickerLib:1.0.1'
     //https://github.com/qstumn/BadgeView
     compile 'q.rorbin:badgeview:1.1.3'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.alibaba:fastjson:1.1.68.android'
+    //选择图片 https://github.com/donglua/PhotoPicker
+    compile 'me.iwf.photopicker:PhotoPicker:0.9.12@aar'
+    compile 'com.android.support:design:26.1.0'
+    //图片压缩 https://github.com/Curzibn/Luban
+    compile 'top.zibin:Luban:1.1.3'
+    //对话框
+    compile 'com.github.razerdp:BasePopup:v1.8.0'
+    //进度条
+    compile 'com.pnikosis:materialish-progress:1.7'
 }
