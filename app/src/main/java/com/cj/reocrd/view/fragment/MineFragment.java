@@ -12,7 +12,7 @@ import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.activity.MyActivity;
-import com.cj.reocrd.view.activity.UndoneActivity;
+import com.cj.reocrd.view.activity.OrderActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -123,16 +123,16 @@ public class MineFragment extends BaseFragment {
             case R.id.mine_all:
                 break;
             case R.id.mine_pay:
-                UndoneActivity.actionActivity(mActivity,UndoneActivity.PAY);
+                OrderActivity.actionActivity(mActivity, OrderActivity.PAY);
                 break;
             case R.id.mine_send:
-                UndoneActivity.actionActivity(mActivity,UndoneActivity.SEND);
+                OrderActivity.actionActivity(mActivity, OrderActivity.SEND);
                 break;
             case R.id.mine_confim:
-                UndoneActivity.actionActivity(mActivity,UndoneActivity.CONFIM);
+                OrderActivity.actionActivity(mActivity, OrderActivity.CONFIM);
                 break;
             case R.id.mine_evaluate:
-                UndoneActivity.actionActivity(mActivity,UndoneActivity.EVALUATE);
+                OrderActivity.actionActivity(mActivity, OrderActivity.EVALUATE);
                 break;
             case R.id.mine_return:
                 break;

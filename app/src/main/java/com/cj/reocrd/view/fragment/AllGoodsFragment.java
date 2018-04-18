@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.model.entity.GoodsType;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.presenter.GoodsPresenter;
+import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.activity.GoodDetailActivity;
@@ -61,6 +63,7 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
     private int pageno = 0; // 页码
     private List<GoodsType> goodsTypes  = new ArrayList<>();
     private List<GoodsBean> goodsBeanList = new ArrayList<>();
+    private Bundle goodBundle;
 
     @Override
     protected void initPresenter() {
@@ -75,18 +78,24 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
     @Override
     public void initData() {
         super.initData();
-        mContext = getActivity();
+        showType();
         // todo get goods type
-        mPresenter.getGoodsType("");
     }
 
     @Override
     public void initView() {
+        mContext = mActivity.getApplicationContext();
         titleCenter.setText(getString(R.string.all));
         initRecycleView();
+        mPresenter.getGoodsType("");
     }
 
     private void showType(){
+        if(CollectionUtils.isNullOrEmpty(goodsTypes)){
+            ToastUtil.showShort("typs is null");
+            return;
+        }
+        mPresenter.getGoodsData(goodsTypes.get(0).getId(),pageno,pagesize);
         allTypeAdapter = new AllTypeAdapter(mActivity, goodsTypes);
         rvGoodsType.setLayoutManager(new LinearLayoutManager(mActivity));
         rvGoodsType.setAdapter(allTypeAdapter);
@@ -101,6 +110,7 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
     }
 
     private void initRecycleView() {
+        goodBundle =  new Bundle();
         mGoodsAdapter = new GoodsAdapter(R.layout.item_all_two,null);
         recyclerViewContent.setLayoutManager(new GridLayoutManager(mContext,3));
         recyclerViewContent.setHasFixedSize(true);
@@ -113,15 +123,15 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
 //        mRefreshLayout.setDelegate(this);
         mRefreshLayout.setRefreshViewHolder(new NormalRefreshViewHolder(mContext,true));
 
-//初次进入 tid 传空
-        mPresenter.getGoodsData("",pageno,pagesize);
-        //条目的点击事件
         recyclerViewContent.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void SimpleOnItemClick(BaseQuickAdapter adapter, View view, int position) {
                 System.out.println("position == "+position);
                 ToastUtil.showShort("position == "+position);
-                GoodDetailActivity.intentTo(mContext,goodsBeanList.get(position).getId());
+//                GoodDetailActivity.intentTo(mContext,goodsBeanList.get(position).getId());
+                goodBundle.clear();
+                goodBundle.putString("goodsID",goodsBeanList.get(position).getId());
+                startActivity(GoodDetailActivity.class,goodBundle);
             }
         });
 
@@ -157,7 +167,7 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
 
     @Override
     public void onRefreshLayoutBeginRefreshing(RefreshLayout refreshLayout) {
-        mPresenter.getGoodsData("", pageno, pagesize);
+//        mPresenter.getGoodsData("", pageno, pagesize);
     }
 
     @Override
@@ -172,8 +182,9 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
     @Override
     public void saveGoodsType(List<GoodsType> list) {
         if(null!= list && list.size()>0){
+            goodsTypes.clear();
             this.goodsTypes.addAll(list);
-            showType();
+//            showType();
         }
     }
 }

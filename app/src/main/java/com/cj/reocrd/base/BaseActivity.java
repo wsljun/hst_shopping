@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.cj.reocrd.utils.TUtil;
+import com.cj.reocrd.view.dialog.LoadingDialog;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -186,68 +187,5 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         unbinder.unbind();
         AppManager.getAppManager().finishActivity(this);
     }
-
-    /**
-     * Check if the calling context has a set of permissions.
-     *
-     * @param context the calling context.
-     * @param perms   one ore more permissions, such as {@link Manifest.permission#CAMERA}.
-     * @return true if all permissions are already granted, false if at least one permission is not
-     * yet granted.
-     * @see Manifest.permission
-     */
-    public  boolean hasPermissions(@NonNull Context context,
-                                         @Size(min = 1) @NonNull String... perms) {
-        // Always return true for SDK < M, let the system deal with the permissions
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            Log.w(TAG, "hasPermissions: API version < M, returning true by default");
-
-            // DANGER ZONE!!! Changing this will break the library.
-            return true;
-        }
-
-        // Null context may be passed if we have detected Low API (less than M) so getting
-        // to this point with a null context should not be possible.
-        if (context == null) {
-            throw new IllegalArgumentException("Can't check permissions for null context");
-        }
-
-        for (String perm : perms) {
-            if (ContextCompat.checkSelfPermission(context, perm)
-                    != PackageManager.PERMISSION_GRANTED) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-
-
-    // 进入首页时申请权限，也可在需要的地方申请
-    public void requestPerminssions(@Size(min = 1) @NonNull String ... permissions){
-
-        RxPermissions rxPermission = new RxPermissions(this);
-        rxPermission
-                .requestEach(permissions)
-                .subscribe(new Consumer<Permission>() {
-                    @Override
-                    public void accept(Permission permission) throws Exception {
-                        if (permission.granted) {
-                            // 用户已经同意该权限
-                            Log.d(TAG, permission.name + " is granted.");
-                        } else if (permission.shouldShowRequestPermissionRationale) {
-                            // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                            Log.d(TAG, permission.name + " is denied. More info should be provided.");
-                        } else {
-                            // 用户拒绝了该权限，并且选中『不再询问』
-                            Log.d(TAG, permission.name + " is denied.");
-                        }
-                    }
-                });
-
-
-    }
-
 
 }

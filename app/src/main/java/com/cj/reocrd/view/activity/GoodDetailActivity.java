@@ -6,40 +6,26 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
-import com.cj.reocrd.contract.GoodsContract;
 import com.cj.reocrd.contract.GoodsDetailContract;
 import com.cj.reocrd.model.entity.GoodsDetailsBean;
-import com.cj.reocrd.model.entity.GoodsType;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
-import com.cj.reocrd.utils.GlideImageLoader;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.ToastUtil;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.ywp.addresspickerlib.AddressPickerView;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -50,6 +36,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
 
     @BindView(R.id.title_left)
     TextView titleLeft;
+    TextView tvGoodsDetailPrice;
     @BindView(R.id.title_center)
     TextView titleCenter;
     @BindView(R.id.title_right)
@@ -82,6 +69,8 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     TextView goodAddress;
     @BindView(R.id.good_car)
     ImageView goodCar;
+    ImageView ivGoodsDetailUrl;
+    ImageView btnGoodsDetailClose;
     @BindView(R.id.good_buy)
     TextView goodBuy;
     @BindView(R.id.good_addcar)
@@ -94,6 +83,10 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     private Dialog dialog;
     private static String goodsID = "";// 商品ID
     private GoodsDetailsBean goodsDetailsBean;
+    private String sid = ""; // 商品规格id
+    private int num = 1; // 商品数据
+    private View skuView; // 商品规格布局
+    private PopupWindow popWindow;
 
     @Override
     public int getLayoutId() {
@@ -103,7 +96,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     @Override
     public void initData() {
         super.initData();
-
+        mPresenter.getGoodsDetail(goodsID);
     }
 
     @Override
@@ -127,7 +120,6 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         mPresenter.setVM(this);
         goodsID = getIntent().getStringExtra("goodsID");
         // TODO get goods details
-        mPresenter.getGoodsDetail(goodsID);
     }
 
     public static Intent newIntent(Context context, String goodsID) {
@@ -145,25 +137,30 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     }
 
 
-    @OnClick({R.id.good_conllect_iv, R.id.good_num_rl, R.id.good_buy, R.id.good_addcar})
+    @OnClick({R.id.title_left,R.id.good_conllect_iv, R.id.good_num_rl, R.id.good_buy, R.id.good_addcar})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.title_left:
+                finish();
+                break;
             case R.id.good_conllect_iv:
                 break;
             case R.id.good_num_rl:
                 break;
             case R.id.good_buy:
 //                showDialog();
-                showPopuView();
+//                showPopuView();
+                mPresenter.orderByDetail(uid,goodsID,sid,num);
                 break;
             case R.id.good_addcar:
                 ToastUtil.showToastS(this, "good_addcar");
+                mPresenter.addToCart(uid,sid,num,goodsID);
                 break;
         }
     }
 
     private void showDialog() {
-        View view = getLayoutInflater().inflate(R.layout.dialog_good_detail, null);
+       View  view = getLayoutInflater().inflate(R.layout.dialog_good_detail, null);
         //布局中的控件
         dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
 
@@ -186,32 +183,58 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         dialog.show();
     }
 
+    private void updateSkuView() {
+        if(null != skuView && null != goodsDetailsBean){
+            tvGoodsDetailPrice.setText(goodsDetailsBean.getPrice());
+            ImageLoaderUtils.display(this,ivGoodsDetailUrl,UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
+            btnGoodsDetailClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(null!= popWindow){
+                        popWindow.dismiss();
+                    }
+                }
+            });
+        }
+    }
+
     private void showPopuView(){
         // 用于PopupWindow的View
-        View contentView = getLayoutInflater().inflate(R.layout.dialog_good_detail, null,false);
+        if(null == skuView){
+            skuView = getLayoutInflater().inflate(R.layout.dialog_good_detail, null,false);
+            tvGoodsDetailPrice = skuView.findViewById(R.id.good_detail_price);
+            ivGoodsDetailUrl = skuView.findViewById(R.id.iv_goods_detail_url);
+            btnGoodsDetailClose = skuView.findViewById(R.id.good_detail_close);
+        }
+        updateSkuView();
         // 创建PopupWindow对象，其中：
         // 第一个参数是用于PopupWindow中的View，第二个参数是PopupWindow的宽度，
         // 第三个参数是PopupWindow的高度，第四个参数指定PopupWindow能否获得焦点
-        PopupWindow window=new PopupWindow(contentView,1080,800,true);
+         popWindow=new PopupWindow(skuView,1080,800,true);
         // 设置PopupWindow的背景
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // 设置PopupWindow是否能响应外部点击事件
-        window.setOutsideTouchable(true);
+        popWindow.setOutsideTouchable(true);
         // 设置PopupWindow是否能响应点击事件
-        window.setTouchable(true);
+        popWindow.setTouchable(true);
         // 显示PopupWindow，其中：
         // 第一个参数是PopupWindow的锚点，第二和第三个参数分别是PopupWindow相对锚点的x、y偏移
-        window.showAsDropDown(rlBottomView, 0, 0);
+        popWindow.showAsDropDown(rlBottomView, 0, 0);
         // 或者也可以调用此方法显示PopupWindow，其中：
         // 第一个参数是PopupWindow的父View，第二个参数是PopupWindow相对父View的位置，
         // 第三和第四个参数分别是PopupWindow相对父View的x、y偏移
-        // window.showAtLocation(parent, gravity, x, y);
+        // popWindow.showAtLocation(parent, gravity, x, y);
     }
 
     @Override
     public void onSuccess(Object data) {
-         goodsDetailsBean = (GoodsDetailsBean) data;
-         updateView();
+        goodsDetailsBean = (GoodsDetailsBean) data;
+//         if(CollectionUtils.isNullOrEmpty(goodsDetailsBean.getSlist())){
+        sid = goodsDetailsBean.getSlist().get(0).getId(); // 默认设置
+//         }else{
+//             sid = "";
+//         }
+        updateView();
     }
 
     @Override
@@ -223,5 +246,17 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     public Context getContext() {
         return mContext;
     }
+
+    @Override
+    public void acticonAddToCart(ApiResponse apiResponse) {
+        if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+            ToastUtil.showShort("加入购物车成功！");
+        }else{
+            ToastUtil.showShort("加入购物车失败！");
+        }
+    }
+
+
+
 
 }

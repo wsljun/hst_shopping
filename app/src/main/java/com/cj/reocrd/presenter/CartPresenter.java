@@ -3,20 +3,20 @@ package com.cj.reocrd.presenter;
 import com.cj.reocrd.api.ApiCallback;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
-import com.cj.reocrd.contract.GoodsDetailContract;
+import com.cj.reocrd.contract.CartContract;
+import com.cj.reocrd.contract.GoodsContract;
 import com.cj.reocrd.model.ApiModel;
-import com.cj.reocrd.model.entity.GoodsDetailsBean;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.cj.reocrd.model.entity.HomeBean;
+import com.cj.reocrd.utils.CollectionUtils;
 
 import retrofit2.Call;
 
+
 /**
- * Created by Lyndon.Li on 2018/4/3.
+ * Created by Lyndon.Li on 2018/4/09.
  */
 
-public class GoodsDetailPresenter extends GoodsDetailContract.Presenter {
+public class CartPresenter extends CartContract.Presenter {
 
     @Override
     public void onStart() {
@@ -24,18 +24,20 @@ public class GoodsDetailPresenter extends GoodsDetailContract.Presenter {
     }
 
     @Override
-    public void getGoodsDetail(String goodsID) {
+    public void getCartData(String uid) {
         baseMap.clear();
-        baseMap.put("id",goodsID);
-        baseMap.put("pagesize","20");
-        baseMap.put("pageno","0");
-        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_GOODS_DETAIL, baseMap, GoodsDetailsBean.class, new ApiCallback() {
+        baseMap.put("uid",uid);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_CART_DATA, baseMap, HomeBean.class, new ApiCallback() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
                     if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
-                        GoodsDetailsBean goodsDetailsBean = (GoodsDetailsBean) apiResponse.getResults();
-                        mView.onSuccess(goodsDetailsBean);
+                        HomeBean homeBean = (HomeBean) apiResponse.getResults();
+                        if(CollectionUtils.isNullOrEmpty(homeBean.getMlist())){
+                            mView.onFailureMessage("暂时没有数据");
+                        }else{
+                            mView.showCartData(homeBean.getMlist());
+                        }
                     }else{
                         mView.onFailureMessage(apiResponse.getMessage());
                     }
@@ -52,17 +54,16 @@ public class GoodsDetailPresenter extends GoodsDetailContract.Presenter {
     }
 
     @Override
-    public void addToCart(String uid, String sid, int num, String goodsID) {
+    public void delGoods(String goodsID) {
         baseMap.clear();
-        baseMap.put("uid",uid);
-        baseMap.put("mid",goodsID);
-        baseMap.put("sid",sid);
-        baseMap.put("num",num);
-        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_ADD_TO_CART, baseMap,null, new ApiCallback() {
+        baseMap.put("bid",goodsID);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_DEL_CART, baseMap, null, new ApiCallback() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
-                    mView.acticonAddToCart(apiResponse);
+//                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                            mView.onSuccess(apiResponse.getMessage());
+//                    }
                 }
             }
 
@@ -75,24 +76,16 @@ public class GoodsDetailPresenter extends GoodsDetailContract.Presenter {
         });
     }
 
-    /**
-     * @param uid  用户id
-     * @param mid  商品id
-     * @param sid  规格id
-     * @param num  数量
-     */
     @Override
-    public void orderByDetail(String uid, String mid, String sid, int num) {
+    public void addCartGoodsNum(String cartID, int num) {
         baseMap.clear();
-        baseMap.put("uid",uid);
-        baseMap.put("mid",mid);
-        baseMap.put("sid",sid);
+        baseMap.put("bid",cartID);
         baseMap.put("num",num);
-        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_ORDER_FROM_DETAIL, baseMap,null, new ApiCallback() {
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_ADD_CART_GOODSNUM, baseMap, null, new ApiCallback() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
-                    mView.acticonAddToCart(apiResponse);
+                    mView.onSuccess(apiResponse.getMessage());
                 }
             }
 
@@ -104,6 +97,4 @@ public class GoodsDetailPresenter extends GoodsDetailContract.Presenter {
             }
         });
     }
-
-
 }

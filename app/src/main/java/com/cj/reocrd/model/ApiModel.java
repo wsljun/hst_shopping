@@ -8,17 +8,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.cj.reocrd.api.ApiCallback;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.ApiStore;
-import com.cj.reocrd.api.UrlConstants;
-import com.cj.reocrd.base.BaseApplication;
 import com.cj.reocrd.model.entity.GirlData;
 import com.cj.reocrd.utils.DESedeUtils;
 import com.cj.reocrd.utils.LogUtil;
-import com.cj.reocrd.utils.SPUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
-import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -137,17 +131,17 @@ public class ApiModel {
         String msg = "请求错误，请稍后重试！";
         ApiResponse apiResponse = null; // new ApiResponse("2","请求错误，请稍后重试！") ;
         if(jsonStr != null && jsonStr.trim().length() >0 ){
-                JSONObject jsonObject = JSON.parseObject(jsonStr);
-                if (jsonObject.containsKey("statusCode")){
-                    code = jsonObject.getString("statusCode");
-                }
-                if (jsonObject.containsKey("message")){
-                    msg = jsonObject.getString("message");
-                }
-                apiResponse = new ApiResponse(code,msg);
+            JSONObject jsonObject = JSON.parseObject(jsonStr);
+              if (jsonObject.containsKey("statusCode")){
+                code = jsonObject.getString("statusCode");
                 jsonObject.remove("statusCode");
+            }
+            if (jsonObject.containsKey("message")){
+                msg = jsonObject.getString("message");
                 jsonObject.remove("message");
-                if(jsonObject.isEmpty()){
+            }
+            apiResponse = new ApiResponse(code,msg);
+            if(jsonObject.isEmpty()){
                 return  apiResponse;
             }else{
                 T t = JSONObject.parseObject(JSONObject.toJSONString(jsonObject), clz);

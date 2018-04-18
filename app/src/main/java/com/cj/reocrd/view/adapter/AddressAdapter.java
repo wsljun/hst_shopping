@@ -6,11 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.model.entity.AddressBean;
+import com.cj.reocrd.utils.LogUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,14 +26,16 @@ import butterknife.ButterKnife;
 
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyHolder> {
 
-    private List<String> mDatas;
+    private List<AddressBean> mDatas;
     private Context mContext;
     private LayoutInflater inflater;
+    private List<CheckBox> checkBoxes;
 
-    public AddressAdapter(Context context, List<String> datas) {
+    public AddressAdapter(Context context, List<AddressBean> datas) {
         this.mContext = context;
         this.mDatas = datas;
         inflater = LayoutInflater.from(mContext);
+        checkBoxes = new ArrayList<>();
     }
 
     @Override
@@ -40,16 +46,29 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyHolder
 
     @Override
     public void onBindViewHolder(MyHolder holder, final int position) {
-        holder.addressCheck.setOnClickListener(new View.OnClickListener() {
+        holder.addressPhone.setText(mDatas.get(position).getPhone());
+        holder.addressDetail.setText(mDatas.get(position).getFuladdress());
+        if(mDatas.get(position).getIsdefault().equals("1")){
+            holder.addressCheck.setChecked(true);
+        }else{
+            holder.addressCheck.setChecked(false);
+        }
+        if(!checkBoxes.contains(holder.addressCheck)){
+            checkBoxes.add(holder.addressCheck);
+        }
+        LogUtil.e("checkbox","size= "+checkBoxes.size());
+        holder.addressCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                mOnItemListener.checkClick(position);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                buttonView.setChecked(isChecked);
+                mOnItemListener.checkClick(mDatas.get(position).getId());
             }
         });
         holder.addressDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemListener.deleteClick(position);
+                removeData(position);
+                mOnItemListener.deleteClick(mDatas.get(position).getId());
             }
         });
         holder.addressEdit.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +84,13 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyHolder
         return mDatas.size();
     }
 
-    public void addData( int position) {
-        mDatas.add(position, "Insert One");
+    public void updateData( List<AddressBean> datas) {
+        mDatas.addAll(datas);
+        notifyDataSetChanged();
+    }
+
+    public void addData(int position,AddressBean addressBean){
+        mDatas.add(position, addressBean);
         notifyItemInserted(position);
         notifyItemRangeChanged(position, mDatas.size());
     }
@@ -83,11 +107,11 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyHolder
     }
 
     public interface OnItemListener {
-        void checkClick(int position);
-
         void editClick(int position);
 
-        void deleteClick(int position);
+        void deleteClick(String id);
+
+        void checkClick(String id);
     }
 
 

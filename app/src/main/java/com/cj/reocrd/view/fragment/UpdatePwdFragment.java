@@ -62,6 +62,7 @@ public class UpdatePwdFragment extends BaseFragment<IndexPresenter> implements I
     private String phone;
     private String code;
     private int type;
+
     @Override
     protected void initPresenter() {
         mPresenter.setVM(this);
@@ -75,13 +76,13 @@ public class UpdatePwdFragment extends BaseFragment<IndexPresenter> implements I
     @Override
     public void initData() {
         super.initData();
-
     }
 
     @Override
     public void initView() {
         titleCenter.setText(getString(R.string.my_update_pwd));
         updateCode.setOnCompleteListener(this);
+
     }
 
 
@@ -105,14 +106,7 @@ public class UpdatePwdFragment extends BaseFragment<IndexPresenter> implements I
                 }
                 type = 2;
                 //跟注册请求一样，返回处理不一样
-                mPresenter.registerRequest(UrlConstants.UrLType.UPDATE_PWD, phone, pwd, code);
-                if(mActivity instanceof IndexActivity){
-                    startActivity(MainActivity.class);
-                    mActivity.finish();
-                }
-                if(mActivity instanceof MyActivity){
-                    getMyActivity().getViewPager().setCurrentItem(0);
-                }
+                mPresenter.updatePwd(UrlConstants.UrLType.UPDATE_PWD, phone, pwd, code);
                 break;
             case R.id.update_next:
                 if (TextUtils.isEmpty(code)) {
@@ -152,7 +146,7 @@ public class UpdatePwdFragment extends BaseFragment<IndexPresenter> implements I
                 ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
                     UserBean userBean = (UserBean) response.getResults();
-                    if(userBean!=null){
+                    if (userBean != null) {
                         //todo
                     }
                 }
@@ -160,7 +154,13 @@ public class UpdatePwdFragment extends BaseFragment<IndexPresenter> implements I
             case 2:
                 ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
-                    getIndexActivity().getVpLogin().setCurrentItem(1);
+                    if (mActivity instanceof IndexActivity) {
+                        startActivity(MainActivity.class);
+                        mActivity.finish();
+                    }
+                    if (mActivity instanceof MyActivity) {
+                        getMyActivity().getViewPager().setCurrentItem(0);
+                    }
                 }
                 break;
         }

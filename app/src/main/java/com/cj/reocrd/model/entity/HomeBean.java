@@ -12,6 +12,8 @@ public class HomeBean {
     private List<GoodsBean> mlist;  // 商品列表
     private List<BannerData> blist; // 首页banner 列表
     private List<GoodsType>  tlist ; // 商品全部分类
+    private List<OrderBean>  olist ; // 订单列表
+    private List<AddressBean>    addlist; //地址列表
 
     public List<GoodsBean> getMlist() {
         return mlist;
@@ -36,5 +38,22 @@ public class HomeBean {
 
     public void setTlist(List<GoodsType> tlist) {
         this.tlist = tlist;
+    }
+
+    public List<OrderBean> getOlist() {
+        return olist;
+    }
+
+    public void setOlist(List<OrderBean> olist) {
+        this.olist = olist;
+    }
+
+
+    public List<AddressBean> getAddlist() {
+        return addlist;
+    }
+
+    public void setAddlist(List<AddressBean> addlist) {
+        this.addlist = addlist;
     }
 }

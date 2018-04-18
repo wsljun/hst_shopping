@@ -10,6 +10,24 @@ public class UserBean {
     private String phone;//手机号  没有名字就填手机号
     private String photo;//头像地址
     private String sex;//性别 1男 2女
+    private String recommend;//推荐码
+    private String ic;//身份证号
+
+    public String getIc() {
+        return ic;
+    }
+
+    public void setIc(String ic) {
+        this.ic = ic;
+    }
+
+    public String getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(String recommend) {
+        this.recommend = recommend;
+    }
 
     public String getId() {
         return id;

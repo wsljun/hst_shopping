@@ -36,6 +36,8 @@ public class UrlConstants {
         public static final String REGISTER= "104";
         //修改密码
         public static final String UPDATE_PWD= "106";
+        //验证推荐号码是否存在
+        public static final String CHECK_RECOMMEND= "107";
         //首页
         public static final  String GET_HOME_DATA = "201";
         //搜索
@@ -46,6 +48,10 @@ public class UrlConstants {
         public static final String  URL_ALL_GOODS = "204";
         //商品详情
         public static final String  URL_GOODS_DETAIL = "205"; // todo all goods
+        public static final String  URL_ADD_TO_CART = "206"; // todo all goods
+        public static final String  URL_DEL_CART = "207"; // todo del goods
+        public static final String  URL_CART_DATA= "208"; // todo cart data
+        public static final String  URL_ADD_CART_GOODSNUM= "209"; // todo add cart goods num
 
         //我的首页
         public static final  String MY_HOME = "301";
@@ -59,6 +65,25 @@ public class UrlConstants {
         public static final String UPDATE_SEX = "305";
         //修改手机
         public static final String UPDATE_PHONE = "306";
+        //验证原手机号验证码
+        public static final String CHECK_PHONE = "307";
+        //修改身份证号
+        public static final String UPDATE_IC = "308";
+
+        // 订单详情
+        public static final String URL_ORDER_LIST = "401";// todo order list
+        public static final String URL_ORDER_DETAIL = "402";// todo order detail
+        public static final String URL_ORDER_FROM_CART = "403";// todo order from cart
+        public static final String URL_ORDER_FROM_DETAIL = "404";// todo order from detail
+        public static final String URL_CANCEL_ORDER = "405";// todo order cancel
+        public static final String URL_Update_ORDER_addr = "406";// todo update order addr
+        public static final String URL_refund_ORDER = "407";// todo order refund
+        public static final String URL_ADDR_LIST = "408";// todo addr list
+        public static final String URL_ADD_ADDR = "409";// todo addr add
+        public static final String URL_UPDATE_ADDR= "410";// todo addr update
+        public static final String URL_DEFAULT_ADDR = "411";// todo addr default
+        public static final String URL_DEL_ADDR= "412";// todo addr del
+        public static final String URL_Select_ADDR_MAP= "413";// todo addr map
    }
 
 }

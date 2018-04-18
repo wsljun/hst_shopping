@@ -134,7 +134,10 @@ public class DESedeUtils {
 //				"XoHkc3+VxPNCzrNL/8NgyZs=";
 //		String text = getdeCrypt(str,  "357714186790243");
 //		System.out.println("解密-->>" + text);
-		String str = "MSsaOKyS62XaBYF4JT5fag3kKNYNfHd9W67UUPYxXHzTRTRgqqyRj4fmPn1OEDbW";
+		String str = "MSsaOKyS62UCS9rEQKToOA3kKNYNfHd9W67UUPYxXHzuolZ4vxfrIDSnaAOTPaVjc084cZgCxsmx\n" +
+				"P6wbQVF6hS5I+MAJKvjO5f+rQC+8GAJaoXb3uOowRePewrAs0CpER7z1AKhF1M6tbWg1G3EebSlg\n" +
+				"KwRhV/BAGCogQwpnQT9r35qmKg6HgrQG9jDP+vYLmkCxBbsVkiDvK6vBq7DL7ZvlnWzUpP2j5zHQ\n" +
+				"81ZCs89dbw/GlirQlhrp/owPd2Dv0JBu1nyg0gkf4SQ2I+5qufCM0VB/4pPpdkO1GLO/7wk==";
 		String text = getdeCrypt(str,  "357714186790243");
 		System.out.println("解密-->>" + text);
 	}

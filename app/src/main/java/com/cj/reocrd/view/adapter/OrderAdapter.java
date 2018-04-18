@@ -19,13 +19,13 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2018/3/18.
  */
 
-public class UndoneAdapter extends RecyclerView.Adapter<UndoneAdapter.MyHolder> {
+public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyHolder> {
 
     private List<String> mDatas;
     private Context mContext;
     private LayoutInflater inflater;
     private int type;
-    public UndoneAdapter(Context context, List<String> datas,int type) {
+    public OrderAdapter(Context context, List<String> datas, int type) {
         this.mContext = context;
         this.mDatas = datas;
         this.type = type;

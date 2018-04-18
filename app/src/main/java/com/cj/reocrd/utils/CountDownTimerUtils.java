@@ -1,5 +1,6 @@
 package com.cj.reocrd.utils;
 
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
@@ -58,7 +59,8 @@ public class CountDownTimerUtils extends CountDownTimer {
     @Override
     public void onFinish() {
         mTextView.setText("重新获取验证码");
+        mTextView.setTextColor(Color.parseColor("#FFFFFF"));
         mTextView.setClickable(true);//重新获得点击
-//        mTextView.setBackgroundResource(R.drawable.bg_identify_code_normal);  //还原背景色
+        mTextView.setBackgroundResource(R.drawable.textview_normal_btn);  //还原背景色
     }
 }

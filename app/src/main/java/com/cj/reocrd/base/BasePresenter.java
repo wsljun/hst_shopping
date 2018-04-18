@@ -2,6 +2,8 @@ package com.cj.reocrd.base;
 
 import android.content.Context;
 
+import com.cj.reocrd.view.dialog.LoadingDialog;
+
 import java.util.HashMap;
 
 
@@ -36,6 +38,21 @@ public abstract class BasePresenter<T>{
      */
     public boolean isViewAttached(){
         return mView != null;
+    }
+
+    /**
+     * 显示正在加载进度框
+     */
+   public void showLoading(){
+        if(null != mContext){
+            LoadingDialog.showDialogForLoading(mContext);
+        }
+    }
+    /**
+     * 隐藏正在加载进度框
+     */
+   public void hideLoading(){
+        LoadingDialog.cancelDialogForLoading();
     }
 
 }

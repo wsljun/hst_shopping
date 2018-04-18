@@ -10,7 +10,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //开启分包模式
-        multiDexEnabled=true
+        multiDexEnabled = true
     }
 
     packagingOptions {
@@ -77,4 +77,5 @@ dependencies {
     //https://github.com/qstumn/BadgeView
     compile 'q.rorbin:badgeview:1.1.3'
     compile 'com.alibaba:fastjson:1.1.68.android'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.38'
 }

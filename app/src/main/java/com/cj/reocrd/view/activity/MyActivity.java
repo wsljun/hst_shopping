@@ -28,6 +28,8 @@ public class MyActivity extends BaseActivity {
     MViewPager myViewPager;
     List<BaseFragment> fragments = new ArrayList<>();
 
+    public static String pNumber = "";
+
     @Override
     public void initFragment(Bundle savedInstanceState) {
 
@@ -41,6 +43,7 @@ public class MyActivity extends BaseActivity {
     public MViewPager getViewPager() {
         return myViewPager;
     }
+
     @Override
     public void initView() {
         fragments.add(new MyFragment());
@@ -48,7 +51,7 @@ public class MyActivity extends BaseActivity {
         fragments.add(new AddPhoneFragment());
         fragments.add(new UpdatePhoneFragment());
         fragments.add(new UpdatePwdFragment());
-        myViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragments,null));
+        myViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, null));
     }
 
     @Override

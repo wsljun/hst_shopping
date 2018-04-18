@@ -33,12 +33,12 @@ public class WelcomeActivity extends BaseActivity {
         // 检查userid是否存在
         String userid = (String) SPUtils.get(this, UrlConstants.key.USERID, "");
         //添加到base里，全局用
-//        if (TextUtils.isEmpty(userid)) {
-//            startActivity(IndexActivity.class);
-//        } else {
+        if (TextUtils.isEmpty(userid)) {
+            startActivity(IndexActivity.class);
+        } else {
             BaseActivity.uid = userid;
             startActivity(MainActivity.class);
-//        }
+        }
         finish();
     }
 

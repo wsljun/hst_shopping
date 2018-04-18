@@ -103,7 +103,7 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
 
     @Override
     public void onFailureMessage(String msg) {
-       ToastUtil.showShort(msg);
+        ToastUtil.showToastS(mActivity, msg);
     }
 
 }

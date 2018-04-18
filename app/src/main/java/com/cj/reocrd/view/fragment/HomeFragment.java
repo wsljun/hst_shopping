@@ -14,13 +14,16 @@ import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.OnItemClickListener;
 import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.model.entity.BannerData;
+import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.presenter.HomePresenter;
 import com.cj.reocrd.utils.GlideImageLoader;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.view.activity.GoodDetailActivity;
 import com.cj.reocrd.view.activity.SearchActivity;
 import com.cj.reocrd.view.adapter.HomeAdapter;
+import com.cj.reocrd.view.adapter.OnRecyclerItemClickListener;
 import com.cj.reocrd.view.refresh.NormalRefreshViewHolder;
 import com.cj.reocrd.view.refresh.RefreshLayout;
 import com.youth.banner.Banner;
@@ -55,13 +58,13 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @BindView(R.id.fl_home_banner)
     FrameLayout flHomeBannerLyout;
     List<String> images;
-    List<String> mDatas;
+    private List<GoodsBean> goodsBeanList = new ArrayList<>();
 
     private HomeAdapter mHomeTabAdapter;
     private int size = 20;  //pageSize
     private int pageno = 0; // 页码
     private final static String TAG = "HomeFragment";
-
+    private Bundle goodBundle = new Bundle();
 
     @Override
     protected void initPresenter() {
@@ -130,15 +133,27 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         //设置下拉、上拉
         mRefreshLayout.setDelegate(this);
         mRefreshLayout.setRefreshViewHolder(new NormalRefreshViewHolder(mActivity,true));
-
-        //条目的点击事件
-        recyclerViewContent.addOnItemTouchListener(new OnItemClickListener() {
+        recyclerViewContent.addOnItemTouchListener(new OnRecyclerItemClickListener(recyclerViewContent) {
             @Override
-            public void SimpleOnItemClick(BaseQuickAdapter adapter, View view, int position) {
-                System.out.println("position == "+position);
-                ToastUtil.showShort("position == "+position);
+            public void onItemClick(RecyclerView.ViewHolder viewHolder) {
+                ToastUtil.showShort("position == "+viewHolder.getAdapterPosition());
+                goodBundle.clear();
+                goodBundle.putString("goodsID",goodsBeanList.get(viewHolder.getAdapterPosition()).getId());
+                startActivity(GoodDetailActivity.class,goodBundle);
+            }
+
+            @Override
+            public void onLongClick(RecyclerView.ViewHolder viewHolder) {
+
             }
         });
+//        //条目的点击事件
+//        recyclerViewContent.addOnItemTouchListener(new OnItemClickListener() {
+//            @Override
+//            public void SimpleOnItemClick(BaseQuickAdapter adapter, View view, int position) {
+//
+//            }
+//        });
 
         mPresenter.getHomeData(size,pageno);
 
@@ -215,7 +230,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void onRefreshHomeData(HomeBean homeBean) {
         if(null!=homeBean.getMlist()&&homeBean.getMlist().size()>0){
-            mHomeTabAdapter.setNewData(homeBean.getMlist());
+            goodsBeanList.clear();
+            goodsBeanList.addAll(homeBean.getMlist());
+            mHomeTabAdapter.setNewData(goodsBeanList);
             mRefreshLayout.endRefreshing();
             mRefreshLayout.endLoadingMore();
         }else{

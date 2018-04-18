@@ -31,6 +31,7 @@ public class HomePresenter extends HomeContract.Presenter {
 
     @Override
     public void getHomeData(int pageSize, int pageno) {
+        showLoading();
         // ToDO  map 可以提取到Base中去
         HashMap<String,Object> map = new HashMap<>();
         map.put("pagesize",pageSize);
@@ -39,6 +40,7 @@ public class HomePresenter extends HomeContract.Presenter {
                 , HomeBean.class, new ApiCallback<HomeBean>() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
+                hideLoading();
                 if(null != apiResponse && isViewAttached()){
                     if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
                         HomeBean homeBean = (HomeBean) apiResponse.getResults();
@@ -51,6 +53,7 @@ public class HomePresenter extends HomeContract.Presenter {
 
             @Override
             public void onFailure(Call call, Throwable t) {
+                hideLoading();
                 if(isViewAttached()){
                     mView.onFailureMessage(t.toString());
                 }
