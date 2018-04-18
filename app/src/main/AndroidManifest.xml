@@ -80,6 +80,17 @@
         <activity android:name=".view.activity.WalletActivity">
 
         </activity>
+        <activity android:name=".view.activity.FriendSendActivity">
+
+        </activity>
+        <activity
+            android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <activity
+            android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".view.activity.FriendDetailActivity"></activity>
     </application>
 
 </manifest>

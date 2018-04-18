@@ -122,6 +122,24 @@ public class ApiModel {
         return apiResponse;
     }
 
+    public <T> ApiResponse uploadPic(String uid, String detail, List<MultipartBody.Part> parts, final Class<T> clz, ApiCallback apiCallback) {
+        ApiResponse apiResponse = new ApiResponse();
+        ApiStore.getInstance().getApiService().uploadPic(uid, detail, parts).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (!TextUtils.isEmpty(response.toString())) {
+                    apiCallback.onSuccess(parseFastJson(response.body().toString(), clz));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                apiCallback.onFailure(call, t);
+            }
+        });
+
+        return apiResponse;
+    }
 
     public static String toJsonStr(Object object) {
         String str_json = JSONObject.toJSONString(object);
@@ -136,6 +154,7 @@ public class ApiModel {
      * @return ApiResponse<> t : obj
      */
     public static <T> ApiResponse parseFastJson(String jsonStr, Class<T> clz) {
+        LogUtil.e("Response-->>",jsonStr);
         String code = "2"; // 1
         String msg = "请求错误，请稍后重试！";
         ApiResponse apiResponse = null; // new ApiResponse("2","请求错误，请稍后重试！") ;

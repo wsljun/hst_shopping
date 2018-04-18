@@ -139,4 +139,8 @@
     <string name="car_paisong">配送服务</string>
     <string name="car_free">以免运费</string>
     <string name="car_weight">规格：</string>
+
+    <string name="friends_hint">分享有趣事儿</string>
+    <string name="friends_send">发布</string>
+    <string name="friends_title_detail">详情</string>
 </resources>
