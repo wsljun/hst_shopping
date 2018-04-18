@@ -61,6 +61,9 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.MyHolder
         }
         if (!TextUtils.isEmpty(data.getDetail())) {
             holder.friendsDetail.setText(data.getDetail());
+            holder.friendsDetail.setVisibility(View.VISIBLE);
+        } else {
+            holder.friendsDetail.setVisibility(View.GONE);
         }
         List<Friends.UrlBean> list = data.getImgs();
         if (list != null && list.size() > 0) {
@@ -160,6 +163,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.MyHolder
 
         @BindView(R.id.friends_item_ll)
         LinearLayout friendsItemLl;
+
         public MyHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.CommentAdapter;
 import com.cj.reocrd.view.adapter.ReleaseAdapter;
+import com.cj.reocrd.view.view.InputOnKeyBoard.CommentPopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2018/4/13.
  */
 
-public class FriendDetailActivity extends BaseActivity<FriendsPresenter> implements FriendsContract.View {
+public class FriendDetailActivity extends BaseActivity<FriendsPresenter> implements FriendsContract.View, CommentPopupWindow.CommentSendClick {
 
 
     @BindView(R.id.title_left)
@@ -77,6 +79,9 @@ public class FriendDetailActivity extends BaseActivity<FriendsPresenter> impleme
     private CommentAdapter commentAdapter;
 
     private Friends friends;
+    private int likeNum;
+
+    private CommentPopupWindow popupWindow;
 
     @Override
     public Context getContext() {
@@ -126,21 +131,14 @@ public class FriendDetailActivity extends BaseActivity<FriendsPresenter> impleme
                 mPresenter.friendLike(UrlConstants.UrLType.FRIEDNS_LIKE, friends.getId(), uid);
                 break;
             case R.id.friends_detail_rl:
+                popupWindow = new CommentPopupWindow(this, this);
+                popupWindow.showReveal();
                 break;
             case R.id.title_left:
                 finish();
                 break;
             case R.id.friends_all_ll:
-                if (friends != null && Integer.parseInt(friends.getCommentnum()) > 0) {
-                    type = 2;
-                    mPresenter.friendMessage(UrlConstants.UrLType.FRIEDNS_MESSAGE, uid, size, pageno);
-                } else {
-                    if (friendsMessage.getVisibility() == View.GONE) {
-                        friendsMessage.setVisibility(View.VISIBLE);
-                    } else {
-                        friendsMessage.setVisibility(View.GONE);
-                    }
-                }
+
                 break;
         }
     }
@@ -164,6 +162,9 @@ public class FriendDetailActivity extends BaseActivity<FriendsPresenter> impleme
                         }
                         if (!TextUtils.isEmpty(friends.getDetail())) {
                             friendsDetail.setText(friends.getDetail());
+                            friendsDetail.setVisibility(View.VISIBLE);
+                        } else {
+                            friendsDetail.setVisibility(View.GONE);
                         }
                         List<Friends.UrlBean> list = friends.getImgs();
                         if (list != null && list.size() > 0) {
@@ -195,6 +196,7 @@ public class FriendDetailActivity extends BaseActivity<FriendsPresenter> impleme
                         }
                         if (!TextUtils.isEmpty(friends.getLikenum())) {
                             friendsLikeIv.setText(friends.getLikenum());
+                            likeNum = Integer.parseInt(friends.getLikenum());
                         }
                         if (!TextUtils.isEmpty(friends.getUid())) {
                             if (uid.equals(friends.getUid())) {
@@ -203,6 +205,8 @@ public class FriendDetailActivity extends BaseActivity<FriendsPresenter> impleme
                                 friendsKeep.setVisibility(View.VISIBLE);
                             }
                         }
+                        type = 2;
+                        mPresenter.friendMessage(UrlConstants.UrLType.FRIEDNS_MESSAGE, friends.getId(), size, pageno);
                     }
                 } else {
                     ToastUtil.showToastS(this, UrlConstants.UrLType.FRIEDNS_DETAIL + response.getMessage());
@@ -226,12 +230,15 @@ public class FriendDetailActivity extends BaseActivity<FriendsPresenter> impleme
                     if ("1".equals(friends.getIslike())) {
                         friends.setIslike("2");
                         drawable = getResources().getDrawable(R.mipmap.zanweixuanzhong);
+                        likeNum--;
                     } else {
                         friends.setIslike("1");
+                        likeNum++;
                         drawable = getResources().getDrawable(R.mipmap.dianzanhong);
                     }
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     friendsLikeIv.setCompoundDrawables(drawable, null, null, null);
+                    friendsLikeIv.setText(likeNum + "");
                 } else {
                     ToastUtil.showToastS(this, UrlConstants.UrLType.FRIEDNS_LIKE + response.getMessage());
                 }
@@ -252,6 +259,18 @@ public class FriendDetailActivity extends BaseActivity<FriendsPresenter> impleme
                     ToastUtil.showToastS(this, UrlConstants.UrLType.FRIEDNS_UNKEEP + response.getMessage());
                 }
                 break;
+            case 6:
+                if ("1".equals(response.getStatusCode())) {
+                    int num = Integer.parseInt(friends.getCommentnum()) + 1;
+                    friendsDetailIv.setText(num+"");
+                    friendsAll.setText("全部评论(" + num + ")");
+                    type = 2;
+                    mPresenter.friendMessage(UrlConstants.UrLType.FRIEDNS_MESSAGE, friends.getId(), size, pageno);
+                } else {
+                    ToastUtil.showToastS(this, UrlConstants.UrLType.FRIEDNS_COMMENT + response.getMessage());
+                }
+                break;
+
         }
 
     }
@@ -262,4 +281,10 @@ public class FriendDetailActivity extends BaseActivity<FriendsPresenter> impleme
     }
 
 
+    @Override
+    public void onSendClick(View view, String comment) {
+        type = 6;
+        mPresenter.friendComment(UrlConstants.UrLType.FRIEDNS_COMMENT, friends.getId(), uid, comment);
+        popupWindow.dismiss();
+    }
 }

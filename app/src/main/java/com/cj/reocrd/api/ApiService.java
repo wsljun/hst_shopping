@@ -56,6 +56,4 @@ public interface ApiService {
     @POST(UrlConstants.UrLType.FRIEDNS_SEND)
     Call<String> uploadPic(@Query("uid") String uid, @Query("detail") String detail, @Part List<MultipartBody.Part> parts);
 
-    @POST(UrlConstants.UrLType.FRIEDNS_SEND)
-    Call<String> uploadPic2(@Query("uid") String uid, @Query("detail") String detail, @Body List<MultipartBody.Part> body);
 }

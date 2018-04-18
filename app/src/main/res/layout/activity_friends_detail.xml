@@ -32,8 +32,7 @@
                     android:id="@+id/friends_icon"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_launcher" />
+                    android:layout_centerVertical="true" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -46,7 +45,6 @@
                         android:id="@+id/friends_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="mmdisa名字"
                         android:textColor="@color/colorBlack"
                         android:textSize="18sp" />
 
@@ -56,7 +54,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/friends_username"
                         android:layout_marginTop="2dp"
-                        android:text="2018.04.10"
                         android:textColor="@color/colorTexthintGrey2"
                         android:textSize="14sp" />
 
@@ -67,8 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@mipmap/guanzhu" />
+                    android:layout_centerVertical="true"/>
 
             </RelativeLayout>
 
@@ -78,7 +74,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
                 android:layout_marginRight="14dp"
-                android:text="mmdisa名字mmdisa名字mmdisa名字mmdisa名字"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp" />
 
@@ -160,8 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:drawableLeft="@mipmap/zanweixuanzhong"
-                android:text="11" />
+                android:drawableLeft="@mipmap/zanweixuanzhong"/>
         </RelativeLayout>
 
         <View
@@ -184,8 +178,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:drawableLeft="@mipmap/liuyanweixuanzhong"
-                android:text="11" />
+                android:drawableLeft="@mipmap/liuyanweixuanzhong"/>
         </RelativeLayout>
     </LinearLayout>
 

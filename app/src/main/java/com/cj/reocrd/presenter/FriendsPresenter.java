@@ -155,8 +155,8 @@ public class FriendsPresenter extends FriendsContract.Presenter {
     public void friendMessage(String por, String cid, int size, int page) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("cid", cid);
-        map.put("size", size);
-        map.put("page", page);
+        map.put("pagesize", size);
+        map.put("pageno", page);
         ApiModel.getInstance().getData(por, map, CommentBean.class, new ApiCallback<String>() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {

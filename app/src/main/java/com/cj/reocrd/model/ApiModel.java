@@ -124,7 +124,7 @@ public class ApiModel {
 
     public <T> ApiResponse uploadPic(String uid, String detail, List<MultipartBody.Part> parts, final Class<T> clz, ApiCallback apiCallback) {
         ApiResponse apiResponse = new ApiResponse();
-        ApiStore.getInstance().getApiService().uploadPic2(uid, detail, parts).enqueue(new Callback<String>() {
+        ApiStore.getInstance().getApiService().uploadPic(uid, detail, parts).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (!TextUtils.isEmpty(response.toString())) {

@@ -9,8 +9,12 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.cj.reocrd.api.UrlConstants;
+import com.cj.reocrd.view.view.InputOnKeyBoard.CommentPopupWindow;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.regex.Matcher;
@@ -60,4 +64,13 @@ public class Utils {
                 Build.USER.length() % 10; //13 位
     }
 
+    public static void showKeyboard(Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    public static void hideSoftInput(Context context, View view) {
+        InputMethodManager immHide = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE); // 隐藏软键盘
+        immHide.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }
