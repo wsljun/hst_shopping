@@ -6,6 +6,7 @@ import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.contract.FriendsContract;
 import com.cj.reocrd.model.ApiModel;
 import com.cj.reocrd.model.entity.CommentBean;
+import com.cj.reocrd.model.entity.FansBean;
 import com.cj.reocrd.model.entity.Friends;
 import com.cj.reocrd.model.entity.FriendsBean;
 import com.cj.reocrd.model.entity.HomeBean;
@@ -69,7 +70,21 @@ public class FriendsPresenter extends FriendsContract.Presenter {
 
     @Override
     public void friendGet(String por, String uid) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        ApiModel.getInstance().getData(por, map, FansBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+        });
     }
 
     @Override

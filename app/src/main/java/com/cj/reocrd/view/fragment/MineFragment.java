@@ -1,6 +1,8 @@
 package com.cj.reocrd.view.fragment;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -8,18 +10,29 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.ApiResponse;
+import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseFragment;
+import com.cj.reocrd.contract.MyContract;
+import com.cj.reocrd.model.entity.UserBean;
+import com.cj.reocrd.presenter.MyPrresenter;
+import com.cj.reocrd.utils.ImageLoaderUtils;
+import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.activity.MyActivity;
+import com.cj.reocrd.view.activity.MyFansActivity;
 import com.cj.reocrd.view.activity.UndoneActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.cj.reocrd.base.BaseActivity.uid;
+import static com.cj.reocrd.view.activity.MyActivity.pNumber;
+
 /**
  * Created by Administrator on 2018/3/16.
  */
 
-public class MineFragment extends BaseFragment {
+public class MineFragment extends BaseFragment<MyPrresenter> implements MyContract.View, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -78,10 +91,12 @@ public class MineFragment extends BaseFragment {
     RelativeLayout mineEvaluate;
     @BindView(R.id.mine_return)
     RelativeLayout mineReturn;
+    @BindView(R.id.mine_swipe)
+    SwipeRefreshLayout mineSwipe;
 
     @Override
     protected void initPresenter() {
-
+        mPresenter.setVM(this);
     }
 
     @Override
@@ -90,12 +105,20 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
+    public void initData() {
+        super.initData();
+        mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
+    }
+
+    @Override
     public void initView() {
         titleCenter.setText(getString(R.string.mine));
+        mineSwipe.setColorSchemeResources(R.color.colorButton, R.color.colorButton, R.color.colorButton);
+        mineSwipe.setOnRefreshListener(this);
     }
 
 
-    @OnClick({R.id.mine_userinfo_rl,R.id.title_rl, R.id.title_left, R.id.mine_icon, R.id.mine_all, R.id.mine_pay, R.id.mine_send, R.id.mine_confim, R.id.mine_evaluate, R.id.mine_return, R.id.mine_money, R.id.mine_price, R.id.mine_collect, R.id.mine_history, R.id.mine_help, R.id.mine_about, R.id.mine_serve})
+    @OnClick({R.id.mine_fans, R.id.mine_userinfo_rl, R.id.title_rl, R.id.title_left, R.id.mine_icon, R.id.mine_all, R.id.mine_pay, R.id.mine_send, R.id.mine_confim, R.id.mine_evaluate, R.id.mine_return, R.id.mine_money, R.id.mine_price, R.id.mine_collect, R.id.mine_history, R.id.mine_help, R.id.mine_about, R.id.mine_serve})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
@@ -106,16 +129,16 @@ public class MineFragment extends BaseFragment {
             case R.id.mine_all:
                 break;
             case R.id.mine_pay:
-                UndoneActivity.actionActivity(mActivity,UndoneActivity.PAY);
+                UndoneActivity.actionActivity(mActivity, UndoneActivity.PAY);
                 break;
             case R.id.mine_send:
-                UndoneActivity.actionActivity(mActivity,UndoneActivity.SEND);
+                UndoneActivity.actionActivity(mActivity, UndoneActivity.SEND);
                 break;
             case R.id.mine_confim:
-                UndoneActivity.actionActivity(mActivity,UndoneActivity.CONFIM);
+                UndoneActivity.actionActivity(mActivity, UndoneActivity.CONFIM);
                 break;
             case R.id.mine_evaluate:
-                UndoneActivity.actionActivity(mActivity,UndoneActivity.EVALUATE);
+                UndoneActivity.actionActivity(mActivity, UndoneActivity.EVALUATE);
                 break;
             case R.id.mine_return:
                 break;
@@ -137,7 +160,41 @@ public class MineFragment extends BaseFragment {
                 Intent intent = new Intent(mActivity, MyActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.mine_fans:
+                startActivity(MyFansActivity.class);
+                break;
         }
     }
 
+    @Override
+    public void onSuccess(Object data) {
+        if (mineSwipe.isRefreshing()) {
+            mineSwipe.setRefreshing(false);
+        }
+        ApiResponse response = (ApiResponse) data;
+        if ("1".equals(response.getStatusCode())) {
+            UserBean userBean = (UserBean) response.getResults();
+            if (userBean != null) {
+                if (!TextUtils.isEmpty(userBean.getPhoto())) {
+                    ImageLoaderUtils.displayRound(mActivity, mineIcon, UrlConstants.BASE_URL + userBean.getPhoto());
+                }
+                if (!TextUtils.isEmpty(userBean.getName())) {
+                    mineUsername.setText(userBean.getName());
+                }
+            }
+        } else {
+            ToastUtil.showToastS(mActivity, response.getMessage());
+        }
+    }
+
+    @Override
+    public void onFailureMessage(String msg) {
+        ToastUtil.showToastS(mActivity, msg);
+    }
+
+    @Override
+    public void onRefresh() {
+        mineSwipe.setRefreshing(true);
+        mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
+    }
 }
