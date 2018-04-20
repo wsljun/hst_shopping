@@ -68,18 +68,14 @@
         <activity android:name=".view.activity.SubmitOrderActivity"></activity>
         <activity android:name=".view.activity.MyFansActivity"></activity>
         <activity android:name=".view.activity.FriendSendActivity">
-
         </activity>
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".view.activity.FriendDetailActivity"></activity>
-
-
-</application>
+    </application>
 
 </manifest>

@@ -28,7 +28,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.cj.reocrd.base.BaseActivity.uid;
-import static com.cj.reocrd.view.activity.MyActivity.pNumber;
 
 /**
  * Created by Administrator on 2018/3/16.
@@ -107,6 +106,17 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     }
 
     @Override
+    public void getArgumentData(Bundle arguments) {
+        super.getArgumentData(arguments);
+        ToastUtil.showShort(arguments.getString("key"));
+    }
+
+    @Override
+    public void putArgumentData(BaseFragment baseFragment, int position) {
+        super.putArgumentData(this, position);
+    }
+
+    @Override
     public void initData() {
         super.initData();
         mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
@@ -164,6 +174,8 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case R.id.mine_fans:
                 startActivity(MyFansActivity.class);
+                break;
+            default:
                 break;
         }
     }
