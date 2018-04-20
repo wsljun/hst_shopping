@@ -113,6 +113,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
 
     private void updateView() {
         price = goodsDetailsBean.getPrice();
+        goodOldPrice.setText(goodsDetailsBean.getOldprice());
         titleCenter.setText(goodsDetailsBean.getName());
         goodName.setText(goodsDetailsBean.getName());
         goodBrandTv.setText(goodsDetailsBean.getBrand());
@@ -121,6 +122,9 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         goodAddress.setText(goodsDetailsBean.getPlace());
         goodTotalPrice.setText(price);
         ImageLoaderUtils.display(getContext(),imgGoodDetail, UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
+        if("1".equals(goodsDetailsBean.getIscollect())){
+            setCollectImg(true);
+        }
     }
 
 

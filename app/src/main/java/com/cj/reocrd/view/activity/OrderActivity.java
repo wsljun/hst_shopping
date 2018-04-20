@@ -40,6 +40,7 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
     List<String> mDatas;
     List<OrderBean> orderBeans;
     int type;
+    public static final int ALL = 0;//全部
     public static final int PAY = 1;//待付款
     public static final int SEND = 2;//待发货
     public static final int CONFIM = 3;//待确认
@@ -73,6 +74,9 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
     @Override
     public void initView() {
         switch (type){
+            case 0:
+                titleCenter.setText(getString(R.string.mine_order_all));
+                break;
             case 1:
                 titleCenter.setText(getString(R.string.mine_daifukuan));
                 break;

@@ -61,7 +61,7 @@
         <activity android:name=".view.activity.MyActivity"></activity>
         <activity android:name=".view.activity.AddressActivity" />
         <activity android:name=".view.activity.AddressEditActivity"></activity>
-        <activity android:name=".view.activity.UndoneActivity"></activity>
+        <activity android:name=".view.activity.OrderActivity"></activity>
         <activity android:name=".view.activity.SearchActivity" />
         <activity android:name=".view.activity.GoodDetailActivity"></activity>
         <activity android:name=".view.activity.WalletActivity"></activity>

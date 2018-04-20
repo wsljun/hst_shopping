@@ -25,6 +25,8 @@ import java.util.zip.GZIPOutputStream;
 
 public class GoodsDetailsBean  implements Parcelable{
 
+    private String iscollect; // 1,一收藏，2.未收藏
+    private String oldprice;
     private String id;
     private String name;
     private String price;
@@ -41,6 +43,8 @@ public class GoodsDetailsBean  implements Parcelable{
     }
 
     protected GoodsDetailsBean(Parcel in) {
+        oldprice = in.readString();
+        iscollect = in.readString();
         id = in.readString();
         name = in.readString();
         price = in.readString();
@@ -49,6 +53,14 @@ public class GoodsDetailsBean  implements Parcelable{
         brand = in.readString();
         imgurl = in.readString();
         unit = in.readString();
+    }
+
+    public String getOldprice() {
+        return oldprice;
+    }
+
+    public void setOldprice(String oldprice) {
+        this.oldprice = oldprice;
     }
 
     public static final Creator<GoodsDetailsBean> CREATOR = new Creator<GoodsDetailsBean>() {
@@ -145,6 +157,14 @@ public class GoodsDetailsBean  implements Parcelable{
         this.clist = clist;
     }
 
+    public String getIscollect() {
+        return iscollect;
+    }
+
+    public void setIscollect(String iscollect) {
+        this.iscollect = iscollect;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -152,6 +172,8 @@ public class GoodsDetailsBean  implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(oldprice);
+        dest.writeString(iscollect);
         dest.writeString(id);
         dest.writeString(name);
         dest.writeString(price);

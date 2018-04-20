@@ -31,6 +31,7 @@
     <string name="friends_publish">发表</string>
     <string name="car">购物车</string>
     <string name="mine">我的</string>
+    <string name="mine_order_all">全部订单</string>
     <string name="mine_tuihuo">退货</string>
     <string name="mine_daifukuan">待付款</string>
     <string name="mine_daifahuo">待发货</string>
