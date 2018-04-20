@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -21,6 +22,7 @@ import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.GoodsDetailContract;
 import com.cj.reocrd.model.entity.GoodsDetailsBean;
+import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.ToastUtil;
@@ -53,6 +55,8 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     TextView goodSales;
     @BindView(R.id.good_conllect_tv)
     TextView goodConllectTv;
+    @BindView(R.id.good_conllect_iv)
+    ImageView ivCollect;
     @BindView(R.id.view1)
     View view1;
     @BindView(R.id.good_act_tv)
@@ -87,6 +91,8 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     private int num = 1; // 商品数据
     private View skuView; // 商品规格布局
     private PopupWindow popWindow;
+    private  boolean isCollect;
+    private String price;
 
     @Override
     public int getLayoutId() {
@@ -106,11 +112,14 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     }
 
     private void updateView() {
+        price = goodsDetailsBean.getPrice();
+        titleCenter.setText(goodsDetailsBean.getName());
         goodName.setText(goodsDetailsBean.getName());
         goodBrandTv.setText(goodsDetailsBean.getBrand());
-        goodPrice.setText(goodsDetailsBean.getPrice());
+        goodPrice.setText(price);
         goodSales.setText("销量："+goodsDetailsBean.getBlocknum());
         goodAddress.setText(goodsDetailsBean.getPlace());
+        goodTotalPrice.setText(price);
         ImageLoaderUtils.display(getContext(),imgGoodDetail, UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
     }
 
@@ -144,6 +153,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                 finish();
                 break;
             case R.id.good_conllect_iv:
+                mPresenter.collectGoods(uid,goodsID);
                 break;
             case R.id.good_num_rl:
                 break;
@@ -239,7 +249,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
 
     @Override
     public void onFailureMessage(String msg) {
-
+        ToastUtil.showShort(msg);
     }
 
     @Override
@@ -248,15 +258,25 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     }
 
     @Override
-    public void acticonAddToCart(ApiResponse apiResponse) {
+    public void acticonToSubmitOrder(ApiResponse apiResponse) {
         if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+            OrderBean orderBean = (OrderBean) apiResponse.getResults();
             ToastUtil.showShort("加入购物车成功！");
+            Bundle b = new Bundle();
+            b.putParcelable("orderBean",orderBean);
+            b.putParcelable("goodsDetails",goodsDetailsBean);
+            startActivity(SubmitOrderActivity.class,b);
         }else{
             ToastUtil.showShort("加入购物车失败！");
         }
     }
 
-
+    @Override
+    public void setCollectImg(boolean stuats) {
+        if(stuats){ // 收藏成功
+            ivCollect.setBackground(getResources().getDrawable(R.mipmap.collect_select));
+        }
+    }
 
 
 }

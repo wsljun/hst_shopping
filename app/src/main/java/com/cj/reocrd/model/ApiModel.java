@@ -13,6 +13,7 @@ import com.cj.reocrd.utils.DESedeUtils;
 import com.cj.reocrd.utils.LogUtil;
 
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -113,6 +114,24 @@ public class ApiModel {
         return apiResponse;
     }
 
+    public <T> ApiResponse uploadPic(String uid, String detail, List<MultipartBody.Part> parts, final Class<T> clz, ApiCallback apiCallback) {
+        ApiResponse apiResponse = new ApiResponse();
+        ApiStore.getInstance().getApiService().uploadPic(uid, detail, parts).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (!TextUtils.isEmpty(response.toString())) {
+                    apiCallback.onSuccess(parseFastJson(response.body().toString(), clz));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                apiCallback.onFailure(call, t);
+            }
+        });
+
+        return apiResponse;
+    }
 
     public static String toJsonStr(Object object) {
         String str_json = JSONObject.toJSONString(object);

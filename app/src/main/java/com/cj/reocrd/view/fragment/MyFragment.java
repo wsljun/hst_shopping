@@ -419,25 +419,26 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
         ApiResponse response = (ApiResponse) data;
         switch (type) {
             case 1://修改性别
-                ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
                     UserBean userBean = (UserBean) response.getResults();
                     if (userBean != null && !TextUtils.isEmpty(userBean.getSex())) {
                         mySexTv.setText("1".equals(userBean.getSex()) ? getString(R.string.man) : getString(R.string.gril));
                     }
+                }else{
+                    ToastUtil.showToastS(mActivity, response.getMessage());
                 }
                 break;
             case 2://上传照片
-                ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
                     UserBean userBean = (UserBean) response.getResults();
                     if (userBean != null && !TextUtils.isEmpty(userBean.getPhoto())) {
                         ImageLoaderUtils.displayRound(mActivity, myIconIv, UrlConstants.BASE_URL + userBean.getPhoto());
                     }
+                }else{
+                    ToastUtil.showToastS(mActivity, response.getMessage());
                 }
                 break;
             case 3://get userinfo
-                ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
                     UserBean userBean = (UserBean) response.getResults();
                     if (userBean != null) {
@@ -458,15 +459,18 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                             myUpdateIcTv.setText(userBean.getIc());
                         }
                     }
+                }else{
+                    ToastUtil.showToastS(mActivity, response.getMessage());
                 }
                 break;
             case 4:
-                ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
                     UserBean userBean = (UserBean) response.getResults();
                     if (userBean != null && !TextUtils.isEmpty(userBean.getIc())) {
                         myUpdateIcTv.setText(userBean.getIc());
                     }
+                }else{
+                    ToastUtil.showToastS(mActivity, response.getMessage());
                 }
                 break;
         }

@@ -61,14 +61,11 @@
         <activity android:name=".view.activity.MyActivity"></activity>
         <activity android:name=".view.activity.AddressActivity" />
         <activity android:name=".view.activity.AddressEditActivity"></activity>
-        <activity android:name=".view.activity.OrderActivity"></activity>
+        <activity android:name=".view.activity.UndoneActivity"></activity>
         <activity android:name=".view.activity.SearchActivity" />
         <activity android:name=".view.activity.GoodDetailActivity"></activity>
         <activity android:name=".view.activity.WalletActivity"></activity>
-        <activity
-            android:name=".view.activity.ConfirmOrderActivity"
-            android:label="@string/title_activity_confirm_order"
-            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".view.activity.SubmitOrderActivity"></activity>
     </application>
 
 </manifest>

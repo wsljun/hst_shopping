@@ -5,4 +5,5 @@ package com.cj.reocrd.model.entity;
  */
 
 public class OrderDetail {
+
 }

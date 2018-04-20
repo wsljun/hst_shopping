@@ -1,7 +1,7 @@
 package com.cj.reocrd.model.entity;
 
 /**
- * Created by Administrator on 2018/3/30.
+ * 用户info
  */
 
 public class UserBean {

@@ -9,7 +9,7 @@ public class UrlConstants {
 //    public final static String BASE_URL = "http://gank.io/api/";
     public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
     public final static String URL = "app/outinterface";
-//    public final static String PID = "123222212121";  //  TODO  pid
+    //    public final static String PID = "123222212121";  //  TODO  pid
     public final static String SUCCESE_CODE = "1"; // 返回结果成功
 
     public static class key {
@@ -33,30 +33,30 @@ public class UrlConstants {
         // 登陆-验证码
         public static final String LOGIN_CODE = "103";
         // 注册
-        public static final String REGISTER= "104";
+        public static final String REGISTER = "104";
         //修改密码
-        public static final String UPDATE_PWD= "106";
+        public static final String UPDATE_PWD = "106";
         //验证推荐号码是否存在
-        public static final String CHECK_RECOMMEND= "107";
+        public static final String CHECK_RECOMMEND = "107";
         //首页
-        public static final  String GET_HOME_DATA = "201";
+        public static final String GET_HOME_DATA = "201";
         //搜索
-        public static final String  URL_SEARCH = "202"; // todo search
+        public static final String URL_SEARCH = "202"; // todo search
         //获取分类
-        public static final String  URL_ALL_GOODS_TYPE = "203";
+        public static final String URL_ALL_GOODS_TYPE = "203";
         //全部商品
-        public static final String  URL_ALL_GOODS = "204";
+        public static final String URL_ALL_GOODS = "204";
         //商品详情
-        public static final String  URL_GOODS_DETAIL = "205"; // todo all goods
-        public static final String  URL_ADD_TO_CART = "206"; // todo all goods
-        public static final String  URL_DEL_CART = "207"; // todo del goods
-        public static final String  URL_CART_DATA= "208"; // todo cart data
-        public static final String  URL_ADD_CART_GOODSNUM= "209"; // todo add cart goods num
+        public static final String URL_GOODS_DETAIL = "205"; // todo all goods
+        public static final String URL_ADD_TO_CART = "206"; // todo all goods
+        public static final String URL_DEL_CART = "207"; // todo del goods
+        public static final String URL_CART_DATA = "208"; // todo cart data
+        public static final String URL_ADD_CART_GOODSNUM = "209"; // todo add cart goods num
 
         //我的首页
-        public static final  String MY_HOME = "301";
+        public static final String MY_HOME = "301";
         //userinfo
-        public static final  String USERINFO = "302";
+        public static final String USERINFO = "302";
         //修改头像
         public static final String UPDATE_PHOTO = "clientupload/updateUserPhoto";
         //修改名字
@@ -69,6 +69,8 @@ public class UrlConstants {
         public static final String CHECK_PHONE = "307";
         //修改身份证号
         public static final String UPDATE_IC = "308";
+        // 收藏
+        public static final String URL_COLLECT_GOODS= "309";
 
         // 订单详情
         public static final String URL_ORDER_LIST = "401";// todo order list
@@ -80,10 +82,31 @@ public class UrlConstants {
         public static final String URL_refund_ORDER = "407";// todo order refund
         public static final String URL_ADDR_LIST = "408";// todo addr list
         public static final String URL_ADD_ADDR = "409";// todo addr add
-        public static final String URL_UPDATE_ADDR= "410";// todo addr update
+        public static final String URL_UPDATE_ADDR = "410";// todo addr update
         public static final String URL_DEFAULT_ADDR = "411";// todo addr default
-        public static final String URL_DEL_ADDR= "412";// todo addr del
-        public static final String URL_Select_ADDR_MAP= "413";// todo addr map
-   }
+        public static final String URL_DEL_ADDR = "412";// todo addr del
+        public static final String URL_Select_ADDR_MAP = "413";// todo addr map
+        //关注好友
+        public static final String FRIEDNS_KEEP = "501";
+        //取消关注
+        public static final String FRIEDNS_UNKEEP = "502";
+        //获取我的好友
+        public static final String FRIEDNS_GET = "503";
+        //发布圈子
+        public static final String FRIEDNS_SEND = "clientupload/addCommunity";
+        //删除圈子
+        public static final String FRIEDNS_DELETE = "505";
+        //圈子列表
+        public static final String FRIEDNS_LIST = "506";
+        //圈子详情
+        public static final String FRIEDNS_DETAIL = "507";
+        //圈子评论列表
+        public static final String FRIEDNS_MESSAGE = "508";
+        //点赞
+        public static final String FRIEDNS_LIKE = "509";
+        //评论
+        public static final String FRIEDNS_COMMENT = "510";
+
+    }
 
 }

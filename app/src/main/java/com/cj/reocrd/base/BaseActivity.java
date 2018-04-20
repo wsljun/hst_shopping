@@ -58,6 +58,7 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
 //        initFragment(savedInstanceState);
         initPresenter();
         init();
+        initPresenter();
     }
 
     @Override

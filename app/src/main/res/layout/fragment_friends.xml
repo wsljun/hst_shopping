@@ -4,11 +4,16 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <include layout="@layout/layout_title" />
+    <include
+        android:id="@+id/friends_title"
+        layout="@layout/layout_title" />
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/friends_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="friends" />
+        android:layout_below="@id/friends_title">
+
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

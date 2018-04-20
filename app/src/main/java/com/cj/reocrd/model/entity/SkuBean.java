@@ -1,5 +1,8 @@
 package com.cj.reocrd.model.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Lyndon.Li on 2018/4/3.
  * 商品规格
@@ -12,13 +15,37 @@ package com.cj.reocrd.model.entity;
  },{},{}...],
  */
 
-public class SkuBean {
- private String id ;
- private String num ;
- private String price ;
- private String stock ;
- private String blocknum;
+public class SkuBean implements Parcelable {
+    private String id ;
+    private String num ;
+    private String price ;
+    private String stock ;
+    private String blocknum;
 
+    public SkuBean(){
+
+    }
+
+
+    protected SkuBean(Parcel in) {
+        id = in.readString();
+        num = in.readString();
+        price = in.readString();
+        stock = in.readString();
+        blocknum = in.readString();
+    }
+
+    public static final Creator<SkuBean> CREATOR = new Creator<SkuBean>() {
+        @Override
+        public SkuBean createFromParcel(Parcel in) {
+            return new SkuBean(in);
+        }
+
+        @Override
+        public SkuBean[] newArray(int size) {
+            return new SkuBean[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -58,5 +85,19 @@ public class SkuBean {
 
     public void setBlocknum(String blocknum) {
         this.blocknum = blocknum;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(num);
+        dest.writeString(price);
+        dest.writeString(stock);
+        dest.writeString(blocknum);
     }
 }

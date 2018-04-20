@@ -3,6 +3,7 @@ package com.cj.reocrd.presenter;
 import com.cj.reocrd.api.ApiCallback;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
+import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.AddressContract;
 import com.cj.reocrd.contract.CartContract;
 import com.cj.reocrd.model.ApiModel;
@@ -65,7 +66,7 @@ public class AddressPresenter extends AddressContract.Presenter {
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
 //                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
-                    mView.onSuccess("addAddress,"+apiResponse.getMessage());
+                    mView.onFailureMessage("addAddress,"+apiResponse.getMessage());
                     // todo 新增成功后会返回详细的地址信息
                     //{"consignee":"李均","address":"湖南省长沙市芙蓉区大望路12号","phone":"18811373790","message":"操作成功","add_id":"853e5be5-9e4a-4171-97a8-e050b8a1538f","statusCode":"1"}
 //                    }
@@ -95,7 +96,7 @@ public class AddressPresenter extends AddressContract.Presenter {
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
 //                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
-                    mView.onSuccess("updateAddress,"+apiResponse.getMessage());
+                    mView.onFailureMessage("updateAddress,"+apiResponse.getMessage());
                     //{"consignee":"李均","address":"湖南省长沙市芙蓉区大望路12号","phone":"18811373790","message":"操作成功","add_id":"853e5be5-9e4a-4171-97a8-e050b8a1538f","statusCode":"1"}
 //                    }
                 }
@@ -113,13 +114,14 @@ public class AddressPresenter extends AddressContract.Presenter {
     @Override
     public void setDefaultAddress(String aid) {
         baseMap.clear();
-        baseMap.put("aid",aid);
+        baseMap.put("address_id",aid);
+        baseMap.put("uid", BaseActivity.uid);
         ApiModel.getInstance().getData(UrlConstants.UrLType.URL_DEFAULT_ADDR, baseMap, null, new ApiCallback() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
 //                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
-                    mView.onSuccess(apiResponse.getMessage());
+                    mView.onFailureMessage(apiResponse.getMessage());
 //                    }
                 }
             }
@@ -142,7 +144,7 @@ public class AddressPresenter extends AddressContract.Presenter {
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
 //                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
-                    mView.onSuccess(apiResponse.getMessage());
+                    mView.onFailureMessage("删除"+apiResponse.getMessage());
 //                    }
                 }
             }
@@ -166,7 +168,7 @@ public class AddressPresenter extends AddressContract.Presenter {
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
 //                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
-                    mView.onSuccess(apiResponse.getMessage());
+                    mView.onSuccess(apiResponse.getResults());
 //                    }
                 }
             }

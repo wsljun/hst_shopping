@@ -1,93 +1,137 @@
 package com.cj.reocrd.model.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.List;
+
 /**
- * Created by Lyndon.Li on 2018/4/3.
- * 评论列表
- *"clist": [{  //评论列表
- "id": "abcd",   //评论ID
- "name": "abcd",   //评论人名字
- "photo": "http://www.baidu.com",   //评论人头像
- "rname": "rname",  //回复人姓名
- "rphoto": "rphoto",  //回复人头像
- "reply": "reply",  //回复内容
- "createtime": "2018-01-20 21:30:40",  //评论时间
- "replytime": "2018-01-20 21:30:40"  //回复时间
- },{},{}...]
- *
+ * Created by Administrator on 2018/4/13.
  */
 
-public class CommentBean {
-    private String id ;
-    private String name ;
-    private String photo ;
-    private String rname ;
-    private String rphoto;
-    private String reply;
-    private String createtime;
-    private String replytime;
+public class CommentBean implements Parcelable {
+    private List<Comment> clist;
 
+    public CommentBean(){
 
-    public String getId() {
-        return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    protected CommentBean(Parcel in) {
+        clist = in.createTypedArrayList(Comment.CREATOR);
     }
 
-    public String getName() {
-        return name;
+    public static final Creator<CommentBean> CREATOR = new Creator<CommentBean>() {
+        @Override
+        public CommentBean createFromParcel(Parcel in) {
+            return new CommentBean(in);
+        }
+
+        @Override
+        public CommentBean[] newArray(int size) {
+            return new CommentBean[size];
+        }
+    };
+
+    public List<Comment> getClist() {
+        return clist;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setClist(List<Comment> clist) {
+        this.clist = clist;
     }
 
-    public String getPhoto() {
-        return photo;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(clist);
     }
 
-    public String getRname() {
-        return rname;
-    }
+    public static class Comment implements Parcelable {
+        private String uid;
+        private String name;
+        private String comment;
+        private String photo;
+        private String createtime;
+        public Comment(){
 
-    public void setRname(String rname) {
-        this.rname = rname;
-    }
+        }
 
-    public String getRphoto() {
-        return rphoto;
-    }
+        protected Comment(Parcel in) {
+            uid = in.readString();
+            name = in.readString();
+            comment = in.readString();
+            photo = in.readString();
+            createtime = in.readString();
+        }
 
-    public void setRphoto(String rphoto) {
-        this.rphoto = rphoto;
-    }
+        public static final Creator<Comment> CREATOR = new Creator<Comment>() {
+            @Override
+            public Comment createFromParcel(Parcel in) {
+                return new Comment(in);
+            }
 
-    public String getReply() {
-        return reply;
-    }
+            @Override
+            public Comment[] newArray(int size) {
+                return new Comment[size];
+            }
+        };
 
-    public void setReply(String reply) {
-        this.reply = reply;
-    }
+        public String getUid() {
+            return uid;
+        }
 
-    public String getCreatetime() {
-        return createtime;
-    }
+        public void setUid(String uid) {
+            this.uid = uid;
+        }
 
-    public void setCreatetime(String createtime) {
-        this.createtime = createtime;
-    }
+        public String getName() {
+            return name;
+        }
 
-    public String getReplytime() {
-        return replytime;
-    }
+        public void setName(String name) {
+            this.name = name;
+        }
 
-    public void setReplytime(String replytime) {
-        this.replytime = replytime;
+        public String getComment() {
+            return comment;
+        }
+
+        public void setComment(String comment) {
+            this.comment = comment;
+        }
+
+        public String getPhoto() {
+            return photo;
+        }
+
+        public void setPhoto(String photo) {
+            this.photo = photo;
+        }
+
+        public String getCreatetime() {
+            return createtime;
+        }
+
+        public void setCreatetime(String createtime) {
+            this.createtime = createtime;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(uid);
+            dest.writeString(name);
+            dest.writeString(comment);
+            dest.writeString(photo);
+            dest.writeString(createtime);
+        }
     }
 }

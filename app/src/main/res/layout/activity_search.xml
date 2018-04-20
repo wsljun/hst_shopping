@@ -91,7 +91,7 @@
             android:textSize="16sp"
             android:gravity="center"
             android:tag="3"
-            android:text="@string/search_promotion" />
+            />
 
     </RadioGroup>
 

@@ -11,10 +11,12 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.AddressContract;
 import com.cj.reocrd.model.entity.AddressBean;
 import com.cj.reocrd.presenter.AddressPresenter;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.AddressAdapter;
 
@@ -99,6 +101,7 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
     @Override
     public void checkClick(String addrId) {
 //        ToastUtil.showToastS(this, "checkClick" + position);
+        SPUtils.put(this,SPUtils.SpKey.DEFAULT_ADDRESS_ID,addrId);
         mPresenter.setDefaultAddress(addrId);
     }
 

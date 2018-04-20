@@ -46,6 +46,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyHolder
 
     @Override
     public void onBindViewHolder(MyHolder holder, final int position) {
+        holder.addressConSignee.setText(mDatas.get(position).getConsignee());
         holder.addressPhone.setText(mDatas.get(position).getPhone());
         holder.addressDetail.setText(mDatas.get(position).getFuladdress());
         if(mDatas.get(position).getIsdefault().equals("1")){
@@ -60,6 +61,9 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyHolder
         holder.addressCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                for (int i = 0; i < checkBoxes.size() ; i++) {
+                    checkBoxes.get(i).setChecked(false);
+                }
                 buttonView.setChecked(isChecked);
                 mOnItemListener.checkClick(mDatas.get(position).getId());
             }
@@ -85,7 +89,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyHolder
     }
 
     public void updateData( List<AddressBean> datas) {
-        mDatas.addAll(datas);
+        mDatas = datas;
         notifyDataSetChanged();
     }
 
@@ -116,8 +120,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyHolder
 
 
     class MyHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.address_name)
-        TextView addressName;
+        @BindView(R.id.address_consignee)
+        TextView addressConSignee;
         @BindView(R.id.address_phone)
         TextView addressPhone;
         @BindView(R.id.address_detail)

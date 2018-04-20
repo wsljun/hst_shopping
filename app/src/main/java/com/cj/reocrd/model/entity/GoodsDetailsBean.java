@@ -1,6 +1,10 @@
 package com.cj.reocrd.model.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Created by Lyndon.Li on 2018/4/3.
@@ -19,7 +23,7 @@ import java.util.List;
    clist :
  */
 
-public class GoodsDetailsBean {
+public class GoodsDetailsBean  implements Parcelable{
 
     private String id;
     private String name;
@@ -31,6 +35,33 @@ public class GoodsDetailsBean {
     private String unit;
     private List<SkuBean> slist;
     private List<CommentBean> clist;
+
+    public GoodsDetailsBean(){
+
+    }
+
+    protected GoodsDetailsBean(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        price = in.readString();
+        blocknum = in.readString();
+        place = in.readString();
+        brand = in.readString();
+        imgurl = in.readString();
+        unit = in.readString();
+    }
+
+    public static final Creator<GoodsDetailsBean> CREATOR = new Creator<GoodsDetailsBean>() {
+        @Override
+        public GoodsDetailsBean createFromParcel(Parcel in) {
+            return new GoodsDetailsBean(in);
+        }
+
+        @Override
+        public GoodsDetailsBean[] newArray(int size) {
+            return new GoodsDetailsBean[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -49,6 +80,8 @@ public class GoodsDetailsBean {
     }
 
     public String getPrice() {
+        int p = (Integer.parseInt(price))/100;
+        price = String.valueOf(p);
         return price;
     }
 
@@ -110,5 +143,24 @@ public class GoodsDetailsBean {
 
     public void setClist(List<CommentBean> clist) {
         this.clist = clist;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(price);
+        dest.writeString(blocknum);
+        dest.writeString(place);
+        dest.writeString(brand);
+        dest.writeString(imgurl);
+        dest.writeString(unit);
+        dest.writeList(slist);
+        dest.writeList(clist);
     }
 }

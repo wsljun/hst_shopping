@@ -16,7 +16,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/address_name"
+            android:id="@+id/address_consignee"
             style="@style/setting_item_configure"
             android:layout_marginStart="0dp"
             android:text="@string/update_phone_n" />

@@ -23,6 +23,7 @@ public class AddressBean {
     private String createtime ; // 创建时间
     private List<Regions> regions ; //
 
+
     public class Regions {
         /*
         * "name":"湖南省",

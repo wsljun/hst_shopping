@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.cj.reocrd.R;
 
 import java.io.File;
@@ -20,74 +21,63 @@ public class ImageLoaderUtils {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
-        Glide.with(context).load(url).placeholder(placeholder)
-                .error(error).crossFade().into(imageView);
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(placeholder)
+                .circleCrop()
+                .error(error)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .encodeQuality(90);
+
+        Glide.with(context)
+                .load(url)
+                .apply(requestOptions)
+                .into(imageView);
     }
 
     public static void display(Context context, ImageView imageView, String url) {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
-        Glide.with(context).load(url)
+        RequestOptions requestOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .fitCenter()
+                .centerCrop()
                 .placeholder(R.mipmap.ic_image_loading)
-                .error(R.mipmap.ic_empty_picture)
-                .crossFade().into(imageView);
+                .error(R.mipmap.ic_empty_picture);
+        Glide.with(context)
+                .load(url)
+                .apply(requestOptions)
+                .into(imageView);
     }
 
     public static void display(Context context, ImageView imageView, File url) {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
-        Glide.with(context).load(url)
+        RequestOptions requestOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .placeholder(R.mipmap.ic_image_loading)
-                .error(R.mipmap.ic_empty_picture)
-                .crossFade().into(imageView);
-    }
-    public static void displaySmallPhoto(Context context, ImageView imageView, String url) {
-        if (imageView == null) {
-            throw new IllegalArgumentException("argument error");
-        }
-        Glide.with(context).load(url).asBitmap()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.ic_image_loading)
-                .error(R.mipmap.ic_empty_picture)
-                .thumbnail(0.5f)
+                .error(R.mipmap.ic_empty_picture);
+
+        Glide.with(context)
+                .load(url)
+                .apply(requestOptions)
                 .into(imageView);
     }
-    public static void displayBigPhoto(Context context, ImageView imageView, String url) {
-        if (imageView == null) {
-            throw new IllegalArgumentException("argument error");
-        }
-        Glide.with(context).load(url).asBitmap()
-                .format(DecodeFormat.PREFER_ARGB_8888)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.ic_image_loading)
-                .error(R.mipmap.ic_empty_picture)
-                .into(imageView);
-    }
-    public static void display(Context context, ImageView imageView, int url) {
-        if (imageView == null) {
-            throw new IllegalArgumentException("argument error");
-        }
-        Glide.with(context).load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .placeholder(R.mipmap.ic_image_loading)
-                .error(R.mipmap.ic_empty_picture)
-                .crossFade().into(imageView);
-    }
+
     public static void displayRound(Context context, ImageView imageView, String url) {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
-        Glide.with(context).load(url)
+        RequestOptions requestOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(R.mipmap.tuihuo)
-                .centerCrop().transform(new GlideRoundTransformUtil(context)).into(imageView);
+                .centerCrop()
+                .transform(new GlideRoundTransformUtil(context));
+        Glide.with(context)
+                .load(url)
+                .apply(requestOptions)
+                .into(imageView);
     }
 
 }
