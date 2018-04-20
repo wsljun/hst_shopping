@@ -31,7 +31,8 @@ import static com.cj.reocrd.base.BaseActivity.uid;
  * Created by Administrator on 2018/3/16.
  */
 
-public class CartFragment extends BaseFragment<CartPresenter> implements CartContract.View ,AmountView.OnAmountChangeListener{
+public class CartFragment extends BaseFragment<CartPresenter> implements CartContract.View
+        ,CarAdapter.OnBaseQuickAdapterItemClickListener{
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -45,6 +46,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     private List<GoodsBean> cartGoodsList; // 购物车 商品集合
     private CarAdapter carAdapter;
     private String currCartID = "";
+    private final  static  String TAG = "CartFragment";
 
     @Override
     protected void initPresenter() {
@@ -96,48 +98,22 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
 
     private void initRecycleView() {
         carAdapter = new CarAdapter(R.layout.item_car, cartGoodsList);
+        carAdapter.setOnBaseAdapterItemClickListener(this);
         rvCartContent.setLayoutManager(new LinearLayoutManager(mActivity));
-        rvCartContent.setHasFixedSize(true);
+//        rvCartContent.setHasFixedSize(true);
         //设置适配器加载动画
         carAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         rvCartContent.setAdapter(carAdapter);
-        //设置适配器可以上拉加载
-//        carAdapter.setOnLoadMoreListener(this);
-        //设置下拉、上拉
-//        mCartRefreshLayout.setDelegate(this);
-//        mCartRefreshLayout.setRefreshViewHolder(new NormalRefreshViewHolder(mActivity, true));
         carAdapter.loadComplete();
-        rvCartContent.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Log.e(TAG, "onItemClick: position= "+position );
-            }
-
-            @Override
-            public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                Log.e(TAG, "onItemLongClick: position= "+position );
-            }
-
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                String s = (String) view.getTag();
-                Log.e(TAG, "onItemChildClick: position= "+position+";s= " +s);
-            }
-
-            @Override
-            public void onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
-
-            }
-
-            @Override
-            public void SimpleOnItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-            }
-        });
     }
 
+//    @Override
+//    public void onAmountChange(View view, int amount) {
+//        mPresenter.addCartGoodsNum(currCartID,amount);
+//    }
+
     @Override
-    public void onAmountChange(View view, int amount) {
-        mPresenter.addCartGoodsNum(currCartID,amount);
+    public void onAdapterItemClickListener(View view, int position) {
+        Log.e(TAG, "onAdapterItemClickListener: positon= "+position );
     }
 }

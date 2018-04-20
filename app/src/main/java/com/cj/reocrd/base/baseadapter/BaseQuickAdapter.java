@@ -46,6 +46,7 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
     private int mDuration = 300;
     private int mLastPosition = -1;
     private RequestLoadMoreListener mRequestLoadMoreListener;
+    public OnBaseQuickAdapterItemClickListener mBaseItemClickListener;
 
     private BaseAnimation mCustomAnimation;
     private BaseAnimation mSelectAnimation = new AlphaInAnimation();
@@ -731,6 +732,17 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
     }
     public T getNextData(int positon) {
             return mData.get(positon);
+    }
+
+    public void setOnBaseAdapterItemClickListener(OnBaseQuickAdapterItemClickListener onBaseQuickAdapterItemClickListener){
+        this.mBaseItemClickListener = onBaseQuickAdapterItemClickListener;
+    }
+
+    /**
+     * 用于 在adapter 设置点击 然后回调给具体的 activity or fragment
+     * */
+    public static  interface  OnBaseQuickAdapterItemClickListener{
+       abstract void  onAdapterItemClickListener(View view,int position);
     }
 
 }
