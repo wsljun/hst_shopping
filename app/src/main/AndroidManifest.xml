@@ -91,6 +91,7 @@
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".view.activity.FriendDetailActivity"></activity>
+        <activity android:name=".view.activity.MyFansActivity"></activity>
     </application>
 
 </manifest>

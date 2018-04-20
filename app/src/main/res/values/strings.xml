@@ -143,4 +143,6 @@
     <string name="friends_hint">分享有趣事儿</string>
     <string name="friends_send">发布</string>
     <string name="friends_title_detail">详情</string>
+
+    <string name="fans_title">粉丝</string>
 </resources>
