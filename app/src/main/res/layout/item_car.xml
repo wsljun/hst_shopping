@@ -108,7 +108,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/car_text_ll">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/car_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -125,7 +125,10 @@
                 android:layout_marginTop="24dp"
                 app:btnTextSize="14sp"
                 app:btnWidth="22dp"
-                app:tvWidth="22dp"></com.cj.reocrd.view.view.AmountView.AmountView>
+                app:tvWidth="22dp"
+                >
+
+            </com.cj.reocrd.view.view.AmountView.AmountView>
 
         </RelativeLayout>
     </RelativeLayout>
