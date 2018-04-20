@@ -77,7 +77,7 @@ public class FriendDetailActivity extends BaseActivity<FriendsPresenter> impleme
     private int pageno = 0; // 页码
     private List<CommentBean.Comment> cList;
     private CommentAdapter commentAdapter;
-
+    private int num;//评论数量
     private Friends friends;
     private int likeNum;
 
@@ -205,6 +205,7 @@ public class FriendDetailActivity extends BaseActivity<FriendsPresenter> impleme
                                 friendsKeep.setVisibility(View.VISIBLE);
                             }
                         }
+                        num = Integer.parseInt(friends.getCommentnum());
                         type = 2;
                         mPresenter.friendMessage(UrlConstants.UrLType.FRIEDNS_MESSAGE, friends.getId(), size, pageno);
                     }
@@ -261,7 +262,7 @@ public class FriendDetailActivity extends BaseActivity<FriendsPresenter> impleme
                 break;
             case 6:
                 if ("1".equals(response.getStatusCode())) {
-                    int num = Integer.parseInt(friends.getCommentnum()) + 1;
+                    num++;
                     friendsDetailIv.setText(num+"");
                     friendsAll.setText("全部评论(" + num + ")");
                     type = 2;
