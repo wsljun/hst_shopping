@@ -2,6 +2,9 @@ package com.cj.reocrd.contract;
 
 import com.cj.reocrd.base.BasePresenter;
 import com.cj.reocrd.base.BaseView;
+import com.cj.reocrd.model.entity.GoodsType;
+
+import java.util.List;
 
 
 /**
@@ -13,10 +16,10 @@ public interface GoodsContract {
 
     interface View extends BaseView {
         //返回获取的数据
-
+       public abstract void saveGoodsType(List<GoodsType> list);
     }
 
     abstract static class Presenter extends BasePresenter<View> {
-        public abstract void getGoodsTest(int size, int page);
+        public abstract void getGoodsData(String tid, int pageno, int pagesize);
     }
 }

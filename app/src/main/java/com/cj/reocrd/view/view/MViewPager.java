@@ -96,4 +96,9 @@ public class MViewPager extends ViewPager {
     }*/
 
 
+    @Override
+    public void setOffscreenPageLimit(int limit) {
+        super.setOffscreenPageLimit(limit);
+
+    }
 }

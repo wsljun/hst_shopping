@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.cj.reocrd.utils.TUtil;
+import com.cj.reocrd.view.dialog.LoadingDialog;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -43,6 +44,7 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         super.onCreate(savedInstanceState);
         doBeforeSetcontentView();
         setContentView(getLayoutId());
+        mContext = this.getApplicationContext();
         unbinder = ButterKnife.bind(this);
         ButterKnife.bind(this);
         mPresenter = TUtil.getT(this, 0);
@@ -54,6 +56,7 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
             pid = savedInstanceState.getString("pid");
         }
 //        initFragment(savedInstanceState);
+        initPresenter();
         init();
         initPresenter();
     }

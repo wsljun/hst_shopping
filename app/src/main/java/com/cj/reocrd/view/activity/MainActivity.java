@@ -189,7 +189,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(new FriendsFragment());
         fragments.add(new CartFragment());
         fragments.add(new MineFragment());
-        viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(), fragments, null));
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, null));
 
         tabLayout.setTitles(getString(R.string.home), getString(R.string.all), getString(R.string.friends), getString(R.string.car), getString(R.string.mine))
                 .setNormalIcons(R.mipmap.shouye2, R.mipmap.quanbushangpin, R.mipmap.quanzi, R.mipmap.guwuche, R.mipmap.wode)

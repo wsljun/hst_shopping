@@ -1,10 +1,12 @@
 package com.cj.reocrd.view.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,10 +15,15 @@ import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.OnItemClickListener;
 import com.cj.reocrd.contract.GoodsContract;
-import com.cj.reocrd.model.entity.FirstBean;
+import com.cj.reocrd.model.entity.GoodsBean;
+import com.cj.reocrd.model.entity.GoodsType;
+import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.presenter.GoodsPresenter;
+import com.cj.reocrd.utils.CollectionUtils;
+import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
-import com.cj.reocrd.view.adapter.AllOneAdapter;
+import com.cj.reocrd.view.activity.GoodDetailActivity;
+import com.cj.reocrd.view.adapter.AllTypeAdapter;
 import com.cj.reocrd.view.adapter.GoodsAdapter;
 import com.cj.reocrd.view.refresh.NormalRefreshViewHolder;
 import com.cj.reocrd.view.refresh.RefreshLayout;
@@ -32,7 +39,7 @@ import butterknife.OnClick;
  */
 
 public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements GoodsContract.View
-        ,BaseQuickAdapter.RequestLoadMoreListener,RefreshLayout.RefreshLayoutDelegate{
+        ,RefreshLayout.RefreshLayoutDelegate{
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -42,8 +49,7 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
     @BindView(R.id.rv_goods_type)
     RecyclerView rvGoodsType; // 商品类目
 
-    AllOneAdapter oneAdapter;
-    List<String> one;
+    AllTypeAdapter allTypeAdapter;
 
     @BindView(R.id.refresh)
     RefreshLayout mRefreshLayout;
@@ -52,11 +58,16 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
 
     private Context mContext;
     private GoodsAdapter mGoodsAdapter;
-    private int size = 20;
+    private String tid = ""; // 商品分类
+    private int pagesize = 20;  //pageSize
+    private int pageno = 0; // 页码
+    private List<GoodsType> goodsTypes  = new ArrayList<>();
+    private List<GoodsBean> goodsBeanList = new ArrayList<>();
+    private Bundle goodBundle;
 
     @Override
     protected void initPresenter() {
-       mPresenter.setVM(this);
+        mPresenter.setVM(this);
     }
 
     @Override
@@ -67,26 +78,39 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
     @Override
     public void initData() {
         super.initData();
-        mContext = getActivity();
-        one = new ArrayList<>();
-        one.add("1");
-        one.add("2");
-        one.add("3");
-        one.add("4");
+        showType();
+        // todo get goods type
     }
 
     @Override
     public void initView() {
+        mContext = mActivity.getApplicationContext();
         titleCenter.setText(getString(R.string.all));
-
-        oneAdapter = new AllOneAdapter(mActivity, one);
-        rvGoodsType.setLayoutManager(new LinearLayoutManager(mActivity));
-        rvGoodsType.setAdapter(oneAdapter);
-        rvGoodsType.setItemAnimator(new DefaultItemAnimator());
         initRecycleView();
+        mPresenter.getGoodsType("");
+    }
+
+    private void showType(){
+        if(CollectionUtils.isNullOrEmpty(goodsTypes)){
+            ToastUtil.showShort("typs is null");
+            return;
+        }
+        mPresenter.getGoodsData(goodsTypes.get(0).getId(),pageno,pagesize);
+        allTypeAdapter = new AllTypeAdapter(mActivity, goodsTypes);
+        rvGoodsType.setLayoutManager(new LinearLayoutManager(mActivity));
+        rvGoodsType.setAdapter(allTypeAdapter);
+        rvGoodsType.setItemAnimator(new DefaultItemAnimator());
+        allTypeAdapter.setOnItemClickListener(new AllTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                LogUtil.d("onItemClick",goodsTypes.get(position).getName());
+                mPresenter.getGoodsData(goodsTypes.get(position).getId(),pageno,pagesize);
+            }
+        });
     }
 
     private void initRecycleView() {
+        goodBundle =  new Bundle();
         mGoodsAdapter = new GoodsAdapter(R.layout.item_all_two,null);
         recyclerViewContent.setLayoutManager(new GridLayoutManager(mContext,3));
         recyclerViewContent.setHasFixedSize(true);
@@ -94,19 +118,20 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
         mGoodsAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerViewContent.setAdapter(mGoodsAdapter);
         //设置适配器可以上拉加载
-        mGoodsAdapter.setOnLoadMoreListener(this);
+//        mGoodsAdapter.setOnLoadMoreListener(this);
         //设置下拉、上拉
-        mRefreshLayout.setDelegate(this);
+//        mRefreshLayout.setDelegate(this);
         mRefreshLayout.setRefreshViewHolder(new NormalRefreshViewHolder(mContext,true));
 
-        mPresenter.getGoodsTest(20,1);
-
-        //条目的点击事件
         recyclerViewContent.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void SimpleOnItemClick(BaseQuickAdapter adapter, View view, int position) {
                 System.out.println("position == "+position);
                 ToastUtil.showShort("position == "+position);
+//                GoodDetailActivity.intentTo(mContext,goodsBeanList.get(position).getId());
+                goodBundle.clear();
+                goodBundle.putString("goodsID",goodsBeanList.get(position).getId());
+                startActivity(GoodDetailActivity.class,goodBundle);
             }
         });
 
@@ -119,38 +144,47 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
             case R.id.title_left:
                 getMainActivity().getViewPager().setCurrentItem(0);
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 
     @Override
     public void onSuccess(Object data) {
-        List<FirstBean> girlDataList = (List<FirstBean>) data;
-        mGoodsAdapter.setNewData(girlDataList);
+        HomeBean homeBean  = (HomeBean) data;
+        goodsBeanList = homeBean.getMlist();
+        mGoodsAdapter.setNewData(goodsBeanList);
+        mGoodsAdapter.loadComplete();
         mRefreshLayout.endRefreshing();
         mRefreshLayout.endLoadingMore();
     }
 
     @Override
     public void onFailureMessage(String msg) {
-
+        ToastUtil.showShort(msg);
     }
 
-    @Override
-    public void onLoadMoreRequested() {
-
-    }
 
     @Override
     public void onRefreshLayoutBeginRefreshing(RefreshLayout refreshLayout) {
-        mPresenter.getGoodsTest(size,1);
+//        mPresenter.getGoodsData("", pageno, pagesize);
     }
 
     @Override
     public boolean onRefreshLayoutBeginLoadingMore(RefreshLayout refreshLayout) {
-        size += 20;
-        mPresenter.getGoodsTest(size,1);
+        mPresenter.getGoodsData(tid, pageno, pagesize);
         return false;
+    }
+
+    /**
+     * @param list
+     */
+    @Override
+    public void saveGoodsType(List<GoodsType> list) {
+        if(null!= list && list.size()>0){
+            goodsTypes.clear();
+            this.goodsTypes.addAll(list);
+//            showType();
+        }
     }
 }

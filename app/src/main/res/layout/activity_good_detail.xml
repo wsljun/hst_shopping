@@ -22,8 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp">
 
-                <com.youth.banner.Banner
-                    android:id="@+id/banner"
+                <ImageView
+                    android:id="@+id/iv_good_detail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -94,7 +94,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/shoucang" />
+                        android:src="@mipmap/shoucang"
+                        />
 
                     <TextView
                         android:id="@+id/good_conllect_tv"
@@ -252,6 +253,7 @@
     </ScrollView>
 
     <RelativeLayout
+        android:id="@+id/rl_goods_detail_bottom"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_alignParentBottom="true"

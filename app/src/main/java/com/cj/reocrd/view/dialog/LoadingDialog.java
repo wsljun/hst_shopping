@@ -2,6 +2,7 @@ package com.cj.reocrd.view.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -22,7 +23,7 @@ public class LoadingDialog {
      * @param msg 对话框显示内容
      * @param cancelable 对话框是否可以取消
      */
-    public static Dialog showDialogForLoading(Activity context, String msg, boolean cancelable) {
+    public static Dialog showDialogForLoading(Context context, String msg, boolean cancelable) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_loading, null);
         TextView loadingText = (TextView)view.findViewById(R.id.id_tv_loading_dialog_text);
         loadingText.setText(msg);
@@ -35,7 +36,7 @@ public class LoadingDialog {
         return  mLoadingDialog;
     }
 
-    public static Dialog showDialogForLoading(Activity context) {
+    public static Dialog showDialogForLoading(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_loading, null);
         TextView loadingText = (TextView)view.findViewById(R.id.id_tv_loading_dialog_text);
         loadingText.setText("加载中...");

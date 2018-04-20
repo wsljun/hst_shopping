@@ -15,7 +15,7 @@ public class CollectionUtils {
      * @return
      */
     public static boolean isNullOrEmpty(Collection c) {
-        if (null == c || c.isEmpty()) {
+        if (null == c || c.isEmpty() || c.size()==0) {
             return true;
         }
         return false;

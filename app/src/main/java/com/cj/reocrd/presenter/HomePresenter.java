@@ -21,33 +21,17 @@ public class HomePresenter extends HomeContract.Presenter {
     @Override
     public void onStart() {
         super.onStart();
+        //TODO 获取
     }
 
     @Override
     public void getListDataTest(int size, int page) {
-//        ApiModel.getInstance().getListData(size,page ,new Callback<GirlData>() {
-//            @Override
-//            public void onResponse(Call<GirlData> call, Response<GirlData> response) {
-//                if(response.code() == 200){
-//                    GirlData girlData = parse(response.body(),FirstBean.class); //(List<FirstBean>) response.body().getResults();
-////                     FirstBean girlDataList = (FirstBean) response.body().getResults();
-//                    if(isViewAttached()){
-//                        mView.onSuccess(girlData.getResults());
-//                    }else{
-//                        mView.onFailureMessage("mView == null");
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<GirlData> call, Throwable t) {
-//
-//            }
-//        });
+
     }
 
     @Override
     public void getHomeData(int pageSize, int pageno) {
+        showLoading();
         // ToDO  map 可以提取到Base中去
         HashMap<String,Object> map = new HashMap<>();
         map.put("pagesize",pageSize);
@@ -56,6 +40,7 @@ public class HomePresenter extends HomeContract.Presenter {
                 , HomeBean.class, new ApiCallback<HomeBean>() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
+                hideLoading();
                 if(null != apiResponse && isViewAttached()){
                     if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
                         HomeBean homeBean = (HomeBean) apiResponse.getResults();
@@ -68,12 +53,51 @@ public class HomePresenter extends HomeContract.Presenter {
 
             @Override
             public void onFailure(Call call, Throwable t) {
+                hideLoading();
                 if(isViewAttached()){
                     mView.onFailureMessage(t.toString());
                 }
             }
         });
     }
+
+    /**
+     * @param search  搜索内容
+     * @param sortlabel  排序
+     * @param label    标签
+     * @param pageSize
+     * @param pageno
+     */
+    public void getSearchData(String search,String sortlabel,String label,int pageSize, int pageno) {
+        baseMap.clear();
+        baseMap.put("search",search);
+        baseMap.put("price",sortlabel);
+        baseMap.put("label",label);
+        baseMap.put("pagesize",pageSize);
+        baseMap.put("pageno",pageno);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_SEARCH, baseMap
+                , HomeBean.class, new ApiCallback<HomeBean>() {
+                    @Override
+                    public void onSuccess(ApiResponse apiResponse) {
+                        if(null != apiResponse && isViewAttached()){
+                            if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                                HomeBean homeBean = (HomeBean) apiResponse.getResults();
+                                mView.onSuccess(homeBean);
+                            }else{
+                                mView.onFailureMessage(apiResponse.getMessage());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        if(isViewAttached()){
+                            mView.onFailureMessage(t.toString());
+                        }
+                    }
+                });
+    }
+
 
 
 }

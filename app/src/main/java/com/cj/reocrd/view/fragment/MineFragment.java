@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,20 +14,20 @@ import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseFragment;
+import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.presenter.MyPrresenter;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.activity.MyActivity;
+import com.cj.reocrd.view.activity.OrderActivity;
 import com.cj.reocrd.view.activity.MyFansActivity;
-import com.cj.reocrd.view.activity.UndoneActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.cj.reocrd.base.BaseActivity.uid;
-import static com.cj.reocrd.view.activity.MyActivity.pNumber;
 
 /**
  * Created by Administrator on 2018/3/16.
@@ -105,6 +106,17 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     }
 
     @Override
+    public void getArgumentData(Bundle arguments) {
+        super.getArgumentData(arguments);
+        ToastUtil.showShort(arguments.getString("key"));
+    }
+
+    @Override
+    public void putArgumentData(BaseFragment baseFragment, int position) {
+        super.putArgumentData(this, position);
+    }
+
+    @Override
     public void initData() {
         super.initData();
         mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
@@ -129,16 +141,16 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
             case R.id.mine_all:
                 break;
             case R.id.mine_pay:
-                UndoneActivity.actionActivity(mActivity, UndoneActivity.PAY);
+                OrderActivity.actionActivity(mActivity,OrderActivity.PAY);
                 break;
             case R.id.mine_send:
-                UndoneActivity.actionActivity(mActivity, UndoneActivity.SEND);
+                OrderActivity.actionActivity(mActivity, OrderActivity.SEND);
                 break;
             case R.id.mine_confim:
-                UndoneActivity.actionActivity(mActivity, UndoneActivity.CONFIM);
+                OrderActivity.actionActivity(mActivity, OrderActivity.CONFIM);
                 break;
             case R.id.mine_evaluate:
-                UndoneActivity.actionActivity(mActivity, UndoneActivity.EVALUATE);
+                OrderActivity.actionActivity(mActivity, OrderActivity.EVALUATE);
                 break;
             case R.id.mine_return:
                 break;
@@ -162,6 +174,8 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case R.id.mine_fans:
                 startActivity(MyFansActivity.class);
+                break;
+            default:
                 break;
         }
     }

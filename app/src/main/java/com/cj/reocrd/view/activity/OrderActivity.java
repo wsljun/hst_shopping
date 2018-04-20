@@ -10,8 +10,11 @@ import android.widget.TextView;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseActivity;
+import com.cj.reocrd.contract.OrderContract;
+import com.cj.reocrd.model.entity.OrderBean;
+import com.cj.reocrd.presenter.OrderPresenter;
 import com.cj.reocrd.utils.ToastUtil;
-import com.cj.reocrd.view.adapter.UndoneAdapter;
+import com.cj.reocrd.view.adapter.OrderAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,8 @@ import butterknife.OnClick;
  * Created by Administrator on 2018/3/17.
  */
 
-public class UndoneActivity extends BaseActivity implements UndoneAdapter.OnItemListener {
+public class OrderActivity extends BaseActivity<OrderPresenter> implements OrderAdapter.OnItemListener
+        ,OrderContract.View{
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -32,19 +36,23 @@ public class UndoneActivity extends BaseActivity implements UndoneAdapter.OnItem
     TextView titleRight;
     @BindView(R.id.undone_recycler)
     RecyclerView undoneRecycler;
-    UndoneAdapter undoneAdapter;
+    OrderAdapter undoneAdapter;
     List<String> mDatas;
+    List<OrderBean> orderBeans;
     int type;
+    public static final int ALL = 0;//全部
     public static final int PAY = 1;//待付款
     public static final int SEND = 2;//待发货
     public static final int CONFIM = 3;//待确认
     public static final int EVALUATE = 4;//待评价
 
     public static void actionActivity(Context context, int type) {
-        Intent sIntent = new Intent(context, UndoneActivity.class);
+        Intent sIntent = new Intent(context, OrderActivity.class);
         sIntent.putExtra("type", type);
         context.startActivity(sIntent);
     }
+
+
 
     @Override
     public int getLayoutId() {
@@ -56,6 +64,7 @@ public class UndoneActivity extends BaseActivity implements UndoneAdapter.OnItem
         super.initData();
         //这四个页面都差不多，就放到一块了，type标示，加载不同布局
         type = getIntent().getIntExtra("type", 1);
+        mPresenter.getOrderList("20","0",uid, String.valueOf(type));
         mDatas = new ArrayList<>();
         mDatas.add("1");
         mDatas.add("2");
@@ -65,6 +74,9 @@ public class UndoneActivity extends BaseActivity implements UndoneAdapter.OnItem
     @Override
     public void initView() {
         switch (type){
+            case 0:
+                titleCenter.setText(getString(R.string.mine_order_all));
+                break;
             case 1:
                 titleCenter.setText(getString(R.string.mine_daifukuan));
                 break;
@@ -79,7 +91,7 @@ public class UndoneActivity extends BaseActivity implements UndoneAdapter.OnItem
                 break;
         }
         //type传给adapter，调整不同布局
-        undoneAdapter = new UndoneAdapter(this, mDatas,type);
+        undoneAdapter = new OrderAdapter(this, mDatas,type);
         undoneAdapter.setOnItemListener(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         undoneRecycler.setLayoutManager(layoutManager);
@@ -89,7 +101,7 @@ public class UndoneActivity extends BaseActivity implements UndoneAdapter.OnItem
 
     @Override
     public void initPresenter() {
-
+        mPresenter.setVM(this);
     }
 
 
@@ -110,5 +122,29 @@ public class UndoneActivity extends BaseActivity implements UndoneAdapter.OnItem
     @Override
     public void refundClick(int position) {
         ToastUtil.showToastS(this, "refundClick" + position);
+    }
+
+    @Override
+    public void onSuccess(Object data) {
+
+    }
+
+    @Override
+    public void onFailureMessage(String msg) {
+
+    }
+
+    @Override
+    public Context getContext() {
+        return this.getApplicationContext();
+    }
+
+    @Override
+    public void showOrderList(List<OrderBean> orderBeanList) {
+         if(orderBeanList.size()>0){
+
+         }else{
+             ToastUtil.showShort("没有订单！");
+         }
     }
 }

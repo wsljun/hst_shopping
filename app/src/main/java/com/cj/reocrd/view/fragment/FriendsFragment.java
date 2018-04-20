@@ -3,45 +3,30 @@ package com.cj.reocrd.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseFragment;
-import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
-import com.cj.reocrd.base.baseadapter.OnItemClickListener;
 import com.cj.reocrd.contract.FriendsContract;
-import com.cj.reocrd.contract.GoodsContract;
 import com.cj.reocrd.model.entity.Friends;
 import com.cj.reocrd.model.entity.FriendsBean;
-import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.presenter.FriendsPresenter;
-import com.cj.reocrd.utils.ImageLoaderUtils;
-import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.activity.FriendDetailActivity;
 import com.cj.reocrd.view.activity.FriendSendActivity;
-import com.cj.reocrd.view.adapter.AllOneAdapter;
 import com.cj.reocrd.view.adapter.FriendsAdapter;
-import com.cj.reocrd.view.adapter.HomeAdapter;
-import com.cj.reocrd.view.refresh.NormalRefreshViewHolder;
-import com.cj.reocrd.view.refresh.RefreshLayout;
 import com.cj.reocrd.view.view.ProgressWait.ProgressPopupWindow;
-import com.zhy.autolayout.utils.L;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static android.app.Activity.RESULT_OK;
 import static com.cj.reocrd.base.BaseActivity.uid;
 
 /**

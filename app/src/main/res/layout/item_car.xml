@@ -54,7 +54,7 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:id="@+id/two_pic"
+            android:id="@+id/iv_cart_pic"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_centerVertical="true"
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/two_pic"
+            android:layout_toRightOf="@+id/iv_cart_pic"
             android:orientation="vertical">
 
             <TextView
@@ -83,7 +83,10 @@
                 style="@style/setting_item_configure"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/car_weight"
+                android:text="asdfghjkjhgdhjkjshdjhsjahsjahdssyyyyyyyyyyyyyy"
+                android:maxLines="1"
+                android:maxEms="30"
+                android:maxLength="25"
                 android:textColor="@color/colorTexthintGrey" />
 
             <TextView
@@ -92,6 +95,9 @@
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="8dp"
                 android:text="X3"
+                android:maxLines="1"
+                android:maxEms="30"
+                android:maxLength="25"
                 android:textColor="@color/colorTexthintGrey" />
         </LinearLayout>
 

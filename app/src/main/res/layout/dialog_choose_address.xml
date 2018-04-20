@@ -7,9 +7,11 @@
     android:gravity="bottom"
     android:orientation="vertical">
 
-    <com.ywp.addresspickerlib.AddressPickerView
+    <com.cj.reocrd.view.view.pickerview.AddressPickerView
         android:id="@+id/apvAddress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"></com.ywp.addresspickerlib.AddressPickerView>
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </com.cj.reocrd.view.view.pickerview.AddressPickerView>
 </LinearLayout>

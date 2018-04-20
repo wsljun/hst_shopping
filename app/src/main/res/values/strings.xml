@@ -31,6 +31,7 @@
     <string name="friends_publish">发表</string>
     <string name="car">购物车</string>
     <string name="mine">我的</string>
+    <string name="mine_order_all">全部订单</string>
     <string name="mine_tuihuo">退货</string>
     <string name="mine_daifukuan">待付款</string>
     <string name="mine_daifahuo">待发货</string>
@@ -78,7 +79,7 @@
     <string name="address_phone">联系方式</string>
     <string name="address_dz">收货地址</string>
     <string name="address_dz_detail">详细地址</string>
-    <string name="address_logo">店名&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="address_logo">邮编&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
 
     <string name="update_name_hint">*以英文字母或汉字开头，限4-16个字符一个汉字为2个字符</string>
     <string name="update_name_hint2">昵称不能为空</string>
@@ -135,6 +136,10 @@
     <string name="good_detail_buy">立即购买</string>
     <string name="good_detail_total">总价：</string>
     <string name="good_detail_buynum">购买数量</string>
+    <string name="goods_price">商品价格</string>
+    <string name="title_freight">运费</string>
+
+
 
     <string name="car_paisong">配送服务</string>
     <string name="car_free">以免运费</string>

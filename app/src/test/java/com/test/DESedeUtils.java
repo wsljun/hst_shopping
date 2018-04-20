@@ -2,17 +2,15 @@ package com.test;
 
 import com.cj.reocrd.api.UrlConstants;
 
+import org.junit.Test;
+import org.openqa.selenium.internal.Base64Encoder;
+
 import java.io.UnsupportedEncodingException;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-
-import org.junit.Test;
-import org.openqa.selenium.internal.Base64Encoder;
 
 @SuppressWarnings("all")
 public class DESedeUtils {
@@ -126,15 +124,21 @@ public class DESedeUtils {
 
 	@Test
 	public void decode(){
-		String str = "gGOy3BZWRo4kiXv1p/9XSQWxDHkFKMGB0oLBjeHw8aKncOIt4Y0dDEW/TM3PYzRkgry8SKZyhbmw\n" +
-				"TD4eBvEVXNzsBqzlgQu1ejL1Ratye1uCJAdSFMRWhIBMCBMruzbeHXygjLA+mWYEHEcmKHEbqK0k\n" +
-				"FmkUeFNfPVTSps3bmNZY7yZ+b1QarUAufmEQvXg5jAfl3eTIm5pHwXuaN6eA4uv3vUaXVhmIefGn\n" +
-				"yp6Ws/CDelRhr1xJAB1cXm9B0m27zBwotemHcMgQU2Dqxt5bvuJvd8BZGjUJSWV+UEPY96fXuntW\n" +
-				"n8gd7644eVuyLs+WWwyBy7tapyyJf6HDU3rnYRyP3rNf10MmlIHdfc9YKdYzkVYrzW4HOmEJwYMI\n" +
-				"811UTVxNh3o0vOwsUe/+Cp5mD7piEwjUZQi6kFp0gIkN2InCg23qOQB/pmEMa22Clq4Bc4hUn8gG\n" +
-				"ZYN2gclYyw3vdbmIWtVBw2woAMDKEoa5rNpqntXqOuFgOIo4/DzOeQa3+ylIbjt6Y5HUOobpqO9i\n" +
-				"UtQbzOT4gGPHk4PVa39clu0=";
-		String text = getdeCrypt(str,  UrlConstants.PID);
+//		String str = "MSsaOKyS62UCS9rEQKToOA3kKNYNfHd9W67UUPYxXHzuolZ4vxfrIKDZPAJxY0nGSALy/n3WZWUY\n" +
+//				"KiBDCmdBP2vfmqYqDoeCtAb2MM/69gvKysQi3M4UXm+R6v3y45vfAwcRsppXj8ifoX8G1Ca1MA94\n" +
+//				"j+w5Z2Ns78NPaXodoRhrrXvJR90A8zDNlNLI7xVwNM72us8KVp++DPIi9M34xXON7HDBe/p8+vyK\n" +
+//				"+3PbENv1KpicDgE9ZToYajdIbgHChk42PPstOD9U+dTVCuv1p2u8snWvNwlW36qkPvo7u2WLJr7H\n" +
+//				"v2KgY4QAIcBWnNi281VHu7oMCGaI+oFYeNS4Oeyyu1yzSM0kndxBe7nT0KsV33OERxb0Eav/yeu9\n" +
+//				"JftAlCPMn7cxnZj6plZ00AYeP/weEOtGAZ2OcRBIsduBafkJ2l96ufijMPF4vsCCUj9tMCvrXkxm\n" +
+//				"JxnyQvshkIe16kPPAOBhB9zylKm0MrLv8yQPEhQIL5vwWqC3aRMb/JFhLZ8z3nbb6NYLO0LRhef1\n" +
+//				"XoHkc3+VxPNCzrNL/8NgyZs=";
+//		String text = getdeCrypt(str,  "357714186790243");
+//		System.out.println("解密-->>" + text);
+		String str = "MSsaOKyS62UCS9rEQKToOA3kKNYNfHd9W67UUPYxXHzuolZ4vxfrIDSnaAOTPaVjc084cZgCxsmx\n" +
+				"P6wbQVF6hS5I+MAJKvjO5f+rQC+8GAJaoXb3uOowRePewrAs0CpER7z1AKhF1M6tbWg1G3EebSlg\n" +
+				"KwRhV/BAGCogQwpnQT9r35qmKg6HgrQG9jDP+vYLmkCxBbsVkiDvK6vBq7DL7ZvlnWzUpP2j5zHQ\n" +
+				"81ZCs89dbw/GlirQlhrp/owPd2Dv0JBu1nyg0gkf4SQ2I+5qufCM0VB/4pPpdkO1GLO/7wk==";
+		String text = getdeCrypt(str,  "357714186790243");
 		System.out.println("解密-->>" + text);
 	}
 
@@ -154,11 +158,11 @@ public class DESedeUtils {
 		int pageno = 1;
 		// 封装cipher秘文
 		String data = "{\"pagesize\":\"" + pagesize + "\",\"pageno\":\"" + pageno + "\"}";
-		String cipher = getDesede(data, UrlConstants.PID);
-		System.out.println("密文-->>" + getDesede(data, UrlConstants.PID));
+//		String cipher = getDesede(data, UrlConstants.PID);
+//		System.out.println("密文-->>" + getDesede(data, UrlConstants.PID));
 		// 求情参数data
-		String sendData = "{\"pid\":\"" + UrlConstants.PID + "\",\"por\":\"" + 201 + "\",\"cipher\":\"" + cipher + "\"}";
-		System.out.println("请求参数-->>" + sendData);
+//		String sendData = "{\"pid\":\"" + UrlConstants.PID + "\",\"por\":\"" + 201 + "\",\"cipher\":\"" + cipher + "\"}";
+//		System.out.println("请求参数-->>" + sendData);
 	}
 
 }

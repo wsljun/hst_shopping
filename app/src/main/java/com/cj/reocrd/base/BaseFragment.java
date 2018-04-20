@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.TUtil;
+import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.IndexActivity;
 import com.cj.reocrd.view.activity.MainActivity;
 import com.cj.reocrd.view.activity.MyActivity;
@@ -29,6 +30,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     public Unbinder unbinder;
     public T mPresenter;
     private final String TAG = "BaseFragment";
+    private String mParam1;
+    private boolean isFirstLoad = true;//是否是第一次加载
+    private boolean isVisible;//是否对用户可见
+    private boolean isInitView;//是否初始化控件
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,18 +41,18 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         mActivity = (BaseActivity) getActivity();
         LogUtil.e(TAG, "onCreateView: ");
         if (savedInstanceState != null) {
-//            FragmentTransaction ft = getFragmentManager().beginTransaction();
-//            if (ft != null && isAdded()) {
-//                ft.remove(this);
-//                ft.commit();
-//            }
-//            if (getParentFragment() != null) {
-//                FragmentTransaction pft = getParentFragment().getChildFragmentManager().beginTransaction();
-//                if (pft != null && isAdded()) {
-//                    pft.remove(this);
-//                    pft.commit();
-//                }
-//            }
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            if (ft != null && isAdded()) {
+                ft.remove(this);
+                ft.commit();
+            }
+            if (getParentFragment() != null) {
+                FragmentTransaction pft = getParentFragment().getChildFragmentManager().beginTransaction();
+                if (pft != null && isAdded()) {
+                    pft.remove(this);
+                    pft.commit();
+                }
+            }
         }
 
         mPresenter = TUtil.getT(this, 0);
@@ -64,16 +69,34 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
+//        if (getArguments() != null) { // todo 此功能存在bug
+////            getArgumentData(getArguments());
+//        }
         unbinder = ButterKnife.bind(this, view);
         LogUtil.e(TAG, "onCreateView: ");
         init();
+        isInitView = true;//已经初始化
+        lazyLoad();//懒加载
         return view;
     }
 
+    public void getArgumentData(Bundle arguments) {
+        mParam1 = getArguments().getString("key");
+//        ToastUtil.showShort(mParam1);
+    }
+    public void putArgumentData(BaseFragment baseFragment,int position) {
+//        Bundle  b = new Bundle();
+//        b.putCharSequence("key",baseFragment.getClass().getName()+position);
+//        baseFragment.setArguments(b);
+//        LogUtil.e(TAG,baseFragment.getClass().getName()+" ; "+position);
+//        ToastUtil.showShort(mParam1);
+    }
+
     private final void init() {
-        initData();
         initView();
     }
+
+
 
     public abstract int getLayoutId();
 
@@ -82,12 +105,42 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     public void initData() {
     }
 
+
+    /**
+     * 懒加载
+     * 如果不是第一次加载、没有初始化控件、不对用户可见就不加载
+     */
+    protected  void lazyLoad(){
+        if(!isFirstLoad || !isInitView || !isVisible){
+            return;
+        }
+        initData();//初始化数据
+//        isFirstLoad = false;//已经不是第一次加载
+    }
+
+    /**
+     * 是否对用户可见
+     * @param isVisibleToUser true:表示对用户可见，反之则不可见
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            isVisible = true;
+            //这里根据需求，如果不要每次对用户可见的时候就加载就不要调用lazyLoad()这个方法，根据个人需求
+            lazyLoad();
+        }else{
+            isVisible = false;
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (mPresenter != null){
 //            mPresenter.onDestroy();
         }
+        isInitView = false;
         unbinder.unbind();
         LogUtil.e(TAG, "onCreateView: ");
     }
@@ -152,6 +205,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         }
         startActivity(intent);
     }
+
+
 
 
 }
