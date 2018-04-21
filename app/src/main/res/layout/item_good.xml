@@ -12,8 +12,7 @@
         android:layout_width="130dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"
-        android:background="@mipmap/ic_launcher" />
+        android:layout_margin="20dp"/>
 
     <TextView
         android:id="@+id/good_name"
@@ -22,7 +21,6 @@
         android:gravity="left"
         android:minLines="2"
         android:maxLines="2"
-        android:text="但是这种简单的方式可能有时候不能满但是这种简单的方式可能有时候不能满足某些比较较真的需求足某些比较较真的需求"
         android:textColor="@color/colorBlack" />
 
     <RelativeLayout
@@ -35,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:text="已售154"
             android:textColor="@color/colorTexthintGrey2"
             android:textSize="12sp" />
 
@@ -46,7 +43,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
-            android:text="$454"
             android:textColor="@color/colorTextRed"
             android:textSize="17sp" />
     </RelativeLayout>

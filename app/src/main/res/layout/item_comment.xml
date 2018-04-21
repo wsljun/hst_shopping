@@ -9,8 +9,7 @@
         android:id="@+id/comment_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_centerVertical="true"/>
 
 
     <LinearLayout
@@ -27,7 +26,6 @@
                 android:id="@+id/comment_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="mmdisa名字"
                 android:textColor="@color/colorTexthintGrey"
                 android:textSize="14sp" />
 
@@ -37,7 +35,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="2dp"
-                android:text="2018.04.10"
                 android:textColor="@color/colorTexthintGrey"
                 android:textSize="12sp" />
 
@@ -49,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="14dp"
-            android:text="mmdisa名字mmdmmdisa名字mmdisa名字mmdisa名字mmdisa名字mmdisa名字mmdisa名字mmdisa名字mmdisa名字isa名字mmdisa名字mmdisa名字"
             android:textSize="14sp" />
     </LinearLayout>
 

@@ -23,9 +23,9 @@ import java.util.List;
  * Created by Administrator on 2018/3/26.
  */
 
-public class CarAdapter extends BaseQuickAdapter implements AmountView.OnAmountChangeListener{
+public class CarAdapter extends BaseQuickAdapter implements AmountView.OnAmountChangeListener {
     private GoodsBean cartGoods; // 购物车 商品集合
-    private  int item_layoutid;
+    private int item_layoutid;
 
     public CarAdapter(int layoutResId, List data) {
         super(layoutResId, data);
@@ -40,26 +40,25 @@ public class CarAdapter extends BaseQuickAdapter implements AmountView.OnAmountC
     @Override
     protected void convert(BaseViewHolder helper, Object item, int position) {
         cartGoods = (GoodsBean) item;
-        ImageLoaderUtils.display(mContext,  helper.getView(R.id.iv_cart_pic), UrlConstants.BASE_URL+cartGoods.getImgurl());
-        helper.setText(R.id.car_name,cartGoods.getName());
-        helper.setText(R.id.car_weight,"规格:"+cartGoods.getUnit());
-        helper.setText(R.id.car_num,"数量:"+cartGoods.getBuynum());
+        ImageLoaderUtils.display(mContext, helper.getView(R.id.iv_cart_pic), UrlConstants.BASE_URL + cartGoods.getImgurl());
+        helper.setText(R.id.car_name, cartGoods.getName());
+        helper.setText(R.id.car_num, "数量:" + cartGoods.getBuynum());
         helper.getView(R.id.car_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBaseItemClickListener.onAdapterItemClickListener(v,position);
+                mBaseItemClickListener.onAdapterItemClickListener(v, position);
             }
         });
 
-        CheckBox checkBox =  helper.getView(R.id.car_choose);
+        CheckBox checkBox = helper.getView(R.id.car_choose);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mBaseItemClickListener.onAdapterItemClickListener(buttonView,position);
+                mBaseItemClickListener.onAdapterItemClickListener(buttonView, position);
             }
         });
-        AmountView amountView =  helper.getView(R.id.car_amount);
-        amountView.setGoods_storage(Integer.parseInt(cartGoods.getBlocknum()));
+        AmountView amountView = helper.getView(R.id.car_amount);
+        amountView.setGoods_storage(Integer.parseInt(cartGoods.getStock()));
         amountView.setOnAmountChangeListener(this::onAmountChange);
 
 
@@ -67,11 +66,9 @@ public class CarAdapter extends BaseQuickAdapter implements AmountView.OnAmountC
 
     @Override
     public void onAmountChange(View view, int amount) {
-        ToastUtil.showShort("onAmountChange: "+amount);
-        mBaseItemClickListener.onAdapterItemClickListener(view,amount);
+        ToastUtil.showShort("onAmountChange: " + amount);
+        mBaseItemClickListener.onAdapterItemClickListener(view, amount);
     }
-
-
 
 
 }

@@ -150,4 +150,6 @@
     <string name="friends_title_detail">详情</string>
 
     <string name="fans_title">粉丝</string>
+
+    <string name="collect_title">收藏</string>
 </resources>

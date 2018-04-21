@@ -71,6 +71,12 @@ public class UrlConstants {
         public static final String UPDATE_IC = "308";
         // 收藏
         public static final String URL_COLLECT_GOODS= "309";
+        // 取消收藏
+        public static final String URL_COLLECT_DELETE= "310";
+        // 收藏
+        public static final String URL_COLLECT_LIST= "311";
+        // 收藏
+        public static final String URL_COLLECT_BROWSE= "312";
 
         // 订单详情
         public static final String URL_ORDER_LIST = "401";// todo order list
