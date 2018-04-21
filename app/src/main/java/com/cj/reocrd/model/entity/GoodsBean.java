@@ -112,8 +112,8 @@ public class GoodsBean {
     }
 
     public String getPrice() {
-        int p = (Integer.parseInt(price))/100;
-        price = String.valueOf(p);
+//        int p = (Integer.parseInt(price))/100;
+//        price = String.valueOf(p);
         return price;
     }
 

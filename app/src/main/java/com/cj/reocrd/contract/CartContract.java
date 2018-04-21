@@ -18,11 +18,12 @@ public interface CartContract {
     interface View extends BaseView {
         //返回获取的数据
         void showCartData(List<GoodsBean> goodsBeanList);
+        void updateCartData();
     }
 
     abstract static class Presenter extends BasePresenter<View> {
         public abstract void getCartData(String uid);
-        public abstract void delGoods(String goodsID);
+        public abstract void delCartGoods(String goodsID);
         public abstract void addCartGoodsNum(String goodsID,int num);
     }
 }

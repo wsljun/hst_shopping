@@ -54,16 +54,17 @@ public class CartPresenter extends CartContract.Presenter {
     }
 
     @Override
-    public void delGoods(String goodsID) {
+    public void delCartGoods(String goodsID) {
         baseMap.clear();
         baseMap.put("bid",goodsID);
         ApiModel.getInstance().getData(UrlConstants.UrLType.URL_DEL_CART, baseMap, null, new ApiCallback() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
-//                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                            mView.updateCartData(); // 刷新list
                             mView.onSuccess(apiResponse.getMessage());
-//                    }
+                    }
                 }
             }
 
@@ -85,6 +86,7 @@ public class CartPresenter extends CartContract.Presenter {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
+                    mView.updateCartData(); // 刷新list
                     mView.onSuccess(apiResponse.getMessage());
                 }
             }
@@ -97,4 +99,27 @@ public class CartPresenter extends CartContract.Presenter {
             }
         });
     }
+
+    public void cartSubmitOrder(String cartID, String  uid) {
+        baseMap.clear();
+        baseMap.put("bid",cartID);
+        baseMap.put("uid",uid);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_ORDER_FROM_CART, baseMap, null, new ApiCallback() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if(null != apiResponse && isViewAttached()){
+//                    mView.updateCartData(); // 刷新list
+                    mView.onSuccess(apiResponse.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                if(isViewAttached()){
+                    mView.onFailureMessage(t.toString());
+                }
+            }
+        });
+    }
+
 }

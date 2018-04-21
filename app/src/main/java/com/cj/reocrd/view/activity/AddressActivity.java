@@ -54,13 +54,7 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
     public void initData() {
         super.initData();
         addressBeans = new ArrayList<>();
-        mPresenter.getAddressList(uid);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mPresenter.getAddressList(uid);
+        updateAddressList();
     }
 
     @Override
@@ -142,5 +136,10 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
         }else{
             ToastUtil.showShort("暂时没有数据");
         }
+    }
+
+    @Override
+    public void updateAddressList() {
+        mPresenter.getAddressList(uid);
     }
 }

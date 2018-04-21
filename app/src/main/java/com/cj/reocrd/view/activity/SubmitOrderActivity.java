@@ -94,6 +94,8 @@ public class SubmitOrderActivity extends BaseActivity {
             case R.id.tv_submit_order:
                 ToastUtil.showShort("提交订单");
                 break;
+            default:
+                break;
         }
     }
 

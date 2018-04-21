@@ -75,17 +75,17 @@ public class UrlConstants {
         // 订单详情
         public static final String URL_ORDER_LIST = "401";// todo order list
         public static final String URL_ORDER_DETAIL = "402";// todo order detail
-        public static final String URL_ORDER_FROM_CART = "403";// todo order from cart
-        public static final String URL_ORDER_FROM_DETAIL = "404";// todo order from detail
+        public static final String URL_ORDER_FROM_CART = "403";//  order from cart
+        public static final String URL_ORDER_FROM_DETAIL = "404";//  order from detail
         public static final String URL_CANCEL_ORDER = "405";// todo order cancel
         public static final String URL_Update_ORDER_addr = "406";// todo update order addr
         public static final String URL_refund_ORDER = "407";// todo order refund
-        public static final String URL_ADDR_LIST = "408";// todo addr list
-        public static final String URL_ADD_ADDR = "409";// todo addr add
-        public static final String URL_UPDATE_ADDR = "410";// todo addr update
-        public static final String URL_DEFAULT_ADDR = "411";// todo addr default
-        public static final String URL_DEL_ADDR = "412";// todo addr del
-        public static final String URL_Select_ADDR_MAP = "413";// todo addr map
+        public static final String URL_ADDR_LIST = "408";//  addr list
+        public static final String URL_ADD_ADDR = "409";//  addr add
+        public static final String URL_UPDATE_ADDR = "410";//  addr update
+        public static final String URL_DEFAULT_ADDR = "411";//  addr default
+        public static final String URL_DEL_ADDR = "412";//  addr del
+        public static final String URL_Select_ADDR_MAP = "413";//  addr map
         //关注好友
         public static final String FRIEDNS_KEEP = "501";
         //取消关注

@@ -17,6 +17,7 @@ import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.view.AmountView.AmountView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,10 +27,12 @@ import java.util.List;
 public class CarAdapter extends BaseQuickAdapter implements AmountView.OnAmountChangeListener{
     private GoodsBean cartGoods; // 购物车 商品集合
     private  int item_layoutid;
+    public static   List<CheckBox> checkBoxList = new ArrayList<>();
 
     public CarAdapter(int layoutResId, List data) {
         super(layoutResId, data);
         item_layoutid = layoutResId;
+        checkBoxList.clear();
     }
 
     @Override
@@ -52,14 +55,23 @@ public class CarAdapter extends BaseQuickAdapter implements AmountView.OnAmountC
         });
 
         CheckBox checkBox =  helper.getView(R.id.car_choose);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBox.setTag(position);
+        if(!checkBoxList.contains(checkBox)){
+            checkBoxList.add(checkBox);
+
+        }
+        checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mBaseItemClickListener.onAdapterItemClickListener(buttonView,position);
+            public void onClick(View v) {
+                int i = (int) v.getTag();
+//                checkBoxList.get(i).setChecked(checkBoxList.get(i).isChecked());
+                mBaseItemClickListener.onAdapterItemClickListener(v,i);
             }
         });
         AmountView amountView =  helper.getView(R.id.car_amount);
-        amountView.setGoods_storage(Integer.parseInt(cartGoods.getBlocknum()));
+        amountView.setGoods_storage(Integer.parseInt(cartGoods.getStock()));
+        amountView.setTag(position);
+        amountView.setText(cartGoods.getBuynum());
         amountView.setOnAmountChangeListener(this::onAmountChange);
 
 
