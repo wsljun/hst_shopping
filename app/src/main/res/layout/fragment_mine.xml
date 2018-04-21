@@ -34,8 +34,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="50dp"
-                        android:src="@mipmap/ic_launcher" />
+                        android:layout_marginLeft="50dp"/>
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -49,7 +48,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:text="mmdisa名字"
                             android:textColor="@color/colorWhite"
                             android:textSize="18sp" />
 
