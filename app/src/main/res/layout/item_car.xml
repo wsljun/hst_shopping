@@ -83,7 +83,7 @@
                 style="@style/setting_item_configure"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="8dp"
-                android:text="asdfghjkjhgdhjkjshdjhsjahsjahdssyyyyyyyyyyyyyy"
+                android:text="asdfghjkjhgdhjkasdfghjkjhasdfghjkjhgdhjkjshdjhsjahsjahdssyyyyyyyyyyyyyygdhjkjshdjhsjahsjahdssyyyyyyyyyyyyyyjshdjhsjahsjahdssyyyyyyyyyyyyyy"
                 android:maxLines="1"
                 android:maxEms="30"
                 android:maxLength="25"

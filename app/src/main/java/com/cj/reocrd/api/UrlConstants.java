@@ -77,7 +77,8 @@ public class UrlConstants {
         public static final String URL_COLLECT_LIST= "311";
         // 收藏
         public static final String URL_COLLECT_BROWSE= "312";
-
+        //钱包
+        public static final String MY_WALLET="313";
         // 订单详情
         public static final String URL_ORDER_LIST = "401";//  order list
         public static final String URL_ORDER_DETAIL = "402";//  order detail

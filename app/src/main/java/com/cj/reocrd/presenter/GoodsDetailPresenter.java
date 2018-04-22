@@ -9,6 +9,7 @@ import com.cj.reocrd.model.ApiModel;
 import com.cj.reocrd.model.entity.GoodsDetailsBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.model.entity.OrderBean;
+import com.cj.reocrd.model.entity.Wallet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -188,6 +189,28 @@ public class GoodsDetailPresenter extends GoodsDetailContract.Presenter {
         baseMap.put("pagesize", pagesize);
         baseMap.put("pageno", pageno);
         ApiModel.getInstance().getData(UrlConstants.UrLType.URL_COLLECT_BROWSE, baseMap, HomeBean.class
+                , new ApiCallback() {
+                    @Override
+                    public void onSuccess(ApiResponse apiResponse) {
+                        if (null != apiResponse && isViewAttached()) {
+                            mView.onSuccess(apiResponse);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        if (isViewAttached()) {
+                            mView.onFailureMessage(t.toString());
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void myWallet(String uid) {
+        baseMap.clear();
+        baseMap.put("uid", uid);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.MY_WALLET, baseMap, Wallet.class
                 , new ApiCallback() {
                     @Override
                     public void onSuccess(ApiResponse apiResponse) {

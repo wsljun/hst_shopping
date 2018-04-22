@@ -24,6 +24,7 @@ import com.cj.reocrd.view.activity.CollectActivity;
 import com.cj.reocrd.view.activity.MyActivity;
 import com.cj.reocrd.view.activity.OrderActivity;
 import com.cj.reocrd.view.activity.MyFansActivity;
+import com.cj.reocrd.view.activity.WalletActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -158,6 +159,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 ToastUtil.showShort("暂未实现");
                 break;
             case R.id.mine_money:
+                startActivity(WalletActivity.class);
                 break;
             case R.id.mine_price:
                 break;

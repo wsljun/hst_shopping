@@ -29,6 +29,6 @@ public interface GoodsDetailContract {
         public abstract void collectDelete(String uid,String mid);
         public abstract void collectList(String uid,int pagesize,int pageno);
         public abstract void collectBrowse(String uid, int pagesize, int pageno);
-
+        public abstract void myWallet(String uid);
     }
 }

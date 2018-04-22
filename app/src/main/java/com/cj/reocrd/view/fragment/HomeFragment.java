@@ -42,7 +42,7 @@ import butterknife.OnClick;
  */
 
 public class HomeFragment extends BaseFragment<HomePresenter> implements HomeContract.View
-        ,BaseQuickAdapter.RequestLoadMoreListener,RefreshLayout.RefreshLayoutDelegate,OnBannerListener {
+        , BaseQuickAdapter.RequestLoadMoreListener, RefreshLayout.RefreshLayoutDelegate, OnBannerListener {
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -87,7 +87,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void initView() {
-        LogUtil.e(TAG,"initview");
+        LogUtil.e(TAG, "initview");
         titleLeft.setVisibility(View.GONE);
         titleCenter.setText(getString(R.string.home));
         titleRight.setBackgroundResource(R.mipmap.gouwuche);
@@ -105,12 +105,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void putArgumentData(BaseFragment baseFragment, int position) {
         super.putArgumentData(this, position);
-        Bundle  b = new Bundle();
-        b.putCharSequence("key",position+"; This is Home Fragment");
+        Bundle b = new Bundle();
+        b.putCharSequence("key", position + "; This is Home Fragment");
         baseFragment.setArguments(b);
     }
 
-    private void setBannerView(List<String> images){
+    private void setBannerView(List<String> images) {
         //轮播图
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         banner.setIndicatorGravity(BannerConfig.CENTER);
@@ -122,8 +122,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     }
 
     private void initRecycleView() {
-        mHomeTabAdapter = new HomeAdapter(R.layout.item_good,null);
-        recyclerViewContent.setLayoutManager(new GridLayoutManager(mActivity,2));
+        mHomeTabAdapter = new HomeAdapter(R.layout.item_good, null);
+        recyclerViewContent.setLayoutManager(new GridLayoutManager(mActivity, 2));
         recyclerViewContent.setHasFixedSize(true);
         //设置适配器加载动画
         mHomeTabAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
@@ -132,14 +132,14 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         mHomeTabAdapter.setOnLoadMoreListener(this);
         //设置下拉、上拉
         mRefreshLayout.setDelegate(this);
-        mRefreshLayout.setRefreshViewHolder(new NormalRefreshViewHolder(mActivity,true));
+        mRefreshLayout.setRefreshViewHolder(new NormalRefreshViewHolder(mActivity, true));
         recyclerViewContent.addOnItemTouchListener(new OnRecyclerItemClickListener(recyclerViewContent) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-                ToastUtil.showShort("position == "+viewHolder.getAdapterPosition());
+                ToastUtil.showShort("position == " + viewHolder.getAdapterPosition());
                 goodBundle.clear();
-                goodBundle.putString("goodsID",goodsBeanList.get(viewHolder.getAdapterPosition()).getId());
-                startActivity(GoodDetailActivity.class,goodBundle);
+                goodBundle.putString("goodsID", goodsBeanList.get(viewHolder.getAdapterPosition()).getId());
+                startActivity(GoodDetailActivity.class, goodBundle);
             }
 
             @Override
@@ -155,11 +155,11 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 //            }
 //        });
 
-        mPresenter.getHomeData(size,pageno);
+        mPresenter.getHomeData(size, pageno);
 
     }
 
-    @OnClick({R.id.home_search,R.id.title_right})
+    @OnClick({R.id.home_search, R.id.title_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.home_search:
@@ -181,7 +181,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void onFailureMessage(String msg) {
-         ToastUtil.showShort(msg);
+        ToastUtil.showShort(msg);
     }
 
     @Override
@@ -198,53 +198,57 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public boolean onRefreshLayoutBeginLoadingMore(RefreshLayout refreshLayout) {
-        size += 20;
-        mPresenter.getHomeData(size,pageno);
+        if (goodsBeanList.size() <= size * pageno) {
+            pageno++;
+            mPresenter.getHomeData(size, pageno);
+        }
         return false;
     }
 
     @Override
     public void OnBannerClick(int position) {
-        ToastUtil.showShort("Banner : " +position);
+        ToastUtil.showShort("Banner : " + position);
     }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogUtil.e(TAG,"onCreate");
+        LogUtil.e(TAG, "onCreate");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        LogUtil.e(TAG,"onStart");
+        LogUtil.e(TAG, "onStart");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LogUtil.e(TAG,"onStart");
+        LogUtil.e(TAG, "onStart");
     }
 
     @Override
     public void onRefreshHomeData(HomeBean homeBean) {
-        if(null!=homeBean.getMlist()&&homeBean.getMlist().size()>0){
-            goodsBeanList.clear();
-            goodsBeanList.addAll(homeBean.getMlist());
-            mHomeTabAdapter.setNewData(goodsBeanList);
+        if (null != homeBean.getMlist() && homeBean.getMlist().size() > 0) {
+            if (pageno > 0) {
+                mHomeTabAdapter.addData(homeBean.getMlist());
+            } else {
+                mHomeTabAdapter.setNewData(homeBean.getMlist());
+            }
             mRefreshLayout.endRefreshing();
             mRefreshLayout.endLoadingMore();
-        }else{
+        } else {
             ToastUtil.showShort("暂时没有商品信息");
             mHomeTabAdapter.loadComplete();
             mRefreshLayout.endRefreshing();
             mRefreshLayout.endLoadingMore();
         }
-        if(null!=homeBean.getBlist()&&homeBean.getBlist().size()>0){
+        if (null != homeBean.getBlist() && homeBean.getBlist().size() > 0) {
             images.clear();
-            for (BannerData uri  : homeBean.getBlist()) {
-                  images.add(UrlConstants.BASE_URL+uri.getImgurl());
+            for (BannerData uri : homeBean.getBlist()) {
+                images.add(UrlConstants.BASE_URL + uri.getImgurl());
             }
             setBannerView(images);
 //            banner.update(images);
