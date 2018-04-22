@@ -70,7 +70,7 @@ public class ApiModel {
         String cipher = DESedeUtils.getDesede(toJsonStr(dMap), pid);
         LogUtil.d(TAG, "data:cipher；" + cipher);
         HashMap<String, Object> map = new HashMap<>();
-        map.put("por", por);   // 请求接口
+        map.put ("por", por);   // 请求接口
         map.put("pid", pid); // 设备唯一码
         map.put("cipher", cipher); // c参数密文
         String data = toJsonStr(map);
