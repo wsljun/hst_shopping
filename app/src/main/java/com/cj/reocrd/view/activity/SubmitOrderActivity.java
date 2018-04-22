@@ -51,7 +51,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     RelativeLayout rlAddress;
     @BindView(R.id.tv_goods_num)
     TextView tvGoodsNum;
-//    @BindView(R.id.iv_goods_img)
+    //    @BindView(R.id.iv_goods_img)
 //    ImageView ivGoodsImg;
     @BindView(R.id.tv_goods_price)
     TextView tvGoodsPrice;
@@ -74,7 +74,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     private String consignee;
     private String phone;
     private String addressDetital;
-    private String totalPrice;
+    private String totalPrice="";
     private GoodsDetailsBean goodsDetails;
     private String oid,aid;
     private OrderDetail orderDetail;
@@ -131,12 +131,12 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     public void initView() {
         titleCenter.setText("提交订单");
         updateAddress();
-        if (null != goodsDetails) {
-            tvGoodsNum.setText(goodsNum+"件商品");
-            tvGoodsPrice.setText(totalPrice);
-            goodTotalPrice.setText(totalPrice);
+//        if (null != goodsDetails) {
+        tvGoodsNum.setText(goodsNum+"件商品");
+        tvGoodsPrice.setText(totalPrice);
+        goodTotalPrice.setText(totalPrice);
 //            ImageLoaderUtils.display(this, ivGoodsImg, UrlConstants.BASE_URL + goodsDetails.getImgurl());
-        }
+//        }
 
         // 订单中 不同商品图片展示
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);

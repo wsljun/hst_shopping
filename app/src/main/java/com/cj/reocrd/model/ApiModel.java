@@ -11,6 +11,7 @@ import com.cj.reocrd.api.ApiStore;
 import com.cj.reocrd.model.entity.GirlData;
 import com.cj.reocrd.utils.DESedeUtils;
 import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.ToastUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -81,7 +82,12 @@ public class ApiModel {
                 LogUtil.d( TAG,"onResponse: result 解密= "+result);
                 if (!TextUtils.isEmpty(result)) {
                     //todo  apicallback
-                    apiCallback.onSuccess(parseFastJson(result, clz));
+                    try {
+                        apiCallback.onSuccess(parseFastJson(result, clz));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        ToastUtil.showShort("返回数据错误");
+                    }
                 }
             }
 
@@ -101,7 +107,12 @@ public class ApiModel {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (!TextUtils.isEmpty(response.toString())) {
-                    apiCallback.onSuccess(parseFastJson(response.body().toString(), clz));
+                    try {
+                        apiCallback.onSuccess(parseFastJson(response.body().toString(), clz));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        ToastUtil.showShort("返回数据错误");
+                    }
                 }
             }
 
@@ -120,7 +131,12 @@ public class ApiModel {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (!TextUtils.isEmpty(response.toString())) {
-                    apiCallback.onSuccess(parseFastJson(response.body().toString(), clz));
+                    try {
+                        apiCallback.onSuccess(parseFastJson(response.body().toString(), clz));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        ToastUtil.showShort("返回数据错误");
+                    }
                 }
             }
 
@@ -145,7 +161,7 @@ public class ApiModel {
      * @param <T>  javabean
      * @return  ApiResponse<> t : obj
      */
-    public static <T> ApiResponse parseFastJson(String jsonStr, Class<T> clz) {
+    public static <T> ApiResponse parseFastJson(String jsonStr, Class<T> clz) throws Exception{
         String code = "2"; // 1
         String msg = "请求错误，请稍后重试！";
         ApiResponse apiResponse = null; // new ApiResponse("2","请求错误，请稍后重试！") ;

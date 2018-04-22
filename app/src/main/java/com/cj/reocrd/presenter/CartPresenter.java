@@ -6,6 +6,7 @@ import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.contract.CartContract;
 import com.cj.reocrd.contract.GoodsContract;
 import com.cj.reocrd.model.ApiModel;
+import com.cj.reocrd.model.entity.AddressBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.utils.CollectionUtils;
 
@@ -104,13 +105,14 @@ public class CartPresenter extends CartContract.Presenter {
         baseMap.clear();
         baseMap.put("bid",cartID);
         baseMap.put("uid",uid);
-        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_ORDER_FROM_CART, baseMap, null, new ApiCallback() {
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_ORDER_FROM_CART, baseMap, AddressBean.class, new ApiCallback() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
                     if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
                         // {"oid":"a3796d4a-32c6-4755-b614-fcf690c3cffb","message":"操作成功","statusCode":"1"}
-                        mView.toSubmitOrder();
+                        AddressBean addressBean = (AddressBean) apiResponse.getResults();
+                        mView.toSubmitOrder(addressBean);
                     }
                 }
             }

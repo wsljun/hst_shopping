@@ -136,7 +136,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         recyclerViewContent.addOnItemTouchListener(new OnRecyclerItemClickListener(recyclerViewContent) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-                ToastUtil.showShort("position == " + viewHolder.getAdapterPosition());
+//                ToastUtil.showShort("position == " + viewHolder.getAdapterPosition());
                 goodBundle.clear();
                 goodBundle.putString("goodsID", goodsBeanList.get(viewHolder.getAdapterPosition()).getId());
                 startActivity(GoodDetailActivity.class, goodBundle);
@@ -232,6 +232,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void onRefreshHomeData(HomeBean homeBean) {
         if (null != homeBean.getMlist() && homeBean.getMlist().size() > 0) {
+            goodsBeanList.clear();
+            goodsBeanList.addAll(homeBean.getMlist());
             if (pageno > 0) {
                 mHomeTabAdapter.addData(homeBean.getMlist());
             } else {

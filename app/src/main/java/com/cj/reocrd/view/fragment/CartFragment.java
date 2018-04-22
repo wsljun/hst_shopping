@@ -15,6 +15,7 @@ import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.OnItemClickListener;
 import com.cj.reocrd.base.baseadapter.SimpleClickListener;
 import com.cj.reocrd.contract.CartContract;
+import com.cj.reocrd.model.entity.AddressBean;
 import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.presenter.CartPresenter;
 import com.cj.reocrd.utils.LogUtil;
@@ -66,6 +67,8 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     private String currCartID = "";
     private final  static  String TAG = "CartFragment";
     public static double totalPrice = 0;
+    private int hisNum;
+
     @Override
     protected void initPresenter() {
         mPresenter.setVM(this);
@@ -168,10 +171,14 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     }
 
     @Override
-    public void toSubmitOrder() {
+    public void toSubmitOrder(AddressBean addressBean) {
+        //{"consignee":"18814253636",
+        // "fuladdress":"北京市北京市平谷区45623",
+        // "oid":"d25c66f5-ae37-420b-b4a5-354a6462cb04"
+        // ,"message":"操作成功","aid":"北京市北京市平谷区45623","statusCode":"1"}
         Bundle b = new Bundle();
-//        b.putParcelable("orderBean",orderBean);
-//        b.putParcelable("goodsDetails",goodsDetailsBean);
+        b.putString(SubmitOrderActivity.BUNDLE_KEY_OID,addressBean.getOid());
+        b.putString(SubmitOrderActivity.BUNDLE_KEY_TYPE,SubmitOrderActivity.TYPE_FOR_CART);
         startActivity(SubmitOrderActivity.class,b);
     }
 
@@ -200,7 +207,10 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
                 break;
             case R.id.car_amount:
                 int p = (Integer) view.getTag();
-                mPresenter.addCartGoodsNum(cartGoodsList.get(p).getBid(),position);
+                if(hisNum != position){
+                    mPresenter.addCartGoodsNum(cartGoodsList.get(p).getBid(),position);
+                }
+                hisNum = position;
                 break;
             default:
                 break;
