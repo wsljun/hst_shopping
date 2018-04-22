@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.nfc.Tag;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -73,6 +74,7 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
     private final String TAG = "SearchActivity";
     private List<RadioButton> radioButtons = new ArrayList<>();
     private Drawable drawableLabel;
+    private List<GoodsBean > goodsBeanList;
 
     @Override
     public int getLayoutId() {
@@ -107,7 +109,6 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
                         radioButton.setCompoundDrawables(null,null, drawableLabel, null);
                     }
                 }
-                ToastUtil.showShort(radioButton.getText()+" , "+radioButton.getTag());
                 label = String.valueOf(radioButton.getTag());
                 updateData();
             }
@@ -135,8 +136,9 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
         recyclerViewContent.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void SimpleOnItemClick(BaseQuickAdapter adapter, View view, int position) {
-                System.out.println("position == " + position);
-                ToastUtil.showShort("position == " + position);
+                Bundle bundle = new Bundle();
+                bundle.putString("goodsID", goodsBeanList.get(position).getId());
+                startActivity(GoodDetailActivity.class, bundle);
             }
         });
 
@@ -155,7 +157,7 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
                 break;
             case R.id.rg_search_label:
                 //todo
-                ToastUtil.showShort("rg");
+//                ToastUtil.showShort("rg");
                 break;
             default:
                 break;
@@ -181,7 +183,9 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
     public void onSuccess(Object data) {
         HomeBean homeBean = (HomeBean) data;
         if(!CollectionUtils.isNullOrEmpty(homeBean.getMlist())){
-            mHomeTabAdapter.setNewData(homeBean.getMlist());
+            goodsBeanList = new ArrayList<>();
+            goodsBeanList.addAll(homeBean.getMlist());
+            mHomeTabAdapter.setNewData(goodsBeanList);
         }else{
             ToastUtil.showShort("暂时没有数据！");
         }

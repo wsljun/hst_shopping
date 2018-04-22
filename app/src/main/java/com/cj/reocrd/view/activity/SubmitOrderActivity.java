@@ -217,7 +217,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
 
     @Override
     public void updateOrderInfo(OrderDetail orderDetail) {
-        ToastUtil.showShort("updateOrderInfo");
+//        ToastUtil.showShort("updateOrderInfo");
     }
 
 }

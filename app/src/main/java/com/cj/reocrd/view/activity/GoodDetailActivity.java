@@ -27,6 +27,7 @@ import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.model.entity.SkuBean;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.ActivityUtils;
+import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
@@ -186,6 +187,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                 break;
             case R.id.good_addcar:
                 if(!TextUtils.isEmpty(sid)){
+                    popWindow.dismiss();
                     mPresenter.addToCart(uid,sid,num,goodsID);
                 }else{
                     ToastUtil.showShort("请先选择商品规则");
@@ -251,7 +253,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                     sid = skuBean.getId();
                     tvGoodsDetailPrice.setText(skuBean.getPrice());
                     tvSkuNum.setGoods_storage(Integer.parseInt(skuBean.getStock()));
-                    ToastUtil.showShort(skuBean.getPrice());
+//                    ToastUtil.showShort(skuBean.getPrice());
                 }
             });
             btnGoodsDetailClose.setOnClickListener(new View.OnClickListener() {
@@ -287,7 +289,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
             // 设置PopupWindow的背景
             popWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             // 设置PopupWindow是否能响应外部点击事件
-            popWindow.setOutsideTouchable(false);
+            popWindow.setOutsideTouchable(true);
             // 设置PopupWindow是否能响应点击事件
             popWindow.setTouchable(true);
         }
@@ -304,11 +306,11 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     @Override
     public void onSuccess(Object data) {
         goodsDetailsBean = (GoodsDetailsBean) data;
-//         if(CollectionUtils.isNullOrEmpty(goodsDetailsBean.getSlist())){
-//        sid = goodsDetailsBean.getSlist().get(0).getId(); // 默认设置
-//         }else{
-//             sid = "";
-//         }
+        if(CollectionUtils.isNullOrEmpty(goodsDetailsBean.getSlist())){
+            sid = goodsDetailsBean.getSlist().get(0).getId(); // 默认设置
+        }else{
+            sid = "";
+        }
         updateView();
     }
 

@@ -113,7 +113,11 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
                     }
                 }
                 Log.e(TAG, "onViewClicked: cartID= "+cartID );
-                mPresenter.cartSubmitOrder(cartID,uid);
+                if(!TextUtils.isEmpty(cartID)){
+                    mPresenter.cartSubmitOrder(cartID,uid);
+                }else{
+                    ToastUtil.showShort("没有商品");
+                }
                 break;
             default:
                 break;
