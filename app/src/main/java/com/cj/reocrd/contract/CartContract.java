@@ -19,6 +19,7 @@ public interface CartContract {
         //返回获取的数据
         void showCartData(List<GoodsBean> goodsBeanList);
         void updateCartData();
+        void toSubmitOrder();
     }
 
     abstract static class Presenter extends BasePresenter<View> {

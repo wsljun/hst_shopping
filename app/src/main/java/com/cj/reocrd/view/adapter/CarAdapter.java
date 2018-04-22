@@ -1,12 +1,7 @@
 package com.cj.reocrd.view.adapter;
 
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.UrlConstants;
@@ -79,7 +74,7 @@ public class CarAdapter extends BaseQuickAdapter implements AmountView.OnAmountC
 
     @Override
     public void onAmountChange(View view, int amount) {
-        ToastUtil.showShort("onAmountChange: "+amount);
+//        ToastUtil.showShort("onAmountChange: "+amount);
         mBaseItemClickListener.onAdapterItemClickListener(view,amount);
     }
 

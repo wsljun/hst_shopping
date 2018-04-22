@@ -168,8 +168,8 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
             searchStr = "";
         }else{
             searchStr = et_str;
+            updateData();
         }
-        updateData();
     }
 
     private void  updateData(){
@@ -193,6 +193,7 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
     @Override
     public void onFailureMessage(String msg) {
         ToastUtil.showShort(msg);
+        mHomeTabAdapter.loadComplete();
     }
 
     @Override
@@ -222,6 +223,6 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
 
     @Override
     public void onRefreshHomeData(HomeBean homeBean) {
-
+        mHomeTabAdapter.loadComplete();
     }
 }

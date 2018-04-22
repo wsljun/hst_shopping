@@ -20,6 +20,7 @@ import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.presenter.MyPrresenter;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.view.activity.CollectActivity;
 import com.cj.reocrd.view.activity.MyActivity;
 import com.cj.reocrd.view.activity.OrderActivity;
 import com.cj.reocrd.view.activity.MyFansActivity;
@@ -139,9 +140,10 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
             case R.id.mine_icon:
                 break;
             case R.id.mine_all:
+                OrderActivity.actionActivity(mActivity, OrderActivity.ALL);
                 break;
             case R.id.mine_pay:
-                OrderActivity.actionActivity(mActivity,OrderActivity.PAY);
+                OrderActivity.actionActivity(mActivity, OrderActivity.PAY);
                 break;
             case R.id.mine_send:
                 OrderActivity.actionActivity(mActivity, OrderActivity.SEND);
@@ -153,14 +155,21 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 OrderActivity.actionActivity(mActivity, OrderActivity.EVALUATE);
                 break;
             case R.id.mine_return:
+                ToastUtil.showShort("暂未实现");
                 break;
             case R.id.mine_money:
                 break;
             case R.id.mine_price:
                 break;
             case R.id.mine_collect:
+                Bundle bundleCollect = new Bundle();
+                bundleCollect.putString("from", "collect");
+                startActivity(CollectActivity.class, bundleCollect);
                 break;
             case R.id.mine_history:
+                Bundle bundleHistory = new Bundle();
+                bundleHistory.putString("from", "history");
+                startActivity(CollectActivity.class, bundleHistory);
                 break;
             case R.id.mine_help:
                 break;

@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#00000000"
-    android:orientation="vertical">
+    android:background="#cc000000"
+    android:orientation="vertical"
+    android:layout_gravity="bottom"
+    >
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="400dp"
+        android:layout_alignParentBottom="true"
+        >
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -26,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="$232"
+                    android:text="$"
                     android:textColor="@color/colorTextRed"
                     android:textSize="18sp" />
 
@@ -71,31 +75,40 @@
                     android:textSize="14sp" />
 
                 <!--<android.support.v7.widget.RecyclerView-->
-                    <!--android:id="@+id/good_detail_type"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@id/good_detail_title1"-->
-                    <!--android:layout_margin="20dp">-->
+                <!--android:id="@+id/good_detail_type"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@id/good_detail_title1"-->
+                <!--android:layout_margin="20dp">-->
 
                 <!--</android.support.v7.widget.RecyclerView>-->
 
 
-                <GridLayout
-                    android:id="@+id/good_detail_type"
+                <com.donkingliang.labels.LabelsView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/goods_labels"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_below="@id/good_detail_title1"
-                    android:layout_margin="20dp"
-                    >
-
-
-                </GridLayout>
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    app:labelBackground="@color/colorWhite"
+                    app:labelTextSize="14sp"
+                    app:labelTextColor="@drawable/label_text_color"
+                    app:labelTextPaddingBottom="5dp"
+                    app:labelTextPaddingLeft="10dp"
+                    app:labelTextPaddingRight="10dp"
+                    app:labelTextPaddingTop="5dp"
+                    app:lineMargin="10dp"
+                    app:wordMargin="10dp"
+                    app:selectType="SINGLE"
+                    app:maxSelect="5" />
 
                 <View
                     android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@id/good_detail_type"
+                    android:layout_below="@id/goods_labels"
                     android:layout_margin="20dp"
                     android:background="@color/colorTextLineGrey"></View>
 
@@ -136,4 +149,4 @@
             android:background="@mipmap/ic_launcher" />
     </FrameLayout>
 
-</LinearLayout>
+</RelativeLayout>

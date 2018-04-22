@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.Key;
 import java.util.Map;
 
 public class SPUtils {
@@ -16,17 +15,20 @@ public class SPUtils {
     public static final String FILE_NAME = "hst_sp";
 
     public static class SpKey{
-      public static final String DEFAULT_ADDRESS_ID = "aid";
+        public static final String DEFAULT_ADDRESS_ID = "aid";
+        public static final String DEFAULT_ADDRESS_PHONE = "phone";
+        public static final String DEFAULT_ADDRESS_DETAIL = "addr_detail";
+        public static final String DEFAULT_ADDRESS_CONSIGNEE = "consignee";
+        public static final String GOODS_DETAIL = "goodsDetail";
     }
 
     /**
      * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法
-     *
-     * @param context
+     *  @param context
      * @param key
      * @param object
      */
-    public static void put(Context context, String key, Object object) {
+    public static String put(Context context, String key, Object object) {
 
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
@@ -46,6 +48,7 @@ public class SPUtils {
         }
 
         SharedPreferencesCompat.apply(editor);
+        return key;
     }
 
     /**

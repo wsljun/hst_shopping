@@ -68,6 +68,8 @@ public class SkuBean implements Parcelable {
     }
 
     public void setPrice(String price) {
+        int p = (Integer.parseInt(price))/100;
+        price = String.valueOf(p);
         this.price = price;
     }
 

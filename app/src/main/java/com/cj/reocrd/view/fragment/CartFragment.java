@@ -1,5 +1,6 @@
 package com.cj.reocrd.view.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,6 +19,7 @@ import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.presenter.CartPresenter;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.view.activity.SubmitOrderActivity;
 import com.cj.reocrd.view.adapter.CarAdapter;
 import com.cj.reocrd.view.refresh.RefreshLayout;
 import com.cj.reocrd.view.view.AmountView.AmountView;
@@ -59,11 +61,11 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     @BindView(R.id.good_total_price)
     TextView tvGoodsTotalPrice;
 
-    private List<GoodsBean> cartGoodsList; // 购物车 商品集合
+    public static List<GoodsBean> cartGoodsList; // 购物车 商品集合
     private CarAdapter carAdapter;
     private String currCartID = "";
     private final  static  String TAG = "CartFragment";
-
+    public static double totalPrice = 0;
     @Override
     protected void initPresenter() {
         mPresenter.setVM(this);
@@ -101,7 +103,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
                 for (int i = 0; i <checkBoxList.size() ; i++) {
                     if(checkBoxList.get(i).isChecked()){
                         if(i>0){
-                            cartID = cartID+"#"+cartGoodsList.get(i).getBid();
+                            cartID = cartID+""+cartGoodsList.get(i).getBid();
                         }else{
                             cartID = cartGoodsList.get(i).getBid();
                         }
@@ -116,7 +118,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     }
 
     private void setTotalPrice(boolean isAll){
-        double totalPrice = 0;
+        totalPrice = 0;
         for (int i = 0; i <checkBoxList.size() ; i++) {
             if(isAll){
                 checkBoxList.get(i).setChecked(cbCartAllChoose.isChecked());
@@ -163,6 +165,14 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     @Override
     public void updateCartData() {
         mPresenter.getCartData(uid);
+    }
+
+    @Override
+    public void toSubmitOrder() {
+        Bundle b = new Bundle();
+//        b.putParcelable("orderBean",orderBean);
+//        b.putParcelable("goodsDetails",goodsDetailsBean);
+        startActivity(SubmitOrderActivity.class,b);
     }
 
     private void initRecycleView() {

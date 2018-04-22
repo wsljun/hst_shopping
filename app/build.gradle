@@ -81,4 +81,5 @@ dependencies {
     compile 'com.github.razerdp:BasePopup:v1.8.0'
     //进度条
     compile 'com.pnikosis:materialish-progress:1.7'
+    compile 'com.github.donkingliang:LabelsView:1.4.0'
 }

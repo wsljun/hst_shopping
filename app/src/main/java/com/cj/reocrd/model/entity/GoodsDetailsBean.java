@@ -92,12 +92,12 @@ public class GoodsDetailsBean  implements Parcelable{
     }
 
     public String getPrice() {
-        int p = (Integer.parseInt(price))/100;
-        price = String.valueOf(p);
         return price;
     }
 
     public void setPrice(String price) {
+        int p = (Integer.parseInt(price))/100;
+        price = String.valueOf(p);
         this.price = price;
     }
 

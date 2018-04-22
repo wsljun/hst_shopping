@@ -68,7 +68,7 @@ public class ApiModel {
     public <T> ApiResponse getData(String por, HashMap<String, Object> dMap, final Class<T> clz, ApiCallback apiCallback) {
         ApiResponse apiResponse = new ApiResponse();
         String cipher = DESedeUtils.getDesede(toJsonStr(dMap), pid);
-        LogUtil.d(TAG, "data:cipher；" + cipher);
+//        LogUtil.d(TAG, "data:cipher；" + cipher);
         HashMap<String, Object> map = new HashMap<>();
         map.put("por", por);   // 请求接口
         map.put("pid", pid); // 设备唯一码

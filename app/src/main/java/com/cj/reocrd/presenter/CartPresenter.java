@@ -108,8 +108,10 @@ public class CartPresenter extends CartContract.Presenter {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
-//                    mView.updateCartData(); // 刷新list
-                    mView.onSuccess(apiResponse.getMessage());
+                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                        // {"oid":"a3796d4a-32c6-4755-b614-fcf690c3cffb","message":"操作成功","statusCode":"1"}
+                        mView.toSubmitOrder();
+                    }
                 }
             }
 

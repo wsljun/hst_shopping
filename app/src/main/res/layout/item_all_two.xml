@@ -11,14 +11,12 @@
         android:layout_width="110dp"
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="4dp"
-        android:background="@mipmap/ic_launcher" />
+        android:layout_margin="4dp"/>
 
     <TextView
         android:id="@+id/item_all_goods_name"
         style="@style/setting_item_configure"
         android:layout_gravity="center"
         android:layout_marginStart="0dp"
-        android:maxLines="1"
-        android:text="mingzi" />
+        android:maxLines="1"/>
 </LinearLayout>

@@ -65,7 +65,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyHolder
                     checkBoxes.get(i).setChecked(false);
                 }
                 buttonView.setChecked(isChecked);
-                mOnItemListener.checkClick(mDatas.get(position).getId());
+                mOnItemListener.checkClick(position);
             }
         });
         holder.addressDelete.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +115,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyHolder
 
         void deleteClick(String id);
 
-        void checkClick(String id);
+        void checkClick(int position);
     }
 
 

@@ -44,6 +44,8 @@ public class GoodsBean {
     }
 
     public void setPrice(String price) {
+        int p = (Integer.parseInt(price))/100;
+        price = String.valueOf(p);
         this.price = price;
     }
 
@@ -112,8 +114,6 @@ public class GoodsBean {
     }
 
     public String getPrice() {
-//        int p = (Integer.parseInt(price))/100;
-//        price = String.valueOf(p);
         return price;
     }
 

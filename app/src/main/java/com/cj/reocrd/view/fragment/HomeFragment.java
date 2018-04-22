@@ -249,5 +249,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             setBannerView(images);
 //            banner.update(images);
         }
+        mHomeTabAdapter.loadComplete();
     }
 }

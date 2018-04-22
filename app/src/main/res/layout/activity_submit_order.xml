@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/rl_address"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:background="@drawable/price_bg"
         android:layout_below="@+id/submit_order_title"
         android:layout_marginBottom="2dp"
@@ -58,6 +58,27 @@
         </LinearLayout>
 
     </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/fl_address"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/price_bg"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/submit_order_title"
+        >
+        <TextView
+            android:id="@+id/tv_add_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="选择默认地址"
+            />
+    </FrameLayout>
     <View
         android:id="@+id/line"
         android:layout_below="@+id/rl_address"
@@ -86,13 +107,24 @@
             android:textStyle="bold"
             />
 
-        <ImageView
-            android:id="@+id/iv_goods_img"
-            style="@style/setting_item_configure"
-            android:layout_below="@+id/tv_goods_num"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rl_goods_img"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
             android:layout_marginTop="10dp"
-            android:src="@mipmap/ic_launcher"
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/tv_goods_num"
+            android:scrollbars="none"
             />
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_goods_img"-->
+            <!--style="@style/setting_item_configure"-->
+            <!--android:layout_below="@+id/tv_goods_num"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:src="@mipmap/ic_launcher"-->
+            <!--android:visibility="gone"-->
+            <!--/>-->
 
         <TextView
             android:id="@+id/tv_title_price"
@@ -100,7 +132,7 @@
             android:layout_marginStart="0dp"
             android:textStyle="bold"
             android:text="@string/goods_price"
-            android:layout_below="@id/iv_goods_img"
+            android:layout_below="@id/rl_goods_img"
             android:layout_marginTop="10dp"
             />
 

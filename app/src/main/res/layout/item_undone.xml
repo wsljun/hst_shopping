@@ -22,7 +22,7 @@
             android:text="@string/undone_time" />
 
         <TextView
-            android:id="@+id/undone_status"
+            android:id="@+id/tv_order_status"
             style="@style/setting_item_configure"
             android:layout_alignParentRight="true"
             android:layout_marginStart="0dp"
@@ -44,9 +44,12 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/undone_photos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:id="@+id/order_photos"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_centerVertical="true"
+            android:scrollbars="none"
+            />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -93,7 +96,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/undone_take"
+            android:id="@+id/tv_btn_togo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -106,11 +109,11 @@
             android:textColor="@color/colorButton" />
 
         <TextView
-            android:id="@+id/undone_refund"
+            android:id="@+id/tv_btn_cancle_or_del"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/undone_take"
+            android:layout_toLeftOf="@id/tv_btn_togo"
             android:background="@drawable/textview_gray_btn"
             android:paddingBottom="2dp"
             android:paddingLeft="15dp"

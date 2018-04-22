@@ -171,9 +171,9 @@ public class AddressPresenter extends AddressContract.Presenter {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
-                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+//                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
                         mView.onSuccess(apiResponse.getResults());
-                    }
+//                    }
                 }
             }
 
