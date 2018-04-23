@@ -189,4 +189,5 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         AppManager.getAppManager().finishActivity(this);
     }
 
+
 }

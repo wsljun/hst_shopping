@@ -36,7 +36,7 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
     TextView titleRight;
     @BindView(R.id.undone_recycler)
     RecyclerView undoneRecycler;
-    OrderAdapter undoneAdapter;
+    OrderAdapter orderAdapter;
     List<String> mDatas;
     List<OrderBean> orderBeans;
     int type;
@@ -64,6 +64,7 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
         super.initData();
         //这四个页面都差不多，就放到一块了，type标示，加载不同布局
         type = getIntent().getIntExtra("type", 1);
+        orderBeans = new ArrayList<>();
         mPresenter.getOrderList("20","0",uid, String.valueOf(type));
         mDatas = new ArrayList<>();
         mDatas.add("1");
@@ -91,11 +92,11 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
                 break;
         }
         //type传给adapter，调整不同布局
-        undoneAdapter = new OrderAdapter(this, mDatas,type);
-        undoneAdapter.setOnItemListener(this);
+        orderAdapter = new OrderAdapter(this, orderBeans,type);
+        orderAdapter.setOnItemListener(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         undoneRecycler.setLayoutManager(layoutManager);
-        undoneRecycler.setAdapter(undoneAdapter);
+        undoneRecycler.setAdapter(orderAdapter);
         undoneRecycler.setItemAnimator(new DefaultItemAnimator());
     }
 
@@ -116,12 +117,14 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
 
     @Override
     public void takeClick(int position) {
-        ToastUtil.showToastS(this, "takeClick" + position);
+//        ToastUtil.showToastS(this, "takeClick" + position);
+        mPresenter.cancelOrder(orderBeans.get(position).getId());
     }
 
     @Override
     public void refundClick(int position) {
-        ToastUtil.showToastS(this, "refundClick" + position);
+//        ToastUtil.showToastS(this, "refundClick" + position);
+        mPresenter.getOrderDetail(orderBeans.get(position).getId());
     }
 
     @Override
@@ -131,7 +134,7 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
 
     @Override
     public void onFailureMessage(String msg) {
-
+          ToastUtil.showShort(msg);
     }
 
     @Override
@@ -142,9 +145,14 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
     @Override
     public void showOrderList(List<OrderBean> orderBeanList) {
          if(orderBeanList.size()>0){
-
+             orderAdapter.updateData(orderBeanList);
          }else{
              ToastUtil.showShort("没有订单！");
          }
+    }
+
+    @Override
+    public void updateOrderList() {
+        mPresenter.getOrderList("20","0",uid, String.valueOf(type));
     }
 }

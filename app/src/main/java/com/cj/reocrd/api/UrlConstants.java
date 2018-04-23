@@ -9,7 +9,7 @@ public class UrlConstants {
 //    public final static String BASE_URL = "http://gank.io/api/";
     public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
     public final static String URL = "app/outinterface";
-    //    public final static String PID = "123222212121";  //  TODO  pid
+    //    public final static String PID = "123222212121";  //    pid
     public final static String SUCCESE_CODE = "1"; // 返回结果成功
 
     public static class key {
@@ -41,17 +41,17 @@ public class UrlConstants {
         //首页
         public static final String GET_HOME_DATA = "201";
         //搜索
-        public static final String URL_SEARCH = "202"; // todo search
+        public static final String URL_SEARCH = "202"; //  search
         //获取分类
         public static final String URL_ALL_GOODS_TYPE = "203";
         //全部商品
         public static final String URL_ALL_GOODS = "204";
         //商品详情
-        public static final String URL_GOODS_DETAIL = "205"; // todo all goods
-        public static final String URL_ADD_TO_CART = "206"; // todo all goods
-        public static final String URL_DEL_CART = "207"; // todo del goods
-        public static final String URL_CART_DATA = "208"; // todo cart data
-        public static final String URL_ADD_CART_GOODSNUM = "209"; // todo add cart goods num
+        public static final String URL_GOODS_DETAIL = "205"; //   goods
+        public static final String URL_ADD_TO_CART = "206"; //  all goods
+        public static final String URL_DEL_CART = "207"; //  del goods
+        public static final String URL_CART_DATA = "208"; //  cart data
+        public static final String URL_ADD_CART_GOODSNUM = "209"; //  add cart goods num
 
         //我的首页
         public static final String MY_HOME = "301";
@@ -80,19 +80,19 @@ public class UrlConstants {
         //钱包
         public static final String MY_WALLET="313";
         // 订单详情
-        public static final String URL_ORDER_LIST = "401";// todo order list
-        public static final String URL_ORDER_DETAIL = "402";// todo order detail
-        public static final String URL_ORDER_FROM_CART = "403";// todo order from cart
-        public static final String URL_ORDER_FROM_DETAIL = "404";// todo order from detail
-        public static final String URL_CANCEL_ORDER = "405";// todo order cancel
-        public static final String URL_Update_ORDER_addr = "406";// todo update order addr
+        public static final String URL_ORDER_LIST = "401";//  order list
+        public static final String URL_ORDER_DETAIL = "402";//  order detail
+        public static final String URL_ORDER_FROM_CART = "403";//  order from cart
+        public static final String URL_ORDER_FROM_DETAIL = "404";//  order from detail
+        public static final String URL_CANCEL_ORDER = "405";//  order cancel
+        public static final String URL_UPDATE_ORDER_ADDR = "406";//  update order addr
         public static final String URL_refund_ORDER = "407";// todo order refund
-        public static final String URL_ADDR_LIST = "408";// todo addr list
-        public static final String URL_ADD_ADDR = "409";// todo addr add
-        public static final String URL_UPDATE_ADDR = "410";// todo addr update
-        public static final String URL_DEFAULT_ADDR = "411";// todo addr default
-        public static final String URL_DEL_ADDR = "412";// todo addr del
-        public static final String URL_Select_ADDR_MAP = "413";// todo addr map
+        public static final String URL_ADDR_LIST = "408";//  addr list
+        public static final String URL_ADD_ADDR = "409";//  addr add
+        public static final String URL_UPDATE_ADDR = "410";//  addr update
+        public static final String URL_DEFAULT_ADDR = "411";//  addr default
+        public static final String URL_DEL_ADDR = "412";//  addr del
+        public static final String URL_Select_ADDR_MAP = "413";//  addr map
         //关注好友
         public static final String FRIEDNS_KEEP = "501";
         //取消关注

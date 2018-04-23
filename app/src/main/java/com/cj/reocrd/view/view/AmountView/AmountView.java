@@ -3,6 +3,7 @@ package com.cj.reocrd.view.view.AmountView;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.utils.ToastUtil;
 
 /**
  * 自定义组件：购买数量，带减少增加按钮
@@ -87,6 +89,8 @@ public class AmountView extends LinearLayout implements View.OnClickListener, Te
             if (amount < goods_storage) {
                 amount++;
                 etAmount.setText(amount + "");
+            }else{
+                ToastUtil.showShort("已达到最大库存量！");
             }
         }
 
@@ -119,6 +123,12 @@ public class AmountView extends LinearLayout implements View.OnClickListener, Te
 
         if (mListener != null) {
             mListener.onAmountChange(this, amount);
+        }
+    }
+
+    public void setText(String text){
+        if (TextUtils.isEmpty(text)){
+            etAmount.setText(text);
         }
     }
 

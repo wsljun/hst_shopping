@@ -18,6 +18,7 @@ public interface AddressContract {
     interface View extends BaseView {
         //返回获取的数据
         void showAddressList(List<AddressBean> beans);
+        void updateAddressList();
     }
 
     abstract static class Presenter extends BasePresenter<View> {

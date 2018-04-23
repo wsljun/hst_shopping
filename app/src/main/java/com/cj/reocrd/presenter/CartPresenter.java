@@ -6,6 +6,7 @@ import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.contract.CartContract;
 import com.cj.reocrd.contract.GoodsContract;
 import com.cj.reocrd.model.ApiModel;
+import com.cj.reocrd.model.entity.AddressBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.utils.CollectionUtils;
 
@@ -54,16 +55,17 @@ public class CartPresenter extends CartContract.Presenter {
     }
 
     @Override
-    public void delGoods(String goodsID) {
+    public void delCartGoods(String goodsID) {
         baseMap.clear();
         baseMap.put("bid",goodsID);
         ApiModel.getInstance().getData(UrlConstants.UrLType.URL_DEL_CART, baseMap, null, new ApiCallback() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
-//                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                            mView.updateCartData(); // 刷新list
                             mView.onSuccess(apiResponse.getMessage());
-//                    }
+                    }
                 }
             }
 
@@ -85,6 +87,7 @@ public class CartPresenter extends CartContract.Presenter {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
+                    mView.updateCartData(); // 刷新list
                     mView.onSuccess(apiResponse.getMessage());
                 }
             }
@@ -97,4 +100,30 @@ public class CartPresenter extends CartContract.Presenter {
             }
         });
     }
+
+    public void cartSubmitOrder(String cartID, String  uid) {
+        baseMap.clear();
+        baseMap.put("bid",cartID);
+        baseMap.put("uid",uid);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_ORDER_FROM_CART, baseMap, AddressBean.class, new ApiCallback() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if(null != apiResponse && isViewAttached()){
+                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                        // {"oid":"a3796d4a-32c6-4755-b614-fcf690c3cffb","message":"操作成功","statusCode":"1"}
+                        AddressBean addressBean = (AddressBean) apiResponse.getResults();
+                        mView.toSubmitOrder(addressBean);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                if(isViewAttached()){
+                    mView.onFailureMessage(t.toString());
+                }
+            }
+        });
+    }
+
 }

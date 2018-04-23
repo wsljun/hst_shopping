@@ -17,7 +17,9 @@
             android:layout_width="0dp"
             android:background="@color/colorTextLineGrey"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"></android.support.v7.widget.RecyclerView>
+            android:layout_weight="0.3">
+
+        </android.support.v7.widget.RecyclerView>
 
         <com.cj.reocrd.view.refresh.RefreshLayout
             android:layout_width="0dp"

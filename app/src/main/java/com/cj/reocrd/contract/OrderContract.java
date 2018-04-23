@@ -18,6 +18,7 @@ public interface OrderContract {
     interface View extends BaseView {
         //返回获取的数据
         void showOrderList(List<OrderBean> goodsBeanList);
+        void updateOrderList();
     }
 
     abstract static class Presenter extends BasePresenter<View> {

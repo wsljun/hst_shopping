@@ -9,17 +9,14 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!-- protection level is dangerous, need request runtime permission -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_CALL_LOG" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_CALENDAR" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <!-- protection level is dangerous, need request runtime permission -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
+    <!-- <uses-permission android:name="android.permission.GET_ACCOUNTS" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_CONTACTS" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_CALENDAR" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_SMS" /> -->
+    <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -56,27 +53,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.IndexActivity"></activity>
-        <activity android:name=".view.activity.MainActivity"></activity>
-        <activity android:name=".view.activity.MyActivity"></activity>
+        <activity android:name=".view.IndexActivity" />
+        <activity android:name=".view.activity.MainActivity" />
+        <activity android:name=".view.activity.MyActivity" />
         <activity android:name=".view.activity.AddressActivity" />
-        <activity android:name=".view.activity.AddressEditActivity"></activity>
-        <activity android:name=".view.activity.OrderActivity"></activity>
+        <activity android:name=".view.activity.AddressEditActivity" />
+        <activity android:name=".view.activity.OrderActivity" />
         <activity android:name=".view.activity.SearchActivity" />
-        <activity android:name=".view.activity.GoodDetailActivity"></activity>
-        <activity android:name=".view.activity.WalletActivity"></activity>
-        <activity android:name=".view.activity.SubmitOrderActivity"></activity>
-        <activity android:name=".view.activity.MyFansActivity"></activity>
-        <activity android:name=".view.activity.FriendSendActivity">
-        </activity>
+        <activity android:name=".view.activity.GoodDetailActivity" />
+        <activity android:name=".view.activity.WalletActivity" />
+        <activity android:name=".view.activity.SubmitOrderActivity" />
+        <activity android:name=".view.activity.MyFansActivity" />
+        <activity android:name=".view.activity.FriendSendActivity"></activity>
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".view.activity.FriendDetailActivity"></activity>
-        <activity android:name=".view.activity.CollectActivity"></activity>
+        <activity android:name=".view.activity.FriendDetailActivity" />
+        <activity android:name=".view.activity.CollectActivity" />
+        <activity android:name=".view.activity.OrderDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -270,6 +270,11 @@ public class AddressEditActivity extends BaseActivity<AddressPresenter> implemen
 
     }
 
+    @Override
+    public void updateAddressList() {
+
+    }
+
     // 地址三级选择栏，实体类转换
     private List<YwpAddressBean.AddressItemBean> toYwpAddressBean(List<AddressBean.Regions> regions){
         List<YwpAddressBean.AddressItemBean> itemBeanList = new ArrayList<>();

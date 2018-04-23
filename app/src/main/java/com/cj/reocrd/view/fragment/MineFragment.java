@@ -141,6 +141,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
             case R.id.mine_icon:
                 break;
             case R.id.mine_all:
+                OrderActivity.actionActivity(mActivity, OrderActivity.ALL);
                 break;
             case R.id.mine_pay:
                 OrderActivity.actionActivity(mActivity, OrderActivity.PAY);
@@ -155,6 +156,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 OrderActivity.actionActivity(mActivity, OrderActivity.EVALUATE);
                 break;
             case R.id.mine_return:
+//                ToastUtil.showShort("没有");
                 break;
             case R.id.mine_money:
                 startActivity(WalletActivity.class);

@@ -126,9 +126,6 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
         recyclerViewContent.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void SimpleOnItemClick(BaseQuickAdapter adapter, View view, int position) {
-                System.out.println("position == "+position);
-                ToastUtil.showShort("position == "+position);
-//                GoodDetailActivity.intentTo(mContext,goodsBeanList.get(position).getId());
                 goodBundle.clear();
                 goodBundle.putString("goodsID",goodsBeanList.get(position).getId());
                 startActivity(GoodDetailActivity.class,goodBundle);

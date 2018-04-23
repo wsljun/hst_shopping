@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.cj.reocrd.R;
 import com.cj.reocrd.model.entity.GoodsType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,6 +28,7 @@ public class AllTypeAdapter extends RecyclerView.Adapter<AllTypeAdapter.MyHolder
     private Context mContext;
     private LayoutInflater inflater;
     private OnItemClickListener mOnItemClickListener;
+    private List<TextView> toolsTextViews;
 
     public interface  OnItemClickListener  {
        void onItemClick(View view, int position);
@@ -37,6 +39,7 @@ public class AllTypeAdapter extends RecyclerView.Adapter<AllTypeAdapter.MyHolder
         this.mContext = context;
         this.mDatas = datas;
         inflater = LayoutInflater.from(mContext);
+        toolsTextViews = new ArrayList<>();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -52,11 +55,15 @@ public class AllTypeAdapter extends RecyclerView.Adapter<AllTypeAdapter.MyHolder
     @Override
     public void onBindViewHolder(MyHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.tvTypeName.setText(mDatas.get(position).getName());
+        if(!toolsTextViews.contains(holder.tvTypeName)){
+            toolsTextViews.add(holder.tvTypeName);
+        }
         if (mOnItemClickListener != null) {
             holder.tvTypeName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = holder.getLayoutPosition();
+                    changeTextColor(position);
                     mOnItemClickListener.onItemClick(holder.itemView, position);
                 }
             });
@@ -84,13 +91,13 @@ public class AllTypeAdapter extends RecyclerView.Adapter<AllTypeAdapter.MyHolder
      * @param id
      */
     private void changeTextColor(int id) {
-//        for (int i = 0; i < toolsTextViews.length; i++) {
-//            if (i != id) {
-//                toolsTextViews[i].setBackgroundResource(android.R.color.transparent);
-//                toolsTextViews[i].setTextColor(0xff000000);
-//            }
-//        }
-//        toolsTextViews[id].setBackgroundResource(android.R.color.white);
-//        toolsTextViews[id].setTextColor(0xffff5d5e);
+        for (int i = 0; i < toolsTextViews.size(); i++) {
+            if (i != id) {
+                toolsTextViews.get(i).setBackgroundResource(android.R.color.transparent);
+                toolsTextViews.get(i).setTextColor(0xff000000);
+            }
+        }
+        toolsTextViews.get(id).setBackgroundResource(android.R.color.white);
+//        toolsTextViews.get(id).setTextColor(0xffff5d5e);
     }
 }
