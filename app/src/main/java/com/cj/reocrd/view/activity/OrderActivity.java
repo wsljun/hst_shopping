@@ -2,6 +2,7 @@ package com.cj.reocrd.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.OrderContract;
 import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.presenter.OrderPresenter;
+import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.OrderAdapter;
 
@@ -44,6 +46,7 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
     public static final int PAY = 1;//待付款
     public static final int SEND = 2;//待发货
     public static final int CONFIM = 3;//待确认
+    public static List<OrderBean.OdlistBean> mOrderGoodsDatas;
     public static final int EVALUATE = 4;//待评价
 
     public static void actionActivity(Context context, int type) {
@@ -124,7 +127,16 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
     @Override
     public void refundClick(int position) {
 //        ToastUtil.showToastS(this, "refundClick" + position);
-        mPresenter.getOrderDetail(orderBeans.get(position).getId());
+    }
+
+    @Override
+    public void orderDetail(int position) {
+        if(!CollectionUtils.isNullOrEmpty(orderBeans)){
+            mOrderGoodsDatas = orderBeans.get(position).getOdlist();
+            Bundle bundle = new Bundle();
+            bundle.putString(OrderDetailActivity.BUNDLE_KEY_OID,orderBeans.get(position).getId());
+            startActivity(OrderDetailActivity.class,bundle);
+        }
     }
 
     @Override

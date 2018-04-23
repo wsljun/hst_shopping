@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -31,6 +33,7 @@ import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.view.AmountView.AmountView;
 import com.donkingliang.labels.LabelsView;
 
@@ -90,6 +93,9 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     TextView goodTotalPrice;
     @BindView(R.id.rl_goods_detail_bottom)
     RelativeLayout rlBottomView;
+    @BindView(R.id.rl_activity_goods_detail)
+    RelativeLayout rlActivityGoodsDetail;
+
 
     private Dialog dialog;
     private static String goodsID = "";// 商品ID
@@ -106,6 +112,9 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     private AmountView tvSkuNum;
     private int width;
     private int height;
+    private TextView tvSkuTotalPrice,tvSkuAddCart,tvSkuBuy;
+    private String skuPrice; // 不同规格单价
+    private  String countPrice; // 最终选择后的总价
 
     @Override
     public int getLayoutId() {
@@ -183,14 +192,16 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                     mPresenter.orderByDetail(uid,goodsID,sid,num);
                 }else{
                     ToastUtil.showShort("请先选择商品规则");
+                    showPopuView();
                 }
                 break;
             case R.id.good_addcar:
-                if(!TextUtils.isEmpty(sid)){
+                if(null!=popWindow && popWindow.isShowing()){
                     popWindow.dismiss();
                     mPresenter.addToCart(uid,sid,num,goodsID);
                 }else{
                     ToastUtil.showShort("请先选择商品规则");
+                    showPopuView();
                 }
                 break;
             default:
@@ -198,33 +209,12 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         }
     }
 
-    private void showDialog() {
-        View  view = getLayoutInflater().inflate(R.layout.dialog_good_detail, null);
-        //布局中的控件
-        dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
-        dialog.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        Window window = dialog.getWindow();
-        // 设置显示动画
-        if (window != null) {
-            window.setWindowAnimations(R.style.main_menu_animstyle);
-            WindowManager.LayoutParams wl = window.getAttributes();
-            wl.x = 0;
-            wl.y = 0;
-            // 以下这两句是为了保证按钮可以水平满屏
-            wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            // 设置显示位置
-            dialog.onWindowAttributesChanged(wl);
-        }
-        // 设置点击外围解散
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-    }
-
     private void setSkuView() {
         if(null != skuView && null != goodsDetailsBean){
             tvGoodsDetailPrice.setText(goodsDetailsBean.getPrice());
             ImageLoaderUtils.display(this,ivGoodsDetailUrl,UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
+            //设置默认选中
+            goodsLabelsView.setSelects(0);
             goodsLabelsView.setLabels(goodsDetailsBean.getSlist(), new LabelsView.LabelTextProvider<SkuBean>() {
                 @Override
                 public CharSequence getLabelText(TextView label, int position, SkuBean data) {
@@ -233,17 +223,6 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                     return s;
                 }
             });
-          /*  //标签的点击监听
-            goodsLabelsView.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
-                @Override
-                public void onLabelClick(TextView label, Object data, int position) {
-                    //label是被点击的标签，data是标签所对应的数据，position是标签的位置。
-                    SkuBean skuBean = (SkuBean) data;
-                    tvGoodsDetailPrice.setText(skuBean.getPrice());
-                    tvSkuNum.setGoods_storage(Integer.parseInt(skuBean.getStock()));
-                    ToastUtil.showShort(skuBean.getPrice());
-                }
-            });*/
             //标签的选中监听
             goodsLabelsView.setOnLabelSelectChangeListener(new LabelsView.OnLabelSelectChangeListener() {
                 @Override
@@ -251,9 +230,10 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                     //label是被选中的标签，data是标签所对应的数据，isSelect是是否选中，position是标签的位置。
                     SkuBean skuBean = (SkuBean) data;
                     sid = skuBean.getId();
-                    tvGoodsDetailPrice.setText(skuBean.getPrice());
+                    skuPrice = skuBean.getPrice();
+                    tvGoodsDetailPrice.setText(skuPrice);
+                    setTextTotalPrice(skuPrice,num);
                     tvSkuNum.setGoods_storage(Integer.parseInt(skuBean.getStock()));
-//                    ToastUtil.showShort(skuBean.getPrice());
                 }
             });
             btnGoodsDetailClose.setOnClickListener(new View.OnClickListener() {
@@ -268,9 +248,23 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                 @Override
                 public void onAmountChange(View view, int amount) {
                     num = amount;
+                    setTextTotalPrice(skuPrice,num);
                 }
             });
+            tvSkuAddCart.setOnClickListener(this::onViewClicked);
+            tvSkuBuy.setOnClickListener(this::onViewClicked);
+
         }
+    }
+
+    private void setTextTotalPrice(String price,int num){
+        if (TextUtils.isEmpty(price)){
+            return;
+        }
+        double totalPrice = Utils.countPrice(price,String.valueOf(num));
+         countPrice = String.valueOf(totalPrice);
+        tvSkuTotalPrice.setText(countPrice);
+        goodTotalPrice.setText(countPrice);
     }
 
     private void showPopuView(){
@@ -282,11 +276,13 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
             btnGoodsDetailClose = skuView.findViewById(R.id.good_detail_close);
             goodsLabelsView = skuView.findViewById(R.id.goods_labels);
             tvSkuNum = skuView.findViewById(R.id.good_detail_num);
-            // 创建PopupWindow对象，其中：
-            // 第一个参数是用于PopupWindow中的View，第二个参数是PopupWindow的宽度，
-            // 第三个参数是PopupWindow的高度，第四个参数指定PopupWindow能否获得焦点
-            popWindow=new PopupWindow(skuView,width ,height-200,true);
-            // 设置PopupWindow的背景
+            tvSkuTotalPrice = skuView.findViewById(R.id.good_total_price);
+            tvSkuAddCart = skuView.findViewById(R.id.good_addcar);
+            tvSkuBuy = skuView.findViewById(R.id.good_buy);
+
+
+            popWindow=new PopupWindow(skuView,WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT,true);
             popWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             // 设置PopupWindow是否能响应外部点击事件
             popWindow.setOutsideTouchable(true);
@@ -294,19 +290,13 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
             popWindow.setTouchable(true);
         }
         setSkuView();
-        // 显示PopupWindow，其中：
-        // 第一个参数是PopupWindow的锚点，第二和第三个参数分别是PopupWindow相对锚点的x、y偏移
-        popWindow.showAsDropDown(rlBottomView, 0, 0);
-        // 或者也可以调用此方法显示PopupWindow，其中：
-        // 第一个参数是PopupWindow的父View，第二个参数是PopupWindow相对父View的位置，
-        // 第三和第四个参数分别是PopupWindow相对父View的x、y偏移
-        // popWindow.showAtLocation(parent, gravity, x, y);
+        popWindow.showAtLocation(rlActivityGoodsDetail, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
     @Override
     public void onSuccess(Object data) {
         goodsDetailsBean = (GoodsDetailsBean) data;
-        if(CollectionUtils.isNullOrEmpty(goodsDetailsBean.getSlist())){
+        if(!CollectionUtils.isNullOrEmpty(goodsDetailsBean.getSlist())){
             sid = goodsDetailsBean.getSlist().get(0).getId(); // 默认设置
         }else{
             sid = "";
@@ -328,16 +318,14 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     public void acticonToSubmitOrder(ApiResponse apiResponse) {
         if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
             OrderBean orderBean = (OrderBean) apiResponse.getResults();
-            ToastUtil.showShort("加入购物车成功！");
             SPUtils.put(mContext, SPUtils.SpKey.GOODS_DETAIL,goodsDetailsBean);
-            Bundle b = new Bundle();// todo 确认订单
-//            b.putParcelable("orderBean",orderBean);
-//            b.putParcelable("goodsDetails",goodsDetailsBean);
+            Bundle b = new Bundle();//  确认订单
             b.putString(SubmitOrderActivity.BUNDLE_KEY_OID,orderBean.getOid());
             b.putString(SubmitOrderActivity.BUNDLE_KEY_TYPE,SubmitOrderActivity.TYPE_FOR_DETAIL);
+            b.putString(SubmitOrderActivity.BUNDLE_KEY_TOTALPRICE,countPrice);
             startActivity(SubmitOrderActivity.class,b);
         }else{
-            ToastUtil.showShort("加入购物车失败！");
+            ToastUtil.showShort("购买失败！");
         }
     }
 

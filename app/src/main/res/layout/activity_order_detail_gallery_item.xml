@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    >
+
+    <ImageView
+        android:id="@+id/id_order_detail_item_image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@color/load_yellow"
+        android:scaleType="centerCrop" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        >
+        <TextView
+            android:id="@+id/tv_goods_name"
+            android:gravity="left"
+            style="@style/setting_item_configure"
+            android:maxLines="1"
+            android:text="三只松鼠 碧根果225g"
+            />
+        <TextView
+            android:id="@+id/tv_goods_unit"
+            android:gravity="left"
+            style="@style/setting_item_configure"
+            android:layout_below="@+id/tv_goods_name"
+            android:layout_marginTop="10dp"
+            android:text="规格：2KG"
+            />
+        <TextView
+            android:id="@+id/tv_goods_num"
+            android:gravity="left"
+            style="@style/setting_item_configure"
+            android:layout_below="@+id/tv_goods_unit"
+            android:layout_marginTop="10dp"
+            android:text="数量：x3"
+            />
+
+        <TextView
+            android:id="@+id/tv_total_price"
+            style="@style/setting_item_configure"
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@+id/tv_goods_num"
+            android:text="¥ "
+            />
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

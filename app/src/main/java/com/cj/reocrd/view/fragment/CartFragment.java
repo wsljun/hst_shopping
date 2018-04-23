@@ -66,7 +66,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     private CarAdapter carAdapter;
     private String currCartID = "";
     private final  static  String TAG = "CartFragment";
-    public static double totalPrice = 0;
+    private double totalPrice = 0;
     private int hisNum;
 
     @Override
@@ -85,6 +85,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
         cartGoodsList = new ArrayList<>();
         updateCartData();
     }
+
 
     @Override
     public void initView() {
@@ -106,7 +107,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
                 for (int i = 0; i <checkBoxList.size() ; i++) {
                     if(checkBoxList.get(i).isChecked()){
                         if(i>0){
-                            cartID = cartID+""+cartGoodsList.get(i).getBid();
+                            cartID = cartID+","+cartGoodsList.get(i).getBid();
                         }else{
                             cartID = cartGoodsList.get(i).getBid();
                         }
@@ -183,6 +184,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
         Bundle b = new Bundle();
         b.putString(SubmitOrderActivity.BUNDLE_KEY_OID,addressBean.getOid());
         b.putString(SubmitOrderActivity.BUNDLE_KEY_TYPE,SubmitOrderActivity.TYPE_FOR_CART);
+        b.putString(SubmitOrderActivity.BUNDLE_KEY_TOTALPRICE,String.valueOf(totalPrice));
         startActivity(SubmitOrderActivity.class,b);
     }
 
@@ -225,11 +227,17 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     public void onResume() {
         super.onResume();
         LogUtil.d(TAG,"onResume");
+        if(isPause){
+            updateCartData();
+            isPause = false;
+        }
     }
 
+    boolean isPause = false;
     @Override
     public void onPause() {
         super.onPause();
+        isPause = true;
         LogUtil.d(TAG,"onPause");
     }
 

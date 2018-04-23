@@ -68,7 +68,7 @@ public class AddressPresenter extends AddressContract.Presenter {
                     if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
                         mView.updateAddressList();
                         // onFailureMessage  toast 展示
-                        mView.onFailureMessage("addAddress,"+apiResponse.getMessage());
+                        mView.onFailureMessage(apiResponse.getMessage());
                         // todo 新增成功后会返回详细的地址信息
                         //{"consignee":"李均","address":"湖南省长沙市芙蓉区大望路12号","phone":"18811373790","message":"操作成功","add_id":"853e5be5-9e4a-4171-97a8-e050b8a1538f","statusCode":"1"}
                     }
@@ -98,7 +98,7 @@ public class AddressPresenter extends AddressContract.Presenter {
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
                     if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
-                        mView.onFailureMessage("updateAddress,"+apiResponse.getMessage());
+                        mView.onFailureMessage(apiResponse.getMessage());
                         //{"consignee":"李均","address":"湖南省长沙市芙蓉区大望路12号","phone":"18811373790","message":"操作成功","add_id":"853e5be5-9e4a-4171-97a8-e050b8a1538f","statusCode":"1"}
                     }
                 }
