@@ -25,6 +25,7 @@ import com.cj.reocrd.view.activity.MyActivity;
 import com.cj.reocrd.view.activity.OrderActivity;
 import com.cj.reocrd.view.activity.MyFansActivity;
 import com.cj.reocrd.view.activity.WalletActivity;
+import com.cj.reocrd.view.activity.WebViewActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -174,8 +175,14 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 startActivity(CollectActivity.class, bundleHistory);
                 break;
             case R.id.mine_help:
+                Bundle bundle = new Bundle();
+                bundle.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE,WebViewActivity.TYPE_HELP);
+                startActivity(WebViewActivity.class,bundle);
                 break;
             case R.id.mine_about:
+                Bundle b = new Bundle();
+                b.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE,WebViewActivity.TYPE_ABOUT);
+                startActivity(WebViewActivity.class,b);
                 break;
             case R.id.mine_serve:
                 break;

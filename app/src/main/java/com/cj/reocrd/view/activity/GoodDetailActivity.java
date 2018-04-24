@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -95,6 +97,10 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     RelativeLayout rlBottomView;
     @BindView(R.id.rl_activity_goods_detail)
     RelativeLayout rlActivityGoodsDetail;
+    @BindView(R.id.btn_comment)
+    Button btnComment;
+    @BindView(R.id.btn_goods_detail_webview)
+    Button btnGoodsDetailWeb;
 
 
     private Dialog dialog;
@@ -175,7 +181,8 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     }
 
 
-    @OnClick({R.id.title_left,R.id.good_conllect_iv, R.id.good_num_rl, R.id.good_buy, R.id.good_addcar})
+    @OnClick({R.id.title_left,R.id.good_conllect_iv, R.id.good_num_rl, R.id.good_buy, R.id.good_addcar,
+    R.id.btn_goods_detail_webview,R.id.btn_comment})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
@@ -203,6 +210,16 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                     ToastUtil.showShort("请先选择商品规则");
                     showPopuView();
                 }
+                break;
+            case R.id.btn_comment:
+                ToastUtil.showShort("btn_comment");
+                break;
+            case R.id.btn_goods_detail_webview:
+                ToastUtil.showShort("btn_goods_detail_webview");
+                Bundle bundle = new Bundle();
+                bundle.putString(WebViewActivity.BUNDLE_WEBVIEW_URL,goodsID);
+                bundle.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE,WebViewActivity.TYPE_GOODS_DETAILS);
+                startActivity(WebViewActivity.class,bundle);
                 break;
             default:
                 break;

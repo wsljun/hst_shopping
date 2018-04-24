@@ -7,14 +7,18 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.Size;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.cj.reocrd.utils.AndroidBug54971Workaround;
 import com.cj.reocrd.utils.TUtil;
 import com.cj.reocrd.view.dialog.LoadingDialog;
 import com.tbruyelle.rxpermissions2.Permission;
@@ -48,6 +52,8 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         unbinder = ButterKnife.bind(this);
         ButterKnife.bind(this);
         mPresenter = TUtil.getT(this, 0);
+        View view = LayoutInflater.from(mContext).inflate(getLayoutId(),null);
+        AndroidBug54971Workaround.assistActivity(view);
         if(mPresenter!=null){
             mPresenter.mContext=this;
         }
@@ -97,6 +103,7 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
     public void initData() {
 
     }
+
     public abstract void initView();
     /**
      * 沉浸式状态栏
@@ -188,6 +195,5 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         unbinder.unbind();
         AppManager.getAppManager().finishActivity(this);
     }
-
 
 }
