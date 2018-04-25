@@ -86,10 +86,6 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
             mOrderDetailGoodsDatas.addAll(mOrderGoodsDatas);
 //            }
         }
-        if(!TextUtils.isEmpty(oid)){
-            rType = REQUEST_TYEP;
-            mPresenter.getOrderDetail(oid);
-        }
     }
 
 //    public static Intent newIntent(Context context, List<OrderBean> orderBeans) {
@@ -108,6 +104,7 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
 
     @Override
     public void initView() {
+        titleCenter.setText("订单详情");
         rlGoodsImg = new RecyclerView(this);
         // 订单中 不同商品图片展示
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -116,6 +113,10 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
         //设置适配器
         mAdapter = new OrderDetailAdapter(this, mOrderDetailGoodsDatas);
         rlGoodsImg.setAdapter(mAdapter);
+        if(!TextUtils.isEmpty(oid)){
+            rType = REQUEST_TYEP;
+            mPresenter.getOrderDetail(oid);
+        }
     }
 
     private void updateView() {
@@ -170,11 +171,11 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
         if(REQUEST_TYEP.equals(rType)){
             orderDetail = (OrderDetail) data;
             if(null!=orderDetail){
-                mOrderDetailGoodsDatas = orderDetail.getOdlist();
-                for (int i = 0; i < mOrderGoodsDatas.size() ; i++) {
-                    mOrderDetailGoodsDatas.get(i).setImgurl(mOrderGoodsDatas.get(i).getImgurl());
-                }
-                mAdapter.updateData(mOrderDetailGoodsDatas);
+//                mOrderDetailGoodsDatas = orderDetail.getOdlist();
+//                for (int i = 0; i < mOrderGoodsDatas.size() ; i++) {
+//                    mOrderDetailGoodsDatas.get(i).setImgurl(mOrderGoodsDatas.get(i).getImgurl());
+//                }
+//                mAdapter.updateData(mOrderDetailGoodsDatas);
                 updateView();
             }else{
                 ToastUtil.showShort("orderDetail == null");

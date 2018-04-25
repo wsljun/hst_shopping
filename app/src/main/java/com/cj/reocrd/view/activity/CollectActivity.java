@@ -17,6 +17,7 @@ import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.contract.GoodsDetailContract;
 import com.cj.reocrd.model.entity.Friends;
 import com.cj.reocrd.model.entity.GoodsBean;
+import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.LogUtil;
@@ -108,6 +109,11 @@ public class CollectActivity extends BaseActivity<GoodsDetailPresenter> implemen
 
     @Override
     public void setCollectImg(boolean stuats) {
+
+    }
+
+    @Override
+    public void showComment(List<GoodsCommentBean> goodsCommentBeanList) {
 
     }
 

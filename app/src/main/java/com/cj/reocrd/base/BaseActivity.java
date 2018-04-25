@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.Size;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -17,16 +19,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
+import com.cj.reocrd.R;
+import com.cj.reocrd.net.NetChangeObserver;
+import com.cj.reocrd.net.NetWorkUtil;
+import com.cj.reocrd.net.NetworkStateReceiver;
 import com.cj.reocrd.utils.AndroidBug54971Workaround;
 import com.cj.reocrd.utils.TUtil;
+import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.dialog.LoadingDialog;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 
-
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.functions.Consumer;
@@ -35,7 +43,7 @@ import io.reactivex.functions.Consumer;
  * Created by Administrator on 2018/3/13.
  */
 
-public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayoutActivity {
+public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayoutActivity implements NetChangeObserver{
 
     private static final String TAG = "BaseActivity" ;
     public T mPresenter;
@@ -43,17 +51,22 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
     public Unbinder unbinder;
     public static String uid = "";
     public static String pid = "";
+
+    FrameLayout frameLayout;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         doBeforeSetcontentView();
-        setContentView(getLayoutId());
+//        setContentView(getLayoutId());
+        setContentView(R.layout.activity_base);
+        frameLayout = findViewById(R.id.activity_base_fl);
         mContext = this.getApplicationContext();
-        unbinder = ButterKnife.bind(this);
-        ButterKnife.bind(this);
-        mPresenter = TUtil.getT(this, 0);
         View view = LayoutInflater.from(mContext).inflate(getLayoutId(),null);
-        AndroidBug54971Workaround.assistActivity(view);
+        frameLayout.addView(view);
+        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
+        mPresenter = TUtil.getT(this, 0);
         if(mPresenter!=null){
             mPresenter.mContext=this;
         }
@@ -92,7 +105,35 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         // 设置竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//        translucentStatusBar();
         initState();
+    }
+    private void translucentStatusBar() {
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); //全屏
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0及以上
+            View decorView = getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_VISIBLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setNavigationBarColor(Color.BLACK);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+//            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+//                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                    | View.SYSTEM_UI_FLAG_VISIBLE
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4到5.0
+            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); //透明导航栏
+        }
     }
 
 
@@ -108,10 +149,12 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
     /**
      * 沉浸式状态栏
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initState() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); //透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            getWindow().setNavigationBarColor(Color.BLACK);
         }
     }
 
@@ -167,8 +210,8 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
     /**
      //     * 网络访问错误提醒
      //     */
-    public void showNetErrorTip() {
-//        ToastUitl.showToastWithImg(getText(R.string.net_error).toString(),R.drawable.ic_wifi_off);
+    public static void showNetErrorTip() {
+        ToastUtil.showShort("网络连接出错");
     }
     public void showNetErrorTip(String error) {
 //        ToastUitl.showToastWithImg(error,R.drawable.ic_wifi_off);
@@ -177,12 +220,14 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
     protected void onResume() {
         super.onResume();
         //防统计之类的
+        NetworkStateReceiver.registerObserver(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
+        NetWorkUtil.isNetworkConnect = NetWorkUtil.isNetworkAvailable(mContext);
+        NetworkStateReceiver.removeRegisterObserver(this);
     }
 
 
@@ -196,4 +241,13 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         AppManager.getAppManager().finishActivity(this);
     }
 
+    @Override
+    public void onConnect(NetWorkUtil.NetType type) {
+
+    }
+
+    @Override
+    public void onDisConnect() {
+        showNetErrorTip();
+    }
 }

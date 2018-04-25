@@ -119,6 +119,7 @@ public class UrlConstants {
         public static final String URL_DEL_ADDR = "412";//  addr del
         public static final String URL_Select_ADDR_MAP = "413";//  addr map
         public static final String URL_OREDER_COMMENT= "414";// todo order comment
+        public static final String URL_OREDER_CONFIRM= "415";// todo 确认收货
         //关注好友
         public static final String FRIEDNS_KEEP = "501";
         //取消关注

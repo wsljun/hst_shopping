@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rl_activity_goods_detail"
-    android:background="@color/colorBackground">
+    android:background="@color/colorBackground"
+    >
 
     <include
         android:id="@+id/address_title"
@@ -181,6 +182,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorWhite"
                     android:text="查看评论"
+                    android:textColor="@color/colorButton"
                     />
 
             </RelativeLayout>
@@ -259,6 +261,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorWhite"
                     android:text="查看详情"
+                    android:textColor="@color/colorButton"
                     />
 
 

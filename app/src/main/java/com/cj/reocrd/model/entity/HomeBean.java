@@ -14,6 +14,15 @@ public class HomeBean {
     private List<GoodsType>  tlist ; // 商品全部分类
     private List<OrderBean>  olist ; // 订单列表
     private List<AddressBean>    addlist; //地址列表
+    private List<GoodsCommentBean>  clist; // 商品详情页评论
+
+    public List<GoodsCommentBean> getClist() {
+        return clist;
+    }
+
+    public void setClist(List<GoodsCommentBean> clist) {
+        this.clist = clist;
+    }
 
     public List<GoodsBean> getMlist() {
         return mlist;

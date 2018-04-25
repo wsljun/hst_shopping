@@ -305,6 +305,7 @@
                     android:visibility="gone"
                     style="@style/mine_frame">
 
+
                     <TextView
                         style="@style/setting_item_configure"
                         android:drawableStart="@mipmap/youhuijuan"
@@ -391,4 +392,4 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
 
-</LinearLayout>
+</LinearLayout>    

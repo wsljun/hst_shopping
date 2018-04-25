@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cj.reocrd.net.NetChangeObserver;
+import com.cj.reocrd.net.NetWorkUtil;
+import com.cj.reocrd.net.NetworkStateReceiver;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.TUtil;
 import com.cj.reocrd.utils.ToastUtil;
@@ -25,7 +28,7 @@ import butterknife.Unbinder;
  * Created by Administrator on 2018/3/15.
  */
 
-public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements NetChangeObserver{
     public BaseActivity mActivity;
     public Unbinder unbinder;
     public T mPresenter;
@@ -206,6 +209,30 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         startActivity(intent);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //防统计之类的
+        NetWorkUtil.isNetworkConnect = NetWorkUtil.isNetworkAvailable(mActivity.mContext);
+        NetworkStateReceiver.registerObserver(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        NetworkStateReceiver.removeRegisterObserver(this);
+    }
+
+
+    @Override
+    public void onConnect(NetWorkUtil.NetType type) {
+        NetWorkUtil.isNetworkConnect = NetWorkUtil.isNetworkAvailable(mActivity.mContext);
+    }
+
+    @Override
+    public void onDisConnect() {
+        NetWorkUtil.isNetworkConnect = NetWorkUtil.isNetworkAvailable(mActivity.mContext);
+    }
 
 
 

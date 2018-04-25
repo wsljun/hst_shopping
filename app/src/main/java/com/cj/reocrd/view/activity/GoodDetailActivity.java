@@ -26,6 +26,7 @@ import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.GoodsDetailContract;
+import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.model.entity.GoodsDetailsBean;
 import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.model.entity.SkuBean;
@@ -38,6 +39,9 @@ import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.view.AmountView.AmountView;
 import com.donkingliang.labels.LabelsView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -121,7 +125,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     private TextView tvSkuTotalPrice,tvSkuAddCart,tvSkuBuy;
     private String skuPrice; // 不同规格单价
     private  String countPrice; // 最终选择后的总价
-
+    private List<GoodsCommentBean> goodsCommentBeans;
     @Override
     public int getLayoutId() {
         return R.layout.activity_good_detail;
@@ -212,10 +216,9 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                 }
                 break;
             case R.id.btn_comment:
-                ToastUtil.showShort("btn_comment");
+                mPresenter.getGoodsDetailComment(goodsID,20,0);
                 break;
             case R.id.btn_goods_detail_webview:
-                ToastUtil.showShort("btn_goods_detail_webview");
                 Bundle bundle = new Bundle();
                 bundle.putString(WebViewActivity.BUNDLE_WEBVIEW_URL,goodsID);
                 bundle.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE,WebViewActivity.TYPE_GOODS_DETAILS);
@@ -351,6 +354,15 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         if(stuats){ // 收藏成功
             ivCollect.setBackground(getResources().getDrawable(R.mipmap.collect_select));
         }
+    }
+
+    @Override
+    public void showComment(List<GoodsCommentBean> goodsCommentBeanList) {
+          if(!CollectionUtils.isNullOrEmpty(goodsCommentBeanList)){
+              goodsCommentBeans = goodsCommentBeanList;
+              // todo
+              ToastUtil.showShort("comment.size= "+goodsCommentBeans.size());
+          }
     }
 
 
