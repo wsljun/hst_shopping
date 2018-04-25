@@ -90,6 +90,8 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     public static final String TYPE_SUBMITORDER = "submitorder";
     private List<String> imgURls;
     private int goodsNum = 0;
+    private String requestType = "";
+    private static final String TYPE_SUBMIT = "SUBMIT_ORDER";
 
     @Override
     public int getLayoutId() {
@@ -167,6 +169,9 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     @OnClick({R.id.rl_address, R.id.tv_submit_order,R.id.fl_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.title_left:
+                finish();
+                break;
             case R.id.rl_address:
             case R.id.fl_address:
                 Bundle bundle = new Bundle();
@@ -175,6 +180,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
                 break;
             case R.id.tv_submit_order:
                 ToastUtil.showShort("提交订单");
+                requestType = TYPE_SUBMIT;
                 mPresenter.updateOrderAddress(oid,aid);
                 break;
             default:
@@ -197,7 +203,9 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
 
     @Override
     public void onSuccess(Object data) {
-
+          if(requestType.equals(TYPE_SUBMIT)){
+              //todo 去支付
+          }
     }
 
     @Override

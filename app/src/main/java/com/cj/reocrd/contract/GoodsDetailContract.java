@@ -3,6 +3,7 @@ package com.cj.reocrd.contract;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.base.BasePresenter;
 import com.cj.reocrd.base.BaseView;
+import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.model.entity.GoodsType;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public interface GoodsDetailContract {
         //返回获取的数据
         void  acticonToSubmitOrder(ApiResponse apiResponse);
         void  setCollectImg(boolean stuats);
+        void showComment(List<GoodsCommentBean> goodsCommentBeanList);
     }
 
     abstract static class Presenter extends BasePresenter<View> {
@@ -30,5 +32,8 @@ public interface GoodsDetailContract {
         public abstract void collectList(String uid,int pagesize,int pageno);
         public abstract void collectBrowse(String uid, int pagesize, int pageno);
         public abstract void myWallet(String uid);
+        public abstract void getGoodsDetailComment(String mid, int pagesize, int pageno);
+
+
     }
 }

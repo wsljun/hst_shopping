@@ -11,10 +11,13 @@ import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.GoodsDetailContract;
+import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.model.entity.Wallet;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.ToastUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -103,6 +106,11 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
 
     @Override
     public void setCollectImg(boolean stuats) {
+
+    }
+
+    @Override
+    public void showComment(List<GoodsCommentBean> goodsCommentBeanList) {
 
     }
 

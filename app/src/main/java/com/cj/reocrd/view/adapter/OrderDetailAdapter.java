@@ -34,13 +34,12 @@ public class OrderDetailAdapter extends  RecyclerView.Adapter<OrderDetailAdapter
     {
         this.mContext = context;
         mInflater = LayoutInflater.from(context);
-        mDatas = datats;
+        mDatas =  datats;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
-        public ViewHolder(View arg0)
-        {
+        public ViewHolder(View arg0) {
             super(arg0);
         }
 

@@ -6,6 +6,7 @@ import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.GoodsDetailContract;
 import com.cj.reocrd.model.ApiModel;
+import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.model.entity.GoodsDetailsBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.model.entity.OrderBean;
@@ -216,6 +217,34 @@ public class GoodsDetailPresenter extends GoodsDetailContract.Presenter {
                     public void onSuccess(ApiResponse apiResponse) {
                         if (null != apiResponse && isViewAttached()) {
                             mView.onSuccess(apiResponse);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        if (isViewAttached()) {
+                            mView.onFailureMessage(t.toString());
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void getGoodsDetailComment(String mid, int pagesize, int pageno) {
+        baseMap.clear();
+        baseMap.put("mid", mid);
+        baseMap.put("pagesize", pagesize);
+        baseMap.put("pageno", pageno);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_GOODS_COMMENT, baseMap, HomeBean.class
+                , new ApiCallback() {
+                    @Override
+                    public void onSuccess(ApiResponse apiResponse) {
+                        if (null != apiResponse && isViewAttached()) {
+                            if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                                HomeBean homeBean = (HomeBean) apiResponse.getResults();
+                                List<GoodsCommentBean> goodsCommentBeans = homeBean.getClist();
+                                mView.showComment(goodsCommentBeans);
+                            }
                         }
                     }
 

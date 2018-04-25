@@ -7,7 +7,7 @@
     <include
         android:id="@+id/submit_order_title"
         layout="@layout/layout_title" />
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rl_order_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,15 +15,19 @@
         android:layout_below="@+id/submit_order_title"
         android:layout_margin="8dp"
         android:padding="12dp"
+        android:gravity="center_vertical"
         >
 
         <TextView
             android:id="@+id/tv_order_id"
             style="@style/setting_item_configure"
+            android:layout_width="0dp"
             android:layout_marginStart="0dp"
             android:textStyle="bold"
             android:text="订单编号："
-            android:layout_marginTop="10dp"
+            android:layout_weight="80"
+            android:maxLines="2"
+            android:gravity="center_vertical"
             />
 
         <TextView
@@ -34,7 +38,7 @@
             android:text="已发货 "
             />
 
-    </RelativeLayout>
+    </LinearLayout>
     <View
         android:id="@+id/line"
         android:layout_below="@+id/rl_order_id"
@@ -126,14 +130,14 @@
             style="@style/setting_item_configure"
             android:layout_marginStart="0dp"
             android:layout_marginBottom="5dp"
-            android:text="收货人：收货人姓名"
+            android:text="收货人："
             />
         <TextView
             android:id="@+id/tv_address"
             style="@style/setting_item_configure"
             android:layout_marginStart="0dp"
             android:layout_marginBottom="5dp"
-            android:text="收货地址：朝阳区西大望路甲20号"
+            android:text="收货地址："
             android:maxLines="2"
             />
 
@@ -142,20 +146,20 @@
             style="@style/setting_item_configure"
             android:layout_marginBottom="5dp"
             android:layout_marginStart="0dp"
-            android:text="支付方式：支付宝" />
+            android:text="支付方式：" />
         <TextView
             android:id="@+id/tv_submit_order_time"
             style="@style/setting_item_configure"
             android:layout_marginStart="0dp"
             android:layout_marginBottom="5dp"
-            android:text="下单时间：2018-04-21 09:30:01"
+            android:text="下单时间："
             />
         <TextView
             android:id="@+id/tv_arrive_time"
             style="@style/setting_item_configure"
             android:layout_marginStart="0dp"
             android:layout_marginBottom="5dp"
-            android:text="预计送达：2018-04-23 09:30:01"
+            android:text="预计送达："
             />
 
     </LinearLayout>

@@ -9,6 +9,7 @@ import com.cj.reocrd.api.ApiCallback;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.ApiStore;
 import com.cj.reocrd.model.entity.GirlData;
+import com.cj.reocrd.net.NetWorkUtil;
 import com.cj.reocrd.utils.DESedeUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
@@ -46,12 +47,6 @@ public class ApiModel {
         }
         return apiModel;
     }
-
-
-    public void getListData(int size, int page, Callback<GirlData> apiCallback) {
-        ApiStore.getInstance().getApiService().getListData(size, page).enqueue(apiCallback);
-    }
-
 //    // 封装cipher秘文
 //    String data = "{\"phone\":\"" + phone + "\",\"type\":\"" + type + "\"}";
 //    String imei = "123222212121";
