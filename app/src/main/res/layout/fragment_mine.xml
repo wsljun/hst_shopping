@@ -302,6 +302,7 @@
 
                 <FrameLayout
                     android:id="@+id/mine_price"
+                    android:visibility="gone"
                     style="@style/mine_frame">
 
                     <TextView

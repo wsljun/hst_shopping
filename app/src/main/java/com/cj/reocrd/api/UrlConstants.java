@@ -83,6 +83,27 @@ public class UrlConstants {
         public static final String URL_COLLECT_BROWSE= "312";
         //钱包
         public static final String MY_WALLET="313";
+        //获取提现手续比例ratio
+        public static final String GET_RATIO="314";
+        //银行列表
+        public static final String CARD_LIST="315";
+        //我的银行卡
+        public static final String MY_CARD="316";
+        //绑定银行卡
+        public static final String BIND_CARD="317";
+        //提现申请
+        public static final String WALLET_GET="318";
+        //福利列表
+        public static final String WEAL_LIST="319";
+        //福利列表convert兑换
+        public static final String WEAL_CONVERT="320";
+        //获取抽奖六个级别金额
+        public static final String LOTTERY_LEVEL="321";
+        //判断该用户当前时间段是否允许抽奖
+        public static final String LOTTERY_CAN="322";
+        //保存抽奖结果
+        public static final String LOTTERY_RESULT="323";
+
         // 订单详情
         public static final String URL_ORDER_LIST = "401";//  order list
         public static final String URL_ORDER_DETAIL = "402";//  order detail
