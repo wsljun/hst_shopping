@@ -25,7 +25,6 @@
             android:id="@+id/wallet_useableblance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="154548"
             android:textColor="@color/colorBlack"
             android:textSize="38sp" />
 
@@ -54,7 +53,6 @@
             android:id="@+id/wallet_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="154548"
             android:textColor="@color/colorBlack"
             android:textSize="28sp" />
 
@@ -83,7 +81,6 @@
             android:id="@+id/wallet_freeze"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="154548"
             android:textColor="@color/colorBlack"
             android:textSize="28sp" />
 
@@ -112,7 +109,6 @@
             android:id="@+id/wallet_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="154548"
             android:textColor="@color/colorBlack"
             android:textSize="28sp" />
 
@@ -141,7 +137,6 @@
             android:id="@+id/wallet_stock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="154548"
             android:textColor="@color/colorBlack"
             android:textSize="28sp" />
 

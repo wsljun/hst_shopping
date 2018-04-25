@@ -14,9 +14,7 @@
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/title"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_below="@+id/title">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_cart_content"
