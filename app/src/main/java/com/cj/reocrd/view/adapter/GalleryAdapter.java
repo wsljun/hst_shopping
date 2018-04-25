@@ -64,6 +64,7 @@ public class GalleryAdapter  extends  RecyclerView.Adapter<GalleryAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder viewHolder, final int i)
     {
         ImageLoaderUtils.display(mContext,  viewHolder.mImg, UrlConstants.BASE_URL+mDatas.get(i).getImgurl());
+
     }
 
 }

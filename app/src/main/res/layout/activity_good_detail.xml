@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rl_activity_goods_detail"
     android:background="@color/colorBackground">
 
     <include
@@ -11,7 +12,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/address_title">
+        android:layout_below="@id/address_title"
+        android:layout_above="@+id/rl_goods_detail_bottom"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -160,17 +163,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorWhite"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp">
 
                 <TextView
                     android:id="@+id/good_shit_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/colorWhite"
+                    android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:text="@string/good_detail_shit"
                     android:textSize="14sp" />
+                <Button
+                    android:id="@+id/btn_comment"
+                    android:layout_below="@+id/good_shit_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:text="查看评论"
+                    />
 
             </RelativeLayout>
 
@@ -242,12 +254,15 @@
                         android:textSize="12sp" />
 
                 </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
+                <Button
+                    android:id="@+id/btn_goods_detail_webview"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:text="查看详情"
+                    />
 
-                </android.support.v7.widget.RecyclerView>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -271,7 +286,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
-            android:background="@mipmap/gouwucje2" />
+            android:background="@mipmap/gouwucje2"
+            android:visibility="invisible"
+            />
 
         <TextView
             android:id="@+id/good_buy"

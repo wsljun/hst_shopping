@@ -83,6 +83,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     public static final String TYPE_FOR_CART = "2";
     public static final String BUNDLE_KEY_OID = "oid";
     public static final String BUNDLE_KEY_TYPE = "type";
+    public static final String BUNDLE_KEY_TOTALPRICE = "total_rice";
     public static final String BUNDLE_KEY_PHONE = "phone";
     public static final String BUNDLE_KEY_ADDRESS_DETITAL = "address";
     public static final String BUNDLE_KEY_CONSIGNEE = "consignee";
@@ -99,8 +100,9 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     public void initData() {
         super.initData();
 //        orderBean = getIntent().getParcelableExtra("orderBean");
-        oid = getIntent().getStringExtra("oid"); // 511cbafb-1b74-476d-a3bf-05908d3a0f21
-        type = getIntent().getStringExtra("type");
+        oid = getIntent().getStringExtra(BUNDLE_KEY_OID); // 511cbafb-1b74-476d-a3bf-05908d3a0f21
+        type = getIntent().getStringExtra(BUNDLE_KEY_TYPE);
+        totalPrice = getIntent().getStringExtra(BUNDLE_KEY_TOTALPRICE);
         // init photo list
         imgURls = new ArrayList<>();
         if (TYPE_FOR_DETAIL.equals(type)) {
@@ -109,21 +111,14 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
                 goodsDetails = GoodDetailActivity.goodsDetailsBean;
                 imgURls.add(goodsDetails.getImgurl());
                 goodsNum = imgURls.size();
-                totalPrice = goodsDetails.getPrice();
             }
         }
         if(TYPE_FOR_CART.equals(type)){
-            phone = getIntent().getStringExtra(BUNDLE_KEY_PHONE);
-            addressDetital = getIntent().getStringExtra(BUNDLE_KEY_ADDRESS_DETITAL);
-            consignee = getIntent().getStringExtra(BUNDLE_KEY_CONSIGNEE);
             goodsNum = cartGoodsList.size();
             for (int i = 0; i < cartGoodsList.size(); i++) {
                 imgURls.add(cartGoodsList.get(i).getImgurl());
             }
-            totalPrice = String.valueOf(CartFragment.totalPrice);
         }
-
-
         mPresenter.getOrderDetail(oid);
     }
 
@@ -172,11 +167,11 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     @OnClick({R.id.rl_address, R.id.tv_submit_order,R.id.fl_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.rl_address:
             case R.id.fl_address:
-                ToastUtil.showShort("修改地址");
                 Bundle bundle = new Bundle();
                 bundle.putString("type",TYPE_SUBMITORDER);
-                startActivityForResult(AddressActivity.class,1);
+                startActivityForResult(AddressActivity.class,bundle,1);
                 break;
             case R.id.tv_submit_order:
                 ToastUtil.showShort("提交订单");

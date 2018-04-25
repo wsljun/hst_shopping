@@ -1,9 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cj.reocrd.view.activity.OrderDetailActivity">
+    android:background="@color/colorBackground"
+    >
+    <include
+        android:id="@+id/submit_order_title"
+        layout="@layout/layout_title" />
+    <RelativeLayout
+        android:id="@+id/rl_order_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/price_bg"
+        android:layout_below="@+id/submit_order_title"
+        android:layout_margin="8dp"
+        android:padding="12dp"
+        >
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_order_id"
+            style="@style/setting_item_configure"
+            android:layout_marginStart="0dp"
+            android:textStyle="bold"
+            android:text="订单编号："
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_order_status"
+            style="@style/setting_item_configure"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@+id/tv_order_id"
+            android:text="已发货 "
+            />
+
+    </RelativeLayout>
+    <View
+        android:id="@+id/line"
+        android:layout_below="@+id/rl_order_id"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_margin="2dp"
+        android:background="@color/colorTextLineGrey"></View>
+    <RelativeLayout
+        android:id="@+id/rl_goods_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/price_bg"
+        android:layout_below="@+id/line"
+        android:layout_margin="8dp"
+        android:padding="12dp"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rl_goods_img"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginStart="0dp"
+            android:scrollbars="none"
+            />
+
+        <TextView
+            android:id="@+id/tv_title_price"
+            style="@style/setting_item_configure"
+            android:layout_marginStart="0dp"
+            android:text="下单商品金额："
+            android:layout_below="@id/rl_goods_img"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_goods_price"
+            style="@style/setting_item_configure"
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@+id/tv_title_price"
+            android:text="¥ "
+            />
+        <TextView
+            android:id="@+id/tv_title_freight"
+            style="@style/setting_item_configure"
+            android:layout_marginStart="0dp"
+            android:text="@string/title_freight"
+            android:layout_below="@id/tv_title_price"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:id="@+id/tv_freight"
+            style="@style/setting_item_configure"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@+id/tv_title_freight"
+            android:text="¥ "
+            />
+        <TextView
+            android:id="@+id/tv_title_total_price"
+            style="@style/setting_item_configure"
+            android:layout_marginStart="0dp"
+            android:textStyle="bold"
+            android:text="@string/good_detail_total"
+            android:layout_below="@id/tv_title_freight"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:id="@+id/tv_total_price"
+            style="@style/setting_item_configure"
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@+id/tv_title_total_price"
+            android:textColor="@color/colorTextRed"
+            android:text="¥ "
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/rv_leave_messsage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/price_bg"
+        android:layout_below="@+id/rl_goods_info"
+        android:layout_margin="8dp"
+        android:padding="12dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/tv_consignee"
+            style="@style/setting_item_configure"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="5dp"
+            android:text="收货人：收货人姓名"
+            />
+        <TextView
+            android:id="@+id/tv_address"
+            style="@style/setting_item_configure"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="5dp"
+            android:text="收货地址：朝阳区西大望路甲20号"
+            android:maxLines="2"
+            />
+
+        <TextView
+            android:id="@+id/tv_pay_way"
+            style="@style/setting_item_configure"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="0dp"
+            android:text="支付方式：支付宝" />
+        <TextView
+            android:id="@+id/tv_submit_order_time"
+            style="@style/setting_item_configure"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="5dp"
+            android:text="下单时间：2018-04-21 09:30:01"
+            />
+        <TextView
+            android:id="@+id/tv_arrive_time"
+            style="@style/setting_item_configure"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="5dp"
+            android:text="预计送达：2018-04-23 09:30:01"
+            />
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_submit_order_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        >
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorTextLineGrey"></View>
+
+
+        <TextView
+            android:id="@+id/tv_buy_again"
+            style="@style/normal_tv_btn"
+            android:layout_width="100dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorButton"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:text="再次购买"
+            android:textColor="@color/colorWhite" />
+
+
+
+
+
+    </RelativeLayout>
+</RelativeLayout>

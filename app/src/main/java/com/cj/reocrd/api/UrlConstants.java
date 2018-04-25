@@ -8,6 +8,9 @@ public class UrlConstants {
     //BaseURl
 //    public final static String BASE_URL = "http://gank.io/api/";
     public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
+    public final static String URL_ABOUT = "http://mall.xdiandian.cn/mall/api/about";
+    public final static String URL_HELP = "http://mall.xdiandian.cn/mall/api/help";
+    public final static String URL_GOODS_DETAIL = "http://mall.xdiandian.cn/mall/api/meDetail?id=";
     public final static String URL = "app/outinterface";
     //    public final static String PID = "123222212121";  //    pid
     public final static String SUCCESE_CODE = "1"; // 返回结果成功
@@ -52,6 +55,7 @@ public class UrlConstants {
         public static final String URL_DEL_CART = "207"; //  del goods
         public static final String URL_CART_DATA = "208"; //  cart data
         public static final String URL_ADD_CART_GOODSNUM = "209"; //  add cart goods num
+        public static final String URL_GOODS_COMMENT = "210"; // todo  商品评论
 
         //我的首页
         public static final String MY_HOME = "301";
@@ -93,6 +97,7 @@ public class UrlConstants {
         public static final String URL_DEFAULT_ADDR = "411";//  addr default
         public static final String URL_DEL_ADDR = "412";//  addr del
         public static final String URL_Select_ADDR_MAP = "413";//  addr map
+        public static final String URL_OREDER_COMMENT= "414";// todo order comment
         //关注好友
         public static final String FRIEDNS_KEEP = "501";
         //取消关注

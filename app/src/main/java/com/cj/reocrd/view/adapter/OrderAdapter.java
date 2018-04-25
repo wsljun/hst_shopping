@@ -4,12 +4,16 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
+import com.cj.reocrd.base.baseadapter.SimpleClickListener;
 import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.view.activity.OrderActivity;
@@ -112,8 +116,30 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyHolder> {
         orderGoodsList.addAll(mDatas.get(position).getOdlist());
         GalleryAdapter mAdapter = new GalleryAdapter(mContext, orderGoodsList);
         holder.orderPhotosRecycleView.setAdapter(mAdapter);
-    }
+        holder.orderPhotosRecycleView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                return true;
+            }
 
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+                switch (e.getAction()){
+                    case MotionEvent.ACTION_UP:
+                        mOnItemListener.orderDetail(position);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+
+    }
     @Override
     public int getItemCount() {
         return mDatas.size();
@@ -129,6 +155,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyHolder> {
         void takeClick(int position);
 
         void refundClick(int position);
+        void orderDetail(int position);
     }
 
 

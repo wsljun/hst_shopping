@@ -10,6 +10,7 @@ import com.cj.reocrd.contract.OrderContract;
 import com.cj.reocrd.model.ApiModel;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.model.entity.OrderBean;
+import com.cj.reocrd.model.entity.OrderDetail;
 import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.ToastUtil;
 
@@ -67,12 +68,16 @@ public class OrderPresenter extends OrderContract.Presenter {
     public void getOrderDetail(String oid) {
         baseMap.clear();
         baseMap.put("oid",oid);
-        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_ORDER_DETAIL, baseMap, HomeBean.class, new ApiCallback() {
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_ORDER_DETAIL, baseMap, OrderDetail.class, new ApiCallback() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
-//                    HomeBean homeBean = (HomeBean) apiResponse.getResults();
-//                    mView.showOrderList(homeBean.getOlist());
+                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                        OrderDetail orderDetail = (OrderDetail) apiResponse.getResults();
+                        mView.onSuccess(orderDetail);
+                    }else{
+                        mView.onFailureMessage(apiResponse.getMessage());
+                    }
                 }
             }
 

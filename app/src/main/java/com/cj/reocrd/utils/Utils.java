@@ -73,4 +73,17 @@ public class Utils {
         InputMethodManager immHide = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE); // 隐藏软键盘
         immHide.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+    //计算价格
+    public static double countPrice(String price,String num){
+        if(TextUtils.isEmpty(price) || TextUtils.isEmpty(num)){
+            return 0;
+        }
+        double totalPrice = 0 ;
+        double p = Double.parseDouble(price);
+        int count = Integer.parseInt(num);
+        double itemPrice = p*count;
+        totalPrice = totalPrice+itemPrice;
+        return totalPrice;
+    }
 }

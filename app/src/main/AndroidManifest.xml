@@ -64,7 +64,7 @@
         <activity android:name=".view.activity.WalletActivity" />
         <activity android:name=".view.activity.SubmitOrderActivity" />
         <activity android:name=".view.activity.MyFansActivity" />
-        <activity android:name=".view.activity.FriendSendActivity"></activity>
+        <activity android:name=".view.activity.FriendSendActivity" />
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -73,7 +73,8 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".view.activity.FriendDetailActivity" />
         <activity android:name=".view.activity.CollectActivity" />
-        <activity android:name=".view.activity.OrderDetailActivity"></activity>
+        <activity android:name=".view.activity.OrderDetailActivity" />
+        <activity android:name=".view.activity.WebViewActivity"></activity>
     </application>
 
 </manifest>

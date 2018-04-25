@@ -42,7 +42,7 @@ public class OrderDetail {
     private String phone;
     private String opinion;
     private String isdel;
-    private List<OdlistBean> odlist;
+    private List<OrderBean.OdlistBean> odlist;
 
     public String getSn() {
         return sn;
@@ -89,6 +89,8 @@ public class OrderDetail {
     }
 
     public void setAmount(String amount) {
+        int p = (Integer.parseInt(amount))/100;
+        amount = String.valueOf(p);
         this.amount = amount;
     }
 
@@ -168,89 +170,12 @@ public class OrderDetail {
         this.isdel = isdel;
     }
 
-    public List<OdlistBean> getOdlist() {
+    public List<OrderBean.OdlistBean> getOdlist() {
         return odlist;
     }
 
-    public void setOdlist(List<OdlistBean> odlist) {
+    public void setOdlist(List<OrderBean.OdlistBean> odlist) {
         this.odlist = odlist;
     }
 
-    public static class OdlistBean {
-        /**
-         * id : 345cb165-1687-4089-bdb1-4dbcc0940d6a
-         * mname : 小米
-         * mid : bd0aa62f-f833-4535-b32e-62d42212c36b
-         * spec : 1KG
-         * num : 1
-         * price : 30000
-         * totalPrice : 30000
-         */
-
-        private String id;
-        private String mname;
-        private String mid;
-        private String spec;
-        private String num;
-        private String price;
-        private String totalPrice;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getMname() {
-            return mname;
-        }
-
-        public void setMname(String mname) {
-            this.mname = mname;
-        }
-
-        public String getMid() {
-            return mid;
-        }
-
-        public void setMid(String mid) {
-            this.mid = mid;
-        }
-
-        public String getSpec() {
-            return spec;
-        }
-
-        public void setSpec(String spec) {
-            this.spec = spec;
-        }
-
-        public String getNum() {
-            return num;
-        }
-
-        public void setNum(String num) {
-            this.num = num;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            int p = (Integer.parseInt(price))/100;
-            price = String.valueOf(p);
-            this.price = price;
-        }
-
-        public String getTotalPrice() {
-            return totalPrice;
-        }
-
-        public void setTotalPrice(String totalPrice) {
-            this.totalPrice = totalPrice;
-        }
-    }
 }

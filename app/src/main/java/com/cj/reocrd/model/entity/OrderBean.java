@@ -31,7 +31,7 @@ public class OrderBean {
     private String status;
     private String isdel;
     private List<OdlistBean> odlist;
-    private String oid;
+    private String oid;  // 同id 立即购买时返回oid 
 
     public String getOid() {
         return oid;
@@ -53,6 +53,8 @@ public class OrderBean {
     }
 
     public void setAmount(String amount) {
+        int p = (Integer.parseInt(amount))/100;
+        amount = String.valueOf(p);
         this.amount = amount;
     }
 
@@ -61,6 +63,8 @@ public class OrderBean {
     }
 
     public void setExamount(String examount) {
+        int p = (Integer.parseInt(examount))/100;
+        examount = String.valueOf(p);
         this.examount = examount;
     }
 
@@ -69,6 +73,8 @@ public class OrderBean {
     }
 
     public void setAllamount(String allamount) {
+        int p = (Integer.parseInt(allamount))/100;
+        allamount = String.valueOf(p);
         this.allamount = allamount;
     }
 
