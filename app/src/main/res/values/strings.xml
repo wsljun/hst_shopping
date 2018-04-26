@@ -157,4 +157,7 @@
     <string name="RMB">¥</string>
 
     <string name="collect_title">收藏</string>
+
+    <string name="bind_name">姓名&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="bind_hu">开户行&#160;&#160;&#160;&#160;</string>
 </resources>

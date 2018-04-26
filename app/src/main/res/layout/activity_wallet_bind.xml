@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_marginStart="0dp"
+                    android:text="银行卡号" />
+
+                <EditText
+                    android:id="@+id/wallet_bind_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@null"
+                    android:hint="输入卡号"
+                    android:inputType="number"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/wallet_bind_bank_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorWhite"
+                android:padding="10dp">
+
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_marginStart="0dp"
+                    android:text="选择银行" />
+
+                <TextView
+                    android:id="@+id/wallet_bind_bank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginStart="80dp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    style="@style/mine_text_colorsize"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/wallet_bind_address_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorWhite"
+                android:padding="10dp">
+
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_marginStart="0dp"
+                    android:text="选择地址" />
+
+                <TextView
+                    android:id="@+id/wallet_bind_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginStart="80dp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    style="@style/mine_text_colorsize"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/setting_item_configure"
+                android:layout_margin="10dp"
+                android:textColor="@color/colorTexthintGrey2"
+                android:text="信息加密处理，仅用于银行验证"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_marginStart="0dp"
+                    android:text="@string/bind_name" />
+
+                <EditText
+                    android:id="@+id/wallet_bind_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@null"
+                    android:hint="持卡人姓名"
+                    android:inputType="number"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorWhite"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_marginStart="0dp"
+                    android:text="@string/bind_hu" />
+
+                <EditText
+                    android:id="@+id/wallet_bind_hu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@null"
+                    android:hint="@string/bind_hu"
+                    android:inputType="number"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorWhite"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_marginStart="0dp"
+                    android:text="银行卡号" />
+
+                <EditText
+                    android:id="@+id/wallet_bind_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@null"
+                    android:hint="预留手机号"
+                    android:inputType="number"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/wallet_bind_next"
+                style="@style/normal_tv_btn"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
+                android:background="@drawable/textview_normal_btn"
+                android:text="@string/next"
+                android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

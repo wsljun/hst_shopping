@@ -102,8 +102,9 @@ public class UrlConstants {
         //判断该用户当前时间段是否允许抽奖
         public static final String LOTTERY_CAN="322";
         //保存抽奖结果
-        public static final String LOTTERY_RESULT="323";
-
+        public static final String LOTTERY_SAVE_RESULT="323";
+        //获取抽奖结果
+        public static final String LOTTERY_GET_RESULT="324";
         // 订单详情
         public static final String URL_ORDER_LIST = "401";//  order list
         public static final String URL_ORDER_DETAIL = "402";//  order detail

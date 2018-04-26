@@ -301,21 +301,33 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:id="@+id/mine_price"
-                    android:visibility="gone"
+                    android:id="@+id/mine_fuli"
                     style="@style/mine_frame">
 
 
                     <TextView
                         style="@style/setting_item_configure"
-                        android:drawableStart="@mipmap/youhuijuan"
-                        android:text="@string/mine_youhuiquan" />
+                        android:drawableStart="@mipmap/fuli"
+                        android:text="福利" />
 
                     <TextView
-                        android:id="@+id/mine_price_tv"
+                        android:id="@+id/mine_fuli_tv"
                         style="@style/mine_text_colorsize" />
                 </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/mine_zp"
+                    style="@style/mine_frame">
 
+
+                    <TextView
+                        style="@style/setting_item_configure"
+                        android:drawableStart="@mipmap/zhuanpan"
+                        android:text="大转盘" />
+
+                    <TextView
+                        android:id="@+id/mine_zp_tv"
+                        style="@style/mine_text_colorsize" />
+                </FrameLayout>
                 <FrameLayout
                     android:id="@+id/mine_collect"
                     style="@style/mine_frame"

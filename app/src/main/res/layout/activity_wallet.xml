@@ -12,21 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center_horizontal">
+        android:layout_marginLeft="20dp">
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/wallet_useableblance"
             android:textColor="@color/colorBlack"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/wallet_useableblance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorBlack"
-            android:textSize="38sp" />
+            android:textSize="28sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,14 +41,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center_horizontal">
+        android:layout_marginLeft="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/wallet_balance"
             android:textColor="@color/colorBlack"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/wallet_balance"
@@ -68,14 +69,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center_horizontal">
+        android:layout_marginLeft="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/wallet_freeze"
             android:textColor="@color/colorBlack"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/wallet_freeze"
@@ -92,61 +93,7 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/wallet_score"
-            android:textColor="@color/colorBlack"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/wallet_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"
-            android:textSize="28sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/wallet_yuan"
-            android:textColor="@color/colorBlack"
-            android:textSize="12sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/wallet_stock"
-            android:textColor="@color/colorBlack"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/wallet_stock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"
-            android:textSize="28sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/wallet_yuan"
-            android:textColor="@color/colorBlack"
-            android:textSize="12sp" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/wallet_get"
@@ -167,18 +114,64 @@
         android:id="@+id/wallet_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="下次体现的日期"
+        android:text="每周提现一次"
         android:textColor="@color/colorTexthintGrey2"
         android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/wallet_rule"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/wallet_rule"
-        android:textColor="@color/colorButton"
-        android:textSize="12sp" />
+        android:layout_marginLeft="20dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wallet_score"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp" />
 
+        <TextView
+            android:id="@+id/wallet_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="28sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wallet_yuan"
+            android:textColor="@color/colorBlack"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wallet_stock"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/wallet_stock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="28sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wallet_yuan"
+            android:textColor="@color/colorBlack"
+            android:textSize="12sp" />
+    </LinearLayout>
 </LinearLayout>

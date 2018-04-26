@@ -5,7 +5,9 @@ import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.ApiModel;
+import com.cj.reocrd.model.entity.BankBean;
 import com.cj.reocrd.model.entity.UserBean;
+import com.cj.reocrd.model.entity.Zp;
 
 import java.io.File;
 import java.util.HashMap;
@@ -171,4 +173,168 @@ public class MyPrresenter extends MyContract.Presenter {
 
         });
     }
+
+    @Override
+    public void getRatio(String por) {
+
+    }
+
+    @Override
+    public void cardList(String por, String uid) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);   //
+        ApiModel.getInstance().getData(por, map, BankBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+
+        });
+    }
+
+    @Override
+    public void myCard(String por, String uid) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);   //
+        ApiModel.getInstance().getData(por, map, BankBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+
+        });
+    }
+
+    @Override
+    public void bindCard(String por, String uid, String bid, String rid, String username, String bankname, String cardsn, String phone) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("bid", bid);
+        map.put("rid", rid);
+        map.put("username", username);
+        map.put("bankname", bankname);
+        map.put("cardsn", cardsn);
+        map.put("phone", phone);
+        ApiModel.getInstance().getData(por, map, BankBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+        });
+    }
+
+    @Override
+    public void walletGet(String por, String uid, String bid, String money) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("bid", bid);
+        map.put("money", money);
+        ApiModel.getInstance().getData(por, map, BankBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+        });
+    }
+
+    @Override
+    public void wealList(String por, String uid) {
+
+    }
+
+    @Override
+    public void wealConvert(String por, String uid, String wid) {
+
+    }
+
+    @Override
+    public void lotteryLevel(String por, String uid) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        ApiModel.getInstance().getData(por, map, Zp.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+        });
+    }
+
+    @Override
+    public void lotteryCan(String por, String uid) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        ApiModel.getInstance().getData(por, map, Zp.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+        });
+    }
+
+    @Override
+    public void lotterySaveResult(String por, String uid, String level, String money) {
+
+    }
+
+    @Override
+    public void lotteryGetResult(String por, String uid) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        ApiModel.getInstance().getData(por, map, Zp.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+        });
+    }
+
 }

@@ -133,10 +133,10 @@ public class CollectActivity extends BaseActivity<GoodsDetailPresenter> implemen
 
     public void initList() {
         if ("collect".equals(from)) {
-            collectAdapter = new CollectAdapter(R.layout.item_collect, mDatas, true);
+            collectAdapter = new CollectAdapter(R.layout.item_collect, mDatas, CollectAdapter.COLLECT);
         }
         if ("history".equals(from)) {
-            collectAdapter = new CollectAdapter(R.layout.item_collect, mDatas, false);
+            collectAdapter = new CollectAdapter(R.layout.item_collect, mDatas, CollectAdapter.HISTORY);
         }
         //设置适配器可以上拉加载
         collectAdapter.setOnBaseAdapterItemClickListener(this);

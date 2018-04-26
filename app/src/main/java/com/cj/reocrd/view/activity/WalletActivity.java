@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,6 +29,7 @@ import butterknife.OnClick;
  */
 
 public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implements GoodsDetailContract.View {
+    public static final int WALLET_GET_REQUEST = 318;
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -48,8 +50,12 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
     TextView walletGet;
     @BindView(R.id.wallet_time)
     TextView walletTime;
-    @BindView(R.id.wallet_rule)
-    TextView walletRule;
+
+    int blance;
+    int useableblance;
+    int freeze;
+    int score;
+    int stock;
 
     @Override
     public int getLayoutId() {
@@ -78,11 +84,16 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
         if (UrlConstants.SUCCESE_CODE.equals(response.getStatusCode())) {
             Wallet wallet = (Wallet) response.getResults();
             if (wallet != null) {
-                walletUseableblance.setText(wallet.getUseableblance());
-                walletBalance.setText(wallet.getBalance());
-                walletFreeze.setText(wallet.getFreeze());
-                walletScore.setText(wallet.getScore());
-                walletStock.setText(wallet.getStock());
+                blance = Integer.parseInt(wallet.getBalance()) / 100;
+                useableblance = Integer.parseInt(wallet.getUseableblance()) / 100;
+                freeze = Integer.parseInt(wallet.getFreeze()) / 100;
+                score = Integer.parseInt(wallet.getScore());
+                stock = Integer.parseInt(wallet.getStock());
+                walletUseableblance.setText(blance + "");
+                walletBalance.setText(useableblance + "");
+                walletFreeze.setText(freeze + "");
+                walletScore.setText(score + "");
+                walletStock.setText(stock + "");
             }
         } else {
             ToastUtil.showToastS(this, response.getMessage());
@@ -114,16 +125,30 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
 
     }
 
-    @OnClick({R.id.title_left, R.id.wallet_get, R.id.wallet_rule})
+    @OnClick({R.id.title_left, R.id.wallet_get})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
                 finish();
                 break;
             case R.id.wallet_get:
+                if (useableblance > 0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("useableblance", useableblance);
+                    startActivityForResult(WalletGetActivity.class, bundle, WalletGetActivity.WALLET_GET_REQUEST);
+                } else {
+                    return;
+                }
                 break;
-            case R.id.wallet_rule:
-                break;
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == WalletGetActivity.WALLET_GET_REQUEST) {
+            mPresenter.myWallet(uid);
         }
     }
 }
