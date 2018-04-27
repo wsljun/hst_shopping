@@ -16,13 +16,13 @@ import java.util.List;
  */
 public class CollectAdapter extends BaseQuickAdapter {
     private GoodsBean cartGoods; // 购物车 商品集合
-    private int item_layoutid;
-    private boolean isCollect;
+    public static final int COLLECT = 1;
+    public static final int HISTORY = 2;
+    private int type;
 
-    public CollectAdapter(int layoutResId, List data, boolean isCollect) {
+    public CollectAdapter(int layoutResId, List data,int type) {
         super(layoutResId, data);
-        this.item_layoutid = layoutResId;
-        this.isCollect = isCollect;
+        this.type = type;
     }
 
     @Override
@@ -31,12 +31,15 @@ public class CollectAdapter extends BaseQuickAdapter {
         ImageLoaderUtils.display(mContext, helper.getView(R.id.collect_img), UrlConstants.BASE_URL + cartGoods.getImgurl());
         helper.setText(R.id.collect_name, cartGoods.getName());
         helper.setText(R.id.collect_price, "￥" + cartGoods.getPrice());
-        if (isCollect) {
-            helper.getView(R.id.collect_delete).setVisibility(View.VISIBLE);
-            helper.getView(R.id.collect_car).setVisibility(View.GONE);
-        } else {
-            helper.getView(R.id.collect_delete).setVisibility(View.GONE);
-            helper.getView(R.id.collect_car).setVisibility(View.VISIBLE);
+        switch (type){
+            case 1:
+                helper.getView(R.id.collect_delete).setVisibility(View.VISIBLE);
+                helper.getView(R.id.collect_car).setVisibility(View.GONE);
+                break;
+            case 2:
+                helper.getView(R.id.collect_delete).setVisibility(View.GONE);
+                helper.getView(R.id.collect_car).setVisibility(View.VISIBLE);
+                break;
         }
         helper.getView(R.id.collect_delete).setOnClickListener(new View.OnClickListener() {
             @Override

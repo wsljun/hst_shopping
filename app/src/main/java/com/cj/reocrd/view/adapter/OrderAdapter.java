@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -138,6 +139,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyHolder> {
 
             }
         });
+        holder.orderItemLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemListener.orderDetail(position);
+            }
+        });
 
     }
     @Override
@@ -176,6 +183,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyHolder> {
         TextView tvToGo;
         @BindView(R.id.tv_btn_cancle_or_del)
         TextView tvCancleOrDel;
+        @BindView(R.id.order_item_ll)
+        LinearLayout orderItemLl;
 
         public MyHolder(View itemView) {
             super(itemView);

@@ -7,6 +7,7 @@
     android:layout_marginRight="8dp"
     android:layout_marginTop="8dp"
     android:background="@drawable/price_bg"
+    android:id="@+id/order_item_ll"
     android:orientation="vertical"
     android:padding="12dp">
 

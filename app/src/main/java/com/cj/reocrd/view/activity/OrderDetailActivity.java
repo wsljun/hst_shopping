@@ -105,11 +105,8 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
     @Override
     public void initView() {
         titleCenter.setText("订单详情");
-        rlGoodsImg = new RecyclerView(this);
         // 订单中 不同商品图片展示
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rlGoodsImg.setLayoutManager(linearLayoutManager);
+        rlGoodsImg.setLayoutManager(new LinearLayoutManager(this));
         //设置适配器
         mAdapter = new OrderDetailAdapter(this, mOrderDetailGoodsDatas);
         rlGoodsImg.setAdapter(mAdapter);
@@ -133,7 +130,7 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
         tvPayWay.setText("支付方式："+orderDetail.getWay());
         tvSubmitOrderTime.setText("下单时间："+orderDetail.getCreatetime());
         tvArriveTime.setText("预计送达："+null);
-        mAdapter.updateData(mOrderDetailGoodsDatas);
+//        mAdapter.updateData(mOrderDetailGoodsDatas);
     }
 
     private void setOrderStatus(String s) {

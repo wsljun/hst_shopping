@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_mybank_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_mybank_name"
+        style="@style/setting_item_configure"
+        android:layout_marginTop="10dp"
+        android:text="提现金额123213.1元"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/item_mybank_code"
+        style="@style/setting_item_configure"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:text="提现金额123213.1元"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/colorTexthintGrey"></View>
+</LinearLayout>
