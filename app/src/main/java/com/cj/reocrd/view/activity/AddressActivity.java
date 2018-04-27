@@ -32,7 +32,7 @@ import butterknife.OnClick;
  */
 
 public class AddressActivity extends BaseActivity<AddressPresenter> implements AddressAdapter.OnItemListener,
-        AddressContract.View{
+        AddressContract.View {
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -42,7 +42,7 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
     @BindView(R.id.address_recycler)
     RecyclerView addressRecycler;
     AddressAdapter addressAdapter;
-    List<AddressBean> addressBeans ;
+    List<AddressBean> addressBeans;
     public static AddressBean addrForEdit;
     private String type;
     private String aid;
@@ -85,18 +85,23 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
-                if(SubmitOrderActivity.TYPE_SUBMITORDER.equals(type)){
-                    Intent intent  = new Intent();
-                    intent.putExtra("aid",aid);
-                    setResult(RESULT_OK,intent);
+                if (SubmitOrderActivity.TYPE_SUBMITORDER.equals(type)) {
+                    Intent intent = new Intent();
+                    intent.putExtra("aid", aid);
+                    setResult(RESULT_OK, intent);
                 }
                 finish();
                 break;
             case R.id.address_add:
                 addrForEdit = null;
                 Intent intent = new Intent(this, AddressEditActivity.class);
+<<<<<<< HEAD
                 Bundle b =  new Bundle();
                 b.putString("type",AddressEditActivity.TYPE_ADD);
+=======
+                Bundle b = new Bundle();
+                b.putString("type", "add");
+>>>>>>> 4c06ad6a3584d5a98cec2b386a0ddc2d0f5db41c
                 intent.putExtras(b);
                 startActivity(intent);
                 break;
@@ -111,6 +116,7 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
         mPresenter.setDefaultAddress(aid);
     }
 
+<<<<<<< HEAD
     private void setDefulatAddress(int position){
         if(CollectionUtils.isNullOrEmpty(addressBeans)){
             if(position == -1){
@@ -119,22 +125,32 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
                 SPUtils.remove(this,SPUtils.SpKey.DEFAULT_ADDRESS_PHONE);
                 SPUtils.remove(this,SPUtils.SpKey.DEFAULT_ADDRESS_DETAIL);
             }
+=======
+    private void setDefulatAddress(int position) {
+        if (CollectionUtils.isNullOrEmpty(addressBeans)) {
+>>>>>>> 4c06ad6a3584d5a98cec2b386a0ddc2d0f5db41c
             return;
         }
         aid = addressBeans.get(position).getId();
-        SPUtils.put(this,SPUtils.SpKey.DEFAULT_ADDRESS_ID,aid);
-        SPUtils.put(this,SPUtils.SpKey.DEFAULT_ADDRESS_CONSIGNEE,addressBeans.get(position).getConsignee());
-        SPUtils.put(this,SPUtils.SpKey.DEFAULT_ADDRESS_PHONE,addressBeans.get(position).getPhone());
-        SPUtils.put(this,SPUtils.SpKey.DEFAULT_ADDRESS_DETAIL,addressBeans.get(position).getFuladdress());
+        SPUtils.put(this, SPUtils.SpKey.DEFAULT_ADDRESS_ID, aid);
+        SPUtils.put(this, SPUtils.SpKey.DEFAULT_ADDRESS_CONSIGNEE, addressBeans.get(position).getConsignee());
+        SPUtils.put(this, SPUtils.SpKey.DEFAULT_ADDRESS_PHONE, addressBeans.get(position).getPhone());
+        SPUtils.put(this, SPUtils.SpKey.DEFAULT_ADDRESS_DETAIL, addressBeans.get(position).getFuladdress());
     }
 
     @Override
     public void editClick(int position) {
         ToastUtil.showToastS(this, "editClick" + position);
         addrForEdit = addressBeans.get(position);
+<<<<<<< HEAD
         Bundle b =  new Bundle();
         b.putString("type",AddressEditActivity.TYPE_EDIT);
         startActivity(AddressEditActivity.class,b);
+=======
+        Bundle b = new Bundle();
+        b.putString("type", "edit");
+        startActivity(AddressEditActivity.class, b);
+>>>>>>> 4c06ad6a3584d5a98cec2b386a0ddc2d0f5db41c
     }
 
     @Override
@@ -160,6 +176,7 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
     @Override
     public void showAddressList(List<AddressBean> beans) {
         addressBeans = beans;
+<<<<<<< HEAD
         if(addressBeans.size()>0){
             if(addressBeans.get(0).getIsdefault().equals("1")){
                 setDefulatAddress(0);
@@ -168,6 +185,13 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
         }else{
             setDefulatAddress(-1);
 //            ToastUtil.showShort("暂时没有数据");
+=======
+        if (addressBeans.size() > 0) {
+            setDefulatAddress(0);
+            addressAdapter.updateData(addressBeans);
+        } else {
+            ToastUtil.showShort("暂时没有数据");
+>>>>>>> 4c06ad6a3584d5a98cec2b386a0ddc2d0f5db41c
         }
     }
 
@@ -178,10 +202,18 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
 
     @Override
     public void onBackPressed() {
+<<<<<<< HEAD
         if(SubmitOrderActivity.TYPE_SUBMITORDER.equals(type)){
             Intent intent  = new Intent();
             intent.putExtra("aid",aid);
             setResult(RESULT_OK,intent);
+=======
+        super.onBackPressed();
+        if (SubmitOrderActivity.TYPE_SUBMITORDER.equals(type)) {
+            Intent intent = new Intent();
+            intent.putExtra("aid", aid);
+            setResult(RESULT_OK, intent);
+>>>>>>> 4c06ad6a3584d5a98cec2b386a0ddc2d0f5db41c
             finish();
         }
     }

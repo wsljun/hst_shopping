@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    >
+    android:background="@color/colorBackground">
+
     <include
         android:id="@+id/submit_order_title"
         layout="@layout/layout_title" />
@@ -58,6 +58,7 @@
                 android:layout_height="1dp"
                 android:layout_margin="2dp"
                 android:background="@color/colorTextLineGrey"></View>
+
             <RelativeLayout
                 android:id="@+id/rl_goods_info"
                 android:layout_width="match_parent"
@@ -136,7 +137,6 @@
                 android:padding="12dp"
                 android:orientation="vertical"
                 >
-
                 <TextView
                     android:id="@+id/tv_consignee"
                     style="@style/setting_item_configure"
@@ -152,6 +152,7 @@
                     android:text="收货地址："
                     android:maxLines="2"
                     />
+
 
                 <TextView
                     android:id="@+id/tv_pay_way"
@@ -192,19 +193,17 @@
         </RelativeLayout>
     </ScrollView>
     <RelativeLayout
-        android:id="@+id/rl_submit_order_bottom"
+        android:id="@id/rl_submit_order_bottom"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorWhite"
-        >
+        android:background="@color/colorWhite">
 
         <View
             android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorTextLineGrey"></View>
-
 
         <TextView
             android:id="@+id/tv_buy_again"
@@ -218,9 +217,6 @@
             android:textColor="@color/colorWhite"
             android:visibility="invisible"
             />
-
-
-
 
 
     </RelativeLayout>

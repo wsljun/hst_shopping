@@ -173,7 +173,6 @@
                     android:layout_height="30dp"
                     android:background="@color/colorWhite"
                     android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
                     android:text="@string/good_detail_shit"
                     android:textSize="14sp" />
                 <Button

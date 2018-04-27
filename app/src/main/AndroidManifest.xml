@@ -79,6 +79,11 @@
         <activity android:name=".view.activity.WebViewActivity" />
         <activity android:name=".view.activity.RefundActivity" />
         <activity android:name=".view.activity.RefundDetailActivity" />
+        <activity android:name=".view.activity.WalletBindActivity"/>
+        <activity android:name=".view.activity.WalletGetActivity"/>
+        <activity android:name=".view.activity.WalletBindListActivity"/>
+        <activity android:name=".view.activity.FuliActivity"/>
+        <activity android:name=".view.activity.ZPActivity"/>
 
         <receiver android:name=".net.NetworkStateReceiver">
             <intent-filter>

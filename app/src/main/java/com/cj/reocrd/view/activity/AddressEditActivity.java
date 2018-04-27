@@ -56,7 +56,7 @@ public class AddressEditActivity extends BaseActivity<AddressPresenter> implemen
     private Dialog dialog;
     private List<AddressBean.Regions> regions ; // 地址信息
     private String consignee ;// 收货人
-    private  String phone ;
+    private String phone ;
     private String postCode ;
     private String detailAddress;
     private String addressID;
@@ -66,7 +66,7 @@ public class AddressEditActivity extends BaseActivity<AddressPresenter> implemen
     private final String LAYER_C = "2";
     private final String LAYER_R = "3";
     private AddressPickerView addressPickerView;
-    private  static YwpAddressBean mYwpAddressBean  = new YwpAddressBean();
+    private static YwpAddressBean mYwpAddressBean  = new YwpAddressBean();
     private List<YwpAddressBean.AddressItemBean> province;
     private List<YwpAddressBean.AddressItemBean> city;
     private List<YwpAddressBean.AddressItemBean> district;
