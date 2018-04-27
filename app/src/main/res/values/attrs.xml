@@ -22,4 +22,12 @@
         <attr name="box_bg_normal" format="reference" />
         <attr name="inputType" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="luckpan">
+        <attr name="pannum"  format="integer"/>
+        <attr name="names" format="reference"/>
+        <attr name="icons"  format="reference"/>
+        <attr name="price"  format="reference"/>
+    </declare-styleable>
+
 </resources>

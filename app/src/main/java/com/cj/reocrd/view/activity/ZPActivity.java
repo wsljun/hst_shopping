@@ -9,8 +9,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
@@ -21,6 +24,9 @@ import com.cj.reocrd.model.entity.Zp;
 import com.cj.reocrd.presenter.MyPrresenter;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.view.view.LuckPan.LuckPanLayout;
+import com.cj.reocrd.view.view.LuckPan.LuckyPanView;
+import com.cj.reocrd.view.view.LuckPan.RotatePan;
 
 import java.util.Random;
 
@@ -32,7 +38,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2018/4/26.
  */
 
-public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract.View {
+public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract.View,LuckPanLayout.AnimationEndListener {
 
     @BindView(R.id.title_left)
     TextView titleLeft;
@@ -47,11 +53,32 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
 
     Zp zp;
     int type;
+    @BindView(R.id.title_rl)
+    RelativeLayout titleRl;
+    @BindView(R.id.imageView)
+    ImageView imageView;
+    @BindView(R.id.id_start_btn)
+    ImageView idStartBtn;
+    @BindView(R.id.rotatePan)
+    RotatePan rotatePan;
+    @BindView(R.id.id_start)
+    ImageView idStart;
+    @BindView(R.id.luckpan_layout)
+    LuckPanLayout luckPanLayout;
+
+    @BindView(R.id.id_luckypan)
+    LuckyPanView mLuckyPanView;
 
     private Animation mStartAnimation;
     private Animation mEndAnimation;
     private boolean isRunning;
     private int mItemCount;
+
+
+    private ImageView goBtn;
+    private ImageView yunIv;
+    private String[] strs;
+
 
     @Override
     public void onSuccess(Object data) {
@@ -76,6 +103,8 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
                     ToastUtil.showToastS(this, response.getMessage());
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -99,6 +128,7 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
         super.initData();
         type = 1;
         mPresenter.lotteryLevel(UrlConstants.UrLType.LOTTERY_LEVEL, uid);
+        strs = getResources().getStringArray(R.array.names);
     }
 
     @Override
@@ -148,7 +178,7 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
             @Override
             public void onAnimationEnd(Animation animation) {
                 isRunning = false;
-                LogUtil.e("---->>", toDegreeMin + "-" + randomInt+ "-" + mItemCount);
+                LogUtil.e("---->>", toDegreeMin + "-" + randomInt + "-" + mItemCount);
             }
 
             @Override
@@ -170,7 +200,7 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
         }
     }
 
-    @OnClick({R.id.id_start_btn, R.id.zp_guize})
+    @OnClick({R.id.id_start_btn, R.id.zp_guize, R.id.id_start})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.id_start_btn:
@@ -183,6 +213,7 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
                     }
                     new Handler().postDelayed(new Runnable() {
 
+                        @Override
                         public void run() {
                             //网络获取抽奖结果
                             type = 2;
@@ -193,6 +224,27 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
                 break;
             case R.id.zp_guize:
                 break;
+            case R.id.id_start:
+                luckPanLayout.rotate(2,100);
+//                if (!mLuckyPanView.isStart())
+//                {
+//                    mLuckyPanView.luckyStart(1);
+//                } else
+//                {
+//                    if (!mLuckyPanView.isShouldEnd())
+//
+//                    {
+//                        mLuckyPanView.luckyEnd();
+//                    }
+//                }
+                break;
+            default:
+                break;
         }
+    }
+
+    @Override
+    public void endAnimation(int position) {
+        ToastUtil.showShort("Position = "+position+","+strs[position]);
     }
 }
