@@ -18,6 +18,7 @@ import com.cj.reocrd.model.entity.AddressBean;
 import com.cj.reocrd.model.entity.BankBean;
 import com.cj.reocrd.presenter.MyPrresenter;
 import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
 
@@ -53,7 +54,8 @@ public class WalletBindActivity extends BaseActivity<MyPrresenter> implements My
     EditText walletBindPhone;
 
     BankBean.Bank bank;
-    AddressBean address;
+    String aid;
+    public static final String TYPE_BINDBANK = "bindbank";
 
     @Override
     public int getLayoutId() {
@@ -67,7 +69,7 @@ public class WalletBindActivity extends BaseActivity<MyPrresenter> implements My
 
     @Override
     public void initView() {
-        titleCenter.setText("提现");
+        titleCenter.setText("绑定银行卡");
     }
 
     @Override
@@ -104,19 +106,21 @@ public class WalletBindActivity extends BaseActivity<MyPrresenter> implements My
                 startActivityForResult(WalletBindListActivity.class, WalletBindListActivity.BIND_LIST_REQUEST);
                 break;
             case R.id.wallet_bind_address_rl:
+                Bundle bundle = new Bundle();
+                bundle.putString("type", TYPE_BINDBANK);
+                startActivityForResult(AddressActivity.class, bundle, 2);
                 break;
             case R.id.wallet_bind_next:
-                String bid = bank.getId();
-                String rid = address.getP_re_id();
                 String cardsn = walletBindCard.getText().toString();
                 String username = walletBindName.getText().toString();
                 String bankname = walletBindHu.getText().toString();
                 String phone = walletBindPhone.getText().toString();
-                if (TextUtils.isEmpty(bid)) {
+                if (bank == null) {
                     ToastUtil.showToastS(this, "分属银行获取失败");
                     return;
                 }
-                if (TextUtils.isEmpty(rid)) {
+                String bid = bank.getId();
+                if (TextUtils.isEmpty(aid)) {
                     ToastUtil.showToastS(this, "地址获取失败");
                     return;
                 }
@@ -140,7 +144,7 @@ public class WalletBindActivity extends BaseActivity<MyPrresenter> implements My
                     ToastUtil.showToastS(this, R.string.format_not_correct);
                     return;
                 }
-                mPresenter.bindCard(UrlConstants.UrLType.BIND_CARD, uid, bid, rid, username, bankname, cardsn, phone);
+                mPresenter.bindCard(UrlConstants.UrLType.BIND_CARD, uid, bid, aid, username, bankname, cardsn, phone);
                 break;
             case R.id.title_left:
                 finish();
@@ -156,5 +160,13 @@ public class WalletBindActivity extends BaseActivity<MyPrresenter> implements My
             walletBindBank.setText(bank.getName());
         }
         //下边获取地址
+        if (requestCode == 2 && resultCode == RESULT_OK) {
+            Bundle b = data.getExtras();
+            aid = b.getString("aid");
+            String addressDetital = (String) SPUtils.get(mContext, SPUtils.SpKey.DEFAULT_ADDRESS_DETAIL, "");
+            walletBindAddress.setText(addressDetital + "");
+        }
     }
+
+
 }

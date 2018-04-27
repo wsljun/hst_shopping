@@ -107,6 +107,7 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                 break;
             case 2:
                 if (UrlConstants.SUCCESE_CODE.equals(response.getStatusCode())) {
+                    setResult(RESULT_OK);
                     finish();
                 } else {
                     ToastUtil.showToastS(this, response.getMessage());
@@ -114,8 +115,11 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                 break;
             case 3:
                 if (UrlConstants.SUCCESE_CODE.equals(response.getStatusCode())) {
-                    String tax = (String) response.getResults();
-                    ratioDialog(tax);
+                    BankBean bankBean = (BankBean) response.getResults();
+                    if (bankBean != null && !TextUtils.isEmpty(bankBean.getTax())) {
+                        ratioDialog(bankBean.getTax());
+                    }
+
                 } else {
                     ToastUtil.showToastS(this, response.getMessage());
                 }
@@ -155,10 +159,9 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                     ToastUtil.showToastS(this, "可提现金额为" + useableblance);
                     return;
                 }
-
                 //获取提现比例
                 type = 3;
-                mPresenter.getRatio(UrlConstants.UrLType.GET_RATIO);
+                mPresenter.getRatio(UrlConstants.UrLType.GET_RATIO, uid);
                 break;
             case R.id.title_left:
                 finish();
@@ -186,7 +189,7 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
      */
     private void ratioDialog(String tax) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("本次提现将收取百分之"+tax+"的手续费是否提现").setIcon(
+        builder.setTitle("本次提现将收取百分之" + tax + "的手续费是否提现").setIcon(
                 R.mipmap.ic_launcher);
         builder.setNegativeButton(getString(R.string.cancel), null);
         builder.setPositiveButton(getString(R.string.confirm),

@@ -6,6 +6,7 @@ import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.ApiModel;
 import com.cj.reocrd.model.entity.BankBean;
+import com.cj.reocrd.model.entity.FuliBean;
 import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.model.entity.Zp;
 
@@ -175,8 +176,23 @@ public class MyPrresenter extends MyContract.Presenter {
     }
 
     @Override
-    public void getRatio(String por) {
+    public void getRatio(String por, String uid) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);   //
+        ApiModel.getInstance().getData(por, map, BankBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+
+        });
     }
 
     @Override
@@ -267,12 +283,41 @@ public class MyPrresenter extends MyContract.Presenter {
 
     @Override
     public void wealList(String por, String uid) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        ApiModel.getInstance().getData(por, map, FuliBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+        });
     }
 
     @Override
     public void wealConvert(String por, String uid, String wid) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("wid", wid);
+        ApiModel.getInstance().getData(por, map, FuliBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+        });
     }
 
     @Override

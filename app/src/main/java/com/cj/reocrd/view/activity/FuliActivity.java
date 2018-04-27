@@ -84,6 +84,7 @@ public class FuliActivity extends BaseActivity<MyPrresenter> implements MyContra
 
     public void initList() {
         adapter = new FuliAdapter(this, wlist, rlist);
+        adapter.setOnItemListener(this);
         recyclerContent.setLayoutManager(new LinearLayoutManager(this));
         recyclerContent.setAdapter(adapter);
     }
