@@ -25,6 +25,8 @@ public interface OrderContract {
         public abstract void getOrderList(String pagesize,String pageno,String uid,String status);
         public abstract void getOrderDetail(String oid);
         public abstract void cancelOrder(String oid);
+        public abstract void comfirmTakeGoods(String oid);
+        public abstract void goComment(String oid,String opinion);
 
     }
 }

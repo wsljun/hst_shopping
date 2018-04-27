@@ -41,6 +41,8 @@ public class UrlConstants {
         public static final String UPDATE_PWD = "106";
         //验证推荐号码是否存在
         public static final String CHECK_RECOMMEND = "107";
+        // 检查APP 更新
+        public static final String CHECK_APP_UPDATE = "108";
         //首页
         public static final String GET_HOME_DATA = "201";
         //搜索
@@ -55,7 +57,7 @@ public class UrlConstants {
         public static final String URL_DEL_CART = "207"; //  del goods
         public static final String URL_CART_DATA = "208"; //  cart data
         public static final String URL_ADD_CART_GOODSNUM = "209"; //  add cart goods num
-        public static final String URL_GOODS_COMMENT = "210"; // todo  商品评论
+        public static final String URL_GOODS_COMMENT = "210"; //   商品评论
 
         //我的首页
         public static final String MY_HOME = "301";
@@ -112,15 +114,17 @@ public class UrlConstants {
         public static final String URL_ORDER_FROM_DETAIL = "404";//  order from detail
         public static final String URL_CANCEL_ORDER = "405";//  order cancel
         public static final String URL_UPDATE_ORDER_ADDR = "406";//  update order addr
-        public static final String URL_refund_ORDER = "407";// todo order refund
+        public static final String URL_REFUND_ORDER = "407";//  order refund
         public static final String URL_ADDR_LIST = "408";//  addr list
         public static final String URL_ADD_ADDR = "409";//  addr add
         public static final String URL_UPDATE_ADDR = "410";//  addr update
         public static final String URL_DEFAULT_ADDR = "411";//  addr default
         public static final String URL_DEL_ADDR = "412";//  addr del
-        public static final String URL_Select_ADDR_MAP = "413";//  addr map
+        public static final String URL_SELECT_ADDR_MAP = "413";//  addr map
         public static final String URL_OREDER_COMMENT= "414";// todo order comment
-        public static final String URL_OREDER_CONFIRM= "415";// todo 确认收货
+        public static final String URL_OREDER_CONFIRM= "415";//  确认收货
+        public static final String URL_OREDER_REFUND_DETAIL= "416";// todo 退款详情
+        public static final String URL_OREDER_PAY_SUCCESS= "417";// todo 支付成功
         //关注好友
         public static final String FRIEDNS_KEEP = "501";
         //取消关注

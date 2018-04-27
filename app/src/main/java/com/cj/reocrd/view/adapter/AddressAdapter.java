@@ -71,7 +71,6 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyHolder
         holder.addressDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeData(position);
                 mOnItemListener.deleteClick(mDatas.get(position).getId());
             }
         });

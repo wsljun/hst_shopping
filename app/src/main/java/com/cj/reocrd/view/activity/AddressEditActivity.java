@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.AddressContract;
 import com.cj.reocrd.model.entity.AddressBean;
@@ -70,6 +71,9 @@ public class AddressEditActivity extends BaseActivity<AddressPresenter> implemen
     private List<YwpAddressBean.AddressItemBean> city;
     private List<YwpAddressBean.AddressItemBean> district;
     private String rid; // 第三级id
+    public static  final  String TYPE_ADD = "add";
+    public static  final  String TYPE_EDIT = "edit";
+    public static  final  String TYPE_ADDRESS_MAP = "selectAddressMap";
 
     /*
     layer 1
@@ -102,7 +106,7 @@ public class AddressEditActivity extends BaseActivity<AddressPresenter> implemen
     @Override
     public void initPresenter() {
         mPresenter.setVM(this);
-        type = getIntent().getExtras().getString("type");
+        type = getIntent().getExtras().getString("type","");
     }
 
     @Override
@@ -160,13 +164,14 @@ public class AddressEditActivity extends BaseActivity<AddressPresenter> implemen
                     ToastUtil.showShort("邮编不能为空！");
                     return;
                 }
-                //{"regions":[{"name":"芙蓉区","id":"1b2250a0-0e36-11e3-977a-d43d7e9c965f"},{"name":"天心区","id":"1b2253bb-0e36-11e3-977a-d43d7e9c965f"},{"name":"岳麓区","id":"1b225596-0e36-11e3-977a-d43d7e9c965f"},{"name":"开福区","id":"1b22574e-0e36-11e3-977a-d43d7e9c965f"},{"name":"雨花区","id":"1b2258ee-0e36-11e3-977a-d43d7e9c965f"},{"name":"长沙县","id":"1b225a96-0e36-11e3-977a-d43d7e9c965f"},{"name":"望城县","id":"1b225c3c-0e36-11e3-977a-d43d7e9c965f"},{"name":"宁乡县","id":"1b225ddc-0e36-11e3-977a-d43d7e9c965f"},{"name":"浏阳市","id":"1b225f6c-0e36-11e3-977a-d43d7e9c965f"},{"name":"开发区","id":"1b226118-0e36-11e3-977a-d43d7e9c965f"}]}
-                if("add".equals(type)){
+                if(TYPE_ADD.equals(type)){
                     mPresenter.addAddress(uid,rid,consignee,phone,detailAddress,postCode);
-                }else{
-//                    rid = "1b2258ee-0e36-11e3-977a-d43d7e9c965f";
+                }
+                if(TYPE_EDIT.equals(type)){
                     mPresenter.updateAddress(addrForEdit.getId(),rid,consignee,phone,detailAddress,postCode);
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -272,6 +277,14 @@ public class AddressEditActivity extends BaseActivity<AddressPresenter> implemen
 
     @Override
     public void updateAddressList() {
+        //此方法 在添加和更新地址成功后回调。返回地址列表页
+        if(TYPE_EDIT.equals(type)){
+            ToastUtil.showShort("更新成功！");
+        }
+        if(TYPE_ADD.equals(type)){
+            ToastUtil.showShort("添加成功！");
+        }
+        finish();
 
     }
 

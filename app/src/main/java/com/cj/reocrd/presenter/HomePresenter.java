@@ -61,6 +61,35 @@ public class HomePresenter extends HomeContract.Presenter {
         });
     }
 
+    @Override
+    public void checkUpdate(String version) {
+        baseMap.clear();
+        baseMap.put("type","1"); // 1,android .2.ios
+        baseMap.put("version",version);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.CHECK_APP_UPDATE, baseMap
+                , HomeBean.class, new ApiCallback<HomeBean>() {
+                    @Override
+                    public void onSuccess(ApiResponse apiResponse) {
+                        if(null != apiResponse && isViewAttached()){
+                            // "statusCode":“1”,     //1.暂无新版本 2 请更新App
+                            if("2".equals(apiResponse.getStatusCode())){
+                                HomeBean homeBean = (HomeBean) apiResponse.getResults();
+                                mView.onSuccess(homeBean.getAppInfo());
+                            }else{
+                                mView.onFailureMessage(apiResponse.getMessage());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        if(isViewAttached()){
+                            mView.onFailureMessage(t.toString());
+                        }
+                    }
+                });
+    }
+
     /**
      * @param search  搜索内容
      * @param sortlabel  排序

@@ -81,10 +81,10 @@ public class OrderDetailAdapter extends  RecyclerView.Adapter<OrderDetailAdapter
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int i)
     {
-        ImageLoaderUtils.display(mContext,  viewHolder.mImg, UrlConstants.BASE_URL+mDatas.get(i));
+        ImageLoaderUtils.display(mContext,  viewHolder.mImg, UrlConstants.BASE_URL+mDatas.get(i).getImgurl());
         viewHolder.tvGoodsName.setText(mDatas.get(i).getMname());
-        viewHolder.tvGoodsUnit.setText(mDatas.get(i).getSpec());
-        viewHolder.tvGoodsNum.setText("x"+mDatas.get(i).getNum());
+        viewHolder.tvGoodsUnit.setText("规格："+mDatas.get(i).getSpec());
+        viewHolder.tvGoodsNum.setText("数量：x"+mDatas.get(i).getNum());
         viewHolder.tvTotalPrice.setText(ConstantsUtils.RMB+mDatas.get(i).getTotalPrice());
     }
 

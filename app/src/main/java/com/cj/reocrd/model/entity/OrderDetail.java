@@ -1,5 +1,7 @@
 package com.cj.reocrd.model.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -43,6 +45,14 @@ public class OrderDetail {
     private String opinion;
     private String isdel;
     private List<OrderBean.OdlistBean> odlist;
+    /**
+     * expname : 百世快递
+     * expinfo : {"message":"ok","state":"3","data":[{"context":"北京市|北京市【金盏分部】，拍照签收 已签收","time":"2018-04-22 12:53:39","ftime":"2018-04-22 12:53:39"},{"context":"北京市|北京市【金盏分部】，【闫长登/17710705604】正在派件","time":"2018-04-22 07:32:09","ftime":"2018-04-22 07:32:09"},{"context":"北京市|到北京市【金盏分部】","time":"2018-04-21 23:42:44","ftime":"2018-04-21 23:42:44"},{"context":"北京市|北京市【北京转运中心】，正发往【金盏分部】","time":"2018-04-21 09:04:40","ftime":"2018-04-21 09:04:40"},{"context":"北京市|到北京市【北京转运中心】","time":"2018-04-21 08:42:59","ftime":"2018-04-21 08:42:59"},{"context":"太原市|太原市【太原转运中心】，正发往【北京转运中心】","time":"2018-04-20 23:38:15","ftime":"2018-04-20 23:38:15"},{"context":"太原市|到太原市【太原转运中心】","time":"2018-04-20 19:45:16","ftime":"2018-04-20 19:45:16"},{"context":"太原市|太原市【清徐县】，正发往【太原转运中心】","time":"2018-04-20 17:15:43","ftime":"2018-04-20 17:15:43"},{"context":"太原市|太原市【清徐县】，【程永刚/18534572555】已揽收","time":"2018-04-20 16:56:21","ftime":"2018-04-20 16:56:21"}],"condition":"F00","status":"200","ischeck":"1","com":"huitongkuaidi","nu":"50905742808412"}
+     */
+
+    private String expname;
+    private ExpinfoBean expinfo;
+
 
     public String getSn() {
         return sn;
@@ -178,4 +188,143 @@ public class OrderDetail {
         this.odlist = odlist;
     }
 
+    public String getExpname() {
+        return expname;
+    }
+
+    public void setExpname(String expname) {
+        this.expname = expname;
+    }
+
+    public ExpinfoBean getExpinfo() {
+        return expinfo;
+    }
+
+    public void setExpinfo(ExpinfoBean expinfo) {
+        this.expinfo = expinfo;
+    }
+
+    public static class ExpinfoBean {
+        /**
+         * message : ok
+         * state : 3
+         * data : [{"context":"北京市|北京市【金盏分部】，拍照签收 已签收","time":"2018-04-22 12:53:39","ftime":"2018-04-22 12:53:39"},{"context":"北京市|北京市【金盏分部】，【闫长登/17710705604】正在派件","time":"2018-04-22 07:32:09","ftime":"2018-04-22 07:32:09"},{"context":"北京市|到北京市【金盏分部】","time":"2018-04-21 23:42:44","ftime":"2018-04-21 23:42:44"},{"context":"北京市|北京市【北京转运中心】，正发往【金盏分部】","time":"2018-04-21 09:04:40","ftime":"2018-04-21 09:04:40"},{"context":"北京市|到北京市【北京转运中心】","time":"2018-04-21 08:42:59","ftime":"2018-04-21 08:42:59"},{"context":"太原市|太原市【太原转运中心】，正发往【北京转运中心】","time":"2018-04-20 23:38:15","ftime":"2018-04-20 23:38:15"},{"context":"太原市|到太原市【太原转运中心】","time":"2018-04-20 19:45:16","ftime":"2018-04-20 19:45:16"},{"context":"太原市|太原市【清徐县】，正发往【太原转运中心】","time":"2018-04-20 17:15:43","ftime":"2018-04-20 17:15:43"},{"context":"太原市|太原市【清徐县】，【程永刚/18534572555】已揽收","time":"2018-04-20 16:56:21","ftime":"2018-04-20 16:56:21"}]
+         * condition : F00
+         * status : 200
+         * ischeck : 1
+         * com : huitongkuaidi
+         * nu : 50905742808412
+         */
+
+        @SerializedName("message")
+        private String messageX;
+        private String state;
+        private String condition;
+        @SerializedName("status")
+        private String statusX;
+        private String ischeck;
+        private String com;
+        private String nu;
+        private List<DataBean> data;
+
+        public String getMessageX() {
+            return messageX;
+        }
+
+        public void setMessageX(String messageX) {
+            this.messageX = messageX;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
+
+        public String getCondition() {
+            return condition;
+        }
+
+        public void setCondition(String condition) {
+            this.condition = condition;
+        }
+
+        public String getStatusX() {
+            return statusX;
+        }
+
+        public void setStatusX(String statusX) {
+            this.statusX = statusX;
+        }
+
+        public String getIscheck() {
+            return ischeck;
+        }
+
+        public void setIscheck(String ischeck) {
+            this.ischeck = ischeck;
+        }
+
+        public String getCom() {
+            return com;
+        }
+
+        public void setCom(String com) {
+            this.com = com;
+        }
+
+        public String getNu() {
+            return nu;
+        }
+
+        public void setNu(String nu) {
+            this.nu = nu;
+        }
+
+        public List<DataBean> getData() {
+            return data;
+        }
+
+        public void setData(List<DataBean> data) {
+            this.data = data;
+        }
+
+        public static class DataBean {
+            /**
+             * context : 北京市|北京市【金盏分部】，拍照签收 已签收
+             * time : 2018-04-22 12:53:39
+             * ftime : 2018-04-22 12:53:39
+             */
+
+            private String context;
+            private String time;
+            private String ftime;
+
+            public String getContext() {
+                return context;
+            }
+
+            public void setContext(String context) {
+                this.context = context;
+            }
+
+            public String getTime() {
+                return time;
+            }
+
+            public void setTime(String time) {
+                this.time = time;
+            }
+
+            public String getFtime() {
+                return ftime;
+            }
+
+            public void setFtime(String ftime) {
+                this.ftime = ftime;
+            }
+        }
+    }
 }

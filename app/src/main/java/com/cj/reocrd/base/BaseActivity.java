@@ -43,7 +43,8 @@ import io.reactivex.functions.Consumer;
  * Created by Administrator on 2018/3/13.
  */
 
-public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayoutActivity implements NetChangeObserver{
+public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayoutActivity implements
+        NetChangeObserver{
 
     private static final String TAG = "BaseActivity" ;
     public T mPresenter;
@@ -106,8 +107,8 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         // 设置竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//        translucentStatusBar();
-        initState();
+        translucentStatusBar();
+//        initState();
     }
     private void translucentStatusBar() {
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); //全屏
@@ -118,7 +119,7 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
             getWindow().setNavigationBarColor(Color.BLACK);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+            getWindow().setStatusBarColor(Color.BLACK); //TRANSPARENT
 //            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
 //                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 //            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -132,7 +133,6 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); //透明导航栏
         }
     }
 

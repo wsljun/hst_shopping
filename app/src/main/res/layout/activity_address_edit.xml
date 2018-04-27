@@ -197,6 +197,7 @@
                 android:layout_toRightOf="@id/update_name_label5"
                 android:background="@null"
                 android:textColor="@color/colorTexthintGrey2"
+                android:inputType="number"
                 android:textSize="14sp" />
         </RelativeLayout>
     </LinearLayout>

@@ -2,7 +2,6 @@ package com.cj.reocrd.view.activity;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,8 +19,8 @@ import com.cj.reocrd.presenter.OrderPresenter;
 import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.ConstantsUtils;
 import com.cj.reocrd.utils.ToastUtil;
-import com.cj.reocrd.view.adapter.GalleryAdapter;
 import com.cj.reocrd.view.adapter.OrderDetailAdapter;
+import com.cj.reocrd.view.adapter.OrderExpinInfoAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
 import static com.cj.reocrd.view.activity.OrderActivity.mOrderGoodsDatas;
 
 public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements OrderContract.View {
@@ -63,14 +63,20 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
     TextView tvArriveTime;
     @BindView(R.id.tv_buy_again)
     TextView tvBuyAgain;
+    @BindView(R.id.title_left)
+    TextView titleLeft;
+    @BindView(R.id.rl_expinInfos)
+    RecyclerView rlExpinInfos;
 
-    private String oid ;
-    public static  final String BUNDLE_KEY_OID = "oid";
-    public static  final String REQUEST_TYEP = "ORDER_DETAIL";
-    private  String rType = "";
-    private OrderDetail orderDetail ;
+    private String oid;
+    public static final String BUNDLE_KEY_OID = "oid";
+    public static final String REQUEST_TYEP = "ORDER_DETAIL";
+    private String rType = "";
+    private OrderDetail orderDetail;
     private OrderDetailAdapter mAdapter;
+    private OrderExpinInfoAdapter mExpinInfoAdapter;
     private List<OrderBean.OdlistBean> mOrderDetailGoodsDatas;
+    private List<OrderDetail.ExpinfoBean.DataBean> expinfos ; // 快递信息
 
     @Override
     public int getLayoutId() {
@@ -81,81 +87,125 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
     public void initData() {
         oid = getIntent().getStringExtra(BUNDLE_KEY_OID);
         mOrderDetailGoodsDatas = new ArrayList<>();
-        if(!CollectionUtils.isNullOrEmpty(mOrderGoodsDatas)){
-//            for (int i = 0; i <mOrderGoodsDatas.size() ; i++) {
-            mOrderDetailGoodsDatas.addAll(mOrderGoodsDatas);
-//            }
+        expinfos = new ArrayList<>();
+        if (!CollectionUtils.isNullOrEmpty(mOrderGoodsDatas)) {
+            for (int i = 0; i < mOrderGoodsDatas.size(); i++) {
+                mOrderDetailGoodsDatas.addAll(mOrderGoodsDatas);
+            }
         }
     }
-
-//    public static Intent newIntent(Context context, List<OrderBean> orderBeans) {
-//        Intent intent = new Intent(context, GoodDetailActivity.class);
-//        intent.putExtra("oid", oid);
-//        return intent;
-//    }
-
-    /**
-//     * @param context
-//     * @param oid 订单id
-     */
-//    public static void intentTo(Context context, String oid) {
-//        context.startActivity(newIntent(context, oid));
-//    }
 
     @Override
     public void initView() {
         titleCenter.setText("订单详情");
-        // 订单中 不同商品图片展示
-        rlGoodsImg.setLayoutManager(new LinearLayoutManager(this));
-        //设置适配器
         mAdapter = new OrderDetailAdapter(this, mOrderDetailGoodsDatas);
+        mExpinInfoAdapter = new OrderExpinInfoAdapter(R.layout.item_order_expininfos,expinfos);
+        // 订单中 不同商品图片展示
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(VERTICAL);
+        rlGoodsImg.setLayoutManager(linearLayoutManager);
+        LinearLayoutManager layoutManager =  new LinearLayoutManager(this);
+        layoutManager.setOrientation(VERTICAL);
+        rlExpinInfos.setLayoutManager(layoutManager);
+        //设置适配器
         rlGoodsImg.setAdapter(mAdapter);
-        if(!TextUtils.isEmpty(oid)){
+        rlExpinInfos.setAdapter(mExpinInfoAdapter);
+        if (!TextUtils.isEmpty(oid)) {
             rType = REQUEST_TYEP;
             mPresenter.getOrderDetail(oid);
         }
     }
 
     private void updateView() {
-        if(null == orderDetail){
+        if (null == orderDetail) {
             return;
         }
-        tvOrderId.setText("订单编号："+orderDetail.getSn());
+        tvOrderId.setText("订单编号：" + orderDetail.getSn());
+        tvGoodsPrice.setText(ConstantsUtils.RMB + orderDetail.getAmount());
+        tvFreight.setText(ConstantsUtils.RMB + orderDetail.getExamount());
+        tvTotalPrice.setText(ConstantsUtils.RMB + orderDetail.getAllamount());
+        tvConsignee.setText("收货人：" + orderDetail.getConsignee());
+        tvAddress.setText("收货地址：" + orderDetail.getFuladdress());
+        tvSubmitOrderTime.setText("下单时间：" + orderDetail.getCreatetime());
+//        tvArriveTime.setText("预计送达：" + null);
+        setPayWay(orderDetail.getWay());
         setOrderStatus(orderDetail.getStatus());
-        tvGoodsPrice.setText(ConstantsUtils.RMB+orderDetail.getAmount());
-        tvFreight.setText(ConstantsUtils.RMB+orderDetail.getExamount());
-        tvTotalPrice.setText(ConstantsUtils.RMB+orderDetail.getAllamount());
-        tvConsignee.setText("收货人："+orderDetail.getConsignee());
-        tvAddress.setText("收货地址："+orderDetail.getFuladdress());
-        tvPayWay.setText("支付方式："+orderDetail.getWay());
-        tvSubmitOrderTime.setText("下单时间："+orderDetail.getCreatetime());
-        tvArriveTime.setText("预计送达："+null);
-//        mAdapter.updateData(mOrderDetailGoodsDatas);
     }
 
+    /**
+     *  支付方式0没有支付 1微信2支付宝3余额
+     * @param s
+     */
+    private void setPayWay(String s) {
+        String way = "";
+        switch (s){
+            case "0":
+                way = "未支付";
+                break;
+            case "1":
+                way = "微信";
+                break;
+            case "2":
+                way = "支付宝";
+                break;
+            case "3":
+                way = "余额";
+                break;
+            default:
+                way = "未支付";
+                break;
+        }
+        tvPayWay.setText("支付方式：" +way );
+    }
+
+    /**
+     *    1.未付款   2 待发货  3待收货，4待评价 5完成  6退货中 7 退货完成 8自行取消 9退货被拒绝
+     * @param s
+     */
     private void setOrderStatus(String s) {
-        //(1.未付款   2 待发货  3待确认，4待评价 5完成  6退款中 7 退款完成 8自行取消)
         int status = Integer.parseInt(s);
+        boolean isExpinInfo = true;
         String str_status = "";
-        switch (status){
-            case OrderActivity.ALL:
-                break;
-            case OrderActivity.PAY:
+        switch (status) {
+            case OrderActivity.ORDER_STATUS_PAY:
                 str_status = "待付款";
+                isExpinInfo = false;
                 break;
-            case OrderActivity.SEND:
+            case OrderActivity.ORDER_STATUS_SEND:
                 str_status = "待发货";
+                isExpinInfo = false;
                 break;
-            case OrderActivity.CONFIM:
+            case OrderActivity.ORDER_STATUS_CONFIM:
                 str_status = "待确认";
                 break;
-            case OrderActivity.EVALUATE:
+            case OrderActivity.ORDER_STATUS_EVALUATE:
                 str_status = "待评价";
+                break;
+            case OrderActivity.ORDER_STATUS_OVER:
+                str_status = "已完成";
+                break;
+            case OrderActivity.ORDER_STATUS_REFUNDING:
+                str_status = "退款中";
+                break;
+            case OrderActivity.ORDER_STATUS_REFUNDOVER:
+                str_status = "退款完成";
+                break;
+            case OrderActivity.ORDER_STATUS_CANCLE:
+                str_status = "已取消";
+                break;
+            case OrderActivity.ORDER_STATUS_NOT_REFUND:
+                str_status = "退款被拒绝";
                 break;
             default:
                 break;
         }
         tvOrderStatus.setText(str_status);
+        if(!CollectionUtils.isNullOrEmpty(orderDetail.getExpinfo().getData())
+                && isExpinInfo){
+            expinfos = orderDetail.getExpinfo().getData();
+            rlExpinInfos.setVisibility(View.VISIBLE);
+            mExpinInfoAdapter.setNewData(expinfos);
+        }
     }
 
     @Override
@@ -165,16 +215,16 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
 
     @Override
     public void onSuccess(Object data) {
-        if(REQUEST_TYEP.equals(rType)){
+        if (REQUEST_TYEP.equals(rType)) {
             orderDetail = (OrderDetail) data;
-            if(null!=orderDetail){
-//                mOrderDetailGoodsDatas = orderDetail.getOdlist();
-//                for (int i = 0; i < mOrderGoodsDatas.size() ; i++) {
-//                    mOrderDetailGoodsDatas.get(i).setImgurl(mOrderGoodsDatas.get(i).getImgurl());
-//                }
-//                mAdapter.updateData(mOrderDetailGoodsDatas);
+            if (null != orderDetail) {
+                mOrderDetailGoodsDatas = orderDetail.getOdlist();
+                for (int i = 0; i < mOrderGoodsDatas.size(); i++) {
+                    mOrderDetailGoodsDatas.get(i).setImgurl(mOrderGoodsDatas.get(i).getImgurl());
+                }
+                mAdapter.updateData(orderDetail.getOdlist());
                 updateView();
-            }else{
+            } else {
                 ToastUtil.showShort("orderDetail == null");
             }
         }
@@ -204,5 +254,19 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
     @OnClick(R.id.tv_buy_again)
     public void onViewClicked() {
         ToastUtil.showShort("再次购买逻辑未确认！");
+    }
+
+    @OnClick({R.id.title_left, R.id.tv_buy_again})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.title_left:
+                finish();
+                break;
+            case R.id.tv_buy_again:
+
+                break;
+            default:
+                break;
+        }
     }
 }

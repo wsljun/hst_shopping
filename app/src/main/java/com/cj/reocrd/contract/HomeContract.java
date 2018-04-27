@@ -22,5 +22,7 @@ public interface HomeContract {
     abstract static class Presenter extends BasePresenter<View> {
         public abstract  void getListDataTest(int size,int page);
         public abstract  void getHomeData(int pageSize,int pageno);
+        public abstract  void checkUpdate(String version);
+
     }
 }

@@ -166,7 +166,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     }
 
 
-    @OnClick({R.id.rl_address, R.id.tv_submit_order,R.id.fl_address})
+    @OnClick({R.id.title_left,R.id.rl_address, R.id.tv_submit_order,R.id.fl_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
@@ -205,6 +205,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     public void onSuccess(Object data) {
           if(requestType.equals(TYPE_SUBMIT)){
               //todo 去支付
+              finish();
           }
     }
 
