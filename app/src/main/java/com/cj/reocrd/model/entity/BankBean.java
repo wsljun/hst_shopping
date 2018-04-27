@@ -8,7 +8,16 @@ import java.util.List;
  */
 
 public class BankBean implements Serializable {
+    private String tax;
     private List<Bank> blist;
+
+    public String getTax() {
+        return tax;
+    }
+
+    public void setTax(String tax) {
+        this.tax = tax;
+    }
 
     public List<Bank> getBlist() {
         return blist;
@@ -18,7 +27,7 @@ public class BankBean implements Serializable {
         this.blist = blist;
     }
 
-    public class Bank implements Serializable{
+    public class Bank implements Serializable {
         private String id;
         private String name;
         private String code;

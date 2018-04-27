@@ -147,7 +147,7 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == WalletGetActivity.WALLET_GET_REQUEST) {
+        if (resultCode == WalletGetActivity.WALLET_GET_REQUEST && resultCode == RESULT_OK) {
             mPresenter.myWallet(uid);
         }
     }

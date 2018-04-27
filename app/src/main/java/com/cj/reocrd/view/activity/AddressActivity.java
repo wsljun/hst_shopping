@@ -183,6 +183,11 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
             intent.putExtra("aid",aid);
             setResult(RESULT_OK,intent);
         }
+        if(WalletBindActivity.TYPE_BINDBANK.equals(type)){
+            Intent intent  = new Intent();
+            intent.putExtra("aid",aid);
+            setResult(RESULT_OK,intent);
+        }
         finish();
     }
 

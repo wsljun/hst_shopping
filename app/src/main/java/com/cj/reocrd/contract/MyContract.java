@@ -34,7 +34,7 @@ public interface MyContract {
 
         public abstract void updateIc(String por,String uid,String ic);
 
-        public abstract void getRatio(String por);
+        public abstract void getRatio(String por,String uid);
         public abstract void cardList(String por,String uid);
         public abstract void myCard(String por,String uid);
         public abstract void bindCard(String por,String uid,String bid,String rid,String username,String bankname,String cardsn,String phone);

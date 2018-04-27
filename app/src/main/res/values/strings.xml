@@ -160,4 +160,5 @@
 
     <string name="bind_name">姓名&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
     <string name="bind_hu">开户行&#160;&#160;&#160;&#160;</string>
+    <string name="bind_phone">手机号&#160;&#160;&#160;&#160;</string>
 </resources>

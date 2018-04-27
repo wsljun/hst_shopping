@@ -12,9 +12,10 @@
         android:id="@+id/fuli_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/fuli_do"
-        android:text="sjdiosjdiojsoiasjdiojsoiasjdiojsoiasjdiojsoiasjdiojsoiasjdiojsoiajsoia"
+        android:text="sjdiosjdiojsoiasjdiojasia"
         android:textColor="@color/colorBlack"
         android:textSize="18sp" />
 
@@ -29,7 +30,7 @@
         android:textSize="17sp" />
 
     <TextView
-        android:id="@+id/fuli_do"
+        android:id="@id/fuli_do"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -37,4 +38,5 @@
         android:text="兑换"
         android:textColor="@color/colorButton"
         android:textSize="17sp" />
+
 </RelativeLayout>

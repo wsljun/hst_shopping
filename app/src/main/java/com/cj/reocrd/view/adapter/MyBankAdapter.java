@@ -47,20 +47,22 @@ public class MyBankAdapter extends RecyclerView.Adapter<MyBankAdapter.MyHolder> 
     public void onBindViewHolder(MyHolder holder, int position) {
         holder.itemMybankName.setText(mDatas.get(position).getName());
         holder.itemMybankCode.setText(mDatas.get(position).getCode());
-        holder.itemMybankLl.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setSelected(selectedPosition == position);
+        if (selectedPosition == position) {
+            holder.itemMybankLl.setBackgroundResource(R.color.colorTextLineGrey);
+        } else {
+            holder.itemMybankLl.setBackgroundResource(R.color.colorWhite);
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mOnItemListener.itemClick(position);
                 selectedPosition = position; //选择的position赋值给参数，
+                notifyDataSetChanged();
                 notifyItemChanged(selectedPosition);//刷新当前点击item
             }
         });
-        holder.itemView.setSelected(selectedPosition == position);
-        if (selectedPosition == position) {
-            holder.itemMybankLl.setBackgroundResource(R.color.colorWhite);
-        } else {
-            holder.itemMybankLl.setBackgroundResource(R.color.colorTextLineGrey);
-        }
+
     }
 
     private OnItemListener mOnItemListener;
