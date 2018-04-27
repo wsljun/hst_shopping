@@ -114,4 +114,54 @@ public class OrderPresenter extends OrderContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void comfirmTakeGoods(String oid) {
+        baseMap.clear();
+        baseMap.put("oid",oid);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_OREDER_CONFIRM, baseMap, HomeBean.class, new ApiCallback() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if(null != apiResponse && isViewAttached()){
+                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                        //todo 调到去评价界面
+                        ToastUtil.showShort(apiResponse.getMessage());
+                        mView.updateOrderList();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                if(isViewAttached()){
+                    mView.onFailureMessage(t.toString());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void goComment(String oid, String opinion) {
+        baseMap.clear();
+        baseMap.put("oid",oid);
+        baseMap.put("opinion",opinion);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_OREDER_COMMENT, baseMap, HomeBean.class, new ApiCallback() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if(null != apiResponse && isViewAttached()){
+                    if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                        ToastUtil.showShort(apiResponse.getMessage());
+                        mView.updateOrderList();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                if(isViewAttached()){
+                    mView.onFailureMessage(t.toString());
+                }
+            }
+        });
+    }
 }

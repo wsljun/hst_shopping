@@ -29,6 +29,16 @@ android {
         sourceCompatibility 1.8
     }
 }
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '26.1.0'
+            }
+        }
+    }
+}
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -82,4 +92,5 @@ dependencies {
     //进度条
     compile 'com.pnikosis:materialish-progress:1.7'
     compile 'com.github.donkingliang:LabelsView:1.4.0'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 }

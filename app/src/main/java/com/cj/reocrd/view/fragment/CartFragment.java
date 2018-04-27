@@ -19,6 +19,7 @@ import com.cj.reocrd.model.entity.AddressBean;
 import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.presenter.CartPresenter;
 import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.TimeUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.activity.SubmitOrderActivity;
 import com.cj.reocrd.view.adapter.CarAdapter;
@@ -181,6 +182,10 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
         // "fuladdress":"北京市北京市平谷区45623",
         // "oid":"d25c66f5-ae37-420b-b4a5-354a6462cb04"
         // ,"message":"操作成功","aid":"北京市北京市平谷区45623","statusCode":"1"}
+        if(TextUtils.isEmpty(addressBean.getOid())){
+            ToastUtil.showShort("oid == null ");
+            return;
+        }
         Bundle b = new Bundle();
         b.putString(SubmitOrderActivity.BUNDLE_KEY_OID,addressBean.getOid());
         b.putString(SubmitOrderActivity.BUNDLE_KEY_TYPE,SubmitOrderActivity.TYPE_FOR_CART);

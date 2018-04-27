@@ -8,12 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.cj.reocrd.R;
-import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
-import com.cj.reocrd.base.baseadapter.SimpleClickListener;
 import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.view.activity.OrderActivity;
@@ -64,29 +61,53 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyHolder> {
         holder.undonePrice.setText("¥"+mDatas.get(position).getAllamount()+"(包含运费¥"+mDatas.get(position).getExamount()
                 +")");
         int status = Integer.parseInt(mDatas.get(position).getStatus());
+        holder.tvCancleOrDel.setVisibility(View.GONE);
+        holder.tvToGo.setVisibility(View.GONE);
         //(1.未付款   2 待发货  3待确认，4待评价 5完成  6退款中 7 退款完成 8自行取消)
         switch (status){
-            case OrderActivity.ALL:
+            case OrderActivity.ORDER_STATUS_ALL:
                 break;
-            case OrderActivity.PAY:
+            case OrderActivity.ORDER_STATUS_PAY:
                 holder.tvOrderStatus.setText("待付款");
+                holder.tvCancleOrDel.setVisibility(View.VISIBLE);
+                holder.tvToGo.setVisibility(View.VISIBLE);
                 holder.tvCancleOrDel.setText("取消订单");
                 holder.tvToGo.setText("去付款");
+                holder.tvCancleOrDel.setTag(OrderActivity.ORDER_STATUS_PAY);
+                holder.tvToGo.setTag(OrderActivity.ORDER_STATUS_PAY);
                 break;
-            case OrderActivity.SEND:
+            case OrderActivity.ORDER_STATUS_SEND:
                 holder.tvOrderStatus.setText("待发货");
-                holder.tvCancleOrDel.setVisibility(View.GONE);
-                holder.tvToGo.setText(R.string.undone_take);
                 break;
-            case OrderActivity.CONFIM:
+            case OrderActivity.ORDER_STATUS_CONFIM:
                 holder.tvOrderStatus.setText("待确认");
-                holder.tvCancleOrDel.setVisibility(View.GONE);
-                holder.tvToGo.setText(R.string.undone_take);
+                holder.tvToGo.setVisibility(View.VISIBLE);
+                holder.tvToGo.setText(R.string.undone_take); //确认后去评价
+                holder.tvToGo.setTag(OrderActivity.ORDER_STATUS_CONFIM);
                 break;
-            case OrderActivity.EVALUATE:
+            case OrderActivity.ORDER_STATUS_EVALUATE:
                 holder.tvOrderStatus.setText("待评价");
-                holder.tvCancleOrDel.setVisibility(View.GONE);
+                holder.tvToGo.setVisibility(View.VISIBLE);
                 holder.tvToGo.setText("去评价");
+                holder.tvToGo.setTag(OrderActivity.ORDER_STATUS_EVALUATE);
+                break;
+            case OrderActivity.ORDER_STATUS_OVER:
+                holder.tvOrderStatus.setText("已完成");
+                holder.tvToGo.setVisibility(View.VISIBLE);
+                holder.tvToGo.setText("申请退款");
+                holder.tvToGo.setTag(OrderActivity.ORDER_STATUS_OVER);
+                break;
+            case OrderActivity.ORDER_STATUS_REFUNDING:
+                holder.tvOrderStatus.setText("退款中");
+                break;
+            case OrderActivity.ORDER_STATUS_REFUNDOVER:
+                holder.tvOrderStatus.setText("退款完成");
+                break;
+            case OrderActivity.ORDER_STATUS_CANCLE:
+                holder.tvOrderStatus.setText("已取消");
+                break;
+            case OrderActivity.ORDER_STATUS_NOT_REFUND:
+                holder.tvOrderStatus.setText("退款被拒绝");
                 break;
             default:
                 break;
@@ -98,13 +119,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyHolder> {
         holder.tvCancleOrDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemListener.takeClick(position);
+                mOnItemListener.cancleClick(v,position);
             }
         });
         holder.tvToGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemListener.refundClick(position);
+                mOnItemListener.refundClick(v,position);
             }
         });
         // 订单中 不同商品图片展示
@@ -152,9 +173,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyHolder> {
     }
 
     public interface OnItemListener {
-        void takeClick(int position);
+        void cancleClick(View v, int position);
 
-        void refundClick(int position);
+        void refundClick(View v, int position);
         void orderDetail(int position);
     }
 

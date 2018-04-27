@@ -10,7 +10,6 @@
         android:id="@+id/id_order_detail_item_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:background="@color/load_yellow"
         android:scaleType="centerCrop" />
     <RelativeLayout
         android:layout_width="match_parent"

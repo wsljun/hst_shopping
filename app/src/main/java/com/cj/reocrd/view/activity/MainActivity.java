@@ -4,10 +4,13 @@ import android.Manifest;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseFragment;
@@ -15,6 +18,7 @@ import com.cj.reocrd.base.BaseFragmentAdapter;
 import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.utils.UpdateUtil;
 import com.cj.reocrd.view.adapter.ViewPagerAdapter;
 import com.cj.reocrd.view.fragment.AllGoodsFragment;
 import com.cj.reocrd.view.fragment.CartFragment;
@@ -165,6 +169,8 @@ public class MainActivity extends BaseActivity {
                                     ToastUtil.showToastS(mContext, "您已经禁止弹出照相机的授权操作,请在设置中手动开启");
                                 }
                                 break;
+                                default:
+                                    break;
                         }
 
                     }

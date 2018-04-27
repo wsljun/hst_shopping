@@ -9,9 +9,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <!-- protection level is dangerous, need request runtime permission -->
     <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
@@ -77,14 +76,30 @@
         <activity android:name=".view.activity.FriendDetailActivity" />
         <activity android:name=".view.activity.CollectActivity" />
         <activity android:name=".view.activity.OrderDetailActivity" />
-        <activity android:name=".view.activity.WebViewActivity"></activity>
+        <activity android:name=".view.activity.WebViewActivity" />
+        <activity android:name=".view.activity.RefundActivity" />
+        <activity android:name=".view.activity.RefundDetailActivity" />
 
-        <receiver
-            android:name=".net.NetworkStateReceiver" >
-            <intent-filter> <action
-                android:name="android.net.conn.CONNECTIVITY_CHANGE" /> <action
-                android:name="android.gzcpc.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter> </receiver>
+        <receiver android:name=".net.NetworkStateReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.gzcpc.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".view.activity.AllCommentActivity"></activity>
+
+        <receiver android:name=".receiver.DownloadCompleteReceiver">
+
+            <!-- 开机启动服务广播 -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+            <!-- 下载完成监听广播 -->
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

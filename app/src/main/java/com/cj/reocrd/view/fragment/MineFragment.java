@@ -142,22 +142,22 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
             case R.id.mine_icon:
                 break;
             case R.id.mine_all:
-                OrderActivity.actionActivity(mActivity, OrderActivity.ALL);
+                OrderActivity.actionActivity(mActivity, OrderActivity.ORDER_STATUS_ALL);
                 break;
             case R.id.mine_pay:
-                OrderActivity.actionActivity(mActivity, OrderActivity.PAY);
+                OrderActivity.actionActivity(mActivity, OrderActivity.ORDER_STATUS_PAY);
                 break;
             case R.id.mine_send:
-                OrderActivity.actionActivity(mActivity, OrderActivity.SEND);
+                OrderActivity.actionActivity(mActivity, OrderActivity.ORDER_STATUS_SEND);
                 break;
             case R.id.mine_confim:
-                OrderActivity.actionActivity(mActivity, OrderActivity.CONFIM);
+                OrderActivity.actionActivity(mActivity, OrderActivity.ORDER_STATUS_CONFIM);
                 break;
             case R.id.mine_evaluate:
-                OrderActivity.actionActivity(mActivity, OrderActivity.EVALUATE);
+                OrderActivity.actionActivity(mActivity, OrderActivity.ORDER_STATUS_EVALUATE);
                 break;
             case R.id.mine_return:
-//                ToastUtil.showShort("没有");
+                OrderActivity.actionActivity(mActivity, OrderActivity.ORDER_STATUS_REFUNDING);
                 break;
             case R.id.mine_money:
                 startActivity(WalletActivity.class);

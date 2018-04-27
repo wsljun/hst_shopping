@@ -193,6 +193,8 @@ public class OrderBean {
         }
 
         public void setTotalPrice(String totalPrice) {
+            int p = (Integer.parseInt(totalPrice))/100;
+            totalPrice = String.valueOf(p);
             this.totalPrice = totalPrice;
         }
     }

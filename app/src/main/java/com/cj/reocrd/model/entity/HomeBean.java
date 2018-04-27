@@ -15,6 +15,15 @@ public class HomeBean {
     private List<OrderBean>  olist ; // 订单列表
     private List<AddressBean>    addlist; //地址列表
     private List<GoodsCommentBean>  clist; // 商品详情页评论
+    private  AppInfo AppInfo; // app info
+
+    public void setAppInfo(AppInfo appInfo) {
+        AppInfo = appInfo;
+    }
+
+    public AppInfo getAppInfo() {
+        return AppInfo;
+    }
 
     public List<GoodsCommentBean> getClist() {
         return clist;

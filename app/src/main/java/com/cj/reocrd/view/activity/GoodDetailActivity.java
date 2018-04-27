@@ -125,7 +125,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     private TextView tvSkuTotalPrice,tvSkuAddCart,tvSkuBuy;
     private String skuPrice; // 不同规格单价
     private  String countPrice; // 最终选择后的总价
-    private List<GoodsCommentBean> goodsCommentBeans;
+    public static  List<GoodsCommentBean> goodsCommentBeans;
     @Override
     public int getLayoutId() {
         return R.layout.activity_good_detail;
@@ -142,11 +142,10 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     @Override
     public void initView() {
         goodOldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
-//        updateView();
     }
 
     private void updateView() {
-        price = goodsDetailsBean.getPrice();
+        countPrice = price = goodsDetailsBean.getPrice();
         unit = goodsDetailsBean.getUnit();
         goodOldPrice.setText(goodsDetailsBean.getOldprice());
         titleCenter.setText(goodsDetailsBean.getName());
@@ -360,8 +359,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     public void showComment(List<GoodsCommentBean> goodsCommentBeanList) {
           if(!CollectionUtils.isNullOrEmpty(goodsCommentBeanList)){
               goodsCommentBeans = goodsCommentBeanList;
-              // todo
-              ToastUtil.showShort("comment.size= "+goodsCommentBeans.size());
+              startActivity(AllCommentActivity.class);
           }
     }
 

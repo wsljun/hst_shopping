@@ -1,18 +1,22 @@
 package com.cj.reocrd.view.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.OnItemClickListener;
 import com.cj.reocrd.contract.HomeContract;
+import com.cj.reocrd.model.entity.AppInfo;
 import com.cj.reocrd.model.entity.BannerData;
 import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.model.entity.HomeBean;
@@ -20,6 +24,7 @@ import com.cj.reocrd.presenter.HomePresenter;
 import com.cj.reocrd.utils.GlideImageLoader;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.utils.UpdateUtil;
 import com.cj.reocrd.view.activity.GoodDetailActivity;
 import com.cj.reocrd.view.activity.SearchActivity;
 import com.cj.reocrd.view.adapter.HomeAdapter;
@@ -136,7 +141,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         recyclerViewContent.addOnItemTouchListener(new OnRecyclerItemClickListener(recyclerViewContent) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-//                ToastUtil.showShort("position == " + viewHolder.getAdapterPosition());
                 goodBundle.clear();
                 goodBundle.putString("goodsID", goodsBeanList.get(viewHolder.getAdapterPosition()).getId());
                 startActivity(GoodDetailActivity.class, goodBundle);
@@ -171,12 +175,40 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         }
     }
 
+    private void update(AppInfo appInfo){
+        if(mActivity == null){
+            return;
+        }
+        MaterialDialog.Builder materialDialog = new MaterialDialog.Builder(mActivity)
+                .title("版本更新")
+                .content("更新内容："+"\n"+appInfo.getDetailDesc()+"\n"+"版本大小："+appInfo.getApkSize())
+                .positiveText("确定")
+                .canceledOnTouchOutside(false)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        UpdateUtil.downloadFile(appInfo.getApkUrl(),mActivity);
+                    }
+                })
+                .negativeText("取消");
+        if("2".equals(appInfo.getIsupdate())){
+            materialDialog.onNegative(new MaterialDialog.SingleButtonCallback(){
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                }
+            });
+        }
+
+        materialDialog .show();
+    }
+
     @Override
     public void onSuccess(Object data) {
-//        List<FirstBean> girlDataList = (List<FirstBean>) data;
-//        mHomeTabAdapter.setNewData(girlDataList);
-//        mRefreshLayout.endRefreshing();
-//        mRefreshLayout.endLoadingMore();
+        if(data instanceof AppInfo){
+            AppInfo appInfo = (AppInfo) data;
+            update(appInfo);
+        }
     }
 
     @Override
@@ -208,6 +240,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void OnBannerClick(int position) {
         ToastUtil.showShort("Banner : " + position);
+        mPresenter.checkUpdate(UpdateUtil.getVerName(mActivity));
     }
 
 
@@ -257,4 +290,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         }
         mHomeTabAdapter.loadComplete();
     }
+
+
 }
