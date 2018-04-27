@@ -81,7 +81,8 @@ public class ApiModel {
                         apiCallback.onSuccess(parseFastJson(result, clz));
                     } catch (Exception e) {
                         e.printStackTrace();
-                        ToastUtil.showShort("返回数据错误");
+                        LogUtil.d( TAG,"onResponse: result Exception= "+e.toString());
+//                        ToastUtil.showShort("返回数据错误");
                     }
                 }
             }
