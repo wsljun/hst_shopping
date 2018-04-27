@@ -38,7 +38,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
 
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyHolder(inflater.inflate(R.layout.item_comment, parent, false));
+        return new MyHolder(inflater.inflate(R.layout.item_all_comment, parent, false));
     }
 
     @Override
