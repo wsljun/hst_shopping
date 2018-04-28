@@ -169,6 +169,7 @@ public class PayActivity extends BaseActivity {
      * orderid 订单id(如果有多个订单 用逗号分割)
      uid     用户ID
      payType  1支付宝 2微信 3余额
+     todo : 余额支付时提示属于支付密码（登陆密码），需先判断余额是否充足（需在本地保存余额）
      */
     private void sendPaySuccess() {
         HashMap<String ,Object> map = new HashMap<>();
@@ -182,7 +183,7 @@ public class PayActivity extends BaseActivity {
                 // sumAmount	金额
                 // 展示支付成功view，
                 ToastUtil.showShort(apiResponse.getMessage());
-                if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getMessage())){
+                if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
                     showPayOverView();
                 }
             }

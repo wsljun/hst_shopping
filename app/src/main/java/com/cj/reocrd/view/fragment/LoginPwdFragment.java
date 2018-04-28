@@ -43,6 +43,8 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
     @BindView(R.id.login_password)
     EditText loginPassword;
     private final String TAG = "LoginPwdFragment";
+    private String phone;
+
     @Override
     protected void initPresenter() {
         mPresenter.setVM(this);
@@ -66,7 +68,7 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
                 getIndexActivity().getVpLogin().setCurrentItem(4);
                 break;
             case R.id.login:
-                String phone = loginPhone.getText().toString();
+                phone = loginPhone.getText().toString();
                 String pwd = loginPassword.getText().toString();
                 if (TextUtils.isEmpty(phone)) {
                     ToastUtil.showToastS(mActivity, R.string.input_phone);
@@ -95,7 +97,7 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
             UserBean userBean = (UserBean) response.getResults();
             LogUtil.e(TAG, userBean.getId());
             SPUtils.put(mActivity, UrlConstants.key.USERID, userBean.getId());
-            SPUtils.put(mActivity, SPUtils.SpKey.USER_PHONE, userBean.getPhone());
+            SPUtils.put(mActivity, SPUtils.SpKey.USER_PHONE, phone);
             BaseActivity.uid = userBean.getId();
             startActivity(MainActivity.class);
             mActivity.finish();
