@@ -88,6 +88,7 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
                     if (userBean != null) {
                         LogUtil.e(TAG, userBean.getId());
                         SPUtils.put(mActivity, UrlConstants.key.USERID, userBean.getId());
+                        SPUtils.put(mActivity, SPUtils.SpKey.USER_PHONE, userBean.getPhone());
                         BaseActivity.uid = userBean.getId();
                         startActivity(MainActivity.class);
                         mActivity.finish();

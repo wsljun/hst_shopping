@@ -95,6 +95,7 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
             UserBean userBean = (UserBean) response.getResults();
             LogUtil.e(TAG, userBean.getId());
             SPUtils.put(mActivity, UrlConstants.key.USERID, userBean.getId());
+            SPUtils.put(mActivity, SPUtils.SpKey.USER_PHONE, userBean.getPhone());
             BaseActivity.uid = userBean.getId();
             startActivity(MainActivity.class);
             mActivity.finish();

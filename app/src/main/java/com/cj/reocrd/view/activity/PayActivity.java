@@ -94,7 +94,10 @@ public class PayActivity extends BaseActivity {
                 if(time_M == 0){
                     countDownTimer.cancel();
                     tvTime.setText("00:00");
-                }else{
+                }else if(time_S < 10){
+                    tvTime.setText(time_M+":"+time_S+"0");
+                }
+                else{
                     tvTime.setText(time_M+":"+time_S);
                 }
             }
