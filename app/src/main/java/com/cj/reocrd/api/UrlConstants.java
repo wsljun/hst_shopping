@@ -121,10 +121,10 @@ public class UrlConstants {
         public static final String URL_DEFAULT_ADDR = "411";//  addr default
         public static final String URL_DEL_ADDR = "412";//  addr del
         public static final String URL_SELECT_ADDR_MAP = "413";//  addr map
-        public static final String URL_OREDER_COMMENT= "414";// todo order comment
+        public static final String URL_OREDER_COMMENT= "414";//  order comment
         public static final String URL_OREDER_CONFIRM= "415";//  确认收货
-        public static final String URL_OREDER_REFUND_DETAIL= "416";// todo 退款详情
-        public static final String URL_OREDER_PAY_SUCCESS= "417";// todo 支付成功
+        public static final String URL_OREDER_REFUND_DETAIL= "416";//  退款详情
+        public static final String URL_OREDER_PAY_SUCCESS= "417";//  支付成功
         //关注好友
         public static final String FRIEDNS_KEEP = "501";
         //取消关注

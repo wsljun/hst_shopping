@@ -79,11 +79,11 @@
         <activity android:name=".view.activity.WebViewActivity" />
         <activity android:name=".view.activity.RefundActivity" />
         <activity android:name=".view.activity.RefundDetailActivity" />
-        <activity android:name=".view.activity.WalletBindActivity"/>
-        <activity android:name=".view.activity.WalletGetActivity"/>
-        <activity android:name=".view.activity.WalletBindListActivity"/>
-        <activity android:name=".view.activity.FuliActivity"/>
-        <activity android:name=".view.activity.ZPActivity"/>
+        <activity android:name=".view.activity.WalletBindActivity" />
+        <activity android:name=".view.activity.WalletGetActivity" />
+        <activity android:name=".view.activity.WalletBindListActivity" />
+        <activity android:name=".view.activity.FuliActivity" />
+        <activity android:name=".view.activity.ZPActivity" />
 
         <receiver android:name=".net.NetworkStateReceiver">
             <intent-filter>
@@ -92,19 +92,21 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".view.activity.AllCommentActivity"></activity>
+        <activity android:name=".view.activity.AllCommentActivity" />
 
         <receiver android:name=".receiver.DownloadCompleteReceiver">
 
             <!-- 开机启动服务广播 -->
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
             <!-- 下载完成监听广播 -->
             <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".view.activity.PayActivity"></activity>
     </application>
 
 </manifest>

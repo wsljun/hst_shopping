@@ -34,11 +34,9 @@ public class CartPresenter extends CartContract.Presenter {
                 if(null != apiResponse && isViewAttached()){
                     if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
                         HomeBean homeBean = (HomeBean) apiResponse.getResults();
-                        if(CollectionUtils.isNullOrEmpty(homeBean.getMlist())){
-//                            mView.onFailureMessage("暂时没有数据");
-                        }else{
+//                        if(!CollectionUtils.isNullOrEmpty(homeBean.getMlist())){
                             mView.showCartData(homeBean.getMlist());
-                        }
+//                        }
                     }else{
                         mView.onFailureMessage(apiResponse.getMessage());
                     }

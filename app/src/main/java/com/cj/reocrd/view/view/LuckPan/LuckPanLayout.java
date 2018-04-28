@@ -1,12 +1,9 @@
 package com.cj.reocrd.view.view.LuckPan;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,14 +11,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.cj.reocrd.R;
-import com.cj.reocrd.utils.LogUtil;
 
 
 /**
- * 描述：
- * 作者：Nipuream
- * 时间: 2016-08-15 17:34
- * 邮箱：nipuream@163.com
  */
 public class LuckPanLayout extends RelativeLayout {
 
@@ -44,12 +36,7 @@ public class LuckPanLayout extends RelativeLayout {
      */
     private static final String START_BTN_TAG = "startbtn";
     public static final int DEFAULT_TIME_PERIOD = 500;
-    private String TAG = "luckpan";
-    /**
-     * 背景图的bitmap
-     */
-    private Bitmap mBgBitmap = BitmapFactory.decodeResource(getResources(),
-            R.mipmap.di);
+
 
     public LuckPanLayout(Context context) {
         this(context,null);
@@ -62,7 +49,8 @@ public class LuckPanLayout extends RelativeLayout {
     public LuckPanLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
-        backgroundPaint.setColor(Color.rgb(255,92,93));
+//        backgroundPaint.setColor(Color.rgb(255,92,93));
+        backgroundPaint.setColor(getResources().getColor(R.color.colorTextRed));
         whitePaint.setColor(Color.WHITE);
         yellowPaint.setColor(Color.YELLOW);
         screeHeight = getResources().getDisplayMetrics().heightPixels;
@@ -77,7 +65,6 @@ public class LuckPanLayout extends RelativeLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         MinValue = Math.min(screenWidth,screeHeight);
         MinValue -= Util.dip2px(context,10)*2;
-        LogUtil.d(TAG,"screenWidth = "+screenWidth + "screenHeight = "+screeHeight + "MinValue = "+MinValue);
         setMeasuredDimension(MinValue,MinValue);
     }
 
@@ -101,28 +88,9 @@ public class LuckPanLayout extends RelativeLayout {
         CircleX = getWidth() /2;
         CircleY = getHeight() /2;
 
-//        canvas.drawCircle(CircleX,CircleY,radius,backgroundPaint);
-       // 绘制背景图
-//        canvas.drawColor(0xFFFFFFFF);
-//        canvas.drawBitmap(mBgBitmap, null, new Rect(paddingLeft / 2,
-//                paddingLeft / 2, getMeasuredWidth() - paddingLeft / 2,
-//                getMeasuredWidth() - paddingLeft / 2), null);
+        canvas.drawCircle(CircleX,CircleY,radius,backgroundPaint);
 
-//        drawBg(canvas);
-//        drawSmallCircle(isYellow);
-    }
-
-    /**
-     * 根据当前旋转的mStartAngle计算当前滚动到的区域 绘制背景，不重要，完全为了美观
-     * todo
-     */
-    private void drawBg(Canvas mCanvas)
-    {
-//        mCanvas.drawColor(0xFFFFFFFF);
-       int mPadding  = 10;
-        mCanvas.drawBitmap(mBgBitmap, null, new Rect(mPadding / 2,
-                mPadding / 2, getMeasuredWidth() - mPadding / 2,
-                getMeasuredWidth() - mPadding / 2), null);
+        drawSmallCircle(isYellow);
     }
 
     @Override
@@ -136,10 +104,10 @@ public class LuckPanLayout extends RelativeLayout {
             View child = getChildAt(i);
             if(child instanceof RotatePan){
                 rotatePan = (RotatePan) child;
-                 int panWidth = child.getWidth();
-                 int panHeight = child.getHeight();
-                 child.layout(centerX - panWidth/2 , centerY - panHeight/2,centerX + panWidth/2 , centerY + panHeight/2);
-                 panReady = true;
+                int panWidth = child.getWidth();
+                int panHeight = child.getHeight();
+                child.layout(centerX - panWidth/2 , centerY - panHeight/2,centerX + panWidth/2 , centerY + panHeight/2);
+                panReady = true;
             }else if(child instanceof ImageView){
                 if(TextUtils.equals((String) child.getTag(),START_BTN_TAG)){
                     startBtn = (ImageView) child;
@@ -150,7 +118,7 @@ public class LuckPanLayout extends RelativeLayout {
             }
         }
 
-        if(!panReady){
+        if(!panReady) {
             throw new RuntimeException("Have you add RotatePan in LuckPanLayout element ?");
         }
     }
@@ -161,11 +129,10 @@ public class LuckPanLayout extends RelativeLayout {
             int x = (int) (pointDistance * Math.sin(Util.change(i))) + CircleX;
             int y = (int) (pointDistance * Math.cos(Util.change(i))) + CircleY;
 
-            if(FirstYellow){
-                canvas.drawCircle(x,y,Util.dip2px(context,4),yellowPaint);
-            }
-            else{
-                canvas.drawCircle(x,y,Util.dip2px(context,4),whitePaint);
+            if(FirstYellow) {
+                canvas.drawCircle(x, y, Util.dip2px(context, 4), yellowPaint);
+            } else {
+                canvas.drawCircle(x, y, Util.dip2px(context, 4), whitePaint);
             }
             FirstYellow = !FirstYellow;
         }

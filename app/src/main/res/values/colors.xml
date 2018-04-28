@@ -22,6 +22,8 @@
     <color name="colorButton">#DAA520</color>
     <color name="colorTextRed">#FF3300</color>
     <color name="colorTextRed2">#FF0000</color>
+    <color name="color1">#FFFFC300</color>
+    <color name="color2">#FFF17E01</color>
 
     <color name="divider">#ffd2d2d2</color>
 </resources>

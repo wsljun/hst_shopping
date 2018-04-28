@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
@@ -18,6 +19,7 @@ import com.cj.reocrd.contract.CartContract;
 import com.cj.reocrd.model.entity.AddressBean;
 import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.presenter.CartPresenter;
+import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.TimeUtils;
 import com.cj.reocrd.utils.ToastUtil;
@@ -55,6 +57,8 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     RefreshLayout mCartRefreshLayout;
     @BindView(R.id.rv_cart_content)
     RecyclerView rvCartContent;
+    @BindView(R.id.img_none)
+    ImageView imgNone;
 
     @BindView(R.id.car_all_choose)
     CheckBox cbCartAllChoose;
@@ -169,6 +173,11 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
         cartGoodsList  = goodsBeanList;
         carAdapter.setNewData(cartGoodsList);
         setTotalPrice(false);
+        if(!CollectionUtils.isNullOrEmpty(cartGoodsList)){
+            imgNone.setVisibility(View.GONE);
+        }else{
+            imgNone.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

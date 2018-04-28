@@ -142,6 +142,7 @@
     <string name="good_detail_total">总价：</string>
     <string name="good_detail_buynum">购买数量</string>
     <string name="goods_price">商品价格</string>
+    <string name="order_price">订单金额</string>
     <string name="title_freight">运费</string>
     <string name="btn_car_to_pay">去结算</string>
 

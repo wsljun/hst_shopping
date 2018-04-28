@@ -28,12 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * 描述：
- * 作者：Nipuream
- * 时间: 2016-08-16 10:18
- * 邮箱：nipuream@163.com
- */
 public class RotatePan extends View {
 
     private Context context;
@@ -354,12 +348,12 @@ public class RotatePan extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        boolean consume = mDetector.onTouchEvent(event);
-        if(consume)
-        {
-            getParent().getParent().requestDisallowInterceptTouchEvent(true);
-            return true;
-        }
+//        boolean consume = mDetector.onTouchEvent(event);
+//        if(consume)
+//        {
+//            getParent().getParent().requestDisallowInterceptTouchEvent(true);
+//            return true;
+//        }
 
         return super.onTouchEvent(event);
     }

@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:luckpan="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorBlack"
     >
 
     <include
@@ -44,16 +43,14 @@
 
 
     <!--测试-->
-    <!--android:background="@android:color/transparent"-->
-
     <com.cj.reocrd.view.view.LuckPan.LuckPanLayout
         android:id="@+id/luckpan_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@color/colorTextRed"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
+        android:background="@android:color/transparent"
         >
 
         <com.cj.reocrd.view.view.LuckPan.RotatePan
@@ -65,7 +62,6 @@
             luckpan:price="@array/price"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:padding="10dp"
             />
 
         <ImageView
@@ -82,15 +78,6 @@
 
     </com.cj.reocrd.view.view.LuckPan.LuckPanLayout>
 
-    <!--测试2-->
-    <com.cj.reocrd.view.view.LuckPan.LuckyPanView
-        android:id="@+id/id_luckypan"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_centerInParent="true"
-        android:padding="30dp"
-        android:visibility="gone"
-        />
 
 
 
@@ -112,7 +99,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="19dp"
         android:gravity="center"
-        android:text="当前奖池3200元"
         android:textColor="@color/colorButton" />
 
     <ImageView
