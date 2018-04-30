@@ -142,7 +142,11 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
         int tag = (int) v.getTag();
         switch (tag){
             case ORDER_STATUS_PAY : // 去支付
-                ToastUtil.showToastS(this, "去支付");
+                Bundle b = new Bundle();
+                b.putString(PayActivity.BUNDLE_KEY_OID,orderBeans.get(position).getId());
+                b.putString(PayActivity.BUNDLE_KEY_PRICE,orderBeans.get(position).getAllamount());
+                startActivity(PayActivity.class,b);
+                finish();
                 break;
             case ORDER_STATUS_CONFIM : //确认后去评价
                 mPresenter.comfirmTakeGoods(orderBeans.get(position).getId());
@@ -151,9 +155,9 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
                 goComment(orderBeans.get(position).getId());
                 break;
             case ORDER_STATUS_OVER : //申请退货
-                Bundle b =  new Bundle();
-                b.putString("oid",orderBeans.get(position).getId());
-                startActivity(RefundActivity.class,b);
+                Bundle nb =  new Bundle();
+                nb.putString("oid",orderBeans.get(position).getId());
+                startActivity(RefundActivity.class,nb);
                 break;
             default:
                 break;

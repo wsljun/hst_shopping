@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="names">
+        <item>未中奖</item>
+        <item>幸运奖</item>
+        <item>一等奖</item>
+        <item>二等奖</item>
+        <item>三等奖</item>
+        <item>特等奖</item>
+
+    </string-array>
+
+    <string-array name="price">
+        <item>0元</item>
+        <item>5元</item>
+        <item>10元</item>
+        <item>50元</item>
+        <item>100元</item>
+        <item>200元</item>
+
+    </string-array>
+
+    <string-array name="icons">
+        <item>ic_launcher_round</item>
+        <item>ic_launcher_round</item>
+        <item>ic_launcher_round</item>
+        <item>ic_launcher_round</item>
+        <item>ic_launcher_round</item>
+        <item>ic_launcher_round</item>
+
+    </string-array>
+
+
+</resources>

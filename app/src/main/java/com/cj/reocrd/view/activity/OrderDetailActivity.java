@@ -219,9 +219,6 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
             orderDetail = (OrderDetail) data;
             if (null != orderDetail) {
                 mOrderDetailGoodsDatas = orderDetail.getOdlist();
-                for (int i = 0; i < mOrderGoodsDatas.size(); i++) {
-                    mOrderDetailGoodsDatas.get(i).setImgurl(mOrderGoodsDatas.get(i).getImgurl());
-                }
                 mAdapter.updateData(orderDetail.getOdlist());
                 updateView();
             } else {

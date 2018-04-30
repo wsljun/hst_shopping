@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:luckpan="http://schemas.android.com/apk/res-auto"
+    >
 
     <include
         android:id="@+id/zp_title"
@@ -13,8 +15,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
+        android:visibility="gone"
         android:paddingRight="10dp"
-        android:src="@mipmap/di" />
+        android:src="@mipmap/di"
+        android:id="@+id/imageView" />
 
     <ImageView
         android:id="@+id/id_lucky_turntable"
@@ -23,6 +27,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="150dp"
+        android:visibility="gone"
         android:src="@mipmap/zu" />
 
     <ImageView
@@ -32,17 +37,68 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="190dp"
-        android:src="@mipmap/anniu" />
+        android:src="@mipmap/anniu"
+        android:visibility="gone"
+        />
+
+
+    <!--测试-->
+    <com.cj.reocrd.view.view.LuckPan.LuckPanLayout
+        android:id="@+id/luckpan_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:background="@android:color/transparent"
+        >
+
+        <com.cj.reocrd.view.view.LuckPan.RotatePan
+            android:id="@+id/rotatePan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            luckpan:pannum="6"
+            luckpan:names="@array/names"
+            luckpan:price="@array/price"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            />
+
+        <ImageView
+            android:id="@+id/id_start"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@mipmap/anniu"
+            android:tag="startbtn"
+            android:clickable="true"
+            android:layout_centerInParent="true"
+            />
+
+
+
+    </com.cj.reocrd.view.view.LuckPan.LuckPanLayout>
+
+
+
+
+    <ImageView
+        android:id="@+id/id_start2"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/anniu"
+        android:visibility="gone"
+        />
 
 
     <TextView
         android:id="@+id/zp_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/id_lucky_turntable"
+        android:layout_alignTop="@+id/zp_guize"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:text="当前奖池3200元"
+        android:layout_marginTop="19dp"
+        android:gravity="center"
         android:textColor="@color/colorButton" />
 
     <ImageView

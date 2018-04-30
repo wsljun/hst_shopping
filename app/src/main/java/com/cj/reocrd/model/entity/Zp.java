@@ -14,6 +14,16 @@ public class Zp {
     private String five;
     private String level;
 
+    private String totalmoney;
+
+    public void setTotalmoney(String totalmoney) {
+        this.totalmoney = totalmoney;
+    }
+
+    public String getTotalmoney() {
+        return totalmoney;
+    }
+
     public String getZero() {
         return zero;
     }

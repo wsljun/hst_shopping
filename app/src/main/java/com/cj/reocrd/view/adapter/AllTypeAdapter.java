@@ -58,6 +58,9 @@ public class AllTypeAdapter extends RecyclerView.Adapter<AllTypeAdapter.MyHolder
         if(!toolsTextViews.contains(holder.tvTypeName)){
             toolsTextViews.add(holder.tvTypeName);
         }
+        if(position == 0){
+            changeTextColor(position);
+        }
         if (mOnItemClickListener != null) {
             holder.tvTypeName.setOnClickListener(new View.OnClickListener() {
                 @Override

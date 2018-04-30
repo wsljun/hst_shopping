@@ -150,6 +150,7 @@ public class AddPhoneFragment extends BaseFragment<MyPrresenter> implements MyCo
                     UserBean userBean = (UserBean) response.getResults();
                     if (userBean != null) {
                         pNumber = userBean.getPhone();
+                        SPUtils.put(mActivity, SPUtils.SpKey.USER_PHONE, userBean.getPhone());
                         getMyActivity().getViewPager().setCurrentItem(3);
                     }
                 }

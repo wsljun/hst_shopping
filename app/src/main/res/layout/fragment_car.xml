@@ -10,6 +10,16 @@
         android:id="@+id/title"
         layout="@layout/layout_title" />
 
+    <ImageView
+        android:id="@+id/img_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/zanwushangpin"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        >
+    </ImageView>
+
     <com.cj.reocrd.view.refresh.RefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"

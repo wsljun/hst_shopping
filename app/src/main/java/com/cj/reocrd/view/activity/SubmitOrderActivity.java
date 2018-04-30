@@ -179,9 +179,13 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
                 startActivityForResult(AddressActivity.class,bundle,1);
                 break;
             case R.id.tv_submit_order:
-                ToastUtil.showShort("提交订单");
                 requestType = TYPE_SUBMIT;
                 mPresenter.updateOrderAddress(oid,aid);
+                Bundle b = new Bundle();
+                b.putString(PayActivity.BUNDLE_KEY_OID,oid);
+                b.putString(PayActivity.BUNDLE_KEY_PRICE,totalPrice);
+                startActivity(PayActivity.class,b);
+                finish();
                 break;
             default:
                 break;
