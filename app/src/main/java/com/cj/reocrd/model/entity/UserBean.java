@@ -12,6 +12,15 @@ public class UserBean {
     private String sex;//性别 1男 2女
     private String recommend;//推荐码
     private String ic;//身份证号
+    private String alipay;//支付宝账号
+
+    public String getAlipay() {
+        return alipay;
+    }
+
+    public void setAlipay(String alipay) {
+        this.alipay = alipay;
+    }
 
     public String getIc() {
         return ic;

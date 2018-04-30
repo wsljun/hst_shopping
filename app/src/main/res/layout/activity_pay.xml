@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
 
     <include
@@ -15,23 +14,22 @@
         android:id="@+id/rl_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/price_bg"
         android:layout_below="@+id/title"
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="10dp"
-        android:padding="5dp"
+        android:background="@drawable/price_bg"
         android:orientation="vertical"
-        >
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/tv_tishi"
             style="@style/setting_item_configure"
-            android:layout_marginTop="5dp"
-            android:text="该订单为您保留"
             android:layout_gravity="center_horizontal"
-            />
+            android:layout_marginTop="5dp"
+            android:text="该订单为您保留" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,11 +50,13 @@
                 android:textColor="@color/colorTexthintGrey2"
                 android:textSize="13sp" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="10dp"
-            android:background="@color/colorTextLineGrey"/>
+            android:background="@color/colorTextLineGrey" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,19 +69,17 @@
                 android:id="@+id/tv_title_order_price"
                 style="@style/setting_item_configure"
                 android:layout_marginStart="0dp"
-                android:textStyle="bold"
-                android:text="@string/order_price"
                 android:layout_marginTop="10dp"
-                />
+                android:text="@string/order_price"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_order_price"
                 style="@style/setting_item_configure"
-                android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@+id/tv_title_order_price"
-                android:textColor="@color/colorTextRed"
+                android:layout_alignParentRight="true"
                 android:text="¥  "
-                />
+                android:textColor="@color/colorTextRed" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -89,101 +87,101 @@
         android:id="@+id/rl_choose_pay_way"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/price_bg"
         android:layout_below="@+id/rl_time"
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:padding="12dp"
+        android:background="@drawable/price_bg"
         android:orientation="vertical"
-        >
+        android:padding="12dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/tv_title_alipay"
                 style="@style/setting_item_configure"
                 android:layout_marginStart="0dp"
-                android:textStyle="bold"
+                android:layout_marginTop="10dp"
                 android:drawableLeft="@mipmap/zhifubao"
                 android:text="支付宝支付"
-                android:layout_marginTop="10dp"
-                />
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/rb_pay_alipay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/pay_way_check"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_alignBaseline="@id/tv_title_alipay"
                 android:layout_alignParentRight="true"
-                android:button="@null"
-                />
+                android:background="@drawable/pay_way_check"
+                android:button="@null" />
 
             <View
                 android:id="@+id/line"
-                android:layout_below="@+id/tv_title_alipay"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_below="@+id/tv_title_alipay"
                 android:layout_margin="10dp"
-                android:background="@color/colorTextLineGrey"/>
+                android:background="@color/colorTextLineGrey" />
 
 
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/tv_title_wechat"
                 style="@style/setting_item_configure"
                 android:layout_marginStart="0dp"
-                android:textStyle="bold"
+                android:layout_marginTop="10dp"
                 android:drawableLeft="@mipmap/weixinzhifu"
                 android:text="微信支付"
-                android:layout_marginTop="10dp"
-                />
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/rb_wechat_pay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/pay_way_check"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_alignBaseline="@id/tv_title_wechat"
                 android:layout_alignParentRight="true"
-                android:button="@null"
-                />
+                android:background="@drawable/pay_way_check"
+                android:button="@null" />
+
             <View
-                android:layout_below="@+id/tv_title_wechat"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_below="@+id/tv_title_wechat"
                 android:layout_margin="10dp"
-                android:background="@color/colorTextLineGrey"/>
+                android:background="@color/colorTextLineGrey" />
 
 
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/tv_title_other"
                 style="@style/setting_item_configure"
-                android:layout_marginStart="0dp"
-                android:textStyle="bold"
-                android:text="余额"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
-                />
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:text="余额"
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/rb_pay_other"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/pay_way_check"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_alignBaseline="@id/tv_title_other"
                 android:layout_alignParentRight="true"
-                android:button="@null"
-                />
+                android:background="@drawable/pay_way_check"
+                android:button="@null" />
 
         </RelativeLayout>
 
@@ -195,11 +193,10 @@
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
         android:background="@color/colorWhite"
         android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:layout_marginBottom="5dp"
-        >
+        android:paddingRight="8dp">
 
         <TextView
             android:id="@+id/tv_btn_order_pay"
@@ -210,63 +207,59 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:text="去支付"
-            android:textColor="@color/colorWhite"
-            />
+            android:textColor="@color/colorWhite" />
 
     </RelativeLayout>
 
 
     <RelativeLayout
         android:id="@+id/rl_order_pay_over"
-        android:layout_below="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/title"
         android:background="@drawable/price_bg"
-        android:padding="60dp"
         android:gravity="center_horizontal"
-        android:visibility="gone"
-        >
+        android:padding="60dp"
+        android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/img_order_over"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/dingdanwancheng"
-                />
+        <ImageView
+            android:id="@+id/img_order_over"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/dingdanwancheng" />
+
         <TextView
             android:id="@+id/tv_order_over_payway"
             style="@style/setting_item_configure"
             android:layout_marginTop="5dp"
-            android:text="支付方式：支付宝"
             android:layout_toRightOf="@+id/img_order_over"
-            />
+            android:text="支付方式：支付宝" />
+
         <TextView
             android:id="@+id/tv_order_over_pirce"
             style="@style/setting_item_configure"
             android:layout_below="@+id/tv_order_over_payway"
             android:layout_marginTop="5dp"
-            android:text="支付金额：288"
             android:layout_toRightOf="@+id/img_order_over"
-            />
+            android:text="支付金额：288" />
+
         <TextView
             android:id="@+id/tv_order_over_youhui"
             style="@style/setting_item_configure"
-            android:layout_marginTop="5dp"
             android:layout_below="@+id/tv_order_over_pirce"
-            android:text="优惠金额：0.01"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/img_order_over"
-            android:visibility="invisible"
-            />
+            android:text="优惠金额：0.01"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/tv_check_order_detail"
             style="@style/normal_tv_btn"
             android:layout_width="match_parent"
-            android:background="@color/colorButton"
-            android:layout_marginTop="30dp"
-            android:text="查看订单详情"
-            android:textColor="@color/colorWhite"
             android:layout_below="@+id/tv_order_over_youhui"
-            />
+            android:layout_marginTop="30dp"
+            android:background="@color/colorButton"
+            android:text="查看订单详情"
+            android:textColor="@color/colorWhite" />
     </RelativeLayout>
 </RelativeLayout>

@@ -135,7 +135,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     }
 
 
-    @OnClick({R.id.mine_zp, R.id.mine_fuli, R.id.mine_fans, R.id.mine_userinfo_rl, R.id.title_rl, R.id.title_left, R.id.mine_icon, R.id.mine_all, R.id.mine_pay, R.id.mine_send, R.id.mine_confim, R.id.mine_evaluate, R.id.mine_return, R.id.mine_money, R.id.mine_collect, R.id.mine_history, R.id.mine_help, R.id.mine_about, R.id.mine_serve})
+    @OnClick({R.id.mine_keep, R.id.mine_zp, R.id.mine_fuli, R.id.mine_fans, R.id.mine_userinfo_rl, R.id.title_rl, R.id.title_left, R.id.mine_icon, R.id.mine_all, R.id.mine_pay, R.id.mine_send, R.id.mine_confim, R.id.mine_evaluate, R.id.mine_return, R.id.mine_money, R.id.mine_collect, R.id.mine_history, R.id.mine_help, R.id.mine_about, R.id.mine_serve})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
@@ -190,8 +190,10 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 Intent intent = new Intent(mActivity, MyActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.mine_fans:
-                startActivity(MyFansActivity.class);
+            case R.id.mine_fans://粉丝
+                Bundle fans = new Bundle();
+                fans.putInt("type", MyFansActivity.FROM_MYFANS);
+                startActivity(MyFansActivity.class, fans);
                 break;
             case R.id.mine_fuli://福利
                 startActivity(FuliActivity.class);
@@ -200,6 +202,11 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 type = 2;
 //                mPresenter.lotteryCan(UrlConstants.UrLType.LOTTERY_CAN, uid);
                 startActivity(ZPActivity.class);
+                break;
+            case R.id.mine_keep://以关注
+                Bundle keep = new Bundle();
+                keep.putInt("type", MyFansActivity.FROM_MYKEEP);
+                startActivity(MyFansActivity.class, keep);
                 break;
             default:
                 break;

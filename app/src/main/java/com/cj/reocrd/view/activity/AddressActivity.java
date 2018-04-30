@@ -130,7 +130,6 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
 
     @Override
     public void editClick(int position) {
-        ToastUtil.showToastS(this, "editClick" + position);
         addrForEdit = addressBeans.get(position);
         Bundle b =  new Bundle();
         b.putString("type",AddressEditActivity.TYPE_EDIT);

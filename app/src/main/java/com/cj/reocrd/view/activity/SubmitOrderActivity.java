@@ -74,9 +74,9 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     private String consignee;
     private String phone;
     private String addressDetital;
-    private String totalPrice="";
+    private String totalPrice = "";
     private GoodsDetailsBean goodsDetails;
-    private String oid,aid;
+    private String oid, aid;
     private OrderDetail orderDetail;
     private String type;
     public static final String TYPE_FOR_DETAIL = "1";
@@ -109,13 +109,13 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
         imgURls = new ArrayList<>();
         if (TYPE_FOR_DETAIL.equals(type)) {
             goodsDetails = (GoodsDetailsBean) SPUtils.get(mContext, SPUtils.SpKey.GOODS_DETAIL, null);
-            if(null == goodsDetails){
+            if (null == goodsDetails) {
                 goodsDetails = GoodDetailActivity.goodsDetailsBean;
                 imgURls.add(goodsDetails.getImgurl());
                 goodsNum = imgURls.size();
             }
         }
-        if(TYPE_FOR_CART.equals(type)){
+        if (TYPE_FOR_CART.equals(type)) {
             goodsNum = cartGoodsList.size();
             for (int i = 0; i < cartGoodsList.size(); i++) {
                 imgURls.add(cartGoodsList.get(i).getImgurl());
@@ -129,9 +129,9 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
         titleCenter.setText("提交订单");
         updateAddress();
 //        if (null != goodsDetails) {
-        tvGoodsNum.setText(goodsNum+"件商品");
-        tvGoodsPrice.setText(totalPrice);
-        goodTotalPrice.setText(totalPrice);
+        tvGoodsNum.setText(goodsNum + "件商品");
+        tvGoodsPrice.setText("￥"+totalPrice);
+        goodTotalPrice.setText("￥"+totalPrice);
 //            ImageLoaderUtils.display(this, ivGoodsImg, UrlConstants.BASE_URL + goodsDetails.getImgurl());
 //        }
 
@@ -144,16 +144,16 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
 
     }
 
-    private void updateAddress(){
-        aid = (String) SPUtils.get(mContext, SPUtils.SpKey.DEFAULT_ADDRESS_ID,"");//13741f0b-4dc7-4cde-9221-5f13db9f010c
-        consignee = (String) SPUtils.get(mContext,SPUtils.SpKey.DEFAULT_ADDRESS_CONSIGNEE,"");
-        phone = (String) SPUtils.get(mContext,SPUtils.SpKey.DEFAULT_ADDRESS_PHONE,"");
-        addressDetital = (String) SPUtils.get(mContext,SPUtils.SpKey.DEFAULT_ADDRESS_DETAIL,"");
-        if(TextUtils.isEmpty(aid)){
+    private void updateAddress() {
+        aid = (String) SPUtils.get(mContext, SPUtils.SpKey.DEFAULT_ADDRESS_ID, "");//13741f0b-4dc7-4cde-9221-5f13db9f010c
+        consignee = (String) SPUtils.get(mContext, SPUtils.SpKey.DEFAULT_ADDRESS_CONSIGNEE, "");
+        phone = (String) SPUtils.get(mContext, SPUtils.SpKey.DEFAULT_ADDRESS_PHONE, "");
+        addressDetital = (String) SPUtils.get(mContext, SPUtils.SpKey.DEFAULT_ADDRESS_DETAIL, "");
+        if (TextUtils.isEmpty(aid)) {
             flAddress.setVisibility(View.VISIBLE);
             rlAddress.setVisibility(View.INVISIBLE);
-        }else{
-            tv_AddressConsigneePhone.setText(consignee+" "+phone);
+        } else {
+            tv_AddressConsigneePhone.setText(consignee + " " + phone);
             tv_AddressDetail.setText(addressDetital);
             flAddress.setVisibility(View.INVISIBLE);
             rlAddress.setVisibility(View.VISIBLE);
@@ -166,7 +166,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     }
 
 
-    @OnClick({R.id.title_left,R.id.rl_address, R.id.tv_submit_order,R.id.fl_address})
+    @OnClick({R.id.title_left, R.id.rl_address, R.id.tv_submit_order, R.id.fl_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
@@ -175,16 +175,20 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
             case R.id.rl_address:
             case R.id.fl_address:
                 Bundle bundle = new Bundle();
-                bundle.putString("type",TYPE_SUBMITORDER);
-                startActivityForResult(AddressActivity.class,bundle,1);
+                bundle.putString("type", TYPE_SUBMITORDER);
+                startActivityForResult(AddressActivity.class, bundle, 1);
                 break;
             case R.id.tv_submit_order:
+                if (TextUtils.isEmpty(aid)) {
+                    ToastUtil.showShort("请添加收货地址");
+                    return;
+                }
                 requestType = TYPE_SUBMIT;
-                mPresenter.updateOrderAddress(oid,aid);
+                mPresenter.updateOrderAddress(oid, aid);
                 Bundle b = new Bundle();
-                b.putString(PayActivity.BUNDLE_KEY_OID,oid);
-                b.putString(PayActivity.BUNDLE_KEY_PRICE,totalPrice);
-                startActivity(PayActivity.class,b);
+                b.putString(PayActivity.BUNDLE_KEY_OID, oid);
+                b.putString(PayActivity.BUNDLE_KEY_PRICE, totalPrice);
+                startActivity(PayActivity.class, b);
                 finish();
                 break;
             default:
@@ -196,8 +200,8 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) { //resultCode为回传的标记，我在B中回传的是RESULT_OK
             case RESULT_OK:
-                Bundle b=data.getExtras(); //data为B中回传的Intent
-                String str=b.getString("aid");//str即为回传的值
+                Bundle b = data.getExtras(); //data为B中回传的Intent
+                String str = b.getString("aid");//str即为回传的值
                 updateAddress();
                 break;
             default:
@@ -207,10 +211,10 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
 
     @Override
     public void onSuccess(Object data) {
-          if(requestType.equals(TYPE_SUBMIT)){
-              //todo 去支付
-              finish();
-          }
+        if (requestType.equals(TYPE_SUBMIT)) {
+            //todo 去支付
+            finish();
+        }
     }
 
     @Override

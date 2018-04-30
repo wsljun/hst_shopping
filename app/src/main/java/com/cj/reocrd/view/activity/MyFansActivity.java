@@ -46,6 +46,11 @@ public class MyFansActivity extends BaseActivity<FriendsPresenter> implements Fr
     private int type;
     private MyFansAdapter adapter;
     private List<FansBean.Fans> mDatas;
+    int removePosition;
+    int fromType;
+
+    public final static int FROM_MYFANS = 1;
+    public final static int FROM_MYKEEP = 2;
 
     @Override
     public int getLayoutId() {
@@ -55,17 +60,35 @@ public class MyFansActivity extends BaseActivity<FriendsPresenter> implements Fr
     @Override
     public void initData() {
         super.initData();
-        type = 1;
-        mPresenter.friendGet(UrlConstants.UrLType.FRIEDNS_GET, uid);
+        fromType = getIntent().getIntExtra("type", 0);
+        switch (fromType) {
+            case 1:
+                type = 1;
+                mPresenter.friendGet(UrlConstants.UrLType.FRIEDNS_MYFANS, uid);
+                break;
+            case 2:
+                type = 2;
+                mPresenter.friendGet(UrlConstants.UrLType.FRIEDNS_MYKEEP, uid);
+                break;
+        }
+
     }
 
     @Override
     public void initView() {
-        titleCenter.setText(getString(R.string.fans_title));
+        switch (fromType) {
+            case 1:
+                titleCenter.setText(getString(R.string.fans_title1));
+                break;
+            case 2:
+                titleCenter.setText(getString(R.string.fans_title2));
+                break;
+        }
+
     }
 
     private void initRecycleView() {
-        adapter = new MyFansAdapter(this, mDatas);
+        adapter = new MyFansAdapter(this, mDatas, fromType);
         fansRecycler.setLayoutManager(new LinearLayoutManager(this));
         fansRecycler.setAdapter(adapter);
         fansRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -80,6 +103,7 @@ public class MyFansActivity extends BaseActivity<FriendsPresenter> implements Fr
                 break;
         }
     }
+
     @Override
     public void initPresenter() {
         mPresenter.setVM(this);
@@ -101,7 +125,22 @@ public class MyFansActivity extends BaseActivity<FriendsPresenter> implements Fr
                 }
                 break;
             case 2:
-
+                if ("1".equals(response.getStatusCode())) {
+                    FansBean fansBean = (FansBean) response.getResults();
+                    if (fansBean != null && fansBean.getFs().size() > 0) {
+                        mDatas = fansBean.getFs();
+                        initRecycleView();
+                    }
+                } else {
+                    ToastUtil.showToastS(this, response.getMessage());
+                }
+                break;
+            case 3:
+                if ("1".equals(response.getStatusCode())) {
+                    adapter.removeData(removePosition);
+                } else {
+                    ToastUtil.showToastS(this, response.getMessage());
+                }
                 break;
         }
     }
@@ -118,7 +157,13 @@ public class MyFansActivity extends BaseActivity<FriendsPresenter> implements Fr
 
     @Override
     public void keepClick(int position) {
-//        type = 2;
-//        mPresenter.friendKeep(UrlConstants.UrLType.FRIEDNS_KEEP, uid, mDatas.get(position).getFid());
+        removePosition = position;
+        type = 3;
+        mPresenter.friendKeep(UrlConstants.UrLType.FRIEDNS_KEEP, uid, mDatas.get(position).getFid());
+    }
+
+    @Override
+    public void chatClick(int position) {
+        ToastUtil.showToastS(this, "未开通");
     }
 }

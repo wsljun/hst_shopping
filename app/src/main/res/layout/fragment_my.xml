@@ -115,6 +115,9 @@
                 <TextView
                     android:id="@+id/my_update_pwd_tv"
                     style="@style/mine_text_colorsize" />
+
+                <TextView
+                    style="@style/mine_text_colorsize" />
             </FrameLayout>
 
             <FrameLayout
@@ -131,7 +134,35 @@
                     android:id="@+id/my_address_tv"
                     style="@style/mine_text_colorsize" />
             </FrameLayout>
+            <FrameLayout
+                android:id="@+id/my_zhifubao_fl"
+                style="@style/mine_frame">
 
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="支付宝" />
+
+                <TextView
+                    android:id="@+id/my_zhifubao_tv"
+                    android:drawableEnd="@null"
+                    style="@style/mine_text_colorsize" />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/my_recommend_fl"
+                style="@style/mine_frame">
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="推荐码" />
+                <TextView
+                    android:id="@+id/my_recommend_tv"
+                    style="@style/mine_text_colorsize"
+                    android:drawableEnd="@null" />
+            </FrameLayout>
         </LinearLayout>
 
     </ScrollView>
