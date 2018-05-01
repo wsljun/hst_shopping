@@ -59,8 +59,8 @@
     <string name="my_update_ic">修改身份证号码</string>
     <string name="my_update_again">身份证号已绑定</string>
     <string name="my_icon">头像</string>
-    <string name="my_name">昵称</string>
-    <string name="my_name2">昵称:</string>
+    <string name="my_name">真实姓名</string>
+    <string name="my_name2">真实姓名:</string>
     <string name="my_sex">性别</string>
     <string name="my_phone">手机</string>
     <string name="my_phone_null">未绑定</string>
@@ -81,7 +81,7 @@
     <string name="address_dz_detail">详细地址</string>
     <string name="address_logo">邮编&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
 
-    <string name="update_name_hint">*以英文字母或汉字开头，限4-16个字符一个汉字为2个字符</string>
+    <string name="update_name_hint">*必须和支付宝登记的姓名一致。以供提现使用</string>
     <string name="update_name_hint2">昵称不能为空</string>
     <string name="phone_number">当前手机号</string>
     <string name="phone_number_new">新的手机号</string>
@@ -154,7 +154,8 @@
     <string name="friends_send">发布</string>
     <string name="friends_title_detail">详情</string>
 
-    <string name="fans_title">粉丝</string>
+    <string name="fans_title1">粉丝</string>
+    <string name="fans_title2">以关注</string>
     <string name="RMB">¥</string>
 
     <string name="collect_title">收藏</string>

@@ -107,6 +107,8 @@ public class UrlConstants {
         public static final String LOTTERY_SAVE_RESULT="323";
         //获取抽奖结果
         public static final String LOTTERY_GET_RESULT="324";
+        //绑定支付宝账号
+        public static final String ZHIFUBAO="325";
         // 订单详情
         public static final String URL_ORDER_LIST = "401";//  order list
         public static final String URL_ORDER_DETAIL = "402";//  order detail
@@ -130,7 +132,7 @@ public class UrlConstants {
         //取消关注
         public static final String FRIEDNS_UNKEEP = "502";
         //获取我的好友
-        public static final String FRIEDNS_GET = "503";
+        public static final String FRIEDNS_MYFANS = "503";
         //发布圈子
         public static final String FRIEDNS_SEND = "clientupload/addCommunity";
         //删除圈子
@@ -145,7 +147,8 @@ public class UrlConstants {
         public static final String FRIEDNS_LIKE = "509";
         //评论
         public static final String FRIEDNS_COMMENT = "510";
-
+        //获取我的好友
+        public static final String FRIEDNS_MYKEEP = "511";
     }
 
 }

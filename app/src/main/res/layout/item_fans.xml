@@ -28,15 +28,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="@mipmap/guanzhu" />
+        android:background="@mipmap/guanzhu"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/fans_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@id/fans_keep"
-        android:background="@mipmap/liaotian"
-        android:visibility="gone" />
+        android:background="@mipmap/liaotian" />
 </RelativeLayout>

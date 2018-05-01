@@ -93,4 +93,5 @@ dependencies {
     compile 'com.pnikosis:materialish-progress:1.7'
     compile 'com.github.donkingliang:LabelsView:1.4.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation files('libs/alipaySdk-20180403.jar')
 }

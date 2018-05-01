@@ -80,6 +80,10 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
     TextView myPhoneTv;
     @BindView(R.id.my_update_ic_tv)
     TextView myUpdateIcTv;
+    @BindView(R.id.my_zhifubao_tv)
+    TextView myZhifubaoTv;
+    @BindView(R.id.my_recommend_tv)
+    TextView myRecommendTv;
     private Dialog dialog;
     private File file;
     private Uri imageUri;
@@ -110,7 +114,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
         titleCenter.setText(getString(R.string.my));
     }
 
-    @OnClick({R.id.my_update_ic_fl, R.id.title_left, R.id.my_icon_fl, R.id.my_name_fl, R.id.my_sex_fl, R.id.my_phone_fl, R.id.my_update_pwd_fl, R.id.my_address_fl, R.id.tv_signout})
+    @OnClick({R.id.my_recommend_fl, R.id.my_zhifubao_fl, R.id.my_update_ic_fl, R.id.title_left, R.id.my_icon_fl, R.id.my_name_fl, R.id.my_sex_fl, R.id.my_phone_fl, R.id.my_update_pwd_fl, R.id.my_address_fl, R.id.tv_signout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
@@ -145,6 +149,12 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                 break;
             case R.id.my_update_ic_fl:
                 inputTitleDialog();
+                break;
+            case R.id.my_recommend_fl:
+
+                break;
+            case R.id.my_zhifubao_fl:
+                inputZfbDialog();
                 break;
         }
     }
@@ -369,7 +379,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                             return;
                         }
                         String oldIc = myUpdateIcTv.getText().toString();
-                        if(oldIc.equals(inputName)){
+                        if (oldIc.equals(inputName)) {
                             ToastUtil.showToastS(mActivity, getString(R.string.my_update_again));
                             return;
                         }
@@ -384,6 +394,26 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                         }
                         type = 4;
                         mPresenter.updateIc(UrlConstants.UrLType.UPDATE_IC, uid, inputName);
+                    }
+                });
+        builder.show();
+    }
+
+    private void inputZfbDialog() {
+        final EditText inputServer = new EditText(getContext());
+        inputServer.setLines(1);
+        inputServer.setMaxEms(18);
+        inputServer.setPadding(50, 50, 50, 50);
+        inputServer.setFocusable(true);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("输入支付宝账号").setView(inputServer).setNegativeButton(R.string.cancel, null);
+        builder.setPositiveButton(R.string.confirm,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String inputName = inputServer.getText().toString();
+                        type = 5;
+                        mPresenter.bindZfb(UrlConstants.UrLType.ZHIFUBAO, uid, inputName);
                     }
                 });
         builder.show();
@@ -424,7 +454,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                     if (userBean != null && !TextUtils.isEmpty(userBean.getSex())) {
                         mySexTv.setText("1".equals(userBean.getSex()) ? getString(R.string.man) : getString(R.string.gril));
                     }
-                }else{
+                } else {
                     ToastUtil.showToastS(mActivity, response.getMessage());
                 }
                 break;
@@ -434,7 +464,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                     if (userBean != null && !TextUtils.isEmpty(userBean.getPhoto())) {
                         ImageLoaderUtils.displayRound(mActivity, myIconIv, UrlConstants.BASE_URL + userBean.getPhoto());
                     }
-                }else{
+                } else {
                     ToastUtil.showToastS(mActivity, response.getMessage());
                 }
                 break;
@@ -458,8 +488,14 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                         if (!TextUtils.isEmpty(userBean.getIc())) {
                             myUpdateIcTv.setText(userBean.getIc());
                         }
+                        if (!TextUtils.isEmpty(userBean.getAlipay()) && !"null".equals(userBean.getAlipay())) {
+                            myZhifubaoTv.setText(userBean.getAlipay());
+                        }
+                        if (!TextUtils.isEmpty(userBean.getRecommend()) && !"null".equals(userBean.getRecommend())) {
+                            myRecommendTv.setText(userBean.getRecommend());
+                        }
                     }
-                }else{
+                } else {
                     ToastUtil.showToastS(mActivity, response.getMessage());
                 }
                 break;
@@ -469,7 +505,17 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                     if (userBean != null && !TextUtils.isEmpty(userBean.getIc())) {
                         myUpdateIcTv.setText(userBean.getIc());
                     }
-                }else{
+                } else {
+                    ToastUtil.showToastS(mActivity, response.getMessage());
+                }
+                break;
+            case 5:
+                if ("1".equals(response.getStatusCode())) {
+                    UserBean userBean = (UserBean) response.getResults();
+                    if (userBean != null && !TextUtils.isEmpty(userBean.getAlipay()) && !"null".equals(userBean.getAlipay())) {
+                        myZhifubaoTv.setText(userBean.getAlipay());
+                    }
+                } else {
                     ToastUtil.showToastS(mActivity, response.getMessage());
                 }
                 break;

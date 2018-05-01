@@ -29,11 +29,13 @@ public class MyFansAdapter extends RecyclerView.Adapter<MyFansAdapter.MyHolder> 
     private Activity context;
     private final LayoutInflater inflater;
     private List<FansBean.Fans> mList;
+    private int fromType;
 
-    public MyFansAdapter(Activity context, List<FansBean.Fans> mList) {
+    public MyFansAdapter(Activity context, List<FansBean.Fans> mList, int fromType) {
         this.context = context;
         this.mList = mList;
         inflater = LayoutInflater.from(context);
+        this.fromType = fromType;
     }
 
     @Override
@@ -50,12 +52,22 @@ public class MyFansAdapter extends RecyclerView.Adapter<MyFansAdapter.MyHolder> 
         if (!TextUtils.isEmpty(data.getName())) {
             holder.fansName.setText(data.getName());
         }
-        holder.fansKeep.setOnClickListener(new View.OnClickListener() {
+
+        holder.fansKeep.setVisibility(View.GONE);
+        holder.fansChat.setVisibility(View.VISIBLE);
+        holder.fansChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemListener.keepClick(position);
+                mOnItemListener.chatClick(position);
             }
         });
+
+    }
+
+    public void removeData(int position) {
+        mList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mList.size());
     }
 
     @Override
@@ -72,6 +84,7 @@ public class MyFansAdapter extends RecyclerView.Adapter<MyFansAdapter.MyHolder> 
     public interface OnItemListener {
         void keepClick(int position);
 
+        void chatClick(int position);
     }
 
     class MyHolder extends RecyclerView.ViewHolder {

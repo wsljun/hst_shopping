@@ -382,4 +382,24 @@ public class MyPrresenter extends MyContract.Presenter {
         });
     }
 
+    @Override
+    public void bindZfb(String por, String uid, String alipay) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("alipay", alipay);
+        ApiModel.getInstance().getData(por, map, UserBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+        });
+    }
+
 }
