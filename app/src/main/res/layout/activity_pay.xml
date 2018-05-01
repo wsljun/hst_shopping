@@ -131,7 +131,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:id="@+id/tv_title_wechat"
@@ -140,7 +142,8 @@
                 android:layout_marginTop="10dp"
                 android:drawableLeft="@mipmap/weixinzhifu"
                 android:text="微信支付"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
 
             <RadioButton
                 android:id="@+id/rb_wechat_pay"

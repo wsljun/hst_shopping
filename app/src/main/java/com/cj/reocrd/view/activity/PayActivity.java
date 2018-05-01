@@ -37,6 +37,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Call;
 
+import static android.provider.UserDictionary.Words.APP_ID;
+
 public class PayActivity extends BaseActivity {
 
     @BindView(R.id.title_left)
@@ -206,6 +208,10 @@ public class PayActivity extends BaseActivity {
                 PayTask alipay = new PayTask(PayActivity.this);
                 //获取支付结果
                 Map<String, String> result = alipay.payV2(orderInfo, true);
+                //app_id=2018042902608871
+                // &timestamp=2016-07-29+16%3A55%3A53
+                // &biz_content=%7B%22timeout_express%22%3A%2230m%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22total_amount%22%3A%220.01%22%2C%22subject%22%3A%221%22%2C%22body%22%3A%22%E6%88%91%E6%98%AF%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%22%2C%22out_trade_no%22%3A%220501181451-1042%22%7D&method=alipay.trade.app.pay&charset=utf-8&version=15.5.3
+                // &sign_type=RSA&sign=bLMlXcpdfEImFe0ZygvetFyt149OyghHLVv4Kqt3FjGNx0igi%2BtXnrzZGv%2BB2kzrJIfKcSq7s9kg%2F4%2FN4mihhsAVUC39WCbuZGbYxBh9tgaUJHe5vgfB53bWimZrW0XsKCsGIt7BrFysua3nm%2BEuqf5GmrHa7NWQyKm4U1akpvg%3D
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
                 msg.obj = result;
@@ -215,6 +221,37 @@ public class PayActivity extends BaseActivity {
         // 必须异步调用
         Thread payThread = new Thread(payRunnable);
         payThread.start();
+    }
+
+    private  void defatureAlipay(){
+//        AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipaydev.com/gateway.do",
+//                APP_ID, "请复制第1步中生成的密钥中的商户应用私钥", "json", "utf-8", ,"沙箱环境RSA2支付宝公钥", "RSA2");
+//        AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
+//        AlipayTradePrecreateModel model = new AlipayTradePrecreateModel();
+//        request.setBizModel(model);
+//        model.setOutTradeNo(System.currentTimeMills());
+//        model.setTotalAmount("88.88");
+//        model.setSubject("Iphone6 16G");
+//        AlipayTradePrecreateResponse response = alipayClient.execute(request);
+//        System.out.print(response.getBody());
+//        System.out.print(response.getQrCode());
+        //实例化客户端
+//        AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY, "RSA2");
+////实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.open.public.template.message.industry.modify
+//        AlipayOpenPublicTemplateMessageIndustryModifyRequest request = new AlipayOpenPublicTemplateMessageIndustryModifyRequest();
+////SDK已经封装掉了公共参数，这里只需要传入业务参数
+////此次只是参数展示，未进行字符串转义，实际情况下请转义
+//        request.setBizContent("  {" +
+//                "    \"primary_industry_name\":\"IT科技/IT软件与服务\"," +
+//                "    \"primary_industry_code\":\"10001/20102\"," +
+//                "    \"secondary_industry_code\":\"10001/20102\"," +
+//                "    \"secondary_industry_name\":\"IT科技/IT软件与服务\"" +
+//                " }");
+//        AlipayOpenPublicTemplateMessageIndustryModifyResponse response = alipayClient.execute(request);
+////调用成功，则处理业务逻辑
+//        if(response.isSuccess()){
+//            //.....
+//        }
     }
 
     private Handler mHandler = new Handler() {
@@ -253,6 +290,7 @@ public class PayActivity extends BaseActivity {
         builder.setTitle("输入登陆密码").setView(inputServer).setNegativeButton(R.string.cancel, null);
         builder.setPositiveButton(R.string.confirm,
                 new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String inputName = inputServer.getText().toString();
                         if (TextUtils.isEmpty(inputName)) {
