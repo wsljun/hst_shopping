@@ -43,6 +43,7 @@ public class RotatePan extends View {
     private int diffRadius ;
     public static final int FLING_VELOCITY_DOWNSCALE = 4;
     private String[] images ;  // Integer[] images ;
+    private String[] moneys ;  // Integer[] images ;
     private String[] strs ;
     /**
      * 抽奖的文字
@@ -120,13 +121,13 @@ public class RotatePan extends View {
 //            iconLists.add(context.getResources().getIdentifier(iconStrs[i],"mipmap",context.getPackageName()));
 //        }
 
-        images = context.getResources().getStringArray(iconArray);
+        moneys = context.getResources().getStringArray(iconArray);
 //        images = iconLists.toArray(new Integer[iconLists.size()]);
         typedArray.recycle();
-        if(strs == null || images == null) {
+        if(strs == null || moneys == null) {
             throw new RuntimeException("Can't find string or price resources.");
         }
-        if(strs.length != panNum || images.length != panNum) {
+        if(strs.length != panNum || moneys.length != panNum) {
             throw new RuntimeException("The string length or icon length  isn't equals panNum.");
         }
     }
@@ -170,13 +171,15 @@ public class RotatePan extends View {
             }
             angle += verPanRadius;
         }
-        for(int i=0;i<panNum;i++){
-//            drawIcon(width/2, height/2, 2*radius, (panNum%4==0)?InitAngle + diffRadius : InitAngle, i, canvas);
-//            InitAngle += verPanRadius;
-        }
+//        for(int i=0;i<panNum;i++){
+////            drawIcon(width/2, height/2, 2*radius, (panNum%4==0)?InitAngle + diffRadius : InitAngle, i, canvas);
+////            InitAngle += verPanRadius;
+//        }
 
         for(int i=0;i<panNum;i++){
-            drawText((panNum%4==0)?InitAngle+diffRadius + (diffRadius*3/4):InitAngle+diffRadius ,i, 2*radius, textPaint, canvas,rectF);
+//            drawText((panNum%4==0)?InitAngle+diffRadius + (diffRadius*3/4):InitAngle+diffRadius ,i, 2*radius, textPaint, canvas,rectF);
+            drawText((panNum%4==0)?InitAngle+diffRadius + (diffRadius*3/4):InitAngle+diffRadius ,strs[i], 2*radius, textPaint, canvas,rectF);
+            drawTextMoney((panNum%4==0)?InitAngle+diffRadius + (diffRadius*3/4):InitAngle+diffRadius ,moneys[i], 2*radius, textPaint, canvas,rectF);
             InitAngle += verPanRadius;
         }
     }
@@ -195,20 +198,40 @@ public class RotatePan extends View {
         float vOffset = mRadius / 2 / 6;
 
         mCanvas.drawTextOnPath(strs[i], path, hOffset, vOffset, mTextPaint);
-//        mCanvas.save();
-//        Path p2 =  new Path();
-//        float textWidth2 = mTextPaint.measureText(images[i]);
-//        RectF rect = new RectF(mRange.left+ textWidth2 *2, mRange.top + textWidth2 *2 ,
-//                mRange.right-textWidth2 *2, mRange.bottom -textWidth2 *2);
-//        path.addArc(rect, startAngle, verPanRadius);
-//        //圆弧的水平偏移
-//        float hOffset2  = (panNum % 4 == 0)?((float) (mRadius * Math.PI / panNum/2 ))
-//                :((float) (mRadius * Math.PI / panNum/2 - textWidth2/2 ));
-//        //圆弧的垂直偏移
-//        float vOffset2 = mRadius / 2 / 6;
-//        mCanvas.drawTextOnPath(images[i], p2, hOffset2, vOffset2, mTextPaint);
-
     }
+
+    // 中奖等级
+    private void drawText(float startAngle, String string, int mRadius, Paint mTextPaint, Canvas mCanvas, RectF mRange) {
+        Path path = new Path();
+
+        path.addArc(mRange, startAngle, verPanRadius);
+        float textWidth = mTextPaint.measureText(string);
+
+        //圆弧的水平偏移
+        float hOffset = (panNum % 4 == 0) ? ((float) (mRadius * Math.PI / panNum / 2))
+                : ((float) (mRadius * Math.PI / panNum / 2 - textWidth / 2));
+        //圆弧的垂直偏移
+        float vOffset = mRadius / 2 / 6;
+
+        mCanvas.drawTextOnPath(string, path, hOffset, vOffset, mTextPaint);
+    }
+
+    // 中奖金额
+    private void drawTextMoney(float startAngle, String string, int mRadius, Paint mTextPaint, Canvas mCanvas, RectF mRange) {
+        Path path = new Path();
+
+        path.addArc(mRange, startAngle, verPanRadius);
+        float textWidth = mTextPaint.measureText(string);
+
+        //圆弧的水平偏移
+        float hOffset = (panNum % 4 == 0) ? ((float) (mRadius * Math.PI / panNum / 2))
+                : ((float) (mRadius * Math.PI / panNum / 2 - textWidth / 2));
+        //圆弧的垂直偏移
+        float vOffset = mRadius / 5;
+
+        mCanvas.drawTextOnPath(string, path, hOffset, vOffset, mTextPaint);
+    }
+
 
     private void drawIcon(int xx,int yy,int mRadius,float startAngle, int i,Canvas mCanvas)
     {
@@ -247,6 +270,10 @@ public class RotatePan extends View {
         this.invalidate();
     }
 
+    public void setMoneys(String... strs){
+        this.moneys = strs;
+        this.invalidate();
+    }
 
 
     /**

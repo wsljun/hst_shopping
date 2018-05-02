@@ -20,9 +20,11 @@ import com.cj.reocrd.contract.GoodsDetailContract;
 import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.entity.BankBean;
 import com.cj.reocrd.model.entity.GoodsCommentBean;
+import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.presenter.MyPrresenter;
 import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.MyBankAdapter;
 
@@ -51,12 +53,17 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
     EditText walletGetEt;
     @BindView(R.id.wallet_get_use)
     TextView walletGetUse;
+    @BindView(R.id.alipay_name)
+    TextView tvAlipayName;
+    @BindView(R.id.tvBtnBind)
+    TextView tvBtnBind;
     int useableblance;
     MyBankAdapter adapter;
     List<BankBean.Bank> banks;
     BankBean.Bank bank;
     String money;
     int type;
+    private String aliPayName ;
 
     @Override
     public int getLayoutId() {
@@ -66,6 +73,7 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
     @Override
     public void initData() {
         super.initData();
+        aliPayName = (String) SPUtils.get(this,SPUtils.SpKey.ALIPAY_NAME,"");
         Bundle bundle = getIntent().getExtras();
         useableblance = bundle.getInt("useableblance");
         type = 1;
@@ -76,6 +84,10 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
     public void initView() {
         titleCenter.setText("提现");
         walletGetUse.setText("可用余额" + useableblance + "元");
+        if(!TextUtils.isEmpty(aliPayName)){
+            tvAlipayName.setText("支付宝账号："+aliPayName);
+            tvBtnBind.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -124,6 +136,20 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                     ToastUtil.showToastS(this, response.getMessage());
                 }
                 break;
+            case 5:
+                if ("1".equals(response.getStatusCode())) {
+                    UserBean userBean = (UserBean) response.getResults();
+                    if (userBean != null && !TextUtils.isEmpty(userBean.getAlipay()) && !"null".equals(userBean.getAlipay())) {
+                        tvAlipayName.setText("支付宝账号："+userBean.getAlipay());
+                        tvBtnBind.setVisibility(View.INVISIBLE);
+                        SPUtils.put(this, SPUtils.SpKey.ALIPAY_NAME,userBean.getAlipay());
+                    }
+                } else {
+                    ToastUtil.showToastS(this, response.getMessage());
+                }
+                break;
+                default:
+                    break;
         }
 
     }
@@ -139,15 +165,20 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
     }
 
 
-    @OnClick({R.id.wallet_get_bind, R.id.wallet_get, R.id.title_left})
+    @OnClick({R.id.tvBtnBind, R.id.wallet_get, R.id.title_left})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.wallet_get_bind:
-                startActivityForResult(WalletBindActivity.class, WalletBindActivity.BIND_LIST_REQUEST);
+            case R.id.tvBtnBind:
+//                startActivityForResult(WalletBindActivity.class, WalletBindActivity.BIND_LIST_REQUEST);
+                inputZfbDialog();
                 break;
             case R.id.wallet_get:
-                if (bank == null || TextUtils.isEmpty(bank.getId())) {
-                    ToastUtil.showToastS(this, "请选择银行卡");
+//                if (bank == null || TextUtils.isEmpty(bank.getId())) {
+//                    ToastUtil.showToastS(this, "请选择银行卡");
+//                    return;
+//                }
+                if (aliPayName == null || TextUtils.isEmpty(aliPayName)) {
+                    ToastUtil.showToastS(this, "请先绑定支付宝");
                     return;
                 }
                 money = walletGetEt.getText().toString();
@@ -167,6 +198,27 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                 finish();
                 break;
         }
+    }
+
+    private void inputZfbDialog() {
+        final EditText inputServer = new EditText(getContext());
+        inputServer.setLines(1);
+        inputServer.setMaxEms(18);
+        inputServer.setPadding(50, 50, 50, 50);
+        inputServer.setFocusable(true);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("输入支付宝账号").setView(inputServer).setNegativeButton(R.string.cancel, null);
+        builder.setPositiveButton(R.string.confirm,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String inputName = inputServer.getText().toString();
+                        type = 5;
+                        mPresenter.bindZfb(UrlConstants.UrLType.ZHIFUBAO, uid, inputName);
+                    }
+                });
+        builder.show();
     }
 
     @Override
@@ -194,6 +246,7 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
         builder.setNegativeButton(getString(R.string.cancel), null);
         builder.setPositiveButton(getString(R.string.confirm),
                 new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int which) {
                         type = 2;
                         mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, bank.getId(), money);

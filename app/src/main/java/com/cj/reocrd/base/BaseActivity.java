@@ -21,6 +21,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.alipay.sdk.app.EnvUtils;
 import com.cj.reocrd.R;
 import com.cj.reocrd.net.NetChangeObserver;
 import com.cj.reocrd.net.NetWorkUtil;
@@ -59,7 +60,7 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         doBeforeSetcontentView();
-//        setContentView(getLayoutId());
+        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX); // 设置沙箱环境
         setContentView(R.layout.activity_base);
         frameLayout = findViewById(R.id.activity_base_fl);
         mContext = this.getApplicationContext();

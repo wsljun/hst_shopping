@@ -94,9 +94,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyHolder> {
                 break;
             case OrderActivity.ORDER_STATUS_OVER:
                 holder.tvOrderStatus.setText("已完成");
-                holder.tvToGo.setVisibility(View.VISIBLE);
-                holder.tvToGo.setText("申请退款");
-                holder.tvToGo.setTag(OrderActivity.ORDER_STATUS_OVER);
+//                holder.tvToGo.setText("申请退款");
+//                holder.tvToGo.setVisibility(View.VISIBLE);
+//                holder.tvToGo.setTag(OrderActivity.ORDER_STATUS_OVER);
                 break;
             case OrderActivity.ORDER_STATUS_REFUNDING:
                 holder.tvOrderStatus.setText("退款中");

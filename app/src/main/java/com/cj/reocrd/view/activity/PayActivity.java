@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiCallback;
@@ -25,6 +26,7 @@ import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.model.ApiModel;
 import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.utils.ConstantsUtils;
+import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.alipay.OrderInfoUtil2_0;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
@@ -37,6 +39,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Call;
 
+import static android.provider.Telephony.Mms.Part.CHARSET;
 import static android.provider.UserDictionary.Words.APP_ID;
 
 public class PayActivity extends BaseActivity {
@@ -77,9 +80,11 @@ public class PayActivity extends BaseActivity {
     private long countTime = 30 * 60 * 1000;
     private int time_M = 29;
     private int time_S = 59;
-    public static final String APPID = "2018042902608871";
+    public static final String APPID = "2016091500515912";//正式："2018042902608871";
     private static final int SDK_PAY_FLAG = 1001;
-    private String RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJmhD7W6lp8OrP9bsFGxDOICdhdgEKCCYxZg2Sk/x0rXvMdJTwI1EFHU0YENw5aw7mJaajtDLtKetvDe1qvqKrkqSmxGq+jwE1Py7hqMa+qwOG46fZCxbG0g+E4RXt75hHFtlQr6uQDAFD0LgP+ob2QzM2c+XgOZ5fMpoJtrLCaJAgMBAAECgYBytFKqeRokwCxirO7Ez9CynuvVICDJ9xBMkRsTNU9zjgihMxcOqtf4gVG7ba9vP8N9I8zVWqAHGgG1bmwSB9DFLzb35VIm4gacB1fmHbZdE3CTPmkToeqPJXtz/MUWREp/Mj1MkIvF7JevlV1JIgqcCVP1XeAgMDdCdBPhJPXVQQJBANG+KMmx6jT1Bbw6TsGu5IqLr7YZCQz2psaqDjiwkvdLqtfi4u18q5pxxSGA9IuJLbhhuFy6tFCAs2ZmsPuvu/UCQQC7gsnRLROoMUvmyFFcTdhe0Vo4J2mN/nGJEFxOU6rHpKLbxyGuJEDt+zgKE6OR0dxjrICvl/o3dsWde46v55fFAkBF9ChibOZyVy5cgw31Z0FuO/yUvXDZVAJ3zAwGOE4sEJ6gdlm9X5FUZ5GaBQqK52vKTT1SICs3llU/WAy7RPdpAkEApgYQgWgDDpnPVaCqAStf19xPoIas/C99AVn+ENAd1zTbifMPzCuHXe9gV/O5kUQaehpjupW6018Ta/PZi8Bn7QJBAJZ0E6CTkmfdHC6inbqk+7gm1FWIy9qRHjjTG4jzyajmDdTmWc2g3MxDERuYXONLukgdrgmH9cIETH3wPZNaAcw=";
+    private String RSA_PRIVATE = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCujCT3HUSt023ik5SG6P9cEt9DwR8iicoOS6DLNdXnTXVQc5e8fumJszwfME+FnhYwUy0nInFhKNqUSGB7fffhDLa4AKOf+JlNg0O2D2TNlhWdmEC0DWIDo939JjgoJJbasYwgVjlwSNLuJCSFaAMmF0vW0QJnNxr2YyW6zpj3P8joWw3FUOnA9Ma5Ipce0KxviAcRiMKIjkWpUsRbqdl0vzkuAzbfZ6lWZut0QW1HYINQ35M8SzgIvrJ/fu0C3BTE3FGjXJ9YvLUZLPujtrdJoILEriF/GbwT6Wyt5IFMUqS+In9fLaUsypJGPKWQeTo1Bl6uDpYgPlLsxeHUFGwnAgMBAAECggEAD+D78+cbulyDoJsgZe2IXY3x9a358SBr20USCaqKHRK0227InQNGp5pAm+2/Lj6lchv+/ZJqkhYvXFIBRPq+tCB99ttIB2OMPrr0S/m2h+VhbgbNzBNzmTUtGryBW1WIy7hfMQnnC8n0NmnfUKuXrb1szswQ1ebzcvquEgJ9c/CY0MSV/uF7qUbTybbWEnsiSobcgk+0tpjwpdVZixc0YW/utIQ50KwGqRcNkFW89JKLR3La9167B3gh1M0Qd12B/K7d1OfOHRrTIiCcUNM5xONnvzfoXsXwUwKxwgd57lpbfAmFFzx0i5LsruBRV5fN4NShlcusai1vWIV1Sc85AQKBgQDuD7c03cBQyg5arVD3rQw7zEKJF30hXADyiQKKM+Yivz2Ca0dkc8XBvsiRuZ01wHwzJV74QfCgW1gI/MG3ozWuK1NVqRuhtCPKa1e8g2bXQ8aNjTm43sDpJjT/cXE7gWC5TU5a+MPOusEi12gPwB2jyH1mVO1a7pygSw9NoAwJwQKBgQC7szknrUbOQvdhScue32F57VWBtHnEHO/xtU97JT3wkA0AKprqr2V5yxJBtbDJE1KV/Ql50dU1QONiyy5XGt0L57uLOwVZJiVQ1QEGYrb89WX/ENMmIM5XvWXm5KF57XSLwa6QvqD68ShtCXPKzdFvEJ/hqIMfSkjr0+q27dlf5wKBgQChJ5hhPGBtEGtpLPyrvcSTUnIUNgdqJsspZGCIyBtZmFZ+TDs3IDxWLN2/8IQhGB27zeedbZ4EH/HXm6tTsjOrpP6z9VeUPssfw0zQe6+JuALYXiseIAU9j7S+27/IhYvBxThu0wpSjxAhkuqKBwbJkfZ56LIJJZB33ngMl3SuwQKBgF78Uocmo/dLYj7khluutXhrR2Ms/pXlAvPxifhKn262py2XYfAztImO331LQdxvn9JxS7NPIbMiVC+xnJDN8mDM81aBFrLHoAio0iz2FZ4rXWNXk1LvNRynpwLSXnkCVoFHEV0Eaxiyo3+SUfumbj7jTdV3XmuePwrAoj3SXbevAoGBAMeirfCernEo5HYsSP67KWKpFaRnCLR9kCkevxb5wNNC5gAPC+bv9nf4VfEcCmWEzTD3OCDIB9dtE3B6cvOLD/hw6HN/U6moE2HlYDGe0gkAdy49TohJ19khQwFVow7ayllBw7RCAq4soWKODaONm3NNRvuYfgvbav7aMgbyqmSV";
+    private   String  aoid;
+    //"MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJmhD7W6lp8OrP9bsFGxDOICdhdgEKCCYxZg2Sk/x0rXvMdJTwI1EFHU0YENw5aw7mJaajtDLtKetvDe1qvqKrkqSmxGq+jwE1Py7hqMa+qwOG46fZCxbG0g+E4RXt75hHFtlQr6uQDAFD0LgP+ob2QzM2c+XgOZ5fMpoJtrLCaJAgMBAAECgYBytFKqeRokwCxirO7Ez9CynuvVICDJ9xBMkRsTNU9zjgihMxcOqtf4gVG7ba9vP8N9I8zVWqAHGgG1bmwSB9DFLzb35VIm4gacB1fmHbZdE3CTPmkToeqPJXtz/MUWREp/Mj1MkIvF7JevlV1JIgqcCVP1XeAgMDdCdBPhJPXVQQJBANG+KMmx6jT1Bbw6TsGu5IqLr7YZCQz2psaqDjiwkvdLqtfi4u18q5pxxSGA9IuJLbhhuFy6tFCAs2ZmsPuvu/UCQQC7gsnRLROoMUvmyFFcTdhe0Vo4J2mN/nGJEFxOU6rHpKLbxyGuJEDt+zgKE6OR0dxjrICvl/o3dsWde46v55fFAkBF9ChibOZyVy5cgw31Z0FuO/yUvXDZVAJ3zAwGOE4sEJ6gdlm9X5FUZ5GaBQqK52vKTT1SICs3llU/WAy7RPdpAkEApgYQgWgDDpnPVaCqAStf19xPoIas/C99AVn+ENAd1zTbifMPzCuHXe9gV/O5kUQaehpjupW6018Ta/PZi8Bn7QJBAJZ0E6CTkmfdHC6inbqk+7gm1FWIy9qRHjjTG4jzyajmDdTmWc2g3MxDERuYXONLukgdrgmH9cIETH3wPZNaAcw=";
 
     @Override
     public int getLayoutId() {
@@ -190,15 +195,19 @@ public class PayActivity extends BaseActivity {
      */
     private void payByAlipay() {
         //秘钥验证的类型 true:RSA2 false:RSA
-        boolean rsa = false;
+        boolean rsa = true;
         //构造支付订单参数列表
-        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(APPID, rsa, this);
+        aoid = OrderInfoUtil2_0.getOutTradeNo();
+        LogUtil.d("alipay","aoid= "+aoid);
+        String bizContent = OrderInfoUtil2_0.buildBizConetent(orderPrice,aoid);
+        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(APPID, rsa,bizContent);
         //构造支付订单参数信息
         String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
         //对支付参数信息进行签名
         String sign = OrderInfoUtil2_0.getSign(params, RSA_PRIVATE, rsa);
         //订单信息
         final String orderInfo = orderParam + "&" + sign;
+        LogUtil.d("alipay",orderInfo);
         //异步处理
         Runnable payRunnable = new Runnable() {
 
@@ -208,10 +217,6 @@ public class PayActivity extends BaseActivity {
                 PayTask alipay = new PayTask(PayActivity.this);
                 //获取支付结果
                 Map<String, String> result = alipay.payV2(orderInfo, true);
-                //app_id=2018042902608871
-                // &timestamp=2016-07-29+16%3A55%3A53
-                // &biz_content=%7B%22timeout_express%22%3A%2230m%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22total_amount%22%3A%220.01%22%2C%22subject%22%3A%221%22%2C%22body%22%3A%22%E6%88%91%E6%98%AF%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%22%2C%22out_trade_no%22%3A%220501181451-1042%22%7D&method=alipay.trade.app.pay&charset=utf-8&version=15.5.3
-                // &sign_type=RSA&sign=bLMlXcpdfEImFe0ZygvetFyt149OyghHLVv4Kqt3FjGNx0igi%2BtXnrzZGv%2BB2kzrJIfKcSq7s9kg%2F4%2FN4mihhsAVUC39WCbuZGbYxBh9tgaUJHe5vgfB53bWimZrW0XsKCsGIt7BrFysua3nm%2BEuqf5GmrHa7NWQyKm4U1akpvg%3D
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
                 msg.obj = result;
@@ -221,37 +226,6 @@ public class PayActivity extends BaseActivity {
         // 必须异步调用
         Thread payThread = new Thread(payRunnable);
         payThread.start();
-    }
-
-    private  void defatureAlipay(){
-//        AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipaydev.com/gateway.do",
-//                APP_ID, "请复制第1步中生成的密钥中的商户应用私钥", "json", "utf-8", ,"沙箱环境RSA2支付宝公钥", "RSA2");
-//        AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
-//        AlipayTradePrecreateModel model = new AlipayTradePrecreateModel();
-//        request.setBizModel(model);
-//        model.setOutTradeNo(System.currentTimeMills());
-//        model.setTotalAmount("88.88");
-//        model.setSubject("Iphone6 16G");
-//        AlipayTradePrecreateResponse response = alipayClient.execute(request);
-//        System.out.print(response.getBody());
-//        System.out.print(response.getQrCode());
-        //实例化客户端
-//        AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY, "RSA2");
-////实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.open.public.template.message.industry.modify
-//        AlipayOpenPublicTemplateMessageIndustryModifyRequest request = new AlipayOpenPublicTemplateMessageIndustryModifyRequest();
-////SDK已经封装掉了公共参数，这里只需要传入业务参数
-////此次只是参数展示，未进行字符串转义，实际情况下请转义
-//        request.setBizContent("  {" +
-//                "    \"primary_industry_name\":\"IT科技/IT软件与服务\"," +
-//                "    \"primary_industry_code\":\"10001/20102\"," +
-//                "    \"secondary_industry_code\":\"10001/20102\"," +
-//                "    \"secondary_industry_name\":\"IT科技/IT软件与服务\"" +
-//                " }");
-//        AlipayOpenPublicTemplateMessageIndustryModifyResponse response = alipayClient.execute(request);
-////调用成功，则处理业务逻辑
-//        if(response.isSuccess()){
-//            //.....
-//        }
     }
 
     private Handler mHandler = new Handler() {
@@ -268,6 +242,7 @@ public class PayActivity extends BaseActivity {
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        sendPaySuccess();
                     } else {
                         Toast.makeText(PayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                     }
@@ -333,13 +308,14 @@ public class PayActivity extends BaseActivity {
      * orderid 订单id(如果有多个订单 用逗号分割)
      * uid     用户ID
      * payType  1支付宝 2微信 3余额
-     * todo : 余额支付时提示属于支付密码（登陆密码），需先判断余额是否充足（需在本地保存余额）
+     *  : 余额支付时提示属于支付密码（登陆密码），需先判断余额是否充足（需在本地保存余额）
      */
     private void sendPaySuccess() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("orderid", oid);
         map.put("uid", uid);
         map.put("payType", payWay);
+        map.put("aoid", aoid);
         ApiModel.getInstance().getData(UrlConstants.UrLType.URL_OREDER_PAY_SUCCESS, map, null, new ApiCallback() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
