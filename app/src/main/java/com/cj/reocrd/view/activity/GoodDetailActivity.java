@@ -33,6 +33,7 @@ import com.cj.reocrd.model.entity.SkuBean;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.ActivityUtils;
 import com.cj.reocrd.utils.CollectionUtils;
+import com.cj.reocrd.utils.ConstantsUtils;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
@@ -123,6 +124,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     private int width;
     private int height;
     private TextView tvSkuTotalPrice,tvSkuAddCart,tvSkuBuy;
+    private ImageView ivSkuGoCart;
     private String skuPrice; // 不同规格单价
     private  String countPrice; // 最终选择后的总价
     public static  List<GoodsCommentBean> goodsCommentBeans;
@@ -147,14 +149,14 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     private void updateView() {
         countPrice = price = goodsDetailsBean.getPrice();
         unit = goodsDetailsBean.getUnit();
-        goodOldPrice.setText(goodsDetailsBean.getOldprice());
+        goodOldPrice.setText(ConstantsUtils.RMB+goodsDetailsBean.getOldprice());
         titleCenter.setText(goodsDetailsBean.getName());
         goodName.setText(goodsDetailsBean.getName());
         goodBrandTv.setText(goodsDetailsBean.getBrand());
-        goodPrice.setText(price);
+        goodPrice.setText(ConstantsUtils.RMB+price);
         goodSales.setText("销量："+goodsDetailsBean.getBlocknum());
         goodAddress.setText(goodsDetailsBean.getPlace());
-        goodTotalPrice.setText(price);
+        goodTotalPrice.setText(ConstantsUtils.RMB+price);
         ImageLoaderUtils.display(getContext(),imgGoodDetail, UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
         if("1".equals(goodsDetailsBean.getIscollect())){
             setCollectImg(true);
@@ -185,14 +187,18 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
 
 
     @OnClick({R.id.title_left,R.id.good_conllect_iv, R.id.good_num_rl, R.id.good_buy, R.id.good_addcar,
-    R.id.btn_goods_detail_webview,R.id.btn_comment})
+    R.id.btn_goods_detail_webview,R.id.btn_comment,R.id.good_car})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
                 finish();
                 break;
             case R.id.good_conllect_iv:
-                mPresenter.collectGoods(uid,goodsID);
+                if(isCollect){
+                    mPresenter.collectDelete(uid, goodsID);
+                }else{
+                    mPresenter.collectGoods(uid,goodsID);
+                }
                 break;
             case R.id.good_num_rl:
                 showPopuView();
@@ -223,6 +229,10 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                 bundle.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE,WebViewActivity.TYPE_GOODS_DETAILS);
                 startActivity(WebViewActivity.class,bundle);
                 break;
+            case R.id.good_car:
+                ToastUtil.showShort("to cart");
+//                getMainActivity().getViewPager().setCurrentItem(3);
+                break;
             default:
                 break;
         }
@@ -250,7 +260,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                     SkuBean skuBean = (SkuBean) data;
                     sid = skuBean.getId();
                     skuPrice = skuBean.getPrice();
-                    tvGoodsDetailPrice.setText(skuPrice);
+                    tvGoodsDetailPrice.setText(ConstantsUtils.RMB+skuPrice);
                     setTextTotalPrice(skuPrice,num);
                     tvSkuNum.setGoods_storage(Integer.parseInt(skuBean.getStock()));
                 }
@@ -263,6 +273,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                     }
                 }
             });
+            tvSkuNum.setGoods_storage(Integer.parseInt(goodsDetailsBean.getSlist().get(0).getStock()));
             tvSkuNum.setOnAmountChangeListener(new AmountView.OnAmountChangeListener() {
                 @Override
                 public void onAmountChange(View view, int amount) {
@@ -272,6 +283,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
             });
             tvSkuAddCart.setOnClickListener(this::onViewClicked);
             tvSkuBuy.setOnClickListener(this::onViewClicked);
+            ivSkuGoCart.setOnClickListener(this::onViewClicked);
 
         }
     }
@@ -282,8 +294,8 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         }
         double totalPrice = Utils.countPrice(price,String.valueOf(num));
          countPrice = String.valueOf(totalPrice);
-        tvSkuTotalPrice.setText(countPrice);
-        goodTotalPrice.setText(countPrice);
+        tvSkuTotalPrice.setText(ConstantsUtils.RMB+countPrice);
+        goodTotalPrice.setText(ConstantsUtils.RMB+countPrice);
     }
 
     private void showPopuView(){
@@ -298,6 +310,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
             tvSkuTotalPrice = skuView.findViewById(R.id.good_total_price);
             tvSkuAddCart = skuView.findViewById(R.id.good_addcar);
             tvSkuBuy = skuView.findViewById(R.id.good_buy);
+            ivSkuGoCart = skuView.findViewById(R.id.good_car);
 
 
             popWindow=new PopupWindow(skuView,WindowManager.LayoutParams.MATCH_PARENT,
@@ -350,8 +363,11 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
 
     @Override
     public void setCollectImg(boolean stuats) {
+        isCollect = stuats;
         if(stuats){ // 收藏成功
             ivCollect.setBackground(getResources().getDrawable(R.mipmap.collect_select));
+        }else{
+            ivCollect.setBackground(getResources().getDrawable(R.mipmap.shoucang));
         }
     }
 

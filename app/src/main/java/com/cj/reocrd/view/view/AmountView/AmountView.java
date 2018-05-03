@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.cj.reocrd.R;
 import com.cj.reocrd.utils.ToastUtil;
 
@@ -113,21 +114,22 @@ public class AmountView extends LinearLayout implements View.OnClickListener, Te
 
     @Override
     public void afterTextChanged(Editable s) {
-        if (s.toString().isEmpty())
+        if (s.toString().isEmpty()) {
             return;
+        }
         amount = Integer.valueOf(s.toString());
-        if (amount > goods_storage) {
-            etAmount.setText(goods_storage + "");
-            return;
-        }
+//        if (amount > goods_storage) {
+//            etAmount.setText(goods_storage + "");
+//            return;
+//        }
 
-        if (mListener != null) {
-            mListener.onAmountChange(this, amount);
-        }
+//        if (mListener != null) {
+//            mListener.onAmountChange(this, amount);
+//        }
     }
 
     public void setText(String text){
-        if (TextUtils.isEmpty(text)){
+        if (!TextUtils.isEmpty(text)){
             etAmount.setText(text);
         }
     }

@@ -27,6 +27,7 @@ import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.UpdateUtil;
 import com.cj.reocrd.view.activity.GoodDetailActivity;
 import com.cj.reocrd.view.activity.SearchActivity;
+import com.cj.reocrd.view.activity.WebViewActivity;
 import com.cj.reocrd.view.adapter.HomeAdapter;
 import com.cj.reocrd.view.adapter.OnRecyclerItemClickListener;
 import com.cj.reocrd.view.refresh.NormalRefreshViewHolder;
@@ -70,6 +71,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     private int pageno = 0; // 页码
     private final static String TAG = "HomeFragment";
     private Bundle goodBundle = new Bundle();
+    private List<BannerData> bannerData;
 
     @Override
     protected void initPresenter() {
@@ -84,6 +86,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void initData() {
         super.initData();
+        // todo 检查更新
+        //        mPresenter.checkUpdate(UpdateUtil.getVerName(mActivity));
         images = new ArrayList<>();
         images.add("http://pic35.photophoto.cn/20150528/0005018358146030_b.jpg");
         images.add("http://pic28.photophoto.cn/20130827/0005018362405048_b.jpg");
@@ -239,8 +243,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void OnBannerClick(int position) {
-        ToastUtil.showShort("Banner : " + position);
-        mPresenter.checkUpdate(UpdateUtil.getVerName(mActivity));
+        Bundle b = new Bundle();
+        b.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE, WebViewActivity.TYPE_HOME_BANNER);
+        b.putString(WebViewActivity.BUNDLE_WEBVIEW_URL, bannerData.get(position).getUrl());
+        startActivity(WebViewActivity.class, b);
     }
 
 
@@ -282,11 +288,11 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         }
         if (null != homeBean.getBlist() && homeBean.getBlist().size() > 0) {
             images.clear();
+            bannerData = homeBean.getBlist();
             for (BannerData uri : homeBean.getBlist()) {
                 images.add(UrlConstants.BASE_URL + uri.getImgurl());
             }
             setBannerView(images);
-//            banner.update(images);
         }
         mHomeTabAdapter.loadComplete();
     }

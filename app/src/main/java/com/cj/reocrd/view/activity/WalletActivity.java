@@ -85,7 +85,7 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
             Wallet wallet = (Wallet) response.getResults();
             if (wallet != null) {
                 blance = Integer.parseInt(wallet.getBalance()) / 100;
-                useableblance = 1000;//Integer.parseInt(wallet.getUseableblance()) / 100;
+                useableblance = Integer.parseInt(wallet.getUseableblance()) / 100;
                 freeze = Integer.parseInt(wallet.getFreeze()) / 100;
                 score = Integer.parseInt(wallet.getScore());
                 stock = Integer.parseInt(wallet.getStock());

@@ -42,7 +42,7 @@ import static com.cj.reocrd.view.adapter.CarAdapter.checkBoxList;
 
 /**
  * Created by Administrator on 2018/3/16.
- * todo CartFragment 状态无法保存 。需要保存购物车选择情况
+ *  CartFragment 状态无法保存 。需要保存购物车选择情况
  */
 
 public class CartFragment extends BaseFragment<CartPresenter> implements CartContract.View
@@ -216,7 +216,6 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
 
     @Override
     public void onAdapterItemClickListener(View view, int position) {
-        Log.e(TAG, "onAdapterItemClickListener: positon= "+position );
         switch (view.getId()){
             case R.id.car_delete:
                 checkBoxList.remove(position);

@@ -8,6 +8,7 @@ import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.BaseViewHolder;
 import com.cj.reocrd.model.entity.GoodsBean;
+import com.cj.reocrd.utils.ConstantsUtils;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.view.AmountView.AmountView;
@@ -38,10 +39,12 @@ public class CarAdapter extends BaseQuickAdapter implements AmountView.OnAmountC
     @Override
     protected void convert(BaseViewHolder helper, Object item, int position) {
         cartGoods = (GoodsBean) item;
+        int num = Integer.parseInt(cartGoods.getBuynum());
+        int price = Integer.parseInt(cartGoods.getPrice());
         ImageLoaderUtils.display(mContext,  helper.getView(R.id.iv_cart_pic), UrlConstants.BASE_URL+cartGoods.getImgurl());
         helper.setText(R.id.car_name,cartGoods.getName());
-        helper.setText(R.id.car_weight,"规格:"+cartGoods.getUnit());
-        helper.setText(R.id.car_num,"数量:"+cartGoods.getBuynum());
+        helper.setText(R.id.car_weight,"规格:"+cartGoods.getSpecnum()+cartGoods.getUnit());
+        helper.setText(R.id.car_num,"价格:"+ ConstantsUtils.RMB+num*price);
         helper.getView(R.id.car_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +77,7 @@ public class CarAdapter extends BaseQuickAdapter implements AmountView.OnAmountC
 
     @Override
     public void onAmountChange(View view, int amount) {
-//        ToastUtil.showShort("onAmountChange: "+amount);
+        ToastUtil.showShort("onAmountChange: "+amount);
         mBaseItemClickListener.onAdapterItemClickListener(view,amount);
     }
 

@@ -3,6 +3,7 @@ package com.cj.reocrd.view.activity;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
@@ -27,6 +28,8 @@ public class WebViewActivity extends BaseActivity {
     public final static int TYPE_HELP = 2;
     public final static int TYPE_COMMENT = 3;
     public final static int TYPE_GOODS_DETAILS = 4;
+    public final static int TYPE_HOME_BANNER= 5;
+
 
     @Override
     public int getLayoutId() {
@@ -56,6 +59,14 @@ public class WebViewActivity extends BaseActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
+        webView.setWebViewClient(new WebViewClient() {
+            //覆盖shouldOverrideUrlLoading 方法
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -81,7 +92,10 @@ public class WebViewActivity extends BaseActivity {
                 String id = getIntent().getStringExtra(BUNDLE_WEBVIEW_URL);
                 webView.loadUrl(UrlConstants.URL_GOODS_DETAIL+id);
                 break;
-            case TYPE_COMMENT :
+            case TYPE_HOME_BANNER :
+                tvCenter.setText("商品详情");
+                webViewUrl = getIntent().getStringExtra(BUNDLE_WEBVIEW_URL);
+                webView.loadUrl(webViewUrl);
                 break;
             default:
                 break;
