@@ -240,7 +240,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
 
     private void setSkuView() {
         if(null != skuView && null != goodsDetailsBean){
-            tvGoodsDetailPrice.setText(goodsDetailsBean.getPrice());
+            tvGoodsDetailPrice.setText(ConstantsUtils.RMB+goodsDetailsBean.getPrice());
             ImageLoaderUtils.display(this,ivGoodsDetailUrl,UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
             //设置默认选中
             goodsLabelsView.setSelects(0);

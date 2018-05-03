@@ -38,7 +38,7 @@ public class CollectAdapter extends BaseQuickAdapter {
                 break;
             case 2:
                 helper.getView(R.id.collect_delete).setVisibility(View.GONE);
-                helper.getView(R.id.collect_car).setVisibility(View.VISIBLE);
+                helper.getView(R.id.collect_car).setVisibility(View.GONE);
                 break;
         }
         helper.getView(R.id.collect_delete).setOnClickListener(new View.OnClickListener() {

@@ -40,7 +40,7 @@ public class ImageLoaderUtils {
         }
         RequestOptions requestOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
+//                .centerCrop()
                 .placeholder(R.mipmap.ic_image_loading)
                 .error(R.mipmap.ic_empty_picture);
         Glide.with(context)

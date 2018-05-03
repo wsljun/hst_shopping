@@ -151,6 +151,7 @@
             android:text="@string/title_freight"
             android:layout_below="@id/tv_title_price"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             />
 
         <TextView
@@ -159,6 +160,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignBaseline="@+id/tv_title_freight"
             android:text="¥  0"
+            android:visibility="gone"
             />
 
     </RelativeLayout>
@@ -221,7 +223,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@string/good_detail_total"
+            android:text="实付款："
             android:textSize="14sp" />
         <TextView
             android:id="@+id/good_total_price"

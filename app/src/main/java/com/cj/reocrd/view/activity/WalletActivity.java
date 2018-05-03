@@ -18,6 +18,7 @@ import com.cj.reocrd.model.entity.Wallet;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.ToastUtil;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,9 +52,9 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
     @BindView(R.id.wallet_time)
     TextView walletTime;
 
-    int blance;
-    int useableblance;
-    int freeze;
+    Double blance;
+    Double useableblance;
+    Double freeze;
     int score;
     int stock;
 
@@ -84,13 +85,14 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
         if (UrlConstants.SUCCESE_CODE.equals(response.getStatusCode())) {
             Wallet wallet = (Wallet) response.getResults();
             if (wallet != null) {
-                blance = Integer.parseInt(wallet.getBalance()) / 100;
-                useableblance = Integer.parseInt(wallet.getUseableblance()) / 100;
-                freeze = Integer.parseInt(wallet.getFreeze()) / 100;
+                blance = Double.valueOf(Integer.parseInt(wallet.getBalance()))/100;
+                useableblance = Double.valueOf(Integer.parseInt(wallet.getUseableblance()))/100;
+                freeze = Double.valueOf(Integer.parseInt(wallet.getFreeze()))/100;
+
                 score = Integer.parseInt(wallet.getScore());
                 stock = Integer.parseInt(wallet.getStock());
-                walletUseableblance.setText(blance + "");
-                walletBalance.setText(useableblance + "");
+                walletUseableblance.setText(useableblance + "");
+                walletBalance.setText(blance + "");
                 walletFreeze.setText(freeze + "");
                 walletScore.setText(score + "");
                 walletStock.setText(stock + "");
@@ -98,6 +100,13 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
         } else {
             ToastUtil.showToastS(this, response.getMessage());
         }
+    }
+
+    private double doubleValue(String s){
+        double   f   =   Double.valueOf(Integer.parseInt(s))/100;
+        BigDecimal   b   =   new BigDecimal(f);
+        double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+        return f1;
     }
 
     @Override
@@ -134,12 +143,14 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
             case R.id.wallet_get:
                 if (useableblance > 0) {
                     Bundle bundle = new Bundle();
-                    bundle.putInt("useableblance", useableblance);
+                    bundle.putDouble("useableblance", useableblance);
                     startActivityForResult(WalletGetActivity.class, bundle, WalletGetActivity.WALLET_GET_REQUEST);
                 } else {
                     return;
                 }
                 break;
+                default:
+                    break;
 
         }
     }

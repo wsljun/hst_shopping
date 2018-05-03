@@ -29,7 +29,9 @@
                 <ImageView
                     android:id="@+id/iv_good_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:scaleType="fitXY"
+                    android:layout_height="match_parent"
+                    />
 
             </FrameLayout>
 
@@ -98,7 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/shoucang"
+                        android:background="@mipmap/shoucang"
                         />
 
                     <TextView
@@ -289,7 +291,6 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:background="@mipmap/gouwucje2"
-            android:visibility="invisible"
             />
 
         <TextView
@@ -301,7 +302,9 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:text="@string/good_detail_buy"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:visibility="gone"
+            />
 
         <TextView
             android:id="@+id/good_addcar"
@@ -312,6 +315,7 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:text="@string/good_detail_addcar"
+            android:layout_alignParentRight="true"
             android:textColor="@color/colorWhite" />
 
 
@@ -324,7 +328,8 @@
             android:layout_toLeftOf="@id/good_addcar"
             android:text=""
             android:textColor="@color/colorTextRed"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -332,7 +337,8 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/good_total_price"
             android:text="@string/good_detail_total"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            />
     </RelativeLayout>
 
 </RelativeLayout>
