@@ -32,7 +32,9 @@ import com.cj.reocrd.view.view.AmountView.AmountView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -74,6 +76,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     private final  static  String TAG = "CartFragment";
     private double totalPrice = 0;
     private int hisNum;
+    public static boolean isChooseAll = false;
 
     @Override
     protected void initPresenter() {
@@ -138,6 +141,23 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
 
     private void setTotalPrice(boolean isAll){
         totalPrice = 0;
+//        isChooseAll = isAll;
+//        if(isAll){
+            LogUtil.d(TAG,"cartGoodsList.size()= "+cartGoodsList.size()+"checkBoxList.size= "+checkBoxList.size());
+//            for (int i = 0; i <cartGoodsList.size() ; i++) {
+//                if(isAll&&i<checkBoxList.size()){
+//                    checkBoxList.get(i).setChecked(cbCartAllChoose.isChecked());
+//                }
+//                if(isChooseAll){
+//                    isCheckedMap.put(i,true);
+//                    totalPrice = totalPrice + countPrice(cartGoodsList.get(i).getPrice(),cartGoodsList.get(i).getBuynum());
+//                }else if(i<checkBoxList.size()){
+//                    if(checkBoxList.get(i).isChecked()){
+//                        totalPrice = totalPrice + countPrice(cartGoodsList.get(i).getPrice(),cartGoodsList.get(i).getBuynum());
+//                    }
+//                }
+//            }
+//        }
         for (int i = 0; i <checkBoxList.size() ; i++) {
             if(isAll){
                 checkBoxList.get(i).setChecked(cbCartAllChoose.isChecked());
@@ -222,6 +242,8 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     }
 
 
+   public static Map<Integer,Boolean> isCheckedMap = new HashMap<>();
+
     @Override
     public void onAdapterItemClickListener(View view, int position) {
         switch (view.getId()){
@@ -230,6 +252,8 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
                 mPresenter.delCartGoods(cartGoodsList.get(position).getBid());
                 break;
             case R.id.car_choose:
+                CheckBox checkBox = (CheckBox) view;
+                isCheckedMap.put(position,checkBox.isChecked());
                 setTotalPrice(false);
                 break;
             case R.id.car_amount:

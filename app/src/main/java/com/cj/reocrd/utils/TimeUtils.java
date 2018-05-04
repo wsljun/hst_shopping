@@ -132,4 +132,22 @@ public class TimeUtils {
         return localTime;
     }
 
+
+    public static String getSysCurDate() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        format.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
+        return (format.format(new Date()));
+    }
+
+    public static String getDADS() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        format.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
+        return format.format(new Date());
+    }
+
+    public static String getDADH() {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        format.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
+        return format.format(new Date());
+    }
 }

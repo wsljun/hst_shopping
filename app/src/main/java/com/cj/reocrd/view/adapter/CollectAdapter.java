@@ -1,6 +1,8 @@
 package com.cj.reocrd.view.adapter;
 
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.UrlConstants;
@@ -8,6 +10,7 @@ import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.BaseViewHolder;
 import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.utils.ImageLoaderUtils;
+import com.cj.reocrd.utils.TimeUtils;
 
 import java.util.List;
 
@@ -37,8 +40,16 @@ public class CollectAdapter extends BaseQuickAdapter {
                 helper.getView(R.id.collect_car).setVisibility(View.GONE);
                 break;
             case 2:
+                if(cartGoods.getIsShowDate()){
+                    helper.setText(R.id.tv_date,cartGoods.getCreatetime());
+                    helper.getView(R.id.tv_date).setVisibility(View.VISIBLE);
+                }else{
+                    helper.getView(R.id.tv_date).setVisibility(View.GONE);
+                }
                 helper.getView(R.id.collect_delete).setVisibility(View.GONE);
                 helper.getView(R.id.collect_car).setVisibility(View.GONE);
+                break;
+            default:
                 break;
         }
         helper.getView(R.id.collect_delete).setOnClickListener(new View.OnClickListener() {
@@ -47,7 +58,7 @@ public class CollectAdapter extends BaseQuickAdapter {
                 mBaseItemClickListener.onAdapterItemClickListener(v, position);
             }
         });
-        helper.getView(R.id.collect_car).setOnClickListener(new View.OnClickListener() {
+        helper.getView(R.id.collect_img).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mBaseItemClickListener.onAdapterItemClickListener(v, position);
