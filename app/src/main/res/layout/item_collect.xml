@@ -3,37 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/colorBackground"
     android:layout_marginBottom="1dp"
-    >
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_date"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="3月9日"
-        android:textColor="@color/colorBlack"
-        android:textSize="16sp"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:tag="0"
-        android:visibility="gone"
-        />
+        android:text="3月9日"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        >
+        android:background="@color/colorWhite">
+
         <ImageView
             android:id="@+id/collect_img"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:paddingLeft="10dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/car_choose"
-            />
+            android:paddingLeft="10dp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -45,6 +42,7 @@
                 android:id="@+id/collect_name"
                 style="@style/setting_item_configure"
                 android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
                 android:maxLength="10"
                 android:minLines="1"
                 android:textSize="16sp" />
@@ -54,13 +52,14 @@
                 android:id="@+id/collect_price"
                 style="@style/setting_item_configure"
                 android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="12dp"
                 android:maxEms="30"
                 android:maxLength="25"
                 android:maxLines="1"
                 android:textColor="@color/colorTextRed"
-                android:textSize="17sp" />
+                android:textSize="14sp" />
         </RelativeLayout>
 
         <ImageView
@@ -70,8 +69,9 @@
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/collect_img"
             android:layout_marginEnd="18dp"
-            android:background="@mipmap/lajixiang"
-            android:visibility="gone" />
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:background="@mipmap/lajixiang"/>
 
         <ImageView
             android:id="@+id/collect_car"

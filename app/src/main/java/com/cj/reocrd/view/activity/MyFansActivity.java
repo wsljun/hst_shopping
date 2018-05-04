@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
@@ -18,9 +20,13 @@ import com.cj.reocrd.model.entity.FansBean;
 import com.cj.reocrd.model.entity.FriendsBean;
 import com.cj.reocrd.presenter.FriendsPresenter;
 import com.cj.reocrd.presenter.MyPrresenter;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.FriendsAdapter;
 import com.cj.reocrd.view.adapter.MyFansAdapter;
+import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nimlib.sdk.RequestCallback;
+import com.netease.nimlib.sdk.auth.LoginInfo;
 
 import java.util.List;
 
@@ -64,11 +70,11 @@ public class MyFansActivity extends BaseActivity<FriendsPresenter> implements Fr
         switch (fromType) {
             case 1:
                 type = 1;
-                mPresenter.friendGet(UrlConstants.UrLType.FRIEDNS_MYFANS, uid);
+                mPresenter.friendGet(UrlConstants.UrLType.FRIEDNS_MYKEEP, uid);
                 break;
             case 2:
                 type = 2;
-                mPresenter.friendGet(UrlConstants.UrLType.FRIEDNS_MYKEEP, uid);
+                mPresenter.friendGet(UrlConstants.UrLType.FRIEDNS_MYFANS, uid);
                 break;
         }
 
@@ -164,6 +170,8 @@ public class MyFansActivity extends BaseActivity<FriendsPresenter> implements Fr
 
     @Override
     public void chatClick(int position) {
-        ToastUtil.showToastS(this, "未开通");
+        NimUIKit.startP2PSession(MyFansActivity.this, mDatas.get(position).getAccid());
     }
+
+
 }
