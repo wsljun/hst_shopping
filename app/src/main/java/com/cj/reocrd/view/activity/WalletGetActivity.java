@@ -256,8 +256,8 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        type = 2;
-                        mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, bank.getId(), money);
+                        type = 2;// todo bank = null
+                        mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, null, money);
                     }
                 });
         builder.show();
