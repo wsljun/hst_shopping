@@ -362,7 +362,6 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     public void acticonToSubmitOrder(ApiResponse apiResponse) {
         if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
             OrderBean orderBean = (OrderBean) apiResponse.getResults();
-            SPUtils.put(mContext, SPUtils.SpKey.GOODS_DETAIL,goodsDetailsBean);
             Bundle b = new Bundle();//  确认订单
             b.putString(SubmitOrderActivity.BUNDLE_KEY_OID,orderBean.getOid());
             b.putString(SubmitOrderActivity.BUNDLE_KEY_TYPE,SubmitOrderActivity.TYPE_FOR_DETAIL);

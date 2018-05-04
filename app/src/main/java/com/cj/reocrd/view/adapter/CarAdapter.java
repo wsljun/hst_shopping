@@ -54,14 +54,14 @@ public class CarAdapter extends BaseQuickAdapter implements AmountView.OnAmountC
         });
         CheckBox checkBox =  helper.getView(R.id.car_choose);
         checkBox.setTag(position);
-        if(CartFragment.isCheckedMap.containsKey(position)){
-            if(CartFragment.isCheckedMap.get(position) ){
-                checkBox.setChecked(true);
-            }
-        }
-        if(CartFragment.isChooseAll ){
-            checkBox.setChecked(true);
-        }
+//        if(CartFragment.isCheckedMap.containsKey(position)){
+//            if(CartFragment.isCheckedMap.get(position) ){
+//                checkBox.setChecked(true);
+//            }
+//        }
+//        if(cartGoods.getIsChecked() ){
+//            checkBox.setChecked(true);
+//        }
         if(!checkBoxList.contains(checkBox)){
             checkBoxList.add(checkBox);
         }

@@ -92,7 +92,6 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
 
     private void showType(){
         if(CollectionUtils.isNullOrEmpty(goodsTypes)){
-//            ToastUtil.showShort("typs is null");
             return;
         }
         mPresenter.getGoodsData(goodsTypes.get(0).getId(),pageno,pagesize);
@@ -119,7 +118,7 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
         recyclerViewContent.setAdapter(mGoodsAdapter);
         //设置适配器可以上拉加载
 //        mGoodsAdapter.setOnLoadMoreListener(this);
-        //设置下拉、上拉
+        //设置下拉、上拉运费
 //        mRefreshLayout.setDelegate(this);
         mRefreshLayout.setRefreshViewHolder(new NormalRefreshViewHolder(mContext,true));
 

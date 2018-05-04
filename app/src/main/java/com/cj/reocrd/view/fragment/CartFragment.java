@@ -12,24 +12,17 @@ import android.widget.TextView;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseFragment;
-import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
-import com.cj.reocrd.base.baseadapter.OnItemClickListener;
-import com.cj.reocrd.base.baseadapter.SimpleClickListener;
 import com.cj.reocrd.contract.CartContract;
 import com.cj.reocrd.model.entity.AddressBean;
 import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.presenter.CartPresenter;
 import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.LogUtil;
-import com.cj.reocrd.utils.TimeUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.activity.GoodDetailActivity;
 import com.cj.reocrd.view.activity.SubmitOrderActivity;
 import com.cj.reocrd.view.adapter.CarAdapter;
 import com.cj.reocrd.view.refresh.RefreshLayout;
-import com.cj.reocrd.view.view.AmountView.AmountView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +31,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.observers.TestObserver;
 
 import static com.cj.reocrd.base.BaseActivity.uid;
 import static com.cj.reocrd.view.adapter.CarAdapter.checkBoxList;
@@ -114,7 +106,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
                 }
                 break;
             case R.id.car_all_choose:
-                setTotalPrice(true);
+                setTotalPrice(true,0);
                 break;
             case R.id.tv_submit_order:
                 String cartID = "";
@@ -139,23 +131,29 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
         }
     }
 
-    private void setTotalPrice(boolean isAll){
+    /**
+     * 所选商品改变时计算最终总价。
+     * @param isAll  是否点击了全选按钮
+     */
+    private void setTotalPrice(boolean isAll,int position){
         totalPrice = 0;
-//        isChooseAll = isAll;
-//        if(isAll){
-            LogUtil.d(TAG,"cartGoodsList.size()= "+cartGoodsList.size()+"checkBoxList.size= "+checkBoxList.size());
-//            for (int i = 0; i <cartGoodsList.size() ; i++) {
-//                if(isAll&&i<checkBoxList.size()){
-//                    checkBoxList.get(i).setChecked(cbCartAllChoose.isChecked());
-//                }
-//                if(isChooseAll){
-//                    isCheckedMap.put(i,true);
-//                    totalPrice = totalPrice + countPrice(cartGoodsList.get(i).getPrice(),cartGoodsList.get(i).getBuynum());
-//                }else if(i<checkBoxList.size()){
-//                    if(checkBoxList.get(i).isChecked()){
-//                        totalPrice = totalPrice + countPrice(cartGoodsList.get(i).getPrice(),cartGoodsList.get(i).getBuynum());
+        LogUtil.d(TAG,"cartGoodsList.size()= "+cartGoodsList.size()+"checkBoxList.size= "+checkBoxList.size());
+//        for (int i = 0; i <cartGoodsList.size() ; i++) {
+//            if(isAll){
+//                cartGoodsList.get(i).setIsChecked(cbCartAllChoose.isChecked());
+//            }else{
+//                if(i == position){
+//                    if(cartGoodsList.get(i).getIsChecked()){
+//                        cartGoodsList.get(i).setIsChecked(false);
+//                    }else{
+//                        cartGoodsList.get(i).setIsChecked(true);
 //                    }
 //                }
+//            }
+//        }
+//        for (int i = 0; i <cartGoodsList.size() ; i++) {
+//            if(cartGoodsList.get(i).getIsChecked()){
+//                totalPrice = totalPrice + countPrice(cartGoodsList.get(i).getPrice(),cartGoodsList.get(i).getBuynum());
 //            }
 //        }
         for (int i = 0; i <checkBoxList.size() ; i++) {
@@ -169,6 +167,8 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
             }
         }
         tvGoodsTotalPrice.setText(getString(R.string.RMB)+totalPrice);
+        // 设置完选中状态后更新adapter todo
+//        carAdapter.setNewData(cartGoodsList);
     }
 
     //计算价格
@@ -199,8 +199,8 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     @Override
     public void showCartData(List<GoodsBean> goodsBeanList) {
         cartGoodsList  = goodsBeanList;
+        setTotalPrice(false,0);
         carAdapter.setNewData(cartGoodsList);
-        setTotalPrice(false);
         if(!CollectionUtils.isNullOrEmpty(cartGoodsList)){
             imgNone.setVisibility(View.GONE);
         }else{
@@ -242,7 +242,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     }
 
 
-   public static Map<Integer,Boolean> isCheckedMap = new HashMap<>();
+    public static Map<Integer,Boolean> isCheckedMap = new HashMap<>();
 
     @Override
     public void onAdapterItemClickListener(View view, int position) {
@@ -254,7 +254,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
             case R.id.car_choose:
                 CheckBox checkBox = (CheckBox) view;
                 isCheckedMap.put(position,checkBox.isChecked());
-                setTotalPrice(false);
+                setTotalPrice(false,position);
                 break;
             case R.id.car_amount:
                 int p = (Integer) view.getTag();
