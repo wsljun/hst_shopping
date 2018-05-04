@@ -227,7 +227,7 @@ public class RotatePan extends View {
         float hOffset = (panNum % 4 == 0) ? ((float) (mRadius * Math.PI / panNum / 2))
                 : ((float) (mRadius * Math.PI / panNum / 2 - textWidth / 2));
         //圆弧的垂直偏移
-        float vOffset = mRadius / 5;
+        float vOffset = mRadius / 7;
 
         mCanvas.drawTextOnPath(string, path, hOffset, vOffset, mTextPaint);
     }

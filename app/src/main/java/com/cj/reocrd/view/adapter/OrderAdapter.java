@@ -41,9 +41,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyHolder> {
     }
 
     public void updateData(List<OrderBean> orderBeans){
-        if(!CollectionUtils.isNullOrEmpty(mDatas)){
-            mDatas.clear();
-        }
         mDatas.addAll(orderBeans);
         notifyDataSetChanged();
     }
@@ -59,8 +56,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyHolder> {
     public void onBindViewHolder(MyHolder holder, final int position) {
         holder.undoneTime.setText("下单时间: "+mDatas.get(position).getCreatetime());
         holder.undoneNumber.setText("共"+mDatas.get(position).getOdlist().size()+"件商品");
-        holder.undonePrice.setText("¥"+mDatas.get(position).getAllamount()+"(包含运费¥"+mDatas.get(position).getExamount()
-                +")");
+        holder.undonePrice.setText("¥"+mDatas.get(position).getAllamount());
         int status = Integer.parseInt(mDatas.get(position).getStatus());
         holder.tvCancleOrDel.setVisibility(View.GONE);
         holder.tvToGo.setVisibility(View.GONE);
