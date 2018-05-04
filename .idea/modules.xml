@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Administrator\Desktop\hst\hst_shopping\hst.iml" filepath="C:\Users\Administrator\Desktop\hst\hst_shopping\hst.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hst_shopping.iml" filepath="$PROJECT_DIR$/hst_shopping.iml" />
-      <module fileurl="file://D:\GitWorkSpace\A-Shopping\A-HaoShanTang\hst\hst_shopping.iml" filepath="D:\GitWorkSpace\A-Shopping\A-HaoShanTang\hst\hst_shopping.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hst.iml" filepath="$PROJECT_DIR$/hst.iml" />
     </modules>
   </component>
 </project>
