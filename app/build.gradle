@@ -27,6 +27,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "default"
+    productFlavors {
+//        yingyongbao {
+//            dimension "default"
+//        }
+        hst {
+            dimension "default"
+        }
+    }
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [umeng_channel: name]
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                if (variant.buildType.name == "release") {
+                    outputFileName = "hst-release_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
+                } else {
+                    outputFileName = "hst-debug_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
+                }
+            }
+        }
+    }
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
@@ -42,6 +68,11 @@ configurations.all {
         }
     }
 }
+
+static def packageTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

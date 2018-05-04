@@ -213,6 +213,7 @@
             android:id="@+id/iv_goods_detail_url"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            android:scaleType="fitXY"
             android:layout_marginLeft="20dp"
             android:background="@mipmap/ic_launcher" />
     </FrameLayout>

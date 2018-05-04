@@ -26,6 +26,24 @@ public class GoodsBean {
     private String specnum;// 规格数量
     private String unit; // 单位
     private String buynum; // 购买数量
+    private String createtime;
+    private boolean isShowDate ;
+
+    public boolean getIsShowDate() {
+        return isShowDate;
+    }
+
+    public void setShowDate(boolean showDate) {
+        isShowDate = showDate;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
+    }
+
+    public String getCreatetime() {
+        return createtime;
+    }
 
     public String getBid() {
         return bid;

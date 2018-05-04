@@ -99,6 +99,7 @@
                     android:text="@string/title_freight"
                     android:layout_below="@id/tv_title_price"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     />
                 <TextView
                     android:id="@+id/tv_freight"
@@ -106,6 +107,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignBaseline="@+id/tv_title_freight"
                     android:text="¥ "
+                    android:visibility="gone"
                     />
                 <TextView
                     android:id="@+id/tv_title_total_price"

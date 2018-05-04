@@ -21,11 +21,13 @@ import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.TimeUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.CollectAdapter;
 import com.cj.reocrd.view.adapter.FriendsAdapter;
 import com.cj.reocrd.view.refresh.RefreshLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -52,7 +54,7 @@ public class CollectActivity extends BaseActivity<GoodsDetailPresenter> implemen
     @BindView(R.id.collect_search)
     TextView coolectSearch;
 
-    List<GoodsBean> mDatas;
+    List<GoodsBean> ALLDatas;
 
     private CollectAdapter collectAdapter;
     private int size = 10;  //pageSize
@@ -63,6 +65,9 @@ public class CollectActivity extends BaseActivity<GoodsDetailPresenter> implemen
     private String from;
 
     private int position;//删除的项
+    private static  String date = "";
+    private static String pre_date = "";
+    private String localTime ;
 
     @Override
     public int getLayoutId() {
@@ -72,6 +77,8 @@ public class CollectActivity extends BaseActivity<GoodsDetailPresenter> implemen
     @Override
     public void initData() {
         super.initData();
+        ALLDatas = new ArrayList<>();
+        localTime = TimeUtils.getSysCurDate();
         Bundle bundle = getIntent().getExtras();
         from = bundle.getString("from");
         if (!TextUtils.isEmpty(from)) {
@@ -91,6 +98,7 @@ public class CollectActivity extends BaseActivity<GoodsDetailPresenter> implemen
 
     @Override
     public void initView() {
+        initList();
     }
 
     @Override
@@ -125,19 +133,23 @@ public class CollectActivity extends BaseActivity<GoodsDetailPresenter> implemen
             case R.id.collect_delete:
                 type = 2;
                 this.position = position;
-                mPresenter.collectDelete(uid, mDatas.get(position).getId());
+                mPresenter.collectDelete(uid, ALLDatas.get(position).getId());
                 break;
-            case R.id.collect_car:
+            case R.id.collect_img:
+//                ToastUtil.showShort("商品详情");
+                Bundle goodBundle = new Bundle();
+                goodBundle.putString("goodsID",ALLDatas.get(position).getId());
+                startActivity(GoodDetailActivity.class, goodBundle);
                 break;
         }
     }
 
     public void initList() {
         if ("collect".equals(from)) {
-            collectAdapter = new CollectAdapter(R.layout.item_collect, mDatas, CollectAdapter.COLLECT);
+            collectAdapter = new CollectAdapter(R.layout.item_collect, ALLDatas, CollectAdapter.COLLECT);
         }
         if ("history".equals(from)) {
-            collectAdapter = new CollectAdapter(R.layout.item_collect, mDatas, CollectAdapter.HISTORY);
+            collectAdapter = new CollectAdapter(R.layout.item_collect, ALLDatas, CollectAdapter.HISTORY);
         }
         //设置适配器可以上拉加载
         collectAdapter.setOnBaseAdapterItemClickListener(this);
@@ -154,14 +166,36 @@ public class CollectActivity extends BaseActivity<GoodsDetailPresenter> implemen
                 if (UrlConstants.SUCCESE_CODE.equals(response.getStatusCode())) {
                     HomeBean homeBean = (HomeBean) response.getResults();
                     if (homeBean.getMlist() != null && homeBean.getMlist().size() > 0) {
-                        if (loading) {
+                       /* if (loading) {
                             loading = false;
                             collectAdapter.addData(homeBean.getMlist());
                             refreshLayout.endLoadingMore();
                         } else {
-                            mDatas = homeBean.getMlist();
+                            ALLDatas = homeBean.getMlist();
                             initList();
+                        }*/
+                        ALLDatas.addAll(homeBean.getMlist());
+                        if ("history".equals(from)) {
+                            for (int i = 0; i <ALLDatas.size() ; i++) {
+                                date = ALLDatas.get(i).getCreatetime();
+                                if(!TextUtils.isEmpty(date)){
+                                    String [] datas = date.split(" ");
+                                    date = datas[0];
+                                }
+                                if(date.equals(localTime)){
+                                    date = "今天";
+                                }
+                                ALLDatas.get(i).setCreatetime(date);
+                                if(pre_date.equals(date)){
+                                    ALLDatas.get(i).setShowDate(false);
+                                }else{
+                                    ALLDatas.get(i).setShowDate(true);
+                                }
+                                pre_date  = date ;
+                            }
                         }
+                        collectAdapter.setNewData(ALLDatas);
+                        refreshLayout.endLoadingMore();
                     }
                 } else {
                     ToastUtil.showToastS(this, response.getMessage());

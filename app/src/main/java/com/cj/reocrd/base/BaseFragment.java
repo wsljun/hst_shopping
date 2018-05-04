@@ -35,7 +35,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     private final String TAG = "BaseFragment";
     private String mParam1;
     private boolean isFirstLoad = true;//是否是第一次加载
-    private boolean isVisible;//是否对用户可见
+    public static boolean isVisible;//是否对用户可见
     private boolean isInitView;//是否初始化控件
 
     @Override
@@ -165,6 +165,13 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     public MyActivity getMyActivity() {
         if (mActivity != null && !mActivity.isFinishing() && mActivity instanceof MyActivity) {
             return (MyActivity) mActivity;
+        }
+        return null;
+    }
+
+    public BaseActivity getBaseActivity() {
+        if (mActivity != null && !mActivity.isFinishing() && mActivity instanceof BaseActivity) {
+            return (BaseActivity) mActivity;
         }
         return null;
     }

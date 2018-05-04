@@ -1,6 +1,8 @@
 package com.cj.reocrd.utils;
 
 
+import android.text.TextUtils;
+
 import org.openqa.selenium.internal.Base64Encoder;
 
 import java.io.UnsupportedEncodingException;
@@ -118,7 +120,7 @@ public class DESedeUtils {
 		Base64Encoder base = new Base64Encoder();
 		String deText = "";
 		try {
-			if (!data.contains("<!D")) {
+			if (!data.contains("<!D")&&!TextUtils.isEmpty(data)) {
 				deText = deCrypt(base.decode(data), key.getBytes("utf-8"));
 			} else {
 				return data;
