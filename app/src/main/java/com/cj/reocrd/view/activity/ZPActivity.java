@@ -43,7 +43,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2018/4/26.
  */
 
-public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract.View,LuckPanLayout.AnimationEndListener {
+public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract.View, LuckPanLayout.AnimationEndListener {
 
     @BindView(R.id.title_left)
     TextView titleLeft;
@@ -79,9 +79,9 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
 
     private ImageView goBtn;
     private ImageView yunIv;
-    private String[] strs,moneys;
+    private String[] strs, moneys;
     private boolean isCan = false;
-    private  int totalMaeny = 0;
+    private int totalMaeny = 0;
 
 
     @Override
@@ -91,19 +91,19 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
             case 1:
                 if (UrlConstants.SUCCESE_CODE.equals(response.getStatusCode())) {
                     zp = (Zp) response.getResults();
-                    if("1".equals(zp.getCan())){
+                    if ("1".equals(zp.getCan())) {
                         isCan = true;
                         totalMaeny = Integer.parseInt(zp.getTotalmoney());
-                        zpMoney.setText("当前奖池金额："+zp.getTotalmoney()+"元");
-                        type = 2;
+                        zpMoney.setText("当前奖池金额：" + zp.getTotalmoney() + "元");
                         moneys = new String[6];
-                        moneys[0] = zp.getZero()+"元";
-                        moneys[1] = zp.getOne()+"元";
-                        moneys[2] = zp.getTwo()+"元";
-                        moneys[3] = zp.getThree()+"元";
-                        moneys[4] = zp.getFour()+"元";
-                        moneys[5] = zp.getFive()+"元";
+                        moneys[0] = zp.getZero() + " 元";
+                        moneys[1] = zp.getOne() + " 元";
+                        moneys[2] = zp.getTwo() + " 元";
+                        moneys[3] = zp.getThree() + " 元";
+                        moneys[4] = zp.getFour() + " 元";
+                        moneys[5] = zp.getFive() + " 元";
                         mRotatePan.setMoneys(moneys);
+                        type = 2;
                         mPresenter.lotteryGetResult(UrlConstants.UrLType.LOTTERY_GET_RESULT, uid);
                     }
                 } else {
@@ -175,25 +175,25 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
         mPresenter.setVM(this);
     }
 
-    @OnClick({ R.id.title_left,R.id.zp_guize, R.id.id_start})
+    @OnClick({R.id.title_left, R.id.zp_guize, R.id.id_start})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
                 finish();
                 break;
             case R.id.zp_guize:
-                new  MaterialDialog.Builder(this)
+                new MaterialDialog.Builder(this)
                         .title("游戏规则")
                         .content("每天上午下午各抽奖一次")
                         .positiveText("确定")
                         .show();
                 break;
             case R.id.id_start:
-                if(isCan){
-                    luckPanLayout.rotate(level,100);
+                if (isCan) {
+                    luckPanLayout.rotate(level, 100);
                     luckPanLayout.setAnimationEndListener(this);
-                }else{
-                    ToastUtil.showShort("暂时不能抽奖");
+                } else {
+                    ToastUtil.showShort("每天上午下午各抽奖一次");
                 }
 //                if (!mLuckyPanView.isStart())
 //                {
@@ -214,6 +214,7 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
 
     @Override
     public void endAnimation(int position) {
+        isCan = false;
         ToastUtil.showShort(strs[position]);
     }
 }

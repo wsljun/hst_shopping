@@ -21,7 +21,9 @@ import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.presenter.OrderPresenter;
 import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.view.adapter.FriendsAdapter;
 import com.cj.reocrd.view.adapter.OrderAdapter;
+import com.netease.nim.uikit.common.util.log.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +36,7 @@ import butterknife.OnClick;
  */
 
 public class OrderActivity extends BaseActivity<OrderPresenter> implements OrderAdapter.OnItemListener
-        ,OrderContract.View{
+        , OrderContract.View {
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -57,14 +59,19 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
     public static final int ORDER_STATUS_REFUNDING = 6;//退款中
     public static final int ORDER_STATUS_REFUNDOVER = 7;//退款完成
     public static final int ORDER_STATUS_CANCLE = 8;//自行取消
-    public static final int ORDER_STATUS_NOT_REFUND = 9 ;//退货被拒绝
+    public static final int ORDER_STATUS_NOT_REFUND = 9;//退货被拒绝
     //(1.未付款   2 待发货  3待确认，4待评价 5完成  6退款中 7 退款完成 8自行取消)
+
+    private int size = 20;  //pageSize
+    private int pageno = 0; // 页码
+    LinearLayoutManager layoutManager;
+    private boolean loading = false;
+
     public static void actionActivity(Context context, int type) {
         Intent sIntent = new Intent(context, OrderActivity.class);
         sIntent.putExtra("type", type);
         context.startActivity(sIntent);
     }
-
 
 
     @Override
@@ -78,12 +85,12 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
         //这四个页面都差不多，就放到一块了，type标示，加载不同布局
         type = getIntent().getIntExtra("type", 1);
         orderBeans = new ArrayList<>();
-        mPresenter.getOrderList("20","0",uid, String.valueOf(type));
+        mPresenter.getOrderList(size + "", pageno + "", uid, String.valueOf(type));
     }
 
     @Override
     public void initView() {
-        switch (type){
+        switch (type) {
             case 0:
                 titleCenter.setText(getString(R.string.mine_order_all));
                 break;
@@ -102,17 +109,41 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
             case 5:
                 titleCenter.setText(R.string.mine_tuihuo);
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
+
+    }
+
+    private void initRecycleView() {
         //type传给adapter，调整不同布局
-        orderAdapter = new OrderAdapter(this, orderBeans,type);
+        orderAdapter = new OrderAdapter(this, orderBeans, type);
         orderAdapter.setOnItemListener(this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this);
         undoneRecycler.setLayoutManager(layoutManager);
         undoneRecycler.setAdapter(orderAdapter);
+        undoneRecycler.addOnScrollListener(scrollChangeListener);
         undoneRecycler.setItemAnimator(new DefaultItemAnimator());
     }
+
+
+
+    RecyclerView.OnScrollListener scrollChangeListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            if (dy > 0) {
+                int visibleItemCount = layoutManager.getChildCount();    //得到显示屏幕内的list数量
+                int totalItemCount = layoutManager.getItemCount();    //得到list的总数量
+                int pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();//得到显示屏内的第一个list的位置数position
+                if (!loading && (visibleItemCount + pastVisiblesItems) >= totalItemCount && totalItemCount >= size * (pageno + 1)) {
+                    loading = true;
+                    pageno++;
+                    mPresenter.getOrderList(size + "", pageno + "", uid, String.valueOf(type));
+                }
+            }
+        }
+    };
 
     @Override
     public void initPresenter() {
@@ -132,7 +163,7 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
     @Override
     public void cancleClick(View v, int position) {
         int tag = (int) v.getTag();
-        if(ORDER_STATUS_PAY == tag){
+        if (ORDER_STATUS_PAY == tag) {
             mPresenter.cancelOrder(orderBeans.get(position).getId());
         }
     }
@@ -140,24 +171,24 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
     @Override
     public void refundClick(View v, int position) {
         int tag = (int) v.getTag();
-        switch (tag){
-            case ORDER_STATUS_PAY : // 去支付
+        switch (tag) {
+            case ORDER_STATUS_PAY: // 去支付
                 Bundle b = new Bundle();
-                b.putString(PayActivity.BUNDLE_KEY_OID,orderBeans.get(position).getId());
-                b.putString(PayActivity.BUNDLE_KEY_PRICE,orderBeans.get(position).getAllamount());
-                startActivity(PayActivity.class,b);
+                b.putString(PayActivity.BUNDLE_KEY_OID, orderBeans.get(position).getId());
+                b.putString(PayActivity.BUNDLE_KEY_PRICE, orderBeans.get(position).getAllamount());
+                startActivity(PayActivity.class, b);
                 finish();
                 break;
-            case ORDER_STATUS_CONFIM : //确认后去评价
+            case ORDER_STATUS_CONFIM: //确认后去评价
                 mPresenter.comfirmTakeGoods(orderBeans.get(position).getId());
                 break;
-            case ORDER_STATUS_EVALUATE : // 评价
+            case ORDER_STATUS_EVALUATE: // 评价
                 goComment(orderBeans.get(position).getId());
                 break;
-            case ORDER_STATUS_OVER : //申请退货
-                Bundle nb =  new Bundle();
-                nb.putString("oid",orderBeans.get(position).getId());
-                startActivity(RefundActivity.class,nb);
+            case ORDER_STATUS_OVER: //申请退货
+                Bundle nb = new Bundle();
+                nb.putString("oid", orderBeans.get(position).getId());
+                startActivity(RefundActivity.class, nb);
                 break;
             default:
                 break;
@@ -165,21 +196,21 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
     }
 
     private void goComment(String id) {
-      new MaterialDialog.Builder(this)
-              .title("输入评论")
-              .inputType(InputType.TYPE_CLASS_TEXT )
+        new MaterialDialog.Builder(this)
+                .title("输入评论")
+                .inputType(InputType.TYPE_CLASS_TEXT)
                 .input("输入评论内容", "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        ToastUtil.showShort("input"+input);
-                        mPresenter.goComment(id,input.toString());
+                        ToastUtil.showShort("input" + input);
+                        mPresenter.goComment(id, input.toString());
                     }
                 }).onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
-                    }
-                })
+            }
+        })
                 .show();
     }
 
@@ -219,17 +250,23 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
 
     @Override
     public void showOrderList(List<OrderBean> orderBeanList) {
-        if(orderBeanList.size()>0){
-            orderAdapter.updateData(orderBeanList);
-        }else{
-            orderBeanList = new ArrayList<>();
-            orderAdapter.updateData(orderBeanList);
+        if (orderBeanList.size() > 0) {
+            LogUtil.e("showOrderList","orderBeanList.size():"+orderBeanList.size());
+            if (loading) {
+                orderAdapter.updateData(orderBeanList);
+                loading = false;
+            } else {
+                orderBeans = orderBeanList;
+                initRecycleView();
+            }
+        } else {
             ToastUtil.showShort("没有订单！");
         }
     }
 
     @Override
     public void updateOrderList() {
-        mPresenter.getOrderList("20","0",uid, String.valueOf(type));
+        pageno = 0;
+        mPresenter.getOrderList(size + "", pageno + "", uid, String.valueOf(type));
     }
 }
