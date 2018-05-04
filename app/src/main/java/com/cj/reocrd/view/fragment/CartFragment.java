@@ -23,6 +23,7 @@ import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.TimeUtils;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.view.activity.GoodDetailActivity;
 import com.cj.reocrd.view.activity.SubmitOrderActivity;
 import com.cj.reocrd.view.adapter.CarAdapter;
 import com.cj.reocrd.view.refresh.RefreshLayout;
@@ -102,7 +103,12 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
-                getMainActivity().getViewPager().setCurrentItem(0);
+                if(GoodDetailActivity.GO_CART){
+                    GoodDetailActivity activity = (GoodDetailActivity) this.getBaseActivity();
+                    activity.hideFragment();
+                }else{
+                    getMainActivity().getViewPager().setCurrentItem(0);
+                }
                 break;
             case R.id.car_all_choose:
                 setTotalPrice(true);
@@ -111,7 +117,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
                 String cartID = "";
                 for (int i = 0; i <checkBoxList.size() ; i++) {
                     if(checkBoxList.get(i).isChecked()){
-                        if(i>0){
+                        if(i>0 && i<cartGoodsList.size()){
                             cartID = cartID+","+cartGoodsList.get(i).getBid();
                         }else{
                             cartID = cartGoodsList.get(i).getBid();
@@ -137,7 +143,9 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
                 checkBoxList.get(i).setChecked(cbCartAllChoose.isChecked());
             }
             if(checkBoxList.get(i).isChecked()){
-                totalPrice = totalPrice + countPrice(cartGoodsList.get(i).getPrice(),cartGoodsList.get(i).getBuynum());
+                if(i<cartGoodsList.size()){
+                    totalPrice = totalPrice + countPrice(cartGoodsList.get(i).getPrice(),cartGoodsList.get(i).getBuynum());
+                }
             }
         }
         tvGoodsTotalPrice.setText(getString(R.string.RMB)+totalPrice);

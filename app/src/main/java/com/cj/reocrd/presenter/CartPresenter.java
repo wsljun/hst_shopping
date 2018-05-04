@@ -110,6 +110,8 @@ public class CartPresenter extends CartContract.Presenter {
                         // {"oid":"a3796d4a-32c6-4755-b614-fcf690c3cffb","message":"操作成功","statusCode":"1"}
                         AddressBean addressBean = (AddressBean) apiResponse.getResults();
                         mView.toSubmitOrder(addressBean);
+                    }else{
+                        mView.onFailureMessage(apiResponse.getMessage());
                     }
                 }
             }

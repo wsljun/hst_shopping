@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.TextureView;
@@ -16,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -25,6 +28,7 @@ import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
+import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.contract.GoodsDetailContract;
 import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.model.entity.GoodsDetailsBean;
@@ -38,6 +42,7 @@ import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
+import com.cj.reocrd.view.fragment.CartFragment;
 import com.cj.reocrd.view.view.AmountView.AmountView;
 import com.donkingliang.labels.LabelsView;
 
@@ -106,6 +111,8 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     Button btnComment;
     @BindView(R.id.btn_goods_detail_webview)
     Button btnGoodsDetailWeb;
+    @BindView(R.id.fl_fragment)
+    FrameLayout mFrameLayout;
 
 
     private Dialog dialog;
@@ -128,6 +135,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     private String skuPrice; // 不同规格单价
     private  String countPrice; // 最终选择后的总价
     public static  List<GoodsCommentBean> goodsCommentBeans;
+    public static  boolean  GO_CART = false;
     @Override
     public int getLayoutId() {
         return R.layout.activity_good_detail;
@@ -232,6 +240,10 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
             case R.id.good_car:
                 ToastUtil.showShort("to cart");
 //                getMainActivity().getViewPager().setCurrentItem(3);
+                BaseFragment.isVisible = true;
+                GO_CART = true;
+                mFrameLayout.setVisibility(View.VISIBLE);
+                replaceFragment(R.id.fl_fragment, CartFragment.class.getName());
                 break;
             default:
                 break;
@@ -378,6 +390,27 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
               startActivity(AllCommentActivity.class);
           }
     }
+    Fragment cartFragment ;
+    protected void replaceFragment(int viewResource, String fragmentName) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if(null == cartFragment){
+            cartFragment =  Fragment.instantiate(this, fragmentName);
+        }
+        ft.replace(viewResource, cartFragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+        getSupportFragmentManager().executePendingTransactions();
+    }
+
+    public void hideFragment(){
+        GO_CART = false;
+        mFrameLayout.setVisibility(View.GONE);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.hide(cartFragment);
+        ft.commit();
+    }
+
+
 
 
 }

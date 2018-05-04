@@ -92,6 +92,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     private int goodsNum = 0;
     private String requestType = "";
     private static final String TYPE_SUBMIT = "SUBMIT_ORDER";
+    private SubmitOrderAdapter mAdapter;
 
     @Override
     public int getLayoutId() {
@@ -117,9 +118,9 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
         }
         if (TYPE_FOR_CART.equals(type)) {
             goodsNum = cartGoodsList.size();
-            for (int i = 0; i < cartGoodsList.size(); i++) {
-                imgURls.add(cartGoodsList.get(i).getImgurl());
-            }
+//            for (int i = 0; i < cartGoodsList.size(); i++) {
+//                imgURls.add(cartGoodsList.get(i).getImgurl());
+//            }
         }
         mPresenter.getOrderDetail(oid);
     }
@@ -139,7 +140,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rlGoodsImg.setLayoutManager(linearLayoutManager);
-        SubmitOrderAdapter mAdapter = new SubmitOrderAdapter(mContext, imgURls);
+        mAdapter = new SubmitOrderAdapter(mContext, imgURls);
         rlGoodsImg.setAdapter(mAdapter);
 
     }
@@ -230,6 +231,10 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     @Override
     public void updateOrderInfo(OrderDetail orderDetail) {
 //        ToastUtil.showShort("updateOrderInfo");
+        for (int i = 0; i < orderDetail.getOdlist().size(); i++) {
+            imgURls.add(orderDetail.getOdlist().get(i).getImgurl());
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
 }
