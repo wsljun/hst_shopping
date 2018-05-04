@@ -134,7 +134,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="16dp"
                             android:layout_marginRight="4dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
@@ -263,7 +262,9 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginRight="16dp"
                             android:layout_weight="1.2"
-                            android:background="@color/colorBackground">
+                            android:background="@color/colorBackground"
+                            android:visibility="gone"
+                            >
 
                             <ImageView
                                 android:id="@+id/iv_tuihuo"

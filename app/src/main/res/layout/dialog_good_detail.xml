@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="$"
+                    android:text=""
                     android:textColor="@color/colorTextRed"
                     android:textSize="18sp" />
 
@@ -157,7 +157,6 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="12dp"
                         android:background="@mipmap/gouwucje2"
-                        android:visibility="invisible"
                         />
 
                     <TextView
@@ -192,7 +191,9 @@
                         android:layout_toLeftOf="@id/good_addcar"
                         android:text=""
                         android:textColor="@color/colorTextRed"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -200,7 +201,9 @@
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/good_total_price"
                         android:text="@string/good_detail_total"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        />
                 </RelativeLayout>
 
             </RelativeLayout>

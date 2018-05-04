@@ -62,7 +62,6 @@ public class CartPresenter extends CartContract.Presenter {
                 if(null != apiResponse && isViewAttached()){
                     if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
                             mView.updateCartData(); // 刷新list
-                            mView.onSuccess(apiResponse.getMessage());
                     }
                 }
             }
@@ -86,7 +85,7 @@ public class CartPresenter extends CartContract.Presenter {
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
                     mView.updateCartData(); // 刷新list
-                    mView.onSuccess(apiResponse.getMessage());
+//                    mView.onSuccess(apiResponse.getMessage());
                 }
             }
 

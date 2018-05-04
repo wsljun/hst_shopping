@@ -21,6 +21,7 @@ public class SPUtils {
         public static final String DEFAULT_ADDRESS_CONSIGNEE = "consignee";
         public static final String GOODS_DETAIL = "goodsDetail";
         public static final String USER_PHONE = "user_phone";
+        public static final String ALIPAY_NAME = "alipay_name";
     }
 
     /**

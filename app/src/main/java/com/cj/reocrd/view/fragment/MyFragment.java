@@ -514,6 +514,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                     UserBean userBean = (UserBean) response.getResults();
                     if (userBean != null && !TextUtils.isEmpty(userBean.getAlipay()) && !"null".equals(userBean.getAlipay())) {
                         myZhifubaoTv.setText(userBean.getAlipay());
+                        SPUtils.put(mActivity, SPUtils.SpKey.ALIPAY_NAME,userBean.getAlipay());
                     }
                 } else {
                     ToastUtil.showToastS(mActivity, response.getMessage());

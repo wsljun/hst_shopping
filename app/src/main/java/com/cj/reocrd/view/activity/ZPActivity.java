@@ -25,6 +25,8 @@ import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.entity.Zp;
 import com.cj.reocrd.presenter.MyPrresenter;
+import com.cj.reocrd.utils.CollectionUtils;
+import com.cj.reocrd.utils.ConstantsUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.view.LuckPan.LuckPanLayout;
@@ -63,14 +65,11 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
     @BindView(R.id.id_start_btn)
     ImageView idStartBtn;
     @BindView(R.id.rotatePan)
-    RotatePan rotatePan;
+    RotatePan mRotatePan;
     @BindView(R.id.id_start)
     ImageView idStart;
     @BindView(R.id.luckpan_layout)
     LuckPanLayout luckPanLayout;
-
-//    @BindView(R.id.id_luckypan)
-//    LuckyPanView mLuckyPanView;
 
     private Animation mStartAnimation;
     private Animation mEndAnimation;
@@ -80,7 +79,7 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
 
     private ImageView goBtn;
     private ImageView yunIv;
-    private String[] strs;
+    private String[] strs,moneys;
     private boolean isCan = false;
     private  int totalMaeny = 0;
 
@@ -97,6 +96,14 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
                         totalMaeny = Integer.parseInt(zp.getTotalmoney());
                         zpMoney.setText("当前奖池金额："+zp.getTotalmoney()+"元");
                         type = 2;
+                        moneys = new String[6];
+                        moneys[0] = zp.getZero()+"元";
+                        moneys[1] = zp.getOne()+"元";
+                        moneys[2] = zp.getTwo()+"元";
+                        moneys[3] = zp.getThree()+"元";
+                        moneys[4] = zp.getFour()+"元";
+                        moneys[5] = zp.getFive()+"元";
+                        mRotatePan.setMoneys(moneys);
                         mPresenter.lotteryGetResult(UrlConstants.UrLType.LOTTERY_GET_RESULT, uid);
                     }
                 } else {
@@ -175,11 +182,11 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
                 finish();
                 break;
             case R.id.zp_guize:
-               new  MaterialDialog.Builder(this)
-                       .title("游戏规则")
-                       .content("每天上午下午各抽奖一次")
-                       .positiveText("确定")
-                       .show();
+                new  MaterialDialog.Builder(this)
+                        .title("游戏规则")
+                        .content("每天上午下午各抽奖一次")
+                        .positiveText("确定")
+                        .show();
                 break;
             case R.id.id_start:
                 if(isCan){

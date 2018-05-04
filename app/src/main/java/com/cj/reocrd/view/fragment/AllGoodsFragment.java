@@ -99,7 +99,7 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
         allTypeAdapter = new AllTypeAdapter(mActivity, goodsTypes);
         rvGoodsType.setLayoutManager(new LinearLayoutManager(mActivity));
         rvGoodsType.setAdapter(allTypeAdapter);
-        rvGoodsType.setItemAnimator(new DefaultItemAnimator());
+//        rvGoodsType.setItemAnimator(new DefaultItemAnimator());
         allTypeAdapter.setOnItemClickListener(new AllTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -115,7 +115,7 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
         recyclerViewContent.setLayoutManager(new GridLayoutManager(mContext,3));
         recyclerViewContent.setHasFixedSize(true);
         //设置适配器加载动画
-        mGoodsAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+//        mGoodsAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerViewContent.setAdapter(mGoodsAdapter);
         //设置适配器可以上拉加载
 //        mGoodsAdapter.setOnLoadMoreListener(this);

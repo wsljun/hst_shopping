@@ -145,7 +145,9 @@ public class GoodsDetailPresenter extends GoodsDetailContract.Presenter {
             public void onSuccess(ApiResponse apiResponse) {
                 if (null != apiResponse && isViewAttached()) {
                     if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
-                        mView.setCollectImg(true);
+                        mView.setCollectImg(false);
+                    }else{
+                        mView.onFailureMessage(apiResponse.getMessage());
                     }
                 }
             }

@@ -60,6 +60,8 @@ public class GoodsDetailsBean  implements Parcelable{
     }
 
     public void setOldprice(String oldprice) {
+        int p = (Integer.parseInt(oldprice))/100;
+        oldprice = String.valueOf(p);
         this.oldprice = oldprice;
     }
 

@@ -77,10 +77,12 @@ public class CollectActivity extends BaseActivity<GoodsDetailPresenter> implemen
         if (!TextUtils.isEmpty(from)) {
             type = 1;
             if ("collect".equals(from)) {
+                titleCenter.setText(getString(R.string.collect_title));
                 mPresenter.collectList(uid, size, pageno);
                 coolectSearch.setVisibility(View.VISIBLE);
             }
             if ("history".equals(from)) {
+                titleCenter.setText("浏览历史");
                 mPresenter.collectBrowse(uid, size, pageno);
                 coolectSearch.setVisibility(View.GONE);
             }
@@ -89,7 +91,6 @@ public class CollectActivity extends BaseActivity<GoodsDetailPresenter> implemen
 
     @Override
     public void initView() {
-        titleCenter.setText(getString(R.string.collect_title));
     }
 
     @Override

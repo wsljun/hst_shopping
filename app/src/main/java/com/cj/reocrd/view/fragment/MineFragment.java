@@ -15,6 +15,7 @@ import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.model.entity.Zp;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.entity.UserBean;
@@ -229,6 +230,9 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                         }
                         if (!TextUtils.isEmpty(userBean.getName())) {
                             mineUsername.setText(userBean.getName());
+                        }
+                        if(!TextUtils.isEmpty(userBean.getAlipay())){
+                            SPUtils.put(mActivity, SPUtils.SpKey.ALIPAY_NAME,userBean.getAlipay());
                         }
                     }
                 } else {

@@ -42,7 +42,7 @@ public class FuliAdapter extends RecyclerView.Adapter<FuliAdapter.MyHolder> {
     public void onBindViewHolder(MyHolder holder, int position) {
         FuliBean.Fuli fuli = wlist.get(position);
         holder.fuliDetail.setText(fuli.getDetail());
-        holder.fuliStock.setText(fuli.getStock());
+        holder.fuliStock.setText("所需股份："+fuli.getStock());
         holder.fuliDo.setVisibility(View.VISIBLE);
         if (rlist != null && rlist.size() > 0) {
             for (FuliBean.Fuli r : rlist) {
