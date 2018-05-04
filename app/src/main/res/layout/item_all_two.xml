@@ -9,6 +9,7 @@
     <ImageView
         android:id="@+id/itme_all_goods_pic"
         android:layout_width="110dp"
+        android:scaleType="fitXY"
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="4dp"/>

@@ -131,7 +131,7 @@ public class UrlConstants {
         public static final String FRIEDNS_KEEP = "501";
         //取消关注
         public static final String FRIEDNS_UNKEEP = "502";
-        //获取我的好友
+        //以关注
         public static final String FRIEDNS_MYFANS = "503";
         //发布圈子
         public static final String FRIEDNS_SEND = "clientupload/addCommunity";
@@ -147,7 +147,7 @@ public class UrlConstants {
         public static final String FRIEDNS_LIKE = "509";
         //评论
         public static final String FRIEDNS_COMMENT = "510";
-        //获取我的好友
+        //粉丝
         public static final String FRIEDNS_MYKEEP = "511";
     }
 

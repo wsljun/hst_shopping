@@ -20,6 +20,7 @@ import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.activity.MainActivity;
+import com.cj.reocrd.view.view.ProgressWait.ProgressPopupWindow;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +45,7 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
     EditText loginPassword;
     private final String TAG = "LoginPwdFragment";
     private String phone;
+    ProgressPopupWindow progressPopupWindow;
 
     @Override
     protected void initPresenter() {
@@ -58,6 +60,7 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
     @Override
     public void initView() {
         titleCenter.setText(R.string.login_title);
+        progressPopupWindow = new ProgressPopupWindow(mActivity);
     }
 
 
@@ -78,6 +81,7 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
                     ToastUtil.showToastS(mActivity, R.string.password_cannot_empty);
                     break;
                 }
+                progressPopupWindow.showPopupWindow();
                 mPresenter.loginRequest(UrlConstants.UrLType.LOGIN_PWD, phone, pwd);
                 break;
             case R.id.title_left:
@@ -91,6 +95,9 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
 
     @Override
     public void onSuccess(Object data) {
+        if (progressPopupWindow != null) {
+            progressPopupWindow.dismiss();
+        }
         ApiResponse response = (ApiResponse) data;
         ToastUtil.showToastS(mActivity, response.getMessage());
         if ("1".equals(response.getStatusCode())) {
@@ -98,6 +105,8 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
             LogUtil.e(TAG, userBean.getId());
             SPUtils.put(mActivity, UrlConstants.key.USERID, userBean.getId());
             SPUtils.put(mActivity, SPUtils.SpKey.USER_PHONE, phone);
+            SPUtils.put(mActivity, SPUtils.SpKey.IM_ACCID, userBean.getAccid());
+            SPUtils.put(mActivity, SPUtils.SpKey.IM_TOKEN, userBean.getToken());
             BaseActivity.uid = userBean.getId();
             startActivity(MainActivity.class);
             mActivity.finish();
@@ -106,6 +115,9 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
 
     @Override
     public void onFailureMessage(String msg) {
+        if (progressPopupWindow != null) {
+            progressPopupWindow.dismiss();
+        }
         ToastUtil.showToastS(mActivity, msg);
     }
 

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
@@ -42,21 +43,22 @@ public class FuliAdapter extends RecyclerView.Adapter<FuliAdapter.MyHolder> {
     public void onBindViewHolder(MyHolder holder, int position) {
         FuliBean.Fuli fuli = wlist.get(position);
         holder.fuliDetail.setText(fuli.getDetail());
-        holder.fuliStock.setText("所需股份："+fuli.getStock());
-        holder.fuliDo.setVisibility(View.VISIBLE);
-        if (rlist != null && rlist.size() > 0) {
-            for (FuliBean.Fuli r : rlist) {
-                if (fuli.getId().equals(r.getId())) {
-                    holder.fuliDo.setVisibility(View.GONE);
-                }
-            }
-        }
+        holder.fuliStock.setText("所需股份：" + fuli.getStock());
         holder.fuliDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mOnItemListener.doClick(position);
             }
         });
+        if (rlist != null && rlist.size() > 0) {
+            for (FuliBean.Fuli r : rlist) {
+                if (fuli.getId().equals(r.getId())) {
+                    holder.fuliDo.setClickable(false);
+                    holder.fuliBg.setBackgroundResource(R.color.colorTextLineGrey);
+                }
+            }
+        }
+
     }
 
     private OnItemListener mOnItemListener;
@@ -81,6 +83,8 @@ public class FuliAdapter extends RecyclerView.Adapter<FuliAdapter.MyHolder> {
         TextView fuliStock;
         @BindView(R.id.fuli_do)
         TextView fuliDo;
+        @BindView(R.id.fuli_bg)
+        RelativeLayout fuliBg;
 
         public MyHolder(View itemView) {
             super(itemView);
