@@ -13,6 +13,24 @@ public class UserBean {
     private String recommend;//推荐码
     private String ic;//身份证号
     private String alipay;//支付宝账号
+    private String accid;//云信id
+    private String token;//云信token
+
+    public String getAccid() {
+        return accid;
+    }
+
+    public void setAccid(String accid) {
+        this.accid = accid;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getAlipay() {
         return alipay;

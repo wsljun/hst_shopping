@@ -4,8 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorWhite"
     android:layout_marginBottom="5dp"
+    android:id="@+id/fuli_bg"
+    android:background="@color/colorWhite"
     android:padding="14dp">
 
 
@@ -16,7 +17,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/fuli_do"
-        android:text="sjdiosjdiojsoiasjdiojasia"
+        android:text="房车一辆"
         android:textColor="@color/colorBlack"
         android:textSize="18sp" />
 
@@ -26,9 +27,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/fuli_detail"
-        android:text="sjdiojsoia"
+        android:layout_marginTop="10dp"
+        android:text="股份：2312"
         android:textColor="@color/colorTextRed"
-        android:textSize="17sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@id/fuli_do"
@@ -39,11 +41,11 @@
         android:text="兑换"
         android:textColor="@color/colorButton"
         android:textSize="17sp" />
+
     <View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="@color/colorTextLineGrey"
-        android:visibility="invisible"
-        ></View>
+        android:visibility="invisible"></View>
 
 </RelativeLayout>

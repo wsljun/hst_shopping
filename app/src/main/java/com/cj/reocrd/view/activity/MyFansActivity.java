@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
@@ -18,9 +20,13 @@ import com.cj.reocrd.model.entity.FansBean;
 import com.cj.reocrd.model.entity.FriendsBean;
 import com.cj.reocrd.presenter.FriendsPresenter;
 import com.cj.reocrd.presenter.MyPrresenter;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.FriendsAdapter;
 import com.cj.reocrd.view.adapter.MyFansAdapter;
+import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nimlib.sdk.RequestCallback;
+import com.netease.nimlib.sdk.auth.LoginInfo;
 
 import java.util.List;
 
@@ -64,11 +70,11 @@ public class MyFansActivity extends BaseActivity<FriendsPresenter> implements Fr
         switch (fromType) {
             case 1:
                 type = 1;
-                mPresenter.friendGet(UrlConstants.UrLType.FRIEDNS_MYFANS, uid);
+                mPresenter.friendGet(UrlConstants.UrLType.FRIEDNS_MYKEEP, uid);
                 break;
             case 2:
                 type = 2;
-                mPresenter.friendGet(UrlConstants.UrLType.FRIEDNS_MYKEEP, uid);
+                mPresenter.friendGet(UrlConstants.UrLType.FRIEDNS_MYFANS, uid);
                 break;
         }
 
@@ -164,6 +170,48 @@ public class MyFansActivity extends BaseActivity<FriendsPresenter> implements Fr
 
     @Override
     public void chatClick(int position) {
-        ToastUtil.showToastS(this, "未开通");
+        doLogin(mDatas.get(position).getAccid());
+    }
+
+    public void doLogin(final String accid) {
+        // 从本地读取上次登录成功时保存的用户登录信息
+        String account = (String) SPUtils.get(this, SPUtils.SpKey.IM_ACCID, "");
+        String token = (String) SPUtils.get(this, SPUtils.SpKey.IM_TOKEN, "");
+        LoginInfo info = new LoginInfo(account, token);
+        NimUIKit.login(info, new RequestCallback<LoginInfo>() {
+            @Override
+            public void onSuccess(LoginInfo loginInfo) {
+                //启动单聊界面
+                NimUIKit.startP2PSession(MyFansActivity.this, accid);
+                // 启动群聊界面
+                // NimUIKit.startTeamSession(MainActivity.this, "群ID");
+            }
+
+            @Override
+            public void onFailed(int i) {
+                switch (i) {
+                    case 302:
+                        Toast.makeText(MyFansActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 408:
+                        Toast.makeText(MyFansActivity.this, "服务器没有相应", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 415:
+                        Toast.makeText(MyFansActivity.this, "网络断开或与服务器连接失败", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 416:
+                        Toast.makeText(MyFansActivity.this, "请求过度频繁", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 417:
+                        Toast.makeText(MyFansActivity.this, "当前用户已经登陆", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                Log.i("SQW", "登陆异常");
+            }
+        });
     }
 }

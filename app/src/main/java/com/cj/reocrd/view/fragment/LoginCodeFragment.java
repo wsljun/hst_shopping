@@ -22,6 +22,7 @@ import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.activity.MainActivity;
+import com.cj.reocrd.view.view.ProgressWait.ProgressPopupWindow;
 import com.cj.reocrd.view.view.VerificationCode.VerificationCodeInput;
 
 import butterknife.BindView;
@@ -50,7 +51,7 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
     private String phone;
     private String code;
     private int type;
-
+    ProgressPopupWindow progressPopupWindow;
     @Override
     protected void initPresenter() {
         mPresenter.setVM(this);
@@ -65,11 +66,15 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
     public void initView() {
         titleCenter.setText(R.string.login_title);
         loginCode.setOnCompleteListener(this);
+        progressPopupWindow = new ProgressPopupWindow(mActivity);
     }
 
 
     @Override
     public void onSuccess(Object data) {
+        if (progressPopupWindow != null) {
+            progressPopupWindow.dismiss();
+        }
         ApiResponse response = (ApiResponse) data;
         switch (type) {
             case 1:
@@ -89,6 +94,8 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
                         LogUtil.e(TAG, userBean.getId());
                         SPUtils.put(mActivity, UrlConstants.key.USERID, userBean.getId());
                         SPUtils.put(mActivity, SPUtils.SpKey.USER_PHONE, phone);
+                        SPUtils.put(mActivity, SPUtils.SpKey.IM_ACCID, userBean.getAccid());
+                        SPUtils.put(mActivity, SPUtils.SpKey.IM_TOKEN, userBean.getToken());
                         BaseActivity.uid = userBean.getId();
                         startActivity(MainActivity.class);
                         mActivity.finish();
@@ -101,6 +108,9 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
 
     @Override
     public void onFailureMessage(String msg) {
+        if (progressPopupWindow != null) {
+            progressPopupWindow.dismiss();
+        }
         ToastUtil.showShort(msg);
     }
 
@@ -118,6 +128,7 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
                     ToastUtil.showShort(R.string.verification_code_empty);
                     break;
                 }
+                progressPopupWindow.showPopupWindow();
                 type = 2;
                 mPresenter.loginRequestCode(UrlConstants.UrLType.LOGIN_CODE, phone, code);
                 break;

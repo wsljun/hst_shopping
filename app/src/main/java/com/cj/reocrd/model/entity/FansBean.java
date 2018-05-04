@@ -21,6 +21,15 @@ public class FansBean {
         private String fid;
         private String img;
         private String name;
+        private String accid;
+
+        public String getAccid() {
+            return accid;
+        }
+
+        public void setAccid(String accid) {
+            this.accid = accid;
+        }
 
         public String getFid() {
             return fid;
