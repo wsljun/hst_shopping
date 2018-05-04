@@ -170,48 +170,8 @@ public class MyFansActivity extends BaseActivity<FriendsPresenter> implements Fr
 
     @Override
     public void chatClick(int position) {
-        doLogin(mDatas.get(position).getAccid());
+        NimUIKit.startP2PSession(MyFansActivity.this, mDatas.get(position).getAccid());
     }
 
-    public void doLogin(final String accid) {
-        // 从本地读取上次登录成功时保存的用户登录信息
-        String account = (String) SPUtils.get(this, SPUtils.SpKey.IM_ACCID, "");
-        String token = (String) SPUtils.get(this, SPUtils.SpKey.IM_TOKEN, "");
-        LoginInfo info = new LoginInfo(account, token);
-        NimUIKit.login(info, new RequestCallback<LoginInfo>() {
-            @Override
-            public void onSuccess(LoginInfo loginInfo) {
-                //启动单聊界面
-                NimUIKit.startP2PSession(MyFansActivity.this, accid);
-                // 启动群聊界面
-                // NimUIKit.startTeamSession(MainActivity.this, "群ID");
-            }
 
-            @Override
-            public void onFailed(int i) {
-                switch (i) {
-                    case 302:
-                        Toast.makeText(MyFansActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 408:
-                        Toast.makeText(MyFansActivity.this, "服务器没有相应", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 415:
-                        Toast.makeText(MyFansActivity.this, "网络断开或与服务器连接失败", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 416:
-                        Toast.makeText(MyFansActivity.this, "请求过度频繁", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 417:
-                        Toast.makeText(MyFansActivity.this, "当前用户已经登陆", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-
-            @Override
-            public void onException(Throwable throwable) {
-                Log.i("SQW", "登陆异常");
-            }
-        });
-    }
 }

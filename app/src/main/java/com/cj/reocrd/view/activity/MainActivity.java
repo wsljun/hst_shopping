@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -17,6 +18,7 @@ import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.base.BaseFragmentAdapter;
 import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.UpdateUtil;
 import com.cj.reocrd.view.adapter.ViewPagerAdapter;
@@ -28,6 +30,9 @@ import com.cj.reocrd.view.fragment.MineFragment;
 import com.cj.reocrd.view.view.MViewPager;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
+import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nimlib.sdk.RequestCallback;
+import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -169,8 +174,8 @@ public class MainActivity extends BaseActivity {
                                     ToastUtil.showToastS(mContext, "您已经禁止弹出照相机的授权操作,请在设置中手动开启");
                                 }
                                 break;
-                                default:
-                                    break;
+                            default:
+                                break;
                         }
 
                     }
@@ -185,6 +190,8 @@ public class MainActivity extends BaseActivity {
 
                     }
                 });
+
+        doLogin();
     }
 
     @Override
@@ -218,4 +225,45 @@ public class MainActivity extends BaseActivity {
         LogUtil.e(TAG, "onDestroy: ");
     }
 
+    public void doLogin() {
+        // 从本地读取上次登录成功时保存的用户登录信息
+        String account = (String) SPUtils.get(this, SPUtils.SpKey.IM_ACCID, "");
+        String token = (String) SPUtils.get(this, SPUtils.SpKey.IM_TOKEN, "");
+        LoginInfo info = new LoginInfo(account, token);
+        NimUIKit.login(info, new RequestCallback<LoginInfo>() {
+            @Override
+            public void onSuccess(LoginInfo loginInfo) {
+                //启动单聊界面
+//                NimUIKit.startP2PSession(MyFansActivity.this, accid);
+                // 启动群聊界面
+                // NimUIKit.startTeamSession(MainActivity.this, "群ID");
+            }
+
+            @Override
+            public void onFailed(int i) {
+                switch (i) {
+                    case 302:
+                        Toast.makeText(MainActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 408:
+                        Toast.makeText(MainActivity.this, "服务器没有相应", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 415:
+                        Toast.makeText(MainActivity.this, "网络断开或与服务器连接失败", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 416:
+                        Toast.makeText(MainActivity.this, "请求过度频繁", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 417:
+                        Toast.makeText(MainActivity.this, "当前用户已经登陆", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                Log.i("SQW", "IM登陆异常");
+            }
+        });
+    }
 }

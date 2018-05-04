@@ -92,7 +92,7 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
 
     private void showType(){
         if(CollectionUtils.isNullOrEmpty(goodsTypes)){
-            ToastUtil.showShort("typs is null");
+//            ToastUtil.showShort("typs is null");
             return;
         }
         mPresenter.getGoodsData(goodsTypes.get(0).getId(),pageno,pagesize);

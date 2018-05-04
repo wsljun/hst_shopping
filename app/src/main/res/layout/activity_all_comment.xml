@@ -3,17 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <include
         android:id="@+id/submit_order_title"
-        layout="@layout/layout_title"
-        />
+        layout="@layout/layout_title" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_comment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
         android:padding="5dp"
-        />
+        android:scrollbars="vertical" />
 
 </LinearLayout>

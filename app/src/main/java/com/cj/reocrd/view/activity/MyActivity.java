@@ -1,11 +1,14 @@
 package com.cj.reocrd.view.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseFragment;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.view.adapter.ViewPagerAdapter;
 import com.cj.reocrd.view.fragment.AddPhoneFragment;
 import com.cj.reocrd.view.fragment.MyFragment;
@@ -13,6 +16,9 @@ import com.cj.reocrd.view.fragment.UpdateNameFragment;
 import com.cj.reocrd.view.fragment.UpdatePhoneFragment;
 import com.cj.reocrd.view.fragment.UpdatePwdFragment;
 import com.cj.reocrd.view.view.MViewPager;
+import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nimlib.sdk.RequestCallback;
+import com.netease.nimlib.sdk.auth.LoginInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +38,12 @@ public class MyActivity extends BaseActivity {
 
     @Override
     public void initFragment(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
 
     }
 

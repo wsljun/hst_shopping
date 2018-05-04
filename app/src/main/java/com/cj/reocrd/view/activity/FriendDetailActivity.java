@@ -26,6 +26,7 @@ import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.CommentAdapter;
 import com.cj.reocrd.view.adapter.ReleaseAdapter;
+import com.cj.reocrd.view.adapter.ReleaseDetailAdapter;
 import com.cj.reocrd.view.view.InputOnKeyBoard.CommentPopupWindow;
 
 import java.util.ArrayList;
@@ -168,9 +169,8 @@ public class FriendDetailActivity extends BaseActivity<FriendsPresenter> impleme
                         }
                         List<Friends.UrlBean> list = friends.getImgs();
                         if (list != null && list.size() > 0) {
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
-                            friendsImgs.setLayoutManager(gridLayoutManager);
-                            ReleaseAdapter adapter = new ReleaseAdapter(this, list);
+                            friendsImgs.setLayoutManager(new LinearLayoutManager(this));
+                            ReleaseDetailAdapter adapter = new ReleaseDetailAdapter(this, list);
                             friendsImgs.setAdapter(adapter);
                         }
                         if (!TextUtils.isEmpty(friends.getIsfriend())) {
