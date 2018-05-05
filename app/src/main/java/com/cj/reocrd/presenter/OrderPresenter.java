@@ -43,7 +43,7 @@ public class OrderPresenter extends OrderContract.Presenter {
         baseMap.put("pagesize",pagesize);
         baseMap.put("pageno",pageno);
         baseMap.put("uid",uid);
-        if(!TextUtils.isEmpty(status)){
+        if(!status.equals("0")){
             baseMap.put("status",status);
         }
         ApiModel.getInstance().getData(UrlConstants.UrLType.URL_ORDER_LIST, baseMap, HomeBean.class, new ApiCallback() {

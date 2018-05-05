@@ -180,9 +180,9 @@ public class PayActivity extends BaseActivity {
             case R.id.tv_check_order_detail:
                 //todo  支付成功后，跳转到订单详情
                 if (!TextUtils.isEmpty(oid)) {
-                    Bundle b = new Bundle();
-                    b.putString(OrderDetailActivity.BUNDLE_KEY_OID, oid);
-                    startActivity(OrderDetailActivity.class, b);
+//                    Bundle b = new Bundle();
+//                    b.putString(OrderDetailActivity.BUNDLE_KEY_OID, oid);
+//                    startActivity(OrderDetailActivity.class, b);
                 }
                 break;
             default:

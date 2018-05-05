@@ -109,11 +109,10 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
         // init photo list
         imgURls = new ArrayList<>();
         if (TYPE_FOR_DETAIL.equals(type)) {
-            goodsDetails = (GoodsDetailsBean) SPUtils.get(mContext, SPUtils.SpKey.GOODS_DETAIL, null);
+            goodsNum = 1;
             if (null == goodsDetails) {
-                goodsDetails = GoodDetailActivity.goodsDetailsBean;
-                imgURls.add(goodsDetails.getImgurl());
-                goodsNum = imgURls.size();
+//                goodsDetails = GoodDetailActivity.goodsDetailsBean;
+//                imgURls.add(goodsDetails.getImgurl());
             }
         }
         if (TYPE_FOR_CART.equals(type)) {
@@ -159,6 +158,8 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
             flAddress.setVisibility(View.INVISIBLE);
             rlAddress.setVisibility(View.VISIBLE);
         }
+        requestType = TYPE_SUBMIT;
+        mPresenter.updateOrderAddress(oid, aid);
     }
 
     @Override
@@ -184,8 +185,6 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
                     ToastUtil.showShort("请添加收货地址");
                     return;
                 }
-                requestType = TYPE_SUBMIT;
-                mPresenter.updateOrderAddress(oid, aid);
                 Bundle b = new Bundle();
                 b.putString(PayActivity.BUNDLE_KEY_OID, oid);
                 b.putString(PayActivity.BUNDLE_KEY_PRICE, totalPrice);
@@ -213,8 +212,8 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     @Override
     public void onSuccess(Object data) {
         if (requestType.equals(TYPE_SUBMIT)) {
-            //todo 去支付
-            finish();
+//            todo 去支付
+//            finish();
         }
     }
 
@@ -230,7 +229,6 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
 
     @Override
     public void updateOrderInfo(OrderDetail orderDetail) {
-//        ToastUtil.showShort("updateOrderInfo");
         for (int i = 0; i < orderDetail.getOdlist().size(); i++) {
             imgURls.add(orderDetail.getOdlist().get(i).getImgurl());
         }

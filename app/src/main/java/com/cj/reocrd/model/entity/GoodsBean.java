@@ -27,7 +27,17 @@ public class GoodsBean {
     private String unit; // 单位
     private String buynum; // 购买数量
     private String createtime;
-    private boolean isShowDate ;
+    private boolean isShowDate ; // 是否显示时间，浏览记录页使用
+    private boolean  isChecked;  // 是否被选中，购物车计算价格使用
+
+    public void setIsChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public boolean getIsChecked(){
+        return isChecked;
+    }
+
 
     public boolean getIsShowDate() {
         return isShowDate;

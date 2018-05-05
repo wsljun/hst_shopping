@@ -389,7 +389,9 @@
 
                 <FrameLayout
                     android:id="@+id/mine_serve"
-                    style="@style/mine_frame">
+                    style="@style/mine_frame"
+                    android:visibility="gone"
+                    >
 
                     <TextView
                         style="@style/setting_item_configure"

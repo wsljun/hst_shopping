@@ -87,7 +87,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void initData() {
         super.initData();
         // todo 检查更新
-        mPresenter.checkUpdate(UpdateUtil.getVerName(mActivity));
+//        mPresenter.checkUpdate(UpdateUtil.getVerName(mActivity));
         images = new ArrayList<>();
         images.add("http://pic35.photophoto.cn/20150528/0005018358146030_b.jpg");
         images.add("http://pic28.photophoto.cn/20130827/0005018362405048_b.jpg");

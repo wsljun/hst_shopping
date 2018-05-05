@@ -148,8 +148,8 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                     ToastUtil.showToastS(this, response.getMessage());
                 }
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
 
     }
@@ -188,6 +188,14 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                 }
                 if (Integer.parseInt(money) > useableblance) {
                     ToastUtil.showToastS(this, "可提现金额为" + useableblance);
+                    return;
+                }
+                if(Integer.parseInt(money)%100 != 0 ){
+                    ToastUtil.showToastS(this, "提现金额为100的整数倍");
+                    return;
+                }
+                if( Integer.parseInt(money)>50000){
+                    ToastUtil.showToastS(this, "单笔最高5万元！");
                     return;
                 }
                 //获取提现比例
@@ -248,8 +256,8 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        type = 2;
-                        mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, bank.getId(), money);
+                        type = 2;// todo bank = null
+                        mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, null, money);
                     }
                 });
         builder.show();

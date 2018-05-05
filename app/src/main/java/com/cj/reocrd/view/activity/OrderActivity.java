@@ -216,21 +216,21 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
 
     @Override
     public void orderDetail(int position) {
-        if (!CollectionUtils.isNullOrEmpty(orderBeans)) {
-            mOrderGoodsDatas = orderBeans.get(position).getOdlist();
-            int status = Integer.parseInt(orderBeans.get(position).getStatus());
-            // 如果订单已经申请退款
-            if (ORDER_STATUS_REFUNDING == status || status == ORDER_STATUS_REFUNDOVER
-                    || ORDER_STATUS_NOT_REFUND == status) {
-                Bundle bundle = new Bundle();
-                bundle.putString(OrderDetailActivity.BUNDLE_KEY_OID, orderBeans.get(position).getId());
-                startActivity(RefundDetailActivity.class, bundle);
-            } else {
-                Bundle bundle = new Bundle();
-                bundle.putString(OrderDetailActivity.BUNDLE_KEY_OID, orderBeans.get(position).getId());
-                startActivity(OrderDetailActivity.class, bundle);
-            }
-        }
+//        if(!CollectionUtils.isNullOrEmpty(orderBeans)){
+//            mOrderGoodsDatas = orderBeans.get(position).getOdlist();
+//            int status = Integer.parseInt( orderBeans.get(position).getStatus());
+//             如果订单已经申请退款
+//            if(ORDER_STATUS_REFUNDING == status || status == ORDER_STATUS_REFUNDOVER
+//                  || ORDER_STATUS_NOT_REFUND == status){
+//                Bundle bundle = new Bundle();
+//                bundle.putString(OrderDetailActivity.BUNDLE_KEY_OID,orderBeans.get(position).getId());
+//                startActivity(RefundDetailActivity.class,bundle);
+//            }else{
+//                Bundle bundle = new Bundle();
+//                bundle.putString(OrderDetailActivity.BUNDLE_KEY_OID,orderBeans.get(position).getId());
+//                startActivity(OrderDetailActivity.class,bundle);
+//            }
+//        }
     }
 
     @Override
