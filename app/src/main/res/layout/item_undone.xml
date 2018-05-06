@@ -70,9 +70,10 @@
                 style="@style/setting_item_configure"
                 android:layout_alignParentRight="true"
                 android:layout_marginStart="4dp"
-                android:text="运费"
                 android:textColor="@color/colorTexthintGrey2"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:visibility="invisible"
+                />
 
             <TextView
                 android:id="@+id/undone_price"

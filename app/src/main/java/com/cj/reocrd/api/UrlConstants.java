@@ -109,6 +109,8 @@ public class UrlConstants {
         public static final String LOTTERY_GET_RESULT="324";
         //绑定支付宝账号
         public static final String ZHIFUBAO="325";
+        //获取佣金
+        public static final String URL_GET_YONGJIN="326";
         // 订单详情
         public static final String URL_ORDER_LIST = "401";//  order list
         public static final String URL_ORDER_DETAIL = "402";//  order detail

@@ -75,7 +75,7 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
         super.initData();
         aliPayName = (String) SPUtils.get(this,SPUtils.SpKey.ALIPAY_NAME,"");
         Bundle bundle = getIntent().getExtras();
-        useableblance = bundle.getDouble("useableblance");
+        useableblance = bundle.getDouble("useableblance",0);
         type = 1;
         mPresenter.myCard(UrlConstants.UrLType.MY_CARD, uid);
     }
