@@ -11,7 +11,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/my_title">
+        android:layout_below="@id/my_title"
+        android:layout_above="@+id/tv_signout"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +52,9 @@
 
                 <TextView
                     android:id="@+id/my_level"
-                    style="@style/mine_text_colorsize" />
+                    style="@style/mine_text_colorsize"
+                    android:drawableEnd="@null"
+                    />
             </FrameLayout>
             <FrameLayout
                 android:id="@+id/my_name_fl"

@@ -1,9 +1,8 @@
 package com.cj.reocrd.view.activity;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
@@ -11,17 +10,14 @@ import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.GoodsDetailContract;
-import com.cj.reocrd.model.YongJINBean;
+import com.cj.reocrd.model.entity.YongJINBean;
 import com.cj.reocrd.model.entity.GoodsCommentBean;
-import com.cj.reocrd.model.entity.Wallet;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.ToastUtil;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -45,6 +41,10 @@ public class YongJinActivity extends BaseActivity<GoodsDetailPresenter> implemen
     TextView tvJq;
     @BindView(R.id.tv_cj)
     TextView tvCj;
+    @BindView(R.id.tv_leader)
+    TextView tvLeader;
+    @BindView(R.id.ll_leader)
+    LinearLayout llLeader;
 
     @Override
     public int getLayoutId() {
@@ -78,6 +78,10 @@ public class YongJinActivity extends BaseActivity<GoodsDetailPresenter> implemen
                 tvDl.setText(yj.getDl());
                 tvJq.setText(yj.getJq());
                 tvCj.setText(yj.getCj());
+                if("1".equals(yj.getIsleader())){
+                    tvLeader.setText(yj.getLeader());
+                    llLeader.setVisibility(View.VISIBLE);
+                }
             }
 
         } else {

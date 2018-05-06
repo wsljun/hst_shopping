@@ -6,14 +6,13 @@ import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.GoodsDetailContract;
 import com.cj.reocrd.model.ApiModel;
-import com.cj.reocrd.model.YongJINBean;
+import com.cj.reocrd.model.entity.YongJINBean;
 import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.model.entity.GoodsDetailsBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.model.entity.Wallet;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
