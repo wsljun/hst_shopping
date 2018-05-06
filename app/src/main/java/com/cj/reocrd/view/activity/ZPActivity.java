@@ -216,5 +216,8 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
     public void endAnimation(int position) {
         isCan = false;
         ToastUtil.showShort(strs[position]);
+        //转盘结束，刷新界面
+        type = 1;
+        mPresenter.lotteryLevel(UrlConstants.UrLType.LOTTERY_LEVEL, uid);
     }
 }
