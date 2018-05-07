@@ -86,7 +86,7 @@ public class UpdatePwdFragment extends BaseFragment<IndexPresenter> implements I
     }
 
 
-    @OnClick({R.id.update_login, R.id.update_next, R.id.update_getcode})
+    @OnClick({R.id.title_left,R.id.update_login, R.id.update_next, R.id.update_getcode})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.update_login:

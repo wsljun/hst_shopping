@@ -7,12 +7,13 @@ package com.cj.reocrd.api;
 public class UrlConstants {
     //BaseURl
 //    public final static String BASE_URL = "http://gank.io/api/";
-    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
-    public final static String URL_ABOUT = "http://mall.xdiandian.cn/mall/api/about";
-    public final static String URL_HELP = "http://mall.xdiandian.cn/mall/api/help";
-    public final static String URL_GOODS_DETAIL = "http://mall.xdiandian.cn/mall/api/meDetail?id=";
+    public final static String BASE_URL = "http://www.rendaoyigou.com/"; //"http://mall.xdiandian.cn/mall/";
+    //test
+//    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
+    public final static String URL_ABOUT = BASE_URL+"api/about";
+    public final static String URL_HELP = BASE_URL+"api/help";
+    public final static String URL_GOODS_DETAIL = BASE_URL+"api/meDetail?id=";
     public final static String URL = "app/outinterface";
-    //    public final static String PID = "123222212121";  //    pid
     public final static String SUCCESE_CODE = "1"; // 返回结果成功
 
     public static class key {
@@ -109,6 +110,8 @@ public class UrlConstants {
         public static final String LOTTERY_GET_RESULT="324";
         //绑定支付宝账号
         public static final String ZHIFUBAO="325";
+        //获取佣金
+        public static final String URL_GET_YONGJIN="326";
         // 订单详情
         public static final String URL_ORDER_LIST = "401";//  order list
         public static final String URL_ORDER_DETAIL = "402";//  order detail

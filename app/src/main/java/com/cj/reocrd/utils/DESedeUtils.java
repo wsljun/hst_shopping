@@ -120,7 +120,7 @@ public class DESedeUtils {
 		Base64Encoder base = new Base64Encoder();
 		String deText = "";
 		try {
-			if (!data.contains("<!D")&&!TextUtils.isEmpty(data)) {
+			if (!TextUtils.isEmpty(data)&&!data.contains("<!D")) {
 				deText = deCrypt(base.decode(data), key.getBytes("utf-8"));
 			} else {
 				return data;

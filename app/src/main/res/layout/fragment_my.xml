@@ -11,7 +11,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/my_title">
+        android:layout_below="@id/my_title"
+        android:layout_above="@+id/tv_signout"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,7 +41,21 @@
                 <TextView style="@style/mine_text_colorsize" />
             </FrameLayout>
 
+            <FrameLayout
+                style="@style/mine_frame">
 
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="管理级别" />
+
+                <TextView
+                    android:id="@+id/my_level"
+                    style="@style/mine_text_colorsize"
+                    android:drawableEnd="@null"
+                    />
+            </FrameLayout>
             <FrameLayout
                 android:id="@+id/my_name_fl"
                 style="@style/mine_frame">

@@ -86,4 +86,8 @@ public class Utils {
         totalPrice = totalPrice+itemPrice;
         return totalPrice;
     }
+
+    public static String strDivide(String s){
+      return String.valueOf(Double.valueOf(s)/100);
+    }
 }

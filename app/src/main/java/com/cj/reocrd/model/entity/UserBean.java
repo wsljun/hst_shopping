@@ -15,6 +15,15 @@ public class UserBean {
     private String alipay;//支付宝账号
     private String accid;//云信id
     private String token;//云信token
+    private String manlevel; //"manlevel": "0 " ,//0 普通消费者 1主管 2主任3经理4总监
+
+    public String getManlevel() {
+        return manlevel;
+    }
+
+    public void setManlevel(String manlevel) {
+        this.manlevel = manlevel;
+    }
 
     public String getAccid() {
         return accid;

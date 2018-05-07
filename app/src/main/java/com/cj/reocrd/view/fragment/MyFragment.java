@@ -74,6 +74,8 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
     ImageView myIconIv;
     @BindView(R.id.my_name_tv)
     TextView myNameTv;
+    @BindView(R.id.my_level)
+    TextView myLevel;
     @BindView(R.id.my_sex_tv)
     TextView mySexTv;
     @BindView(R.id.my_phone_tv)
@@ -114,7 +116,9 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
         titleCenter.setText(getString(R.string.my));
     }
 
-    @OnClick({R.id.my_recommend_fl, R.id.my_zhifubao_fl, R.id.my_update_ic_fl, R.id.title_left, R.id.my_icon_fl, R.id.my_name_fl, R.id.my_sex_fl, R.id.my_phone_fl, R.id.my_update_pwd_fl, R.id.my_address_fl, R.id.tv_signout})
+    @OnClick({R.id.my_recommend_fl, R.id.my_zhifubao_fl, R.id.my_update_ic_fl, R.id.title_left,
+            R.id.my_icon_fl, R.id.my_name_fl, R.id.my_sex_fl, R.id.my_phone_fl, R.id.my_update_pwd_fl,
+            R.id.my_address_fl, R.id.tv_signout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
@@ -432,7 +436,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SPUtils.put(mActivity, UrlConstants.key.USERID, "");
+                        SPUtils.clear(mActivity);
                         BaseActivity.uid = "";
                         startActivity(IndexActivity.class);
                         mActivity.finish();
@@ -478,6 +482,10 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                         if (!TextUtils.isEmpty(userBean.getName())) {
                             myNameTv.setText(userBean.getName());
                         }
+                        if (!TextUtils.isEmpty(userBean.getManlevel())) {
+                            String level = switchLevel(userBean.getManlevel());
+                            myLevel.setText(level);
+                        }
                         if (!TextUtils.isEmpty(userBean.getSex())) {
                             mySexTv.setText("1".equals(userBean.getSex()) ? getString(R.string.man) : getString(R.string.gril));
                         }
@@ -522,6 +530,35 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                 break;
         }
 
+    }
+
+    /**
+     * 0 普通消费者 1主管 2 主任 3 经理 4 总监
+     * @param manlevel
+     * @return
+     */
+    private String switchLevel(String manlevel) {
+        String str = "";
+        switch (manlevel){
+            case "0":
+                str = "普通消费者";
+                break;
+            case "1":
+                str = "主管";
+                break;
+            case "2":
+                str = "主任";
+                break;
+            case "3":
+                str = "经理";
+                break;
+            case "4":
+                str = "总监";
+                break;
+                default:
+                    break;
+        }
+        return  str;
     }
 
 
