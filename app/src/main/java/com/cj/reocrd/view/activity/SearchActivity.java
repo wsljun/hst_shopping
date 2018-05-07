@@ -149,15 +149,16 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
         mPresenter.setVM(this);
     }
 
-    @OnClick({R.id.search_iv,R.id.title_right})
+    @OnClick({R.id.search_iv,R.id.title_right,R.id.title_left})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.search_iv:
                 setSearchStr();
                 break;
             case R.id.rg_search_label:
-                //todo
-//                ToastUtil.showShort("rg");
+                break;
+            case R.id.title_left:
+                finish();
                 break;
             default:
                 break;

@@ -147,8 +147,6 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
             case R.id.title_left:
                 getMainActivity().getViewPager().setCurrentItem(0);
                 break;
-            case R.id.mine_icon:
-                break;
             case R.id.mine_all:
                 OrderActivity.actionActivity(mActivity, OrderActivity.ORDER_STATUS_ALL);
                 break;
@@ -195,6 +193,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case R.id.mine_serve:
                 break;
+            case R.id.mine_icon:
             case R.id.mine_userinfo_rl:
                 Intent intent = new Intent(mActivity, MyActivity.class);
                 startActivity(intent);

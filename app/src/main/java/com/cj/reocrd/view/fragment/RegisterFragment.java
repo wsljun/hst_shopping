@@ -60,6 +60,7 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
     private String responseCode;
     private String recommend;
     private int type;
+    private String pwd;
 
     @Override
     protected void initPresenter() {
@@ -81,7 +82,7 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.register:
-                String pwd = updatePwd1.getText().toString();
+                pwd = updatePwd1.getText().toString();
                 String secondPwd = updatePwd2.getText().toString();
                 if (TextUtils.isEmpty(pwd) && TextUtils.isEmpty(secondPwd)) {
                     ToastUtil.showToastS(mActivity, R.string.password_cannot_empty);
@@ -95,13 +96,24 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                     ToastUtil.showToastS(mActivity, R.string.password_can_only);
                     break;
                 }
-                // todo do register
-                type = 2;
-                mPresenter.registerRequest(UrlConstants.UrLType.REGISTER, phone, pwd, code,recommend);
+                recommend = registerRecommend.getText().toString();
+                if (!TextUtils.isEmpty(recommend)) {
+                    type = 3;
+                    mPresenter.checkRecommend(UrlConstants.UrLType.CHECK_RECOMMEND, recommend);
+                }else{
+                    // todo do register
+                    type = 2;
+                    mPresenter.registerRequest(UrlConstants.UrLType.REGISTER, phone, pwd, code,recommend); 
+                }
                 break;
             case R.id.register_next:
                 phone = registerPhone.getText().toString();
-                if (TextUtils.isEmpty(phone)) {
+                if (!TextUtils.isEmpty(phone)) {
+                    if (!Utils.checkMobileNumber(phone)) {
+                        ToastUtil.showToastS(mActivity, R.string.format_not_correct);
+                        break;
+                    }
+                } else {
                     ToastUtil.showToastS(mActivity, R.string.input_phone);
                     break;
                 }
@@ -109,17 +121,8 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                     ToastUtil.showShort(R.string.verification_code_empty);
                     break;
                 }
-//                if(TextUtils.isEmpty(responseCode)&&!responseCode.equals(code)){
-//                    ToastUtil.showShort(R.string.verification_code_fault);
-//                }
-                recommend = registerRecommend.getText().toString();
-                if (TextUtils.isEmpty(recommend)) {
-                    registerCodeRl.setVisibility(View.GONE);
-                    registerPwdRl.setVisibility(View.VISIBLE);
-                } else {
-                    type = 3;
-                    mPresenter.checkRecommend(UrlConstants.UrLType.CHECK_RECOMMEND, recommend);
-                }
+                registerCodeRl.setVisibility(View.GONE);
+                registerPwdRl.setVisibility(View.VISIBLE);
                 break;
             case R.id.register_getcode:
                 phone = registerPhone.getText().toString();
@@ -138,7 +141,12 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                 }
                 break;
             case R.id.title_left:
-                getIndexActivity().getVpLogin().setCurrentItem(0);
+                if(registerPwdRl.getVisibility() == View.VISIBLE){
+                    registerCodeRl.setVisibility(View.VISIBLE);
+                    registerPwdRl.setVisibility(View.GONE);
+                }else{
+                    getIndexActivity().getVpLogin().setCurrentItem(0);
+                }
                 break;
         }
     }
@@ -174,8 +182,11 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
             case 3:
                 ToastUtil.showToastS(mActivity, response.getMessage());
                 if ("1".equals(response.getStatusCode())) {
-                    registerCodeRl.setVisibility(View.GONE);
-                    registerPwdRl.setVisibility(View.VISIBLE);
+//                    registerCodeRl.setVisibility(View.GONE);
+//                    registerPwdRl.setVisibility(View.VISIBLE);
+                    // todo do register
+                    type = 2;
+                    mPresenter.registerRequest(UrlConstants.UrLType.REGISTER, phone, pwd, code,recommend);
                 }
                 break;
         }
@@ -192,4 +203,8 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
         registerCode.setEnabled(false);
         code = s;
     }
+
+
+
+
 }

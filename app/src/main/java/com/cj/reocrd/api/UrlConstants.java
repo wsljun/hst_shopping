@@ -7,9 +7,9 @@ package com.cj.reocrd.api;
 public class UrlConstants {
     //BaseURl
 //    public final static String BASE_URL = "http://gank.io/api/";
-//    public final static String BASE_URL = "http://www.rendaoyigou.com/"; //"http://mall.xdiandian.cn/mall/";
+    public final static String BASE_URL = "http://www.rendaoyigou.com/"; //"http://mall.xdiandian.cn/mall/";
     //test
-    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
+//    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
     public final static String URL_ABOUT = BASE_URL+"api/about";
     public final static String URL_HELP = BASE_URL+"api/help";
     public final static String URL_GOODS_DETAIL = BASE_URL+"api/meDetail?id=";
