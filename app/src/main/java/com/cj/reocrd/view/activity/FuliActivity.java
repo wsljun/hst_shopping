@@ -1,10 +1,8 @@
 package com.cj.reocrd.view.activity;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,20 +10,14 @@ import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
-import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
-import com.cj.reocrd.contract.GoodsDetailContract;
 import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.entity.FuliBean;
-import com.cj.reocrd.model.entity.GoodsBean;
-import com.cj.reocrd.model.entity.GoodsCommentBean;
-import com.cj.reocrd.model.entity.HomeBean;
-import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.presenter.MyPrresenter;
 import com.cj.reocrd.utils.ToastUtil;
-import com.cj.reocrd.view.adapter.CollectAdapter;
 import com.cj.reocrd.view.adapter.FuliAdapter;
 import com.cj.reocrd.view.refresh.RefreshLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,6 +55,8 @@ public class FuliActivity extends BaseActivity<MyPrresenter> implements MyContra
     @Override
     public void initData() {
         super.initData();
+        wlist = new ArrayList<>();
+        rlist = new ArrayList<>();
         type = 1;
         mPresenter.wealList(UrlConstants.UrLType.WEAL_LIST, uid);
     }

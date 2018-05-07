@@ -116,7 +116,9 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
         titleCenter.setText(getString(R.string.my));
     }
 
-    @OnClick({R.id.my_recommend_fl, R.id.my_zhifubao_fl, R.id.my_update_ic_fl, R.id.title_left, R.id.my_icon_fl, R.id.my_name_fl, R.id.my_sex_fl, R.id.my_phone_fl, R.id.my_update_pwd_fl, R.id.my_address_fl, R.id.tv_signout})
+    @OnClick({R.id.my_recommend_fl, R.id.my_zhifubao_fl, R.id.my_update_ic_fl, R.id.title_left,
+            R.id.my_icon_fl, R.id.my_name_fl, R.id.my_sex_fl, R.id.my_phone_fl, R.id.my_update_pwd_fl,
+            R.id.my_address_fl, R.id.tv_signout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
@@ -434,7 +436,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SPUtils.put(mActivity, UrlConstants.key.USERID, "");
+                        SPUtils.clear(mActivity);
                         BaseActivity.uid = "";
                         startActivity(IndexActivity.class);
                         mActivity.finish();

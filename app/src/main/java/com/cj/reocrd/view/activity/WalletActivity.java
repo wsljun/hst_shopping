@@ -141,7 +141,7 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
                 finish();
                 break;
             case R.id.wallet_get:
-                if (useableblance > 0) {
+                if (null!=useableblance && useableblance > 0) {
                     Bundle bundle = new Bundle();
                     bundle.putDouble("useableblance", useableblance);
                     startActivityForResult(WalletGetActivity.class, bundle, WalletGetActivity.WALLET_GET_REQUEST);

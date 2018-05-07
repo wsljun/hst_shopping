@@ -12,7 +12,8 @@
         android:id="@+id/register_code_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        >
 
         <TextView
             android:id="@+id/register_next"
@@ -49,7 +50,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="48dp"
             android:drawableBottom="@drawable/editview_line"
-            ver:child_h_padding="5dp" />
+            ver:child_h_padding="5dp"
+            ver:inputType="number"
+            />
 
 
 
@@ -66,20 +69,7 @@
             android:text="@string/getcode"
             android:textColor="@color/colorButton" />
 
-        <EditText
-            android:id="@+id/register_recommend"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="27dp"
-            android:background="@null"
-            android:layout_below="@+id/register_getcode"
-            android:drawableBottom="@drawable/editview_line"
-            android:gravity="center"
-            android:hint="@string/login_recommend_hint"
-            android:inputType="phone"
-            android:maxLength="11"
-            android:maxLines="1" />
+
     </RelativeLayout>
 
 
@@ -127,6 +117,20 @@
             android:gravity="center"
             android:hint="@string/update_pwd"
             android:inputType="textPassword"
+            android:maxLength="11"
+            android:maxLines="1" />
+        <EditText
+            android:id="@+id/register_recommend"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="27dp"
+            android:background="@null"
+            android:layout_below="@+id/update_pwd2"
+            android:drawableBottom="@drawable/editview_line"
+            android:gravity="center"
+            android:hint="@string/login_recommend_hint"
+            android:inputType="phone"
             android:maxLength="11"
             android:maxLines="1" />
     </RelativeLayout>

@@ -26,9 +26,11 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"
             android:layout_toLeftOf="@+id/search_iv"
-            android:background="@null"
+            android:textColor="@color/colorBlack"
+            android:background="@drawable/textview_home_search"
             android:drawablePadding="10dp"
             android:hint="@string/home_search"
+            android:textColorHint="@color/colorBlack"
             android:textSize="14sp" />
 
         <ImageView
@@ -59,6 +61,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="@string/search_price"
+            android:textColor="@color/colorBlack"
             android:tag="0"
             android:textSize="16sp"
             />
@@ -69,6 +72,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
+            android:textColor="@color/colorBlack"
             android:textSize="16sp"
             android:tag="1"
             android:text="@string/search_hot" />
@@ -78,6 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
+            android:textColor="@color/colorBlack"
             android:textSize="16sp"
             android:tag="2"
             android:gravity="center"
@@ -92,6 +97,7 @@
             android:gravity="center"
             android:tag="3"
             android:text="@string/search_cuxiao"
+            android:textColor="@color/colorBlack"
             />
 
     </RadioGroup>
