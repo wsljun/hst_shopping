@@ -434,7 +434,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SPUtils.put(mActivity, UrlConstants.key.USERID, "");
+                        SPUtils.clear(mActivity);
                         BaseActivity.uid = "";
                         startActivity(IndexActivity.class);
                         mActivity.finish();
