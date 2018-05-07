@@ -28,7 +28,9 @@ import com.cj.reocrd.view.activity.MyActivity;
 import com.cj.reocrd.view.activity.OrderActivity;
 import com.cj.reocrd.view.activity.MyFansActivity;
 import com.cj.reocrd.view.activity.WalletActivity;
+import com.cj.reocrd.view.activity.WalletGetActivity;
 import com.cj.reocrd.view.activity.WebViewActivity;
+import com.cj.reocrd.view.activity.YongJinActivity;
 import com.cj.reocrd.view.activity.ZPActivity;
 
 import butterknife.BindView;
@@ -136,7 +138,10 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     }
 
 
-    @OnClick({R.id.mine_keep, R.id.mine_zp, R.id.mine_fuli, R.id.mine_fans, R.id.mine_userinfo_rl, R.id.title_rl, R.id.title_left, R.id.mine_icon, R.id.mine_all, R.id.mine_pay, R.id.mine_send, R.id.mine_confim, R.id.mine_evaluate, R.id.mine_return, R.id.mine_money, R.id.mine_collect, R.id.mine_history, R.id.mine_help, R.id.mine_about, R.id.mine_serve})
+    @OnClick({R.id.mine_keep, R.id.mine_zp, R.id.mine_fuli, R.id.mine_fans, R.id.mine_userinfo_rl,
+            R.id.title_rl, R.id.title_left, R.id.mine_icon, R.id.mine_all, R.id.mine_pay, R.id.mine_send,
+            R.id.mine_confim, R.id.mine_evaluate, R.id.mine_return, R.id.mine_money, R.id.mine_collect,
+            R.id.mine_history, R.id.mine_help, R.id.mine_about, R.id.mine_serve,R.id.mine_yongjin})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
@@ -164,6 +169,9 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case R.id.mine_money:
                 startActivity(WalletActivity.class);
+                break;
+            case R.id.mine_yongjin:
+                startActivity(YongJinActivity.class);
                 break;
             case R.id.mine_collect:
                 Bundle bundleCollect = new Bundle();

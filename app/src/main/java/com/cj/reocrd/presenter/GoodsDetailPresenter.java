@@ -6,19 +6,18 @@ import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.GoodsDetailContract;
 import com.cj.reocrd.model.ApiModel;
+import com.cj.reocrd.model.entity.YongJINBean;
 import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.model.entity.GoodsDetailsBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.model.entity.Wallet;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 
 /**
- * Created by Lyndon.Li on 2018/4/3.
  */
 
 public class GoodsDetailPresenter extends GoodsDetailContract.Presenter {
@@ -258,6 +257,29 @@ public class GoodsDetailPresenter extends GoodsDetailContract.Presenter {
                     }
                 });
     }
+
+
+    public void myYongJin(String uid) {
+        baseMap.clear();
+        baseMap.put("uid", uid);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_GET_YONGJIN, baseMap, YongJINBean.class
+                , new ApiCallback() {
+                    @Override
+                    public void onSuccess(ApiResponse apiResponse) {
+                        if (null != apiResponse && isViewAttached()) {
+                            mView.onSuccess(apiResponse);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        if (isViewAttached()) {
+                            mView.onFailureMessage(t.toString());
+                        }
+                    }
+                });
+    }
+
 
 
 }
