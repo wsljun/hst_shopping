@@ -192,6 +192,10 @@
             android:authorities="com.cj.reocrd.ipc.provider"
             android:exported="false"
             android:process=":core" />
+
+        <activity android:name=".wxapi.WXEntryActivity"
+            android:launchMode="singleTop"
+            android:exported="true"/>
     </application>
 
 </manifest>
