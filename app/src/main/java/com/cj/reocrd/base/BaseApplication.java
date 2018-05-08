@@ -11,6 +11,8 @@ import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.netease.nimlib.sdk.util.NIMUtil;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
 /**
@@ -18,6 +20,16 @@ import com.zhy.autolayout.config.AutoLayoutConifg;
  */
 public class BaseApplication extends MultiDexApplication {
     private static BaseApplication baseApplication;
+    private static final String APP_ID = "12312313212313213213";    //这个APP_ID就是注册APP的时候生成的
+
+    private static final String APP_SECRET = "12312312313212313213213";
+
+    public IWXAPI api;      //这个对象是专门用来向微信发送数据的一个重要接口,使用强引用持有,所有的信息发送都是基于这个对象的
+
+    public void registerWeChat(Context context) {   //向微信注册app
+        api = WXAPIFactory.createWXAPI(context, APP_ID, true);
+        api.registerApp(APP_ID);
+    }
 
     @Override
     public void onCreate() {
@@ -34,6 +46,8 @@ public class BaseApplication extends MultiDexApplication {
             NimUIKit.init(this);
             // 2、相关Service调用
         }
+        //微信分享
+        registerWeChat(this);
     }
 
     public static Context getAppContext() {
