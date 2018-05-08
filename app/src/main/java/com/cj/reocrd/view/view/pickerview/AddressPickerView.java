@@ -127,12 +127,12 @@ public class AddressPickerView extends RelativeLayout implements View.OnClickLis
             e.printStackTrace();
         }
         // 将数据转换为对象
-        mYwpAddressBean = new Gson().fromJson(jsonSB.toString(), YwpAddressBean.class);
-        if (mYwpAddressBean != null) {
-            mRvData.clear();
-            mRvData.addAll(mYwpAddressBean.getProvince());
-            mAdapter.notifyDataSetChanged();
-        }
+//        mYwpAddressBean = new Gson().fromJson(jsonSB.toString(), YwpAddressBean.class);
+//        if (mYwpAddressBean != null) {
+//            mRvData.clear();
+//            mRvData.addAll(mYwpAddressBean.getProvince());
+//            mAdapter.notifyDataSetChanged();
+//        }
     }
 
     /**
@@ -217,6 +217,9 @@ public class AddressPickerView extends RelativeLayout implements View.OnClickLis
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             mRvData.clear();
+            if(null==mYwpAddressBean){
+                return;
+            }
             switch (tab.getPosition()) {
                 case 0:
                     mRvData.addAll(mYwpAddressBean.getProvince());

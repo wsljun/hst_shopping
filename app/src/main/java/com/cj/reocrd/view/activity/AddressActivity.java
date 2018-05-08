@@ -165,6 +165,8 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
             }
             addressAdapter.updateData(addressBeans);
         }else{
+            addressBeans = new ArrayList<>();
+            addressAdapter.updateData(addressBeans);
             setDefulatAddress(-1);
 //            ToastUtil.showShort("暂时没有数据");
         }

@@ -10,6 +10,7 @@ import com.cj.reocrd.model.ApiModel;
 import com.cj.reocrd.model.entity.AddressBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.utils.CollectionUtils;
+import com.cj.reocrd.utils.ToastUtil;
 
 import java.util.List;
 
@@ -68,8 +69,9 @@ public class AddressPresenter extends AddressContract.Presenter {
                     if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
                         // onFailureMessage  toast 展示
                         mView.updateAddressList();
-                        // todo 新增成功后会返回详细的地址信息
                         //{"consignee":"李均","address":"湖南省长沙市芙蓉区大望路12号","phone":"18811373790","message":"操作成功","add_id":"853e5be5-9e4a-4171-97a8-e050b8a1538f","statusCode":"1"}
+                    }else{
+                        ToastUtil.showShort(apiResponse.getMessage());
                     }
                 }
             }
@@ -99,6 +101,8 @@ public class AddressPresenter extends AddressContract.Presenter {
                     if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
                         mView.updateAddressList();
                         //{"consignee":"李均","address":"湖南省长沙市芙蓉区大望路12号","phone":"18811373790","message":"操作成功","add_id":"853e5be5-9e4a-4171-97a8-e050b8a1538f","statusCode":"1"}
+                    }else{
+                        ToastUtil.showShort(apiResponse.getMessage());
                     }
                 }
             }
