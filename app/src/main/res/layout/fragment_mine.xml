@@ -34,7 +34,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="50dp"/>
+                        android:layout_marginLeft="50dp" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -283,8 +283,7 @@
                             android:layout_marginRight="16dp"
                             android:layout_weight="1.2"
                             android:background="@color/colorBackground"
-                            android:visibility="gone"
-                            >
+                            android:visibility="gone">
 
                             <ImageView
                                 android:id="@+id/iv_tuihuo"
@@ -320,35 +319,30 @@
                         android:id="@+id/mine_money_tv"
                         style="@style/mine_text_colorsize" />
                 </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/mine_team"
+                    style="@style/mine_frame">
 
+                    <TextView
+                        style="@style/setting_item_configure"
+                        android:drawableStart="@mipmap/yongjin"
+                        android:text="我的消费商（100人  ）" />
+
+                    <TextView style="@style/mine_text_colorsize" />
+                </FrameLayout>
                 <FrameLayout
                     android:id="@+id/mine_yongjin"
-                    style="@style/mine_frame"
-                    android:layout_marginTop="8dp">
+                    style="@style/mine_frame">
 
                     <TextView
                         style="@style/setting_item_configure"
                         android:drawableStart="@mipmap/yongjin"
                         android:text="@string/mine_yongjin" />
 
-                    <TextView
-                        style="@style/mine_text_colorsize" />
+                    <TextView style="@style/mine_text_colorsize" />
                 </FrameLayout>
 
-                <FrameLayout
-                    android:id="@+id/mine_fuli"
-                    style="@style/mine_frame">
 
-
-                    <TextView
-                        style="@style/setting_item_configure"
-                        android:drawableStart="@mipmap/fuli"
-                        android:text="福利" />
-
-                    <TextView
-                        android:id="@+id/mine_fuli_tv"
-                        style="@style/mine_text_colorsize" />
-                </FrameLayout>
                 <FrameLayout
                     android:id="@+id/mine_zp"
                     style="@style/mine_frame">
@@ -363,6 +357,7 @@
                         android:id="@+id/mine_zp_tv"
                         style="@style/mine_text_colorsize" />
                 </FrameLayout>
+
                 <FrameLayout
                     android:id="@+id/mine_collect"
                     style="@style/mine_frame"
@@ -422,10 +417,24 @@
                 </FrameLayout>
 
                 <FrameLayout
+                    android:id="@+id/mine_fuli"
+                    style="@style/mine_frame">
+
+
+                    <TextView
+                        style="@style/setting_item_configure"
+                        android:drawableStart="@mipmap/fuli"
+                        android:text="福利" />
+
+                    <TextView
+                        android:id="@+id/mine_fuli_tv"
+                        style="@style/mine_text_colorsize" />
+                </FrameLayout>
+
+                <FrameLayout
                     android:id="@+id/mine_serve"
                     style="@style/mine_frame"
-                    android:visibility="gone"
-                    >
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/setting_item_configure"
