@@ -101,9 +101,7 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                     type = 3;
                     mPresenter.checkRecommend(UrlConstants.UrLType.CHECK_RECOMMEND, recommend);
                 }else{
-                    // todo do register
-                    type = 2;
-                    mPresenter.registerRequest(UrlConstants.UrLType.REGISTER, phone, pwd, code,recommend); 
+                    ToastUtil.showToastS(mActivity,"请填写推荐码");
                 }
                 break;
             case R.id.register_next:

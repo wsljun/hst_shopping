@@ -59,7 +59,7 @@ public class YongJinActivity extends BaseActivity<GoodsDetailPresenter> implemen
 
     @Override
     public void initView() {
-        titleCenter.setText("我的佣金");
+        titleCenter.setText("我的收益");
     }
 
     @Override
@@ -78,10 +78,11 @@ public class YongJinActivity extends BaseActivity<GoodsDetailPresenter> implemen
                 tvDl.setText(yj.getDl());
                 tvJq.setText(yj.getJq());
                 tvCj.setText(yj.getCj());
-                if("1".equals(yj.getIsleader())){
-                    tvLeader.setText(yj.getLeader());
-                    llLeader.setVisibility(View.VISIBLE);
-                }
+                tvLeader.setText(yj.getLeader());
+//                if("1".equals(yj.getIsleader())){
+//                    tvLeader.setText(yj.getLeader());
+//                    llLeader.setVisibility(View.VISIBLE);
+//                }
             }
 
         } else {

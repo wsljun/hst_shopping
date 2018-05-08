@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我的佣金（元）"
+            android:text="我的收益（元）"
             android:textColor="@color/colorBlack"
             android:textSize="20sp" />
 
@@ -41,7 +41,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="销售分佣："
+            android:text="销售提成："
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />
 
@@ -85,7 +85,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="代理获利："
+            android:text="股份分红："
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />
 
@@ -107,7 +107,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="加权分红："
+            android:text="代理收益："
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />
 
@@ -129,7 +129,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="大转盘："
+            android:text="抽奖收益："
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />
 
@@ -147,7 +147,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:visibility="gone"
         >
 
         <TextView
