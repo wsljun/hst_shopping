@@ -258,7 +258,12 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                             SPUtils.put(mActivity, SPUtils.SpKey.ALIPAY_NAME, userBean.getAlipay());
                         }
                         if (!TextUtils.isEmpty(userBean.getNum())) {
-                            mineTeamNum.setText("我的团队（" + userBean.getNum() + "）人");
+                            int num = Integer.parseInt(userBean.getNum());
+                            if(num>0F){
+                                mineTeamNum.setText("我的消费商（" + userBean.getNum() + "）人");
+                            }else{
+
+                            }
                         }
 
                     }
