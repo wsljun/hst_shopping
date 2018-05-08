@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
@@ -73,6 +74,12 @@ public class MyTeamActivity extends BaseActivity<MyPrresenter> implements MyCont
     @Override
     public void initView() {
         titleCenter.setText("我的团队");
+        titleLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         initRecycleView();
     }
 
@@ -106,7 +113,7 @@ public class MyTeamActivity extends BaseActivity<MyPrresenter> implements MyCont
                     teamAdapter.setNewData(teamList);
                 }
             } else {
-                ToastUtil.showShort("暂时没有商品信息");
+//                ToastUtil.showShort("暂时没有商品信息");
             }
             refresh.endRefreshing();
             refresh.endLoadingMore();

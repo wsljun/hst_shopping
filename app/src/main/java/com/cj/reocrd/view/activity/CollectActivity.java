@@ -195,6 +195,7 @@ public class CollectActivity extends BaseActivity<GoodsDetailPresenter> implemen
                             }
                         }
                         collectAdapter.setNewData(ALLDatas);
+                        collectAdapter.loadComplete();
                         refreshLayout.endLoadingMore();
                     }
                 } else {
