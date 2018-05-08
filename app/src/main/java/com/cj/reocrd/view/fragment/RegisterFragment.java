@@ -158,7 +158,6 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                 if ("1".equals(response.getStatusCode())) {
                     UserBean userBean = (UserBean) response.getResults();
                     if (userBean != null) {
-                        //todo
                         responseCode = userBean.getId();
                         LogUtil.e(TAG, responseCode);
                     }
@@ -182,7 +181,6 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                 if ("1".equals(response.getStatusCode())) {
 //                    registerCodeRl.setVisibility(View.GONE);
 //                    registerPwdRl.setVisibility(View.VISIBLE);
-                    // todo do register
                     type = 2;
                     mPresenter.registerRequest(UrlConstants.UrLType.REGISTER, phone, pwd, code,recommend);
                 }

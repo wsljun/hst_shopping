@@ -139,7 +139,6 @@ public class AddressEditActivity extends BaseActivity<AddressPresenter> implemen
                 }
                 break;
             case R.id.address_save:
-//                String  rid = "1b2253bb-0e36-11e3-977a-d43d7e9c965f"; // 第三级地址id
                 consignee = addressNameEt.getText().toString().trim();
                 if(TextUtils.isEmpty(consignee)){
                     ToastUtil.showShort("收货人不能为空！");

@@ -7,12 +7,14 @@ package com.cj.reocrd.api;
 public class UrlConstants {
     //BaseURl
 //    public final static String BASE_URL = "http://gank.io/api/";
-    public final static String BASE_URL = "http://www.rendaoyigou.com/"; //"http://mall.xdiandian.cn/mall/";
+//    public final static String BASE_URL = "http://www.rendaoyigou.com/"; //"http://mall.xdiandian.cn/mall/";
+//    public final static String BASE_URL = "http://192.168.0.100:8080/mall/"; //"http://mall.xdiandian.cn/mall/";
     //test
-//    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
+    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
     public final static String URL_ABOUT = BASE_URL+"api/about";
     public final static String URL_HELP = BASE_URL+"api/help";
     public final static String URL_GOODS_DETAIL = BASE_URL+"api/meDetail?id=";
+    public final static String URL_SHARE_REGISTER = BASE_URL+"api/appRegister?code=";
     public final static String URL = "app/outinterface";
     public final static String SUCCESE_CODE = "1"; // 返回结果成功
 

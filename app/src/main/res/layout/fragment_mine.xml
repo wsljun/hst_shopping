@@ -56,7 +56,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/mine_username"
-                            android:layout_marginLeft="6dp"
                             android:layout_marginTop="6dp"
                             android:text="已关注"
                             android:textColor="@color/colorWhite"
@@ -85,6 +84,27 @@
                             android:text="粉丝"
                             android:textColor="@color/colorWhite"
                             android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/mine_userinfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/colorWhite"
+                            android:layout_alignParentRight="true"
+                            android:text="个人信息"
+                            android:layout_marginRight="20dp"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/mine_share_url"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/colorWhite"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@+id/mine_userinfo"
+                            android:text="分享注册"
+                            android:layout_marginRight="20dp"
+                            android:textSize="18sp" />
                     </RelativeLayout>
                 </RelativeLayout>
 

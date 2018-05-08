@@ -29,7 +29,7 @@ android {
     }
     signingConfigs {
         debug {  //这里配置的就是debug的签名配置了
-            storeFile file("C:\\Users\\Administrator\\Desktop\\hst\\hst_shopping\\app\\hst.jks")
+            storeFile file("hst.jks")
             storePassword "123456"
             keyAlias "hst"
             keyPassword "123456"
