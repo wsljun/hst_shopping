@@ -114,6 +114,8 @@ public class UrlConstants {
         public static final String ZHIFUBAO="325";
         //获取佣金
         public static final String URL_GET_YONGJIN="326";
+        //我的团队
+        public static final String GET_MYTEAM = "327";
         // 订单详情
         public static final String URL_ORDER_LIST = "401";//  order list
         public static final String URL_ORDER_DETAIL = "402";//  order detail

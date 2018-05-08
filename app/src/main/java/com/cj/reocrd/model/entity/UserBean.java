@@ -16,6 +16,15 @@ public class UserBean {
     private String accid;//云信id
     private String token;//云信token
     private String manlevel; //"manlevel": "0 " ,//0 普通消费者 1主管 2主任3经理4总监
+    private String num;//我的团队人数
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
+    }
 
     public String getManlevel() {
         return manlevel;
