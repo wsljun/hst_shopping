@@ -108,7 +108,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void getArgumentData(Bundle arguments) {
         super.getArgumentData(arguments);
-        ToastUtil.showShort(arguments.getString("key"));
+//        ToastUtil.showShort(arguments.getString("key"));
     }
 
     @Override

@@ -324,11 +324,13 @@
                     style="@style/mine_frame">
 
                     <TextView
+                        android:id="@+id/mine_team_num"
                         style="@style/setting_item_configure"
                         android:drawableStart="@mipmap/yongjin"
-                        android:text="我的消费商（100人  ）" />
+                        android:text="我的消费商" />
 
                     <TextView style="@style/mine_text_colorsize" />
+
                 </FrameLayout>
                 <FrameLayout
                     android:id="@+id/mine_yongjin"

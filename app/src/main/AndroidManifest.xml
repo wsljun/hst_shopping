@@ -110,7 +110,7 @@
         <activity android:name=".view.activity.FuliActivity" />
         <activity android:name=".view.activity.ZPActivity" />
         <activity android:name=".view.activity.YongJinActivity"/>
-
+        <activity android:name=".view.activity.MyTeamActivity"></activity>
         <receiver android:name=".net.NetworkStateReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

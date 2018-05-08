@@ -46,6 +46,7 @@ public interface MyContract {
         public abstract void lotterySaveResult(String por,String uid,String level,String money);
         public abstract void lotteryGetResult(String por,String uid);
         public abstract void bindZfb(String por,String uid,String alipay);
+        public abstract void myTeam(String por,int pagesize,int pageno,String uid);
 
     }
 }
