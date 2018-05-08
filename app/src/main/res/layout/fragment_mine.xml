@@ -84,26 +84,28 @@
                             android:text="粉丝"
                             android:textColor="@color/colorWhite"
                             android:textSize="14sp" />
+
                         <TextView
                             android:id="@+id/mine_userinfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:textColor="@color/colorWhite"
                             android:layout_alignParentRight="true"
-                            android:text="个人信息"
                             android:layout_marginRight="20dp"
+                            android:layout_marginTop="6dp"
+                            android:text="个人信息"
+                            android:textColor="@color/colorWhite"
                             android:textSize="18sp" />
+
                         <TextView
                             android:id="@+id/mine_share_url"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:textColor="@color/colorWhite"
                             android:layout_alignParentRight="true"
                             android:layout_below="@+id/mine_userinfo"
-                            android:text="分享注册"
                             android:layout_marginRight="20dp"
+                            android:layout_marginTop="6dp"
+                            android:text="分享注册"
+                            android:textColor="@color/colorWhite"
                             android:textSize="18sp" />
                     </RelativeLayout>
                 </RelativeLayout>
@@ -319,19 +321,9 @@
                         android:id="@+id/mine_money_tv"
                         style="@style/mine_text_colorsize" />
                 </FrameLayout>
-                <FrameLayout
-                    android:id="@+id/mine_team"
-                    style="@style/mine_frame">
 
-                    <TextView
-                        android:id="@+id/mine_team_num"
-                        style="@style/setting_item_configure"
-                        android:drawableStart="@mipmap/yongjin"
-                        android:text="我的消费商" />
 
-                    <TextView style="@style/mine_text_colorsize" />
 
-                </FrameLayout>
                 <FrameLayout
                     android:id="@+id/mine_yongjin"
                     style="@style/mine_frame">
@@ -344,7 +336,19 @@
                     <TextView style="@style/mine_text_colorsize" />
                 </FrameLayout>
 
+                <FrameLayout
+                    android:id="@+id/mine_team"
+                    style="@style/mine_frame">
 
+                    <TextView
+                        android:id="@+id/mine_team_num"
+                        style="@style/setting_item_configure"
+                        android:drawableStart="@mipmap/tuandui"
+                        android:text="我的消费商" />
+
+                    <TextView style="@style/mine_text_colorsize" />
+
+                </FrameLayout>
                 <FrameLayout
                     android:id="@+id/mine_zp"
                     style="@style/mine_frame">
