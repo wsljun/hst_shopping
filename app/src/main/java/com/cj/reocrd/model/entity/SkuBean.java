@@ -3,6 +3,8 @@ package com.cj.reocrd.model.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.cj.reocrd.utils.Utils;
+
 /**
  * Created by Lyndon.Li on 2018/4/3.
  * 商品规格
@@ -68,8 +70,7 @@ public class SkuBean implements Parcelable {
     }
 
     public void setPrice(String price) {
-        int p = (Integer.parseInt(price))/100;
-        price = String.valueOf(p);
+        price = Utils.strDivide(price);
         this.price = price;
     }
 

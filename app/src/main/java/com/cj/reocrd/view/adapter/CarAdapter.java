@@ -41,11 +41,10 @@ public class CarAdapter extends BaseQuickAdapter implements AmountView.OnAmountC
     protected void convert(BaseViewHolder helper, Object item, int position) {
         cartGoods = (GoodsBean) item;
         int num = Integer.parseInt(cartGoods.getBuynum());
-        int price = Integer.parseInt(cartGoods.getPrice());
         ImageLoaderUtils.display(mContext,  helper.getView(R.id.iv_cart_pic), UrlConstants.BASE_URL+cartGoods.getImgurl());
         helper.setText(R.id.car_name,cartGoods.getName());
         helper.setText(R.id.car_weight,"规格:"+cartGoods.getSpecnum()+"/"+cartGoods.getUnit());
-        helper.setText(R.id.car_num,"价格:"+ ConstantsUtils.RMB+price);
+        helper.setText(R.id.car_num,"价格:"+ ConstantsUtils.RMB+cartGoods.getPrice());
         helper.getView(R.id.car_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

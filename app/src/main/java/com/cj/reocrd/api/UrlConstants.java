@@ -134,6 +134,7 @@ public class UrlConstants {
         public static final String URL_OREDER_CONFIRM= "415";//  确认收货
         public static final String URL_OREDER_REFUND_DETAIL= "416";//  退款详情
         public static final String URL_OREDER_PAY_SUCCESS= "417";//  支付成功
+        public static final String URL_OREDER_PAY_KEY= "418";//  支付key
         //关注好友
         public static final String FRIEDNS_KEEP = "501";
         //取消关注

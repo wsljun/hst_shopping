@@ -362,6 +362,9 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     @Override
     public void acticonToSubmitOrder(ApiResponse apiResponse) {
         if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+            if(null != popWindow){
+                popWindow.dismiss();
+            }
             OrderBean orderBean = (OrderBean) apiResponse.getResults();
             Bundle b = new Bundle();//  确认订单
             b.putString(SubmitOrderActivity.BUNDLE_KEY_OID,orderBean.getOid());

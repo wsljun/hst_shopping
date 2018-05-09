@@ -1,5 +1,7 @@
 package com.cj.reocrd.model.entity;
 
+import com.cj.reocrd.utils.Utils;
+
 /**
  * Created by Lyndon.Li on 2018/4/27.
  */
@@ -31,8 +33,7 @@ public class RefundDetail {
     }
 
     public void setMoney(String money) {
-        int p = (Integer.parseInt(money))/100;
-        money = String.valueOf(p);
+        money = Utils.strDivide(money);
         this.money = money;
     }
 

@@ -134,17 +134,23 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyHolder> {
         orderGoodsList.addAll(mDatas.get(position).getOdlist());
         GalleryAdapter mAdapter = new GalleryAdapter(mContext, orderGoodsList);
         holder.orderPhotosRecycleView.setAdapter(mAdapter);
+        holder.orderPhotosRecycleView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemListener.orderDetail(position);
+            }
+        });
         holder.orderPhotosRecycleView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return true;
+                return false;
             }
 
             @Override
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
                 switch (e.getAction()){
                     case MotionEvent.ACTION_UP:
-                        mOnItemListener.orderDetail(position);
+//                        mOnItemListener.orderDetail(position);
                         break;
                     default:
                         break;

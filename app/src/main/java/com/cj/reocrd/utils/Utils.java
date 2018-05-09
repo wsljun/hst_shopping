@@ -17,6 +17,9 @@ import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.view.view.InputOnKeyBoard.CommentPopupWindow;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,10 +87,20 @@ public class Utils {
         int count = Integer.parseInt(num);
         double itemPrice = p*count;
         totalPrice = totalPrice+itemPrice;
-        return totalPrice;
+        return formatDouble2(totalPrice);
     }
 
     public static String strDivide(String s){
-      return String.valueOf(Double.valueOf(s)/100);
+        return String.valueOf(formatDouble2(Double.valueOf(s)/100));
+    }
+
+    public static String newDouble(Double d){
+        DecimalFormat df = new DecimalFormat("######0.00");
+        return df.format(d);
+    }
+
+    public static Double formatDouble2(double d) {
+        BigDecimal bg = new BigDecimal(d).setScale(2, RoundingMode.UP);
+        return bg.doubleValue();
     }
 }

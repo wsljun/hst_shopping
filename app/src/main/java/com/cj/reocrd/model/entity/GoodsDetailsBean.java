@@ -3,6 +3,8 @@ package com.cj.reocrd.model.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.cj.reocrd.utils.Utils;
+
 import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
@@ -19,8 +21,8 @@ import java.util.zip.GZIPOutputStream;
  "imgurl": "http://www.baidu.com",   //商品图片地址
  "detail": "商品详情"， //商品详情
  "unit": "KG"， //单位
-   slist:
-   clist :
+ slist:
+ clist :
  */
 
 public class GoodsDetailsBean  implements Parcelable{
@@ -60,8 +62,7 @@ public class GoodsDetailsBean  implements Parcelable{
     }
 
     public void setOldprice(String oldprice) {
-        int p = (Integer.parseInt(oldprice))/100;
-        oldprice = String.valueOf(p);
+        oldprice = Utils.strDivide(oldprice);
         this.oldprice = oldprice;
     }
 
@@ -98,8 +99,7 @@ public class GoodsDetailsBean  implements Parcelable{
     }
 
     public void setPrice(String price) {
-        int p = (Integer.parseInt(price))/100;
-        price = String.valueOf(p);
+        price = Utils.strDivide(price);
         this.price = price;
     }
 
