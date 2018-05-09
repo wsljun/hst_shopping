@@ -68,6 +68,8 @@ public class PayActivity extends BaseActivity {
     RelativeLayout rlOrderPayOver;
     @BindView(R.id.tv_time)
     TextView tvTime;
+    @BindView( R.id.tv_btn_order_pay)
+    TextView tvBtnPay;
 
     private String oid, orderPrice, payWay;
     private final String TYPE_ALIPAY = "1";
@@ -164,7 +166,6 @@ public class PayActivity extends BaseActivity {
                 rbWechatPay.setChecked(false);
                 break;
             case R.id.tv_btn_order_pay:
-                //todo  发起第三方支付未申请，暂时直接调用支付成功接口
                 if (TextUtils.isEmpty(payWay)) {
                     ToastUtil.showShort("请先选择支付方式");
                 } else {
@@ -178,11 +179,11 @@ public class PayActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_check_order_detail:
-                //todo  支付成功后，跳转到订单详情
+                //  支付成功后，跳转到订单详情
                 if (!TextUtils.isEmpty(oid)) {
-//                    Bundle b = new Bundle();
-//                    b.putString(OrderDetailActivity.BUNDLE_KEY_OID, oid);
-//                    startActivity(OrderDetailActivity.class, b);
+                    Bundle b = new Bundle();
+                    b.putString(OrderDetailActivity.BUNDLE_KEY_OID, oid);
+                    startActivity(OrderDetailActivity.class, b);
                 }
                 break;
             default:
@@ -242,9 +243,11 @@ public class PayActivity extends BaseActivity {
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        tvBtnPay.setClickable(false);
                         sendPaySuccess();
                     } else {
                         Toast.makeText(PayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                        tvBtnPay.setClickable(true);
                     }
                     break;
             }
@@ -289,8 +292,10 @@ public class PayActivity extends BaseActivity {
                 if (null != apiResponse) {
                     if ("1".equals(apiResponse.getStatusCode())) {
                         UserBean userBean = (UserBean) apiResponse.getResults();
+                        tvBtnPay.setClickable(false);
                         sendPaySuccess();
                     } else {
+                        tvBtnPay.setClickable(true);
                         ToastUtil.showShort(apiResponse.getMessage());
                     }
                 }

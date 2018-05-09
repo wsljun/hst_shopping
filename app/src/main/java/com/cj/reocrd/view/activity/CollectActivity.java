@@ -195,7 +195,13 @@ public class CollectActivity extends BaseActivity<GoodsDetailPresenter> implemen
                             }
                         }
                         collectAdapter.setNewData(ALLDatas);
+                        if(homeBean.getMlist().size()<10 ){
+                            refreshLayout.endLoadingMore();
+                            collectAdapter.loadComplete();
+                        }
+                    }else{
                         refreshLayout.endLoadingMore();
+                        collectAdapter.loadComplete();
                     }
                 } else {
                     ToastUtil.showToastS(this, response.getMessage());

@@ -12,6 +12,7 @@ import com.cj.reocrd.model.entity.GoodsDetailsBean;
 import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.model.entity.Wallet;
+import com.cj.reocrd.utils.ToastUtil;
 
 import java.util.List;
 
@@ -245,6 +246,8 @@ public class GoodsDetailPresenter extends GoodsDetailContract.Presenter {
                                 HomeBean homeBean = (HomeBean) apiResponse.getResults();
                                 List<GoodsCommentBean> goodsCommentBeans = homeBean.getClist();
                                 mView.showComment(goodsCommentBeans);
+                            }else{
+                                ToastUtil.showShort("获取失败");
                             }
                         }
                     }

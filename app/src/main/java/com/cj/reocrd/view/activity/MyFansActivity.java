@@ -170,7 +170,7 @@ public class MyFansActivity extends BaseActivity<FriendsPresenter> implements Fr
 
     @Override
     public void chatClick(int position) {
-        ToastUtil.showToastS(this, "未开通");
+        ToastUtil.showToastS(this, "暂未开通");
 //        NimUIKit.startP2PSession(MyFansActivity.this, mDatas.get(position).getAccid());
     }
 

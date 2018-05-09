@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.TextureView;
+import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -176,7 +177,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     public void initPresenter() {
         mPresenter.setVM(this);
         goodsID = getIntent().getStringExtra("goodsID");
-        // TODO get goods details
+        //  get goods details
     }
 
     public static Intent newIntent(Context context, String goodsID) {
@@ -387,6 +388,8 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
           if(!CollectionUtils.isNullOrEmpty(goodsCommentBeanList)){
               goodsCommentBeans = goodsCommentBeanList;
               startActivity(AllCommentActivity.class);
+          }else{
+              ToastUtil.showShort("没有评论");
           }
     }
     Fragment cartFragment ;

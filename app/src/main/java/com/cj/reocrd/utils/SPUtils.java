@@ -26,6 +26,8 @@ public class SPUtils {
         public static final String ALIPAY_NAME = "alipay_name";
         public static final String IM_ACCID = "im_accid";
         public static final String IM_TOKEN = "im_token";
+        public static final String UPDATE_IS_CANCLE = "iscancle";
+        public static final String UPDATE_VERSION = "vs";
 
     }
 

@@ -79,8 +79,9 @@ public class ApiStore {
             Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
 
             okHttpClient = new OkHttpClient.Builder()
-                    .readTimeout(6000, TimeUnit.MILLISECONDS)
-                    .connectTimeout(6000, TimeUnit.MILLISECONDS)
+                    .connectTimeout(60, TimeUnit.SECONDS).
+                            readTimeout(60, TimeUnit.SECONDS).
+                            writeTimeout(60, TimeUnit.SECONDS)
                     .addInterceptor(interceptor)
                     .addInterceptor(headerInterceptor)
                     .addNetworkInterceptor(new HttpCacheInterceptor())
