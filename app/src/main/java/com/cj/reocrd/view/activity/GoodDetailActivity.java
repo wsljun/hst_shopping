@@ -176,7 +176,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     public void initPresenter() {
         mPresenter.setVM(this);
         goodsID = getIntent().getStringExtra("goodsID");
-        // TODO get goods details
+        //  get goods details
     }
 
     public static Intent newIntent(Context context, String goodsID) {

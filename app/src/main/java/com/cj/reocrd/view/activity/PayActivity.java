@@ -164,7 +164,6 @@ public class PayActivity extends BaseActivity {
                 rbWechatPay.setChecked(false);
                 break;
             case R.id.tv_btn_order_pay:
-                //todo  发起第三方支付未申请，暂时直接调用支付成功接口
                 if (TextUtils.isEmpty(payWay)) {
                     ToastUtil.showShort("请先选择支付方式");
                 } else {
@@ -178,11 +177,11 @@ public class PayActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_check_order_detail:
-                //todo  支付成功后，跳转到订单详情
+                //  支付成功后，跳转到订单详情
                 if (!TextUtils.isEmpty(oid)) {
-//                    Bundle b = new Bundle();
-//                    b.putString(OrderDetailActivity.BUNDLE_KEY_OID, oid);
-//                    startActivity(OrderDetailActivity.class, b);
+                    Bundle b = new Bundle();
+                    b.putString(OrderDetailActivity.BUNDLE_KEY_OID, oid);
+                    startActivity(OrderDetailActivity.class, b);
                 }
                 break;
             default:
@@ -242,7 +241,8 @@ public class PayActivity extends BaseActivity {
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        sendPaySuccess();
+                        showPayOverView();
+                        sendPaySuccess(); // todo 接口异常时无法跳转。因此支付成功后直接显示
                     } else {
                         Toast.makeText(PayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                     }
@@ -324,7 +324,7 @@ public class PayActivity extends BaseActivity {
                 // 展示支付成功view，
                 ToastUtil.showShort(apiResponse.getMessage());
                 if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
-                    showPayOverView();
+//                    showPayOverView();
                 }
             }
 

@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2018/5/8.
@@ -73,13 +75,7 @@ public class MyTeamActivity extends BaseActivity<MyPrresenter> implements MyCont
 
     @Override
     public void initView() {
-        titleCenter.setText("我的团队");
-        titleLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        titleCenter.setText("我的消费商");
         initRecycleView();
     }
 
@@ -113,7 +109,7 @@ public class MyTeamActivity extends BaseActivity<MyPrresenter> implements MyCont
                     teamAdapter.setNewData(teamList);
                 }
             } else {
-//                ToastUtil.showShort("暂时没有商品信息");
+                ToastUtil.showShort("暂时没有商品信息");
             }
             refresh.endRefreshing();
             refresh.endLoadingMore();
@@ -147,6 +143,16 @@ public class MyTeamActivity extends BaseActivity<MyPrresenter> implements MyCont
             return true;
         }else{
             return false;
+        }
+    }
+
+    @OnClick({R.id.title_left})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.title_left:
+                finish();
+                break;
+
         }
     }
 }
