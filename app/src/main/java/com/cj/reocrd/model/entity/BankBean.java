@@ -27,7 +27,7 @@ public class BankBean implements Serializable {
         this.blist = blist;
     }
 
-    public class Bank implements Serializable {
+    public static class Bank implements Serializable {
         private String id;
         private String name;
         private String code;
