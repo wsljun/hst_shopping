@@ -51,6 +51,9 @@ public class SubmitOrderPresenter extends SubmitOrderContract.Presenter {
 
     @Override
     public void updateOrderAddress(String oid, String aid) {
+        if(TextUtils.isEmpty(oid)||TextUtils.isEmpty(aid)){
+            return;
+        }
         baseMap.clear();
         baseMap.put("oid",oid);
         baseMap.put("aid",aid);

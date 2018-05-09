@@ -66,7 +66,7 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
     BankBean.Bank bank;
     String money;
     int type;
-    private String aliPayName ;
+    private String aliPayName = "";
     private String getType ;
     private final String TYPE_BANK = "1";
     private final String TYPE_ALIPAY = "2";
@@ -92,7 +92,7 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
         titleCenter.setText("提现");
         walletGetUse.setText("可用余额" + useableblance + "元");
         // 先默认选择支付宝
-        if(!TextUtils.isEmpty(aliPayName)){
+        if(!TextUtils.isEmpty(aliPayName)&&!"null".equals(aliPayName)){
             setTypeText("支付宝账号："+aliPayName,false);
         }
     }

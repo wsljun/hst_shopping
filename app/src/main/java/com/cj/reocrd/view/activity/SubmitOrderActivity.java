@@ -116,7 +116,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
             }
         }
         if (TYPE_FOR_CART.equals(type)) {
-            goodsNum = cartGoodsList.size();
+//            goodsNum = cartGoodsList.size();
 //            for (int i = 0; i < cartGoodsList.size(); i++) {
 //                imgURls.add(cartGoodsList.get(i).getImgurl());
 //            }
@@ -232,6 +232,8 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
         for (int i = 0; i < orderDetail.getOdlist().size(); i++) {
             imgURls.add(orderDetail.getOdlist().get(i).getImgurl());
         }
+        goodsNum = imgURls.size();
+        tvGoodsNum.setText(goodsNum + "件商品");
         mAdapter.notifyDataSetChanged();
     }
 

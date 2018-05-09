@@ -220,14 +220,15 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
         // "oid":"d25c66f5-ae37-420b-b4a5-354a6462cb04"
         // ,"message":"操作成功","aid":"北京市北京市平谷区45623","statusCode":"1"}
         if(TextUtils.isEmpty(addressBean.getOid())){
-            ToastUtil.showShort("oid == null ");
+//            ToastUtil.showShort("oid == null ");
             return;
+        }else{
+            Bundle b = new Bundle();
+            b.putString(SubmitOrderActivity.BUNDLE_KEY_OID,addressBean.getOid());
+            b.putString(SubmitOrderActivity.BUNDLE_KEY_TYPE,SubmitOrderActivity.TYPE_FOR_CART);
+            b.putString(SubmitOrderActivity.BUNDLE_KEY_TOTALPRICE,String.valueOf(totalPrice));
+            startActivity(SubmitOrderActivity.class,b);
         }
-        Bundle b = new Bundle();
-        b.putString(SubmitOrderActivity.BUNDLE_KEY_OID,addressBean.getOid());
-        b.putString(SubmitOrderActivity.BUNDLE_KEY_TYPE,SubmitOrderActivity.TYPE_FOR_CART);
-        b.putString(SubmitOrderActivity.BUNDLE_KEY_TOTALPRICE,String.valueOf(totalPrice));
-        startActivity(SubmitOrderActivity.class,b);
     }
 
     private void initRecycleView() {

@@ -68,6 +68,8 @@ public class PayActivity extends BaseActivity {
     RelativeLayout rlOrderPayOver;
     @BindView(R.id.tv_time)
     TextView tvTime;
+    @BindView( R.id.tv_btn_order_pay)
+    TextView tvBtnPay;
 
     private String oid, orderPrice, payWay;
     private final String TYPE_ALIPAY = "1";
@@ -241,10 +243,11 @@ public class PayActivity extends BaseActivity {
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        showPayOverView();
-                        sendPaySuccess(); // todo 接口异常时无法跳转。因此支付成功后直接显示
+                        tvBtnPay.setClickable(false);
+                        sendPaySuccess();
                     } else {
                         Toast.makeText(PayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                        tvBtnPay.setClickable(true);
                     }
                     break;
             }
@@ -289,8 +292,10 @@ public class PayActivity extends BaseActivity {
                 if (null != apiResponse) {
                     if ("1".equals(apiResponse.getStatusCode())) {
                         UserBean userBean = (UserBean) apiResponse.getResults();
+                        tvBtnPay.setClickable(false);
                         sendPaySuccess();
                     } else {
+                        tvBtnPay.setClickable(true);
                         ToastUtil.showShort(apiResponse.getMessage());
                     }
                 }
@@ -324,7 +329,7 @@ public class PayActivity extends BaseActivity {
                 // 展示支付成功view，
                 ToastUtil.showShort(apiResponse.getMessage());
                 if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
-//                    showPayOverView();
+                    showPayOverView();
                 }
             }
 

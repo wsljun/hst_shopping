@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.presenter.HomePresenter;
 import com.cj.reocrd.utils.GlideImageLoader;
 import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.UpdateUtil;
 import com.cj.reocrd.view.activity.GoodDetailActivity;
@@ -72,6 +74,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     private final static String TAG = "HomeFragment";
     private Bundle goodBundle = new Bundle();
     private List<BannerData> bannerData;
+    private  boolean  isCancle = false;
 
     @Override
     protected void initPresenter() {
@@ -87,6 +90,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void initData() {
         super.initData();
         // todo 检查更新
+//        isCancle = (boolean) SPUtils.get(mActivity,SPUtils.SpKey.UPDATE_IS_CANCLE,false);
 //        mPresenter.checkUpdate(UpdateUtil.getVerName(mActivity));
         images = new ArrayList<>();
         images.add("http://pic35.photophoto.cn/20150528/0005018358146030_b.jpg");
@@ -180,7 +184,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     }
 
     private void update(AppInfo appInfo){
-        if(mActivity == null){
+        if(mActivity == null || isCancle){
             return;
         }
         MaterialDialog.Builder materialDialog = new MaterialDialog.Builder(mActivity)
@@ -194,12 +198,19 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                         UpdateUtil.downloadFile(appInfo.getApkUrl(),mActivity);
                     }
                 })
-                .negativeText("取消");
+                .negativeText("取消")
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        SPUtils.put(mActivity,SPUtils.SpKey.UPDATE_IS_CANCLE,true);
+                        SPUtils.put(mActivity,SPUtils.SpKey.UPDATE_VERSION,appInfo.getVersionCode());
+                    }
+                });
         if("2".equals(appInfo.getIsupdate())){
             materialDialog.onNegative(new MaterialDialog.SingleButtonCallback(){
                 @Override
                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        mActivity.finish();
+                    mActivity.finish();
                 }
             });
         }
@@ -211,6 +222,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void onSuccess(Object data) {
         if(data instanceof AppInfo){
             AppInfo appInfo = (AppInfo) data;
+            String vs = (String) SPUtils.get(mActivity,SPUtils.SpKey.UPDATE_VERSION,"");
+            if(!TextUtils.isEmpty(vs)){
+                if(!vs.equals(appInfo.getVersionCode())){
+                    isCancle = false;
+                }
+            }
             update(appInfo);
         }
     }
