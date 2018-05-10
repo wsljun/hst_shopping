@@ -85,11 +85,7 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
-                if (SubmitOrderActivity.TYPE_SUBMITORDER.equals(type)) {
-                    Intent intent = new Intent();
-                    intent.putExtra("aid", aid);
-                    setResult(RESULT_OK, intent);
-                }
+                setResult();
                 finish();
                 break;
             case R.id.address_add:
@@ -179,17 +175,17 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
 
     @Override
     public void onBackPressed() {
-        if(SubmitOrderActivity.TYPE_SUBMITORDER.equals(type)){
-            Intent intent  = new Intent();
-            intent.putExtra("aid",aid);
-            setResult(RESULT_OK,intent);
-        }
-        if(WalletBindActivity.TYPE_BINDBANK.equals(type)){
-            Intent intent  = new Intent();
-            intent.putExtra("aid",aid);
-            setResult(RESULT_OK,intent);
-        }
+        setResult();
         finish();
+    }
+
+    private void setResult(){
+        if(SubmitOrderActivity.TYPE_SUBMITORDER.equals(type) ||
+                WalletBindActivity.TYPE_BINDBANK.equals(type)){
+            Intent intent  = new Intent();
+            intent.putExtra("aid",aid);
+            setResult(RESULT_OK,intent);
+        }
     }
 
 

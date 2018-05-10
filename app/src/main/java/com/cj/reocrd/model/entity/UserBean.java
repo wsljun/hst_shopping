@@ -17,6 +17,15 @@ public class UserBean {
     private String token;//云信token
     private String manlevel; //"manlevel": "0 " ,//0 普通消费者 1主管 2主任3经理4总监
     private String num;//我的团队人数
+    private String codeimg; // 分享注册二维码
+
+    public void setCodeimg(String codeimg) {
+        this.codeimg = codeimg;
+    }
+
+    public String getCodeimg() {
+        return codeimg;
+    }
 
     public String getNum() {
         return num;
