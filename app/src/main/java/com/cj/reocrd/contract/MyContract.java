@@ -38,7 +38,7 @@ public interface MyContract {
         public abstract void cardList(String por,String uid);
         public abstract void myCard(String por,String uid);
         public abstract void bindCard(String por,String uid,String bid,String rid,String username,String bankname,String cardsn,String phone);
-        public abstract void walletGet(String por,String uid,String bid,String money);
+        public abstract void walletGet(String por,String uid,String bid,String money,String type);
         public abstract void wealList(String por,String uid);
         public abstract void wealConvert(String por,String uid,String wid);
         public abstract void lotteryLevel(String por,String uid);

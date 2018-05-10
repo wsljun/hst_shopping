@@ -17,6 +17,7 @@ import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.model.entity.Wallet;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.utils.Utils;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -85,9 +86,9 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
         if (UrlConstants.SUCCESE_CODE.equals(response.getStatusCode())) {
             Wallet wallet = (Wallet) response.getResults();
             if (wallet != null) {
-                blance = Double.valueOf(Integer.parseInt(wallet.getBalance()))/100;
-                useableblance = Double.valueOf(Integer.parseInt(wallet.getUseableblance()))/100;
-                freeze = Double.valueOf(Integer.parseInt(wallet.getFreeze()))/100;
+                blance = Utils.formatDouble2(Double.valueOf(wallet.getBalance())/100);
+                useableblance = Utils.formatDouble2( Double.valueOf(wallet.getUseableblance())/100);
+                freeze =  Utils.formatDouble2(Double.valueOf(wallet.getFreeze())/100);
 
                 score = Integer.parseInt(wallet.getScore());
                 stock = Integer.parseInt(wallet.getStock());
@@ -158,7 +159,7 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == WalletGetActivity.WALLET_GET_REQUEST && resultCode == RESULT_OK) {
+        if (requestCode == WalletGetActivity.WALLET_GET_REQUEST && resultCode == RESULT_OK) {
             mPresenter.myWallet(uid);
         }
     }

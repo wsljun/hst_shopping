@@ -262,13 +262,14 @@ public class MyPrresenter extends MyContract.Presenter {
     }
 
     @Override
-    public void walletGet(String por, String uid, String bid, String money) {
+    public void walletGet(String por, String uid, String bid, String money,String type) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("uid", uid);
         if(null != bid){
             map.put("bid", bid);
         }
         map.put("money", money);
+        map.put("type", type);
         ApiModel.getInstance().getData(por, map, BankBean.class, new ApiCallback<String>() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
