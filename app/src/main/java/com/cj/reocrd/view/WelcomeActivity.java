@@ -2,6 +2,7 @@ package com.cj.reocrd.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +50,8 @@ public class WelcomeActivity extends AppCompatActivity implements ViewPager.OnPa
     private ImageView iv_point;
     private ImageView[] ivPointArray;
 
+
+    private MyCount mc;//倒计时类
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +59,10 @@ public class WelcomeActivity extends AppCompatActivity implements ViewPager.OnPa
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//去掉信息栏
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
-        initViewPager();
-        initPoint();
+        mc = new MyCount(3000, 1000);
+        mc.start();
+//        initViewPager();
+//        initPoint();
     }
 
     /**
@@ -156,4 +161,35 @@ public class WelcomeActivity extends AppCompatActivity implements ViewPager.OnPa
     public void onPageScrollStateChanged(int state) {
 
     }
+
+    /**
+     * 定义一个倒计时的内部类
+     */
+    class MyCount extends CountDownTimer {
+        public MyCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish() {
+            //获取手机的imei 存到sp
+            BaseActivity.pid = Utils.getIMEI();
+            // 检查userid是否存在
+            String userid = (String) SPUtils.get(WelcomeActivity.this, UrlConstants.key.USERID, "");
+            //添加到base里，全局用
+            if (TextUtils.isEmpty(userid)) {
+                startActivity(new Intent(WelcomeActivity.this, IndexActivity.class));
+            } else {
+                BaseActivity.uid = userid;
+                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+            }
+            finish();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+    }
+
 }
