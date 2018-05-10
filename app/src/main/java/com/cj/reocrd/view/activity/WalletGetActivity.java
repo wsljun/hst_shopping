@@ -139,11 +139,10 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                 }
                 break;
             case 2:
+                ToastUtil.showToastS(this, response.getMessage());
                 if (UrlConstants.SUCCESE_CODE.equals(response.getStatusCode())) {
                     setResult(RESULT_OK);
                     finish();
-                } else {
-                    ToastUtil.showToastS(this, response.getMessage());
                 }
                 break;
             case 3:

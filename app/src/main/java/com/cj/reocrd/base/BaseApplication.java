@@ -2,10 +2,13 @@ package com.cj.reocrd.base;
 
 
 import android.content.Context;
+import android.os.Build;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
+import com.cj.reocrd.BuildConfig;
 import com.cj.reocrd.api.UrlConstants;
+import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nimlib.sdk.NIMClient;
@@ -48,6 +51,11 @@ public class BaseApplication extends MultiDexApplication {
         }
         //微信分享
         registerWeChat(this);
+        if(BuildConfig.DEBUG){
+            LogUtil.setShow(true);
+        }else{
+            LogUtil.setShow(false);
+        }
     }
 
     public static Context getAppContext() {
