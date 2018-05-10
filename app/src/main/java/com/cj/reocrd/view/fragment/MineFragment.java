@@ -249,24 +249,24 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     }
 
     private void showQRCode() {
-        ImageView imageView = new ImageView(getContext());
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//        imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
-//                , ViewGroup.LayoutParams.MATCH_PARENT));
-        imageView.setLayoutParams(
-                new LinearLayout.LayoutParams(ActivityUtils.getWidth(mActivity)-100,
-                        ActivityUtils.getWidth(mActivity)-100));
-        imageView.setPadding(5,5,5,5);
-        ImageLoaderUtils.display(getContext(), imageView, UrlConstants.BASE_URL + codeImg);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setView(imageView);
-        builder.setPositiveButton(R.string.confirm,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+//        ImageView imageView = new ImageView(getContext());
+//        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+////        imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+////                , ViewGroup.LayoutParams.MATCH_PARENT));
+//        imageView.setLayoutParams(
+//                new LinearLayout.LayoutParams(ActivityUtils.getWidth(mActivity)-100,
+//                        ActivityUtils.getWidth(mActivity)-100));
+//        imageView.setPadding(5,5,5,5);
+//        ImageLoaderUtils.display(getContext(), imageView, UrlConstants.BASE_URL + codeImg);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//        builder.setView(imageView);
+//        builder.setPositiveButton(R.string.confirm,
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
 //        builder.show();
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_qrcode,null);
         ImageView img = view.findViewById(R.id.img_qrcode);
@@ -276,7 +276,6 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 .positiveText("确定")
                 .show();
 
-//                .addContentView();
     }
 
 
