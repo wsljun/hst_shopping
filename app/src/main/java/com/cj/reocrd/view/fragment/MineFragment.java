@@ -5,17 +5,22 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -116,6 +121,8 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     TextView mineTeamNum;
     int type;
     private String codeImg;
+    private PopupWindow popWindow;
+    private View qrView;
 
     @Override
     protected void initPresenter() {
@@ -248,35 +255,31 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
         }
     }
 
-    private void showQRCode() {
-//        ImageView imageView = new ImageView(getContext());
-//        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-////        imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
-////                , ViewGroup.LayoutParams.MATCH_PARENT));
-//        imageView.setLayoutParams(
-//                new LinearLayout.LayoutParams(ActivityUtils.getWidth(mActivity)-100,
-//                        ActivityUtils.getWidth(mActivity)-100));
-//        imageView.setPadding(5,5,5,5);
-//        ImageLoaderUtils.display(getContext(), imageView, UrlConstants.BASE_URL + codeImg);
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//        builder.setView(imageView);
-//        builder.setPositiveButton(R.string.confirm,
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//        builder.show();
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_qrcode,null);
-        ImageView img = view.findViewById(R.id.img_qrcode);
-        ImageLoaderUtils.display(getContext(), img, UrlConstants.BASE_URL + codeImg);
-        new MaterialDialog.Builder(getContext())
-                .customView(view,false)
-                .positiveText("确定")
-                .show();
-
+    private void showQRCode(){
+        if(null == qrView){
+            qrView = getLayoutInflater().inflate(R.layout.dialog_qrcode, null,false);
+            popWindow=new PopupWindow(qrView, ActivityUtils.getWidth(mActivity)-300,
+                    ActivityUtils.getWidth(mActivity)-300,true);
+//            popWindow=new PopupWindow(qrView, WindowManager.LayoutParams.MATCH_PARENT,
+//                    WindowManager.LayoutParams.MATCH_PARENT,true);
+            ImageView img = qrView.findViewById(R.id.img_qrcode);
+            ImageLoaderUtils.display(getContext(), img, UrlConstants.BASE_URL + codeImg);
+            ImageView close = qrView.findViewById(R.id.img_qr_close);
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popWindow.dismiss();
+                }
+            });
+//            popWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            // 设置PopupWindow是否能响应外部点击事件
+            popWindow.setOutsideTouchable(true);
+            // 设置PopupWindow是否能响应点击事件
+            popWindow.setTouchable(true);
+        }
+        popWindow.showAtLocation(mActivity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
+
 
 
     @Override

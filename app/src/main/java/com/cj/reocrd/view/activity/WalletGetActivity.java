@@ -134,7 +134,9 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                     if (bankBean != null && bankBean.getBlist().size() > 0) {
                         banks = bankBean.getBlist();
                         haveBank = true;
-                        setTypeText("请选择银行卡",true);
+                        if(TYPE_BANK.equals(getType)){
+                            setTypeText("请选择银行卡",true);
+                        }
                         initList();
                     }else{
                         haveBank = false;
