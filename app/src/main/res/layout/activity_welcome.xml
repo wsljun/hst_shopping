@@ -30,6 +30,11 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/textview_normal_btn"
         android:text="立即启动"
-        android:textColor="@color/colorWhite" />
+        android:textColor="@color/colorWhite"
+        android:visibility="gone" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/qidong2" />
 </RelativeLayout>
