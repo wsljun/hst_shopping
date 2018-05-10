@@ -1,23 +1,32 @@
 package com.cj.reocrd.view.fragment;
 
+import android.app.AlertDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.model.entity.Zp;
+import com.cj.reocrd.utils.ActivityUtils;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.contract.MyContract;
@@ -106,6 +115,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     @BindView(R.id.mine_team_num)
     TextView mineTeamNum;
     int type;
+    private String codeImg;
 
     @Override
     protected void initPresenter() {
@@ -200,10 +210,11 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
             case R.id.mine_serve:
                 break;
             case R.id.mine_share_url:
-                ClipboardManager cm = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
-                // 将文本内容放到系统剪贴板里。
-                cm.setText(UrlConstants.URL_SHARE_REGISTER + BaseActivity.uid);
-                ToastUtil.showShort("复制成功，可以发给朋友们了。");
+//                ClipboardManager cm = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
+//                // 将文本内容放到系统剪贴板里。
+//                cm.setText(UrlConstants.URL_SHARE_REGISTER + BaseActivity.uid);
+//                ToastUtil.showShort("复制成功，可以发给朋友们了。");
+                showQRCode();
                 break;
             case R.id.mine_userinfo:
             case R.id.mine_icon:
@@ -237,6 +248,38 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
         }
     }
 
+    private void showQRCode() {
+        ImageView imageView = new ImageView(getContext());
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//        imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+//                , ViewGroup.LayoutParams.MATCH_PARENT));
+        imageView.setLayoutParams(
+                new LinearLayout.LayoutParams(ActivityUtils.getWidth(mActivity)-100,
+                        ActivityUtils.getWidth(mActivity)-100));
+        imageView.setPadding(5,5,5,5);
+        ImageLoaderUtils.display(getContext(), imageView, UrlConstants.BASE_URL + codeImg);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setView(imageView);
+        builder.setPositiveButton(R.string.confirm,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+//        builder.show();
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_qrcode,null);
+        ImageView img = view.findViewById(R.id.img_qrcode);
+        ImageLoaderUtils.display(getContext(), img, UrlConstants.BASE_URL + codeImg);
+        new MaterialDialog.Builder(getContext())
+                .customView(view,false)
+                .positiveText("确定")
+                .show();
+
+//                .addContentView();
+    }
+
+
     @Override
     public void onSuccess(Object data) {
         if (mineSwipe.isRefreshing()) {
@@ -250,6 +293,9 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                     if (userBean != null) {
                         if (!TextUtils.isEmpty(userBean.getPhoto())) {
                             ImageLoaderUtils.displayRound(mActivity, mineIcon, UrlConstants.BASE_URL + userBean.getPhoto());
+                        }
+                        if (!TextUtils.isEmpty(userBean.getCodeimg())) {
+                            codeImg = userBean.getCodeimg();
                         }
                         if (!TextUtils.isEmpty(userBean.getName())) {
                             mineUsername.setText(userBean.getName());

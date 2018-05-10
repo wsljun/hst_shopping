@@ -7,17 +7,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.ApiCallback;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.GoodsDetailContract;
 import com.cj.reocrd.contract.MyContract;
+import com.cj.reocrd.model.ApiModel;
 import com.cj.reocrd.model.entity.BankBean;
 import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.model.entity.UserBean;
@@ -29,11 +32,13 @@ import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.MyBankAdapter;
 import com.netease.nim.uikit.business.robot.parser.elements.group.LinearLayout;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
 
 /**
  * Created by Administrator on 2018/3/18.
@@ -129,6 +134,7 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                     if (bankBean != null && bankBean.getBlist().size() > 0) {
                         banks = bankBean.getBlist();
                         haveBank = true;
+                        setTypeText("请选择银行卡",true);
                         initList();
                     }else{
                         haveBank = false;
@@ -194,7 +200,7 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                 getType = TYPE_BANK;
                 walletGetRecycler.setVisibility(View.VISIBLE);
                 if(haveBank){
-                    setTypeText("请选择银行卡",false);
+                    setTypeText("请选择银行卡",true);
                 }else{
                     setTypeText("请先绑定银行卡",true);
                 }
@@ -307,14 +313,60 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        type = 2;// todo bank = null
-                        if(TYPE_ALIPAY.equals(getType)){
-                            mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, null, money,"1");
-                        }else{// 银行卡提现
-                            mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, bank.getId(), money,"2");
-                        }
+                       inputPWD();
                     }
                 });
         builder.show();
     }
+
+    private void inputPWD() {
+        final EditText inputServer = new EditText(getContext());
+        inputServer.setLines(1);
+        inputServer.setMaxEms(18);
+        inputServer.setPadding(50, 50, 50, 50);
+        inputServer.setFocusable(true);
+        inputServer.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("输入密码").setView(inputServer).setNegativeButton(R.string.cancel, null);
+        builder.setPositiveButton(R.string.confirm,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String inputName = inputServer.getText().toString();
+                        String phone = (String) SPUtils.get(WalletGetActivity.this, SPUtils.SpKey.USER_PHONE, "");
+                        loginRequest(UrlConstants.UrLType.LOGIN_PWD, phone, inputName);
+                    }
+                });
+        builder.show();
+    }
+
+    public void loginRequest(String por, String phone, String password) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("phone", phone);
+        map.put("password", password);
+        ApiModel.getInstance().getData(por, map, UserBean.class, new ApiCallback<String>() {
+
+
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                    type = 2;
+                    if(TYPE_ALIPAY.equals(getType)){
+                        mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, null, money,"1");
+                    }else{// 银行卡提现
+                        mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, bank.getId(), money,"2");
+                    }
+                }else{
+                    ToastUtil.showShort(apiResponse.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                inputPWD();
+            }
+        });
+    }
+
+
 }
