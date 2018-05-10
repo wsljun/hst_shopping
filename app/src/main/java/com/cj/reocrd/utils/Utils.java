@@ -100,7 +100,7 @@ public class Utils {
     }
 
     public static Double formatDouble2(double d) {
-        BigDecimal bg = new BigDecimal(d).setScale(2, RoundingMode.UP);
+        BigDecimal bg = new BigDecimal(d).setScale(2, RoundingMode.HALF_UP);
         return bg.doubleValue();
     }
 }
