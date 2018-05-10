@@ -70,10 +70,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
+        <!-- 透明主题去掉 android:theme="@style/Theme.MyAppTheme"-->
         <activity
-            android:name=".view.WelcomeActivity"
-            android:theme="@style/Theme.MyAppTheme">
+            android:name=".view.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
