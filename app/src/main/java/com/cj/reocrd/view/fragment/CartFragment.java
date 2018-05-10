@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.cj.reocrd.base.BaseActivity.uid;
+import static com.cj.reocrd.utils.Utils.formatDouble2;
 import static com.cj.reocrd.view.adapter.CarAdapter.checkBoxList;
 
 /**
@@ -166,7 +167,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
                 }
             }
         }
-        tvGoodsTotalPrice.setText(getString(R.string.RMB)+totalPrice);
+        tvGoodsTotalPrice.setText(getString(R.string.RMB)+formatDouble2(totalPrice));
         // 设置完选中状态后更新adapter todo
 //        carAdapter.setNewData(cartGoodsList);
     }
@@ -181,7 +182,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
         int count = Integer.parseInt(num);
         double itemPrice = p*count;
         totalPrice = totalPrice+itemPrice;
-        return totalPrice;
+        return formatDouble2(totalPrice);
     }
 
 
@@ -226,7 +227,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
             Bundle b = new Bundle();
             b.putString(SubmitOrderActivity.BUNDLE_KEY_OID,addressBean.getOid());
             b.putString(SubmitOrderActivity.BUNDLE_KEY_TYPE,SubmitOrderActivity.TYPE_FOR_CART);
-            b.putString(SubmitOrderActivity.BUNDLE_KEY_TOTALPRICE,String.valueOf(totalPrice));
+            b.putString(SubmitOrderActivity.BUNDLE_KEY_TOTALPRICE,String.valueOf(formatDouble2(totalPrice)));
             startActivity(SubmitOrderActivity.class,b);
         }
     }

@@ -1,5 +1,6 @@
 package com.cj.reocrd.model.entity;
 
+import com.cj.reocrd.utils.Utils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -99,8 +100,7 @@ public class OrderDetail {
     }
 
     public void setAmount(String amount) {
-        int p = (Integer.parseInt(amount))/100;
-        amount = String.valueOf(p);
+        amount = Utils.strDivide(amount);
         this.amount = amount;
     }
 
@@ -109,8 +109,7 @@ public class OrderDetail {
     }
 
     public void setExamount(String examount) {
-        int p = (Integer.parseInt(examount))/100;
-        examount = String.valueOf(p);
+        examount = Utils.strDivide(examount);
         this.examount = examount;
     }
 
@@ -119,8 +118,7 @@ public class OrderDetail {
     }
 
     public void setAllamount(String allamount) {
-        int p = (Integer.parseInt(allamount))/100;
-        allamount = String.valueOf(p);
+        allamount = Utils.strDivide(allamount);
         this.allamount = allamount;
     }
 

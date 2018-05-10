@@ -1,5 +1,7 @@
 package com.cj.reocrd.model.entity;
 
+import com.cj.reocrd.utils.Utils;
+
 /**
  * Created by Lyndon.Li on 2018/3/29.
  * 商品信息 ，除购物车外
@@ -72,8 +74,7 @@ public class GoodsBean {
     }
 
     public void setPrice(String price) {
-        int p = (Integer.parseInt(price))/100;
-        price = String.valueOf(p);
+        price = Utils.strDivide(price);
         this.price = price;
     }
 

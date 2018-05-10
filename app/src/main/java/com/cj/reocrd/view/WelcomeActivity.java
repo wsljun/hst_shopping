@@ -41,9 +41,6 @@ public class WelcomeActivity extends BaseActivity {
         BaseActivity.pid = Utils.getIMEI();
         // 检查userid是否存在
         String userid = (String) SPUtils.get(this, UrlConstants.key.USERID, "");
-        // todo 检查更新
-//        isCancle = (boolean) SPUtils.get(this,SPUtils.SpKey.UPDATE_IS_CANCLE,false);
-//        checkUpdate(UpdateUtil.getVerName(this));
         //添加到base里，全局用
         if (TextUtils.isEmpty(userid)) {
             startActivity(IndexActivity.class);
@@ -62,27 +59,6 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     public void initPresenter() {
 
-    }
-
-    public void checkUpdate(String version) {
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("type","1"); // 1,android .2.ios
-        map.put("version",version);
-        ApiModel.getInstance().getData(UrlConstants.UrLType.CHECK_APP_UPDATE, map
-                , HomeBean.class, new ApiCallback<HomeBean>() {
-                    @Override
-                    public void onSuccess(ApiResponse apiResponse) {
-                            // "statusCode":“1”,     //1.暂无新版本 2 请更新App
-                            if("2".equals(apiResponse.getStatusCode())){
-                                HomeBean homeBean = (HomeBean) apiResponse.getResults();
-//                                mView.onSuccess(homeBean.getAppInfo());
-                            }
-                    }
-
-                    @Override
-                    public void onFailure(Call call, Throwable t) {
-                    }
-                });
     }
 
 }

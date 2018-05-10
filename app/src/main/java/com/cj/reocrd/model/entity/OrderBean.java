@@ -1,5 +1,7 @@
 package com.cj.reocrd.model.entity;
 
+import com.cj.reocrd.utils.Utils;
+
 import java.util.List;
 
 /**
@@ -53,8 +55,7 @@ public class OrderBean {
     }
 
     public void setAmount(String amount) {
-        int p = (Integer.parseInt(amount))/100;
-        amount = String.valueOf(p);
+        amount = Utils.strDivide(amount);
         this.amount = amount;
     }
 
@@ -63,8 +64,7 @@ public class OrderBean {
     }
 
     public void setExamount(String examount) {
-        int p = (Integer.parseInt(examount))/100;
-        examount = String.valueOf(p);
+        examount = Utils.strDivide(examount);
         this.examount = examount;
     }
 
@@ -73,8 +73,7 @@ public class OrderBean {
     }
 
     public void setAllamount(String allamount) {
-        int p = (Integer.parseInt(allamount))/100;
-        allamount = String.valueOf(p);
+        allamount = Utils.strDivide(allamount);
         this.allamount = allamount;
     }
 
@@ -193,8 +192,7 @@ public class OrderBean {
         }
 
         public void setTotalPrice(String totalPrice) {
-            int p = (Integer.parseInt(totalPrice))/100;
-            totalPrice = String.valueOf(p);
+            totalPrice = Utils.strDivide(totalPrice);
             this.totalPrice = totalPrice;
         }
     }
