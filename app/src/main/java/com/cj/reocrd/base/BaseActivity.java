@@ -61,7 +61,7 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         doBeforeSetcontentView();
-        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX); // 设置沙箱环境
+//        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX); //todo 设置沙箱环境,正式上线时必须注销掉
         setContentView(R.layout.activity_base);
         frameLayout = findViewById(R.id.activity_base_fl);
         mContext = this.getApplicationContext();

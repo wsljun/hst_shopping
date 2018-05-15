@@ -56,6 +56,7 @@ public class AllTypeAdapter extends RecyclerView.Adapter<AllTypeAdapter.MyHolder
     public void onBindViewHolder(MyHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.tvTypeName.setText(mDatas.get(position).getName());
         if(!toolsTextViews.contains(holder.tvTypeName)){
+            holder.tvTypeName.setTag(holder.getLayoutPosition());
             toolsTextViews.add(holder.tvTypeName);
         }
         if(position == 0){
@@ -66,7 +67,7 @@ public class AllTypeAdapter extends RecyclerView.Adapter<AllTypeAdapter.MyHolder
                 @Override
                 public void onClick(View v) {
                     int position = holder.getLayoutPosition();
-                    changeTextColor(position);
+                    changeTextColor((Integer) holder.tvTypeName.getTag());
                     mOnItemClickListener.onItemClick(holder.itemView, position);
                 }
             });
@@ -91,16 +92,18 @@ public class AllTypeAdapter extends RecyclerView.Adapter<AllTypeAdapter.MyHolder
     /**
      * 改变textView的颜色
      *
-     * @param id
+     * @param tag
      */
-    private void changeTextColor(int id) {
+    private void changeTextColor(int tag) {
         for (int i = 0; i < toolsTextViews.size(); i++) {
-            if (i != id) {
+            int t = (int) toolsTextViews.get(i).getTag();
+            if (t != tag) {
                 toolsTextViews.get(i).setBackgroundResource(android.R.color.transparent);
                 toolsTextViews.get(i).setTextColor(0xff000000);
+            }else{
+                toolsTextViews.get(i).setBackgroundResource(android.R.color.white);
             }
         }
-        toolsTextViews.get(id).setBackgroundResource(android.R.color.white);
 //        toolsTextViews.get(id).setTextColor(0xffff5d5e);
     }
 }
