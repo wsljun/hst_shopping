@@ -10,7 +10,6 @@ import android.util.Log;
 import com.cj.reocrd.api.UrlConstants;
 
 /**
- * Created by Lyndon.Li on 2018/4/26.
  */
 
 public class UpdateUtil {
@@ -65,7 +64,7 @@ public class UpdateUtil {
                 //显示在下载界面，即下载后的文件在系统下载管理里显示
                 down.setVisibleInDownloadsUi(true);
                 //设置下载标题
-                down.setTitle("好善堂");
+                down.setTitle("好膳堂");
                 //显示Notification
                 down.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
                 //设置下载后文件存放的位置，在SDCard/Android/data/你的应用的包名/files/目录下面

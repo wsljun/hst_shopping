@@ -76,7 +76,7 @@ public class HomePresenter extends HomeContract.Presenter {
                                 HomeBean homeBean = (HomeBean) apiResponse.getResults();
                                 mView.onSuccess(homeBean.getAppInfo());
                             }else{
-                                mView.onFailureMessage(apiResponse.getMessage());
+//                                mView.onFailureMessage(apiResponse.getMessage());
                             }
                         }
                     }

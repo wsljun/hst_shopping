@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.alipay.sdk.app.PayTask;
 import com.cj.reocrd.utils.TimeUtils;
+import com.netease.nim.uikit.common.util.sys.TimeUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,11 +84,11 @@ public class OrderInfoUtil2_0 {
 
         keyValues.put("charset", "utf-8");
 
-        keyValues.put("method", "alipay.trade.app.pay");
+        keyValues.put("method", "alipay.trade.app.pay");// alipay.trade.app.pay
 
         keyValues.put("sign_type", rsa2 ? "RSA2" : "RSA");
 
-        keyValues.put("timestamp", "2016-07-29 16:55:53");
+        keyValues.put("timestamp", TimeUtil.getNowDatetime()); //"2016-07-29 16:55:53"
 
         keyValues.put("version", "1.0");
 
