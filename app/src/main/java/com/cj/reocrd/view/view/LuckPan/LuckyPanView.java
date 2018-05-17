@@ -49,9 +49,9 @@ public class LuckyPanView extends SurfaceView implements Callback, Runnable
 	/**
 	 * 与文字对应的图片
 	 */
-	private int[] mImgs = new int[] {R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round,
-			R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round,
-			R.mipmap.ic_launcher_round};
+	private int[] mImgs = new int[] {R.mipmap.ic_launcher, R.mipmap.ic_launcher,
+			R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher,
+			R.mipmap.ic_launcher};
 
 	/**
 	 * 与文字对应图片的bitmap数组
@@ -339,7 +339,6 @@ public class LuckyPanView extends SurfaceView implements Callback, Runnable
 	/**
 	 * 绘制文本
 	 * 
-	 * @param rect
 	 * @param startAngle
 	 * @param sweepAngle
 	 * @param string

@@ -165,4 +165,14 @@ public class DESedeUtils {
 //		System.out.println("请求参数-->>" + sendData);
 	}
 
+	@Test
+	private  void mergerDex(){
+//		val dexA = DexBuffer(File(classes1DexFilePath))
+//		val dexB = DexBuffer(File(classes2DexFilePath))
+//		val dexMerger = DexMerger(dexA, dexB, CollisionPolicy.FAIL)
+//		val dexM = dexMerger.merge()
+//		dexM.writeTo(File(classesDexFilePath))
+
+	}
+
 }
