@@ -1,55 +1,55 @@
 package com.cj.reocrd.view.fragment;
 
-import android.app.AlertDialog;
-import android.content.ClipboardManager;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
-import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseFragment;
-import com.cj.reocrd.model.entity.Zp;
-import com.cj.reocrd.utils.ActivityUtils;
-import com.cj.reocrd.utils.SPUtils;
-import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.entity.UserBean;
+import com.cj.reocrd.model.entity.Zp;
 import com.cj.reocrd.presenter.MyPrresenter;
+import com.cj.reocrd.utils.ActivityUtils;
 import com.cj.reocrd.utils.ImageLoaderUtils;
+import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.activity.CollectActivity;
 import com.cj.reocrd.view.activity.FuliActivity;
 import com.cj.reocrd.view.activity.MyActivity;
+import com.cj.reocrd.view.activity.MyFansActivity;
 import com.cj.reocrd.view.activity.MyTeamActivity;
 import com.cj.reocrd.view.activity.OrderActivity;
-import com.cj.reocrd.view.activity.MyFansActivity;
 import com.cj.reocrd.view.activity.WalletActivity;
-import com.cj.reocrd.view.activity.WalletGetActivity;
 import com.cj.reocrd.view.activity.WebViewActivity;
 import com.cj.reocrd.view.activity.YongJinActivity;
 import com.cj.reocrd.view.activity.ZPActivity;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.SendMessageToWX;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.sdk.openapi.WXImageObject;
+import com.tencent.mm.sdk.openapi.WXMediaMessage;
+import com.tencent.mm.sdk.platformtools.Util;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -60,7 +60,8 @@ import static com.cj.reocrd.base.BaseActivity.uid;
  * Created by Administrator on 2018/3/16.
  */
 
-public class MineFragment extends BaseFragment<MyPrresenter> implements MyContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class MineFragment extends BaseFragment<MyPrresenter> implements MyContract.View,
+        SwipeRefreshLayout.OnRefreshListener ,View.OnClickListener {
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -119,10 +120,26 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     SwipeRefreshLayout mineSwipe;
     @BindView(R.id.mine_team_num)
     TextView mineTeamNum;
+    @BindView(R.id.img_share)
+    ImageView imgShare;
+
     int type;
     private String codeImg;
     private PopupWindow popWindow;
     private View qrView;
+    private boolean isTimelineCb; // 是否是发送朋友圈
+    private File picFile;
+
+    private static final String APP_ID = "wxb02990e3e223e34a";    //这个APP_ID就是注册APP的时候生成的
+
+    private static final String APP_SECRET = "0a77fdf8f447cee2bdecd66d7e6dd266";
+
+    public static IWXAPI wxapi;      //这个对象是专门用来向微信发送数据的一个重要接口,使用强引用持有,所有的信息发送都是基于这个对象的
+
+    public void registerWeChat(Context context) {   //向微信注册app
+        wxapi = WXAPIFactory.createWXAPI(context, APP_ID, true);
+        wxapi.registerApp(APP_ID);
+    }
 
     @Override
     protected void initPresenter() {
@@ -148,6 +165,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     @Override
     public void initData() {
         super.initData();
+        registerWeChat(getContext());
         type = 1;
         mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
     }
@@ -221,7 +239,15 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
 //                // 将文本内容放到系统剪贴板里。
 //                cm.setText(UrlConstants.URL_SHARE_REGISTER + BaseActivity.uid);
 //                ToastUtil.showShort("复制成功，可以发给朋友们了。");
-                showQRCode();
+//                ImageLoaderUtils.display(getContext(), imgShare, UrlConstants.BASE_URL + codeImg);
+                imgShare.setVisibility(View.VISIBLE);
+                imgShare.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        showDialog();
+                        return false;
+                    }
+                });
                 break;
             case R.id.mine_userinfo:
             case R.id.mine_icon:
@@ -254,12 +280,46 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
         }
     }
+    private Dialog dialog;
+    private void showDialog() {
+        View view = mActivity.getLayoutInflater().inflate(R.layout.share_choose_dialog, null);
+        Button btn_save = (Button) view.findViewById(R.id.btn_save);
+        Button btn_share_timeline = (Button) view.findViewById(R.id.btn_share_timeline);
+        Button btn_share_fd = (Button) view.findViewById(R.id.btn_share_fd);
+        Button btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
 
+        btn_save.setOnClickListener(this);
+        btn_share_timeline.setOnClickListener(this);
+        btn_share_fd.setOnClickListener(this);
+        btn_cancel.setOnClickListener(this);
+        dialog = new Dialog(getContext(), R.style.transparentFrameWindowStyle);
+        dialog.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        Window window = dialog.getWindow();
+        // 设置显示动画
+        if (window != null) {
+            window.setWindowAnimations(R.style.main_menu_animstyle);
+            WindowManager.LayoutParams wl = window.getAttributes();
+            wl.x = 0;
+            wl.y = mActivity.getWindowManager().getDefaultDisplay().getHeight();
+            // 以下这两句是为了保证按钮可以水平满屏
+            wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            // 设置显示位置
+            dialog.onWindowAttributesChanged(wl);
+        }
+        // 设置点击外围解散
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+    }
+
+
+
+    // todo 分享到微信
     private void showQRCode(){
         if(null == qrView){
             qrView = getLayoutInflater().inflate(R.layout.dialog_qrcode, null,false);
-            popWindow=new PopupWindow(qrView, ActivityUtils.getWidth(mActivity)-300,
-                    ActivityUtils.getWidth(mActivity)-300,true);
+            popWindow=new PopupWindow(qrView, ActivityUtils.getWidth(mActivity),
+                    ActivityUtils.getWidth(mActivity),true);
 //            popWindow=new PopupWindow(qrView, WindowManager.LayoutParams.MATCH_PARENT,
 //                    WindowManager.LayoutParams.MATCH_PARENT,true);
             ImageView img = qrView.findViewById(R.id.img_qrcode);
@@ -280,6 +340,31 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
         popWindow.showAtLocation(mActivity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
 
+    public void sharePicByFile() {
+        if (null == picFile) {return;}
+        Bitmap bmp = BitmapFactory.decodeFile(picFile.getAbsolutePath());
+//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        WXImageObject imgObj = new WXImageObject(bmp);
+        WXMediaMessage msg = new WXMediaMessage();
+        msg.mediaObject = imgObj;
+
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 100, 100, true);
+        bmp.recycle();
+        msg.thumbData = Util.bmpToByteArray(thumbBmp, true);  // 设置所图；
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+//        req.transaction = buildTransaction("img");
+        req.message = msg;
+        req.scene = isTimelineCb ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+        wxapi.sendReq(req);
+        imgShare.setVisibility(View.GONE);
+    }
+
+
+
+
+
+
 
 
     @Override
@@ -298,6 +383,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                         }
                         if (!TextUtils.isEmpty(userBean.getCodeimg())) {
                             codeImg = userBean.getCodeimg();
+                            saveImage(codeImg);
                         }
                         if (!TextUtils.isEmpty(userBean.getName())) {
                             mineUsername.setText(userBean.getName());
@@ -335,8 +421,26 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                     ToastUtil.showToastS(mActivity, response.getMessage());
                 }
                 break;
+            default:
+                break;
         }
 
+    }
+
+    private void saveImage(String codeImg) {
+        if(TextUtils.isEmpty(codeImg)){
+            return;
+        }
+        String imgUri  = UrlConstants.BASE_URL + codeImg;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(null == picFile){
+                    Bitmap b = ImageLoaderUtils.getbitmap(imgUri);
+                    picFile = ImageLoaderUtils.saveImage(b);
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -349,5 +453,39 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
         mineSwipe.setRefreshing(true);
         type = 1;
         mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
+    }
+
+    @Override
+    public void onClick(View v) {
+        // todo ,保存，分享到朋友圈，分享给朋友，取消
+        int id = v.getId();
+        switch (id){
+            case R.id.btn_save:
+                if (null == picFile) {
+                    // todo save img
+                    saveImage(codeImg);
+                }else{
+                    ToastUtil.showShort("保存成功");
+                    imgShare.setVisibility(View.GONE);
+                }
+//                File appDir = new File(Environment.getExternalStorageDirectory(), "hst");
+//                File [] fs = appDir.listFiles();
+//                picFile = fs[0];
+                break;
+            case R.id.btn_share_timeline:
+                isTimelineCb = true;
+                sharePicByFile();
+                break;
+            case R.id.btn_share_fd:
+                isTimelineCb = false;
+                sharePicByFile();
+                break;
+            case R.id.btn_cancel:
+                imgShare.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
+        dialog.dismiss();
     }
 }
