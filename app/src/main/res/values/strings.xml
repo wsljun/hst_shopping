@@ -6,7 +6,7 @@
 
     <string name="login">登录</string>
     <string name="login_phone_hint">请输入手机号</string>
-    <string name="login_recommend_hint">推荐码（选填）</string>
+    <string name="login_recommend_hint">推荐码</string>
     <string name="login_pwd_hint">请输入密码</string>
     <string name="login_lose">忘记密码？</string>
     <string name="login_title">欢迎登陆</string>

@@ -176,8 +176,10 @@ public class WelcomeActivity extends AppCompatActivity implements ViewPager.OnPa
             BaseActivity.pid = Utils.getIMEI();
             // 检查userid是否存在
             String userid = (String) SPUtils.get(WelcomeActivity.this, UrlConstants.key.USERID, "");
+            String account = (String) SPUtils.get(WelcomeActivity.this, SPUtils.SpKey.IM_ACCID, "");
+            String token = (String) SPUtils.get(WelcomeActivity.this, SPUtils.SpKey.IM_TOKEN, "");
             //添加到base里，全局用
-            if (TextUtils.isEmpty(userid)) {
+            if (TextUtils.isEmpty(userid)||TextUtils.isEmpty(account)||TextUtils.isEmpty(token)) {
                 startActivity(new Intent(WelcomeActivity.this, IndexActivity.class));
             } else {
                 BaseActivity.uid = userid;

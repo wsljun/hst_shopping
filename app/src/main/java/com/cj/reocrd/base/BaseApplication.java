@@ -2,12 +2,10 @@ package com.cj.reocrd.base;
 
 
 import android.content.Context;
-import android.os.Build;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
 import com.cj.reocrd.BuildConfig;
-import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
 import com.netease.nim.uikit.api.NimUIKit;
@@ -17,7 +15,6 @@ import com.netease.nimlib.sdk.util.NIMUtil;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zhy.autolayout.config.AutoLayoutConifg;
-
 /**
  * MultiDexApplication防止方法数过多
  */
@@ -42,12 +39,13 @@ public class BaseApplication extends MultiDexApplication {
         AutoLayoutConifg.getInstance().useDeviceSize();
 //        ZXingLibrary.initDisplayOpinion(this);
         // SDK初始化（启动后台服务，若已经存在用户登录信息， SDK 将完成自动登录）
-        NIMClient.init(this, loginInfo(), null);
+        NIMClient.init(this, null, null);
         if (NIMUtil.isMainProcess(this)) {
             // 注意：以下操作必须在主进程中进行
             // 1、UI相关初始化操作
             NimUIKit.init(this);
-            // 2、相关Service调用
+            // 初始化消息提醒
+//            NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
         }
         //微信分享
         registerWeChat(this);
