@@ -1,27 +1,18 @@
 package com.cj.reocrd.view.activity;
 
 import android.Manifest;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseFragment;
-import com.cj.reocrd.base.BaseFragmentAdapter;
-import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
-import com.cj.reocrd.utils.UpdateUtil;
 import com.cj.reocrd.view.adapter.ViewPagerAdapter;
 import com.cj.reocrd.view.fragment.AllGoodsFragment;
 import com.cj.reocrd.view.fragment.CartFragment;
@@ -30,9 +21,13 @@ import com.cj.reocrd.view.fragment.HomeFragment;
 import com.cj.reocrd.view.fragment.MineFragment;
 import com.cj.reocrd.view.view.MViewPager;
 import com.jpeng.jptabbar.JPTabBar;
-import com.jpeng.jptabbar.OnTabSelectListener;
 import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
+import com.netease.nim.uikit.impl.preference.UserPreferences;
+import com.netease.nimlib.sdk.AbortableFuture;
+import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
+import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -191,7 +186,6 @@ public class MainActivity extends BaseActivity {
 
                     }
                 });
-
         doLogin();
     }
 
@@ -223,21 +217,24 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LogUtil.e(TAG, "onDestroy: ");
     }
+
+    private AbortableFuture<LoginInfo> loginRequest;
 
     public void doLogin() {
         // 从本地读取上次登录成功时保存的用户登录信息
         String account = (String) SPUtils.get(this, SPUtils.SpKey.IM_ACCID, "");
         String token = (String) SPUtils.get(this, SPUtils.SpKey.IM_TOKEN, "");
-        LoginInfo info = new LoginInfo(account, token);
-        NimUIKit.login(info, new RequestCallback<LoginInfo>() {
+        loginRequest = NimUIKit.login(new LoginInfo(account, token), new RequestCallback<LoginInfo>() {
             @Override
             public void onSuccess(LoginInfo loginInfo) {
                 //启动单聊界面
 //                NimUIKit.startP2PSession(MyFansActivity.this, accid);
                 // 启动群聊界面
                 // NimUIKit.startTeamSession(MainActivity.this, "群ID");
+                onLoginDone();
+                //开启消息通知
+                initNotificationConfig();
             }
 
             @Override
@@ -268,14 +265,23 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    private void onLoginDone() {
+        loginRequest = null;
+        DialogMaker.dismissProgressDialog();
+    }
+    private void initNotificationConfig() {
+        // 初始化消息提醒
+        NIMClient.toggleNotification(true);
+    }
     // 用来计算返回键的点击间隔时间
     private long exitTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getAction() == KeyEvent.ACTION_DOWN) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
-                ToastUtil.showShort( "再按一次退出程序");
+                ToastUtil.showShort("再按一次退出程序");
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();

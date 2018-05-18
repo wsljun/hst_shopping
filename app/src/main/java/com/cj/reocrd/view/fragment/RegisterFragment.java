@@ -169,10 +169,17 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                     UserBean userBean = (UserBean) response.getResults();
                     if (userBean != null) {
                         LogUtil.e(TAG, userBean.getId());
-                        SPUtils.put(mActivity, UrlConstants.key.USERID, userBean.getId());
-                        BaseActivity.uid = userBean.getId();
-                        startActivity(MainActivity.class);
-                        mActivity.finish();
+                        if(userBean.getId()==null||userBean.getAccid()==null||userBean.getToken()==null){
+                            getIndexActivity().getVpLogin().setCurrentItem(1);
+                        }else{
+                            SPUtils.put(mActivity, UrlConstants.key.USERID, userBean.getId());
+                            SPUtils.put(mActivity, SPUtils.SpKey.USER_PHONE, phone);
+                            SPUtils.put(mActivity, SPUtils.SpKey.IM_ACCID, userBean.getAccid());
+                            SPUtils.put(mActivity, SPUtils.SpKey.IM_TOKEN, userBean.getToken());
+                            BaseActivity.uid = userBean.getId();
+                            startActivity(MainActivity.class);
+                            mActivity.finish();
+                        }
                     }
                 }
                 break;
