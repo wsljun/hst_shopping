@@ -183,4 +183,10 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
 //            showType();
         }
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        setUserVisibleHint(false);
+    }
 }

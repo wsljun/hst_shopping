@@ -9,6 +9,7 @@ import android.os.Message;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -32,7 +33,9 @@ import com.cj.reocrd.utils.alipay.OrderInfoUtil2_0;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.alipay.PayResult;
+import com.cj.reocrd.view.dialog.LoadingDialog;
 
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,6 +90,8 @@ public class PayActivity extends BaseActivity {
     private static final int SDK_PAY_FLAG = 1001;
     private String RSA_PRIVATE = "";
     private   String  aoid;
+    private int serversLoadTimes = 0;
+    private int maxLoadTimes = 3;
 
     @Override
     public int getLayoutId() {
@@ -242,11 +247,11 @@ public class PayActivity extends BaseActivity {
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                         tvBtnPay.setClickable(false);
                         sendPaySuccess();
                     } else {
-                        Toast.makeText(PayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(PayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                         tvBtnPay.setClickable(true);
                     }
                     break;
@@ -316,6 +321,7 @@ public class PayActivity extends BaseActivity {
      *  : 余额支付时提示属于支付密码（登陆密码），需先判断余额是否充足（需在本地保存余额）
      */
     private void sendPaySuccess() {
+        LoadingDialog.showDialogForLoading(PayActivity.this,"正在同步支付信息",false);
         HashMap<String, Object> map = new HashMap<>();
         map.put("orderid", oid);
         map.put("uid", uid);
@@ -327,14 +333,26 @@ public class PayActivity extends BaseActivity {
                 //payType	1支付宝 2微信 3余额
                 // sumAmount	金额
                 // 展示支付成功view，
-                ToastUtil.showShort(apiResponse.getMessage());
+                LoadingDialog.cancelDialogForLoading();
                 if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
+                    Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                     showPayOverView();
+                }else{
+                    ToastUtil.showShort(apiResponse.getMessage());
+                    tvBtnPay.setClickable(true);
                 }
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(Call call, Throwable e) {
+                //如果超时并未超过指定次数，则重新连接
+                LoadingDialog.cancelDialogForLoading();
+                if(e.toString().equals("java.net.SocketTimeoutException")
+                        && serversLoadTimes<maxLoadTimes){
+                    serversLoadTimes++;
+                    LogUtil.e("onFailure","serversLoadTimes= "+serversLoadTimes);
+                    sendPaySuccess();
+                }
                 rlOrderPayOver.setVisibility(View.GONE);
             }
         });
@@ -386,6 +404,15 @@ public class PayActivity extends BaseActivity {
         });
     }
 
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }
+        return false;
+    }
 
 
 }

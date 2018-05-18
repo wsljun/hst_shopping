@@ -437,7 +437,9 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
             public void run() {
                 if(null == picFile){
                     Bitmap b = ImageLoaderUtils.getbitmap(imgUri);
-                    picFile = ImageLoaderUtils.saveImage(b);
+                    if(null != b){
+                        picFile = ImageLoaderUtils.saveImage(b);
+                    }
                 }
             }
         }).start();
