@@ -8,6 +8,15 @@ public class PayKeys {
     private String privatekey ;
     private String publickey ;
     private String url ;
+    private String outTradeNo;
+
+    public void setOutTradeNo(String outTradeNo) {
+        this.outTradeNo = outTradeNo;
+    }
+
+    public String getOutTradeNo() {
+        return outTradeNo;
+    }
 
     public String getAppid() {
         return appid;

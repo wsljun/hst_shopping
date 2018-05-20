@@ -3,6 +3,7 @@ package com.cj.reocrd.utils.alipay;
 import android.app.Activity;
 
 import com.alipay.sdk.app.PayTask;
+import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.utils.TimeUtils;
 import com.netease.nim.uikit.common.util.sys.TimeUtil;
 
@@ -70,9 +71,7 @@ public class OrderInfoUtil2_0 {
 
     /**
      * 构造支付订单参数列表
-     * @param pid
      * @param app_id
-     * @param target_id
      * @return
      */
     public static Map<String, String> buildOrderParamMap(String app_id, boolean rsa2,String bizContent) {
@@ -89,6 +88,7 @@ public class OrderInfoUtil2_0 {
         keyValues.put("sign_type", rsa2 ? "RSA2" : "RSA");
 
         keyValues.put("timestamp", TimeUtil.getNowDatetime()); //"2016-07-29 16:55:53"
+        keyValues.put("notify_url", UrlConstants.URL_ALIPAY_RESULT); //"2016-07-29 16:55:53"
 
         keyValues.put("version", "1.0");
 

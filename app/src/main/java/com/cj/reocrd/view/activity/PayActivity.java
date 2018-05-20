@@ -92,6 +92,8 @@ public class PayActivity extends BaseActivity {
     private   String  aoid;
     private int serversLoadTimes = 0;
     private int maxLoadTimes = 3;
+    private String phone;
+    private String OutTradeNo;
 
     @Override
     public int getLayoutId() {
@@ -103,6 +105,7 @@ public class PayActivity extends BaseActivity {
         super.initData();
         oid = getIntent().getStringExtra(BUNDLE_KEY_OID);
         orderPrice = getIntent().getStringExtra(BUNDLE_KEY_PRICE);
+        phone = (String) SPUtils.get(this, SPUtils.SpKey.USER_PHONE, "");
         getPayKey();
     }
 
@@ -157,6 +160,7 @@ public class PayActivity extends BaseActivity {
                 rbPayAlipay.setChecked(true);
                 rbPayOther.setChecked(false);
                 rbWechatPay.setChecked(false);
+                getOutTradeNo();
                 break;
             case R.id.rb_wechat_pay:
                 payWay = TYPE_WECHAT;
@@ -203,7 +207,7 @@ public class PayActivity extends BaseActivity {
         //秘钥验证的类型 true:RSA2 false:RSA
         boolean rsa = true;
         //构造支付订单参数列表
-        aoid = OrderInfoUtil2_0.getOutTradeNo();
+        aoid = OutTradeNo;//OrderInfoUtil2_0.getOutTradeNo();
         LogUtil.d("alipay","aoid= "+aoid);
         String bizContent = OrderInfoUtil2_0.buildBizConetent(orderPrice,aoid);
         Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(APPID, rsa,bizContent);
@@ -247,9 +251,10 @@ public class PayActivity extends BaseActivity {
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
-//                        Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                         tvBtnPay.setClickable(false);
-                        sendPaySuccess();
+                        showPayOverView();
+//                        sendPaySuccess();
                     } else {
 //                        Toast.makeText(PayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                         tvBtnPay.setClickable(true);
@@ -288,7 +293,6 @@ public class PayActivity extends BaseActivity {
 
     private void doLogin(String password) {
         HashMap<String, Object> map = new HashMap<>();
-        String phone = (String) SPUtils.get(this, SPUtils.SpKey.USER_PHONE, "");
         map.put("phone", phone);
         map.put("password", password);
         ApiModel.getInstance().getData(UrlConstants.UrLType.LOGIN_PWD, map, UserBean.class, new ApiCallback<String>() {
@@ -412,6 +416,29 @@ public class PayActivity extends BaseActivity {
             return true;
         }
         return false;
+    }
+
+
+    private void getOutTradeNo() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("orderid", oid);
+        map.put("payType", payWay);
+        map.put("phone", phone);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_OUT_TRADE_NO, map, PayKeys.class, new ApiCallback() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
+                    PayKeys payKeys = (PayKeys) apiResponse.getResults();
+                    if(!TextUtils.isEmpty(payKeys.getOutTradeNo())){
+                        OutTradeNo = payKeys.getOutTradeNo();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+            }
+        });
     }
 
 

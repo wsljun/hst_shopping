@@ -13,6 +13,7 @@ public class UrlConstants {
     public final static String URL_GOODS_DETAIL = BASE_URL+"api/meDetail?id=";
     public final static String URL_SHARE_REGISTER = BASE_URL+"api/appRegister?code=";
     public final static String URL = "app/outinterface";
+    public final static String URL_ALIPAY_RESULT = BASE_URL+"api/alipayResult";
     public final static String SUCCESE_CODE = "1"; // 返回结果成功
 
     public static class key {
@@ -132,6 +133,7 @@ public class UrlConstants {
         public static final String URL_OREDER_REFUND_DETAIL= "416";//  退款详情
         public static final String URL_OREDER_PAY_SUCCESS= "417";//  支付成功
         public static final String URL_OREDER_PAY_KEY= "418";//  支付key
+        public static final String URL_OUT_TRADE_NO = "419";//  OUT_TRADE_NO
         //关注好友
         public static final String FRIEDNS_KEEP = "501";
         //取消关注
