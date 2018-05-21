@@ -63,7 +63,8 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     @BindView(R.id.good_total_price)
     TextView tvGoodsTotalPrice;
 
-    public static List<GoodsBean> cartGoodsList; // 购物车 商品集合
+    public  List<GoodsBean> cartGoodsList; // 购物车 商品集合
+    public static List<String> cartGoodsImgs; // 购物车 商品集合
     private CarAdapter carAdapter;
     private String currCartID = "";
     private final  static  String TAG = "CartFragment";
@@ -85,6 +86,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     public void initData() {
         super.initData();
         cartGoodsList = new ArrayList<>();
+        cartGoodsImgs = new ArrayList<>();
         updateCartData();
     }
 
@@ -142,25 +144,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
      */
     private void setTotalPrice(boolean isAll,int position){
         totalPrice = 0;
-        LogUtil.d(TAG,"cartGoodsList.size()= "+cartGoodsList.size()+"checkBoxList.size= "+checkBoxList.size());
-//        for (int i = 0; i <cartGoodsList.size() ; i++) {
-//            if(isAll){
-//                cartGoodsList.get(i).setIsChecked(cbCartAllChoose.isChecked());
-//            }else{
-//                if(i == position){
-//                    if(cartGoodsList.get(i).getIsChecked()){
-//                        cartGoodsList.get(i).setIsChecked(false);
-//                    }else{
-//                        cartGoodsList.get(i).setIsChecked(true);
-//                    }
-//                }
-//            }
-//        }
-//        for (int i = 0; i <cartGoodsList.size() ; i++) {
-//            if(cartGoodsList.get(i).getIsChecked()){
-//                totalPrice = totalPrice + countPrice(cartGoodsList.get(i).getPrice(),cartGoodsList.get(i).getBuynum());
-//            }
-//        }
+        cartGoodsImgs.clear();
         for (int i = 0; i <checkBoxList.size() ; i++) {
             if(isAll){
                 checkBoxList.get(i).setChecked(cbCartAllChoose.isChecked());
@@ -168,12 +152,11 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
             if(checkBoxList.get(i).isChecked()){
                 if(i<cartGoodsList.size()){
                     totalPrice = totalPrice + countPrice(cartGoodsList.get(i).getPrice(),cartGoodsList.get(i).getBuynum());
+                    cartGoodsImgs.add(cartGoodsList.get(i).getImgurl());
                 }
             }
         }
         tvGoodsTotalPrice.setText(getString(R.string.RMB)+formatDouble2(totalPrice));
-        // 设置完选中状态后更新adapter todo
-//        carAdapter.setNewData(cartGoodsList);
     }
 
     //计算价格

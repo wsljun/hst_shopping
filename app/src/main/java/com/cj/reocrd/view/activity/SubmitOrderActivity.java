@@ -36,7 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.cj.reocrd.view.fragment.CartFragment.cartGoodsList;
+import static com.cj.reocrd.view.fragment.CartFragment.cartGoodsImgs;
 
 public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> implements SubmitOrderContract.View {
     @BindView(R.id.title_left)
@@ -111,17 +111,15 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
         if (TYPE_FOR_DETAIL.equals(type)) {
             goodsNum = 1;
             if (null == goodsDetails) {
-//                goodsDetails = GoodDetailActivity.goodsDetailsBean;
-//                imgURls.add(goodsDetails.getImgurl());
+                goodsDetails = GoodDetailActivity.goodsDetailsBean;
+                imgURls.add(goodsDetails.getImgurl());
             }
         }
         if (TYPE_FOR_CART.equals(type)) {
-//            goodsNum = cartGoodsList.size();
-//            for (int i = 0; i < cartGoodsList.size(); i++) {
-//                imgURls.add(cartGoodsList.get(i).getImgurl());
-//            }
+            goodsNum = cartGoodsImgs.size();
+            imgURls.addAll(cartGoodsImgs);
         }
-        mPresenter.getOrderDetail(oid);
+//        mPresenter.getOrderDetail(oid);
     }
 
     @Override
