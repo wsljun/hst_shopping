@@ -20,11 +20,11 @@ import com.zhy.autolayout.config.AutoLayoutConifg;
  */
 public class BaseApplication extends MultiDexApplication {
     private static BaseApplication baseApplication;
-    private static final String APP_ID = "12312313212313213213";    //这个APP_ID就是注册APP的时候生成的
+    private static final String APP_ID = "wxb02990e3e223e34a";    //这个APP_ID就是注册APP的时候生成的
 
-    private static final String APP_SECRET = "12312312313212313213213";
+    private static final String APP_SECRET = "0a77fdf8f447cee2bdecd66d7e6dd266";
 
-    public IWXAPI api;      //这个对象是专门用来向微信发送数据的一个重要接口,使用强引用持有,所有的信息发送都是基于这个对象的
+    public static IWXAPI api;      //这个对象是专门用来向微信发送数据的一个重要接口,使用强引用持有,所有的信息发送都是基于这个对象的
 
     public void registerWeChat(Context context) {   //向微信注册app
         api = WXAPIFactory.createWXAPI(context, APP_ID, true);
@@ -48,7 +48,7 @@ public class BaseApplication extends MultiDexApplication {
 //            NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
         }
         //微信分享
-        registerWeChat(this);
+//        registerWeChat(this);
         if(BuildConfig.DEBUG){
             LogUtil.setShow(true);
         }else{

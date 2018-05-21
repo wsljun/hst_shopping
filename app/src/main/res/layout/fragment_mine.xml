@@ -8,6 +8,14 @@
 
     <include layout="@layout/layout_title" />
 
+    <ImageView
+        android:id="@+id/img_share"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/share"
+        android:visibility="gone"
+        />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/mine_swipe"
         android:layout_width="match_parent"
@@ -456,5 +464,4 @@
         </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
-</LinearLayout>    
+</LinearLayout>

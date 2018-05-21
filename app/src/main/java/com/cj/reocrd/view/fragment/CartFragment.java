@@ -111,12 +111,16 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
                 break;
             case R.id.tv_submit_order:
                 String cartID = "";
+                int n = 0;
                 for (int i = 0; i <checkBoxList.size() ; i++) {
                     if(checkBoxList.get(i).isChecked()){
-                        if(i>0 && i<cartGoodsList.size()){
-                            cartID = cartID+","+cartGoodsList.get(i).getBid();
-                        }else{
-                            cartID = cartGoodsList.get(i).getBid();
+                        n++;
+                        if(i<cartGoodsList.size()){
+                            if(n>1){
+                                cartID = cartID+","+cartGoodsList.get(i).getBid();
+                            }else{
+                                cartID = cartGoodsList.get(i).getBid();
+                            }
                         }
                     }
                 }
