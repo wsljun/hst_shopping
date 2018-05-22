@@ -103,8 +103,8 @@ public class OrderInfoUtil2_0 {
             jsonObject.put("timeout_express","30m");
             jsonObject.put("product_code","QUICK_MSECURITY_PAY");
             jsonObject.put("total_amount",totalAmount);
-            jsonObject.put("subject", UniquePsuedoID.getUniquePsuedoID());
-            jsonObject.put("body","我是测试数据");
+            jsonObject.put("subject", out_trade_no); //UniquePsuedoID.getUniquePsuedoID()
+//            jsonObject.put("body","我是测试数据");
             jsonObject.put("out_trade_no",out_trade_no);
         } catch (JSONException e) {
             e.printStackTrace();

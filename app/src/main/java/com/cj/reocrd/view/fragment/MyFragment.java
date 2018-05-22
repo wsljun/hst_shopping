@@ -86,6 +86,8 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
     TextView myZhifubaoTv;
     @BindView(R.id.my_recommend_tv)
     TextView myRecommendTv;
+    @BindView(R.id.tv_is)
+    TextView tv_is;
     private Dialog dialog;
     private File file;
     private Uri imageUri;
@@ -281,8 +283,9 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                 }
                 break;
             case 3:
-                if (file == null)
+                if (file == null) {
                     return;
+                }
                 if (file.exists()) {
                     postPic(file);
                 } else {
@@ -481,6 +484,14 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                         }
                         if (!TextUtils.isEmpty(userBean.getName())) {
                             myNameTv.setText(userBean.getName());
+                        }
+                        if (!TextUtils.isEmpty(userBean.getType())) {
+                            if("1".equals(userBean.getType())){
+                                tv_is.setText("是");
+                            }else{
+                                tv_is.setText("否");
+                            }
+
                         }
                         if (!TextUtils.isEmpty(userBean.getManlevel())) {
                             String level = switchLevel(userBean.getManlevel());
