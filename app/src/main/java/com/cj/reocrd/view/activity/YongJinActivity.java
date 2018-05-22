@@ -14,6 +14,7 @@ import com.cj.reocrd.model.entity.YongJINBean;
 import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.utils.Utils;
 
 import java.util.List;
 
@@ -45,6 +46,8 @@ public class YongJinActivity extends BaseActivity<GoodsDetailPresenter> implemen
     TextView tvLeader;
     @BindView(R.id.ll_leader)
     LinearLayout llLeader;
+    @BindView(R.id.tv_yj_total)
+    TextView tvYjTotal;
 
     @Override
     public int getLayoutId() {
@@ -79,15 +82,23 @@ public class YongJinActivity extends BaseActivity<GoodsDetailPresenter> implemen
                 tvJq.setText(yj.getJq());
                 tvCj.setText(yj.getCj());
                 tvLeader.setText(yj.getLeader());
-//                if("1".equals(yj.getIsleader())){
-//                    tvLeader.setText(yj.getLeader());
-//                    llLeader.setVisibility(View.VISIBLE);
-//                }
+                // 总佣金
+                tvYjTotal.setText(getTotal(yj));
             }
 
         } else {
             ToastUtil.showToastS(this, response.getMessage());
         }
+    }
+
+    private String getTotal(YongJINBean yj) {
+        Double total =  Double.valueOf(yj.getXs())+
+                Double.valueOf(yj.getGl())+
+                Double.valueOf(yj.getDl())+
+                Double.valueOf(yj.getJq())+
+                Double.valueOf(yj.getCj())+
+                Double.valueOf(yj.getLeader());
+        return String.valueOf(total);
     }
 
     @Override

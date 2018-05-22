@@ -74,6 +74,7 @@ public class ApiModel {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String result = DESedeUtils.getdeCrypt((response.body()), pid);
+                result = result.replace("\\","/");
                 LogUtil.d( TAG,"onResponse: result 解密= por；"+por+";result= "+result);
                 if (!TextUtils.isEmpty(result)) {
                     //todo  apicallback

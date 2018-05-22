@@ -1,5 +1,7 @@
 package com.cj.reocrd.view.fragment;
 
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -24,6 +26,8 @@ import com.cj.reocrd.view.view.VerificationCode.VerificationCodeInput;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.cj.reocrd.utils.Utils.isChinese;
 
 public class RegisterFragment extends BaseFragment<IndexPresenter> implements
         IndexContract.View, VerificationCodeInput.Listener {
@@ -54,6 +58,8 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
     RelativeLayout registerPwdRl;
     @BindView(R.id.register_recommend)
     TextView registerRecommend;
+    @BindView(R.id.et_user_name)
+    EditText et_user_name;
     private final String TAG = "RegisterFragment";
     private String phone;
     private String code;
@@ -61,6 +67,20 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
     private String recommend;
     private int type;
     private String pwd;
+    InputFilter filter = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end,
+                                   Spanned dest, int dstart, int dend) {
+            for (int i = start; i < end; i++) {
+                if (!isChinese(source.charAt(i))) {
+                    ToastUtil.showShort("只能输入汉字！");
+                    return "";
+                }
+            }
+            return null;
+        }
+    };
+    private String username;
 
     @Override
     protected void initPresenter() {
@@ -76,6 +96,7 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
     public void initView() {
         titleCenter.setText(R.string.register_title);
         registerCode.setOnCompleteListener(this);
+        et_user_name.setFilters(new InputFilter[]{filter, new InputFilter.LengthFilter(5)});
     }
 
     @OnClick({R.id.register, R.id.register_next, R.id.register_getcode, R.id.title_left})
@@ -97,11 +118,16 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                     break;
                 }
                 recommend = registerRecommend.getText().toString();
+                username = et_user_name.getText().toString();
+                if (TextUtils.isEmpty(username)) {
+                    ToastUtil.showToastS(mActivity, "请填写真实姓名");
+                    break;
+                }
                 if (!TextUtils.isEmpty(recommend)) {
                     type = 3;
                     mPresenter.checkRecommend(UrlConstants.UrLType.CHECK_RECOMMEND, recommend);
                 }else{
-                    ToastUtil.showToastS(mActivity,"请填写推荐码");
+                    ToastUtil.showToastS(mActivity,"请填写推荐人");
                 }
                 break;
             case R.id.register_next:
@@ -189,7 +215,7 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
 //                    registerCodeRl.setVisibility(View.GONE);
 //                    registerPwdRl.setVisibility(View.VISIBLE);
                     type = 2;
-                    mPresenter.registerRequest(UrlConstants.UrLType.REGISTER, phone, pwd, code,recommend);
+                    mPresenter.registerRequest(UrlConstants.UrLType.REGISTER, phone, pwd, code,recommend,username);
                 }
                 break;
         }

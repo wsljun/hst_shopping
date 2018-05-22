@@ -71,14 +71,18 @@
         </provider>
         <!-- 透明主题去掉 android:theme="@style/Theme.MyAppTheme"-->
         <activity
-            android:name=".view.WelcomeActivity">
+            android:name=".view.WelcomeActivity"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.IndexActivity" />
+        <activity android:name=".view.IndexActivity"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".view.activity.MainActivity" />
         <activity android:name=".view.activity.MyActivity" />
         <activity android:name=".view.activity.AddressActivity" />

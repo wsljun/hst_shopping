@@ -1,7 +1,5 @@
 package com.cj.reocrd.contract;
 
-import com.cj.reocrd.api.ApiCallback;
-import com.cj.reocrd.base.BaseModel;
 import com.cj.reocrd.base.BasePresenter;
 import com.cj.reocrd.base.BaseView;
 
@@ -22,7 +20,7 @@ public interface IndexContract {
 
         public abstract void loginRequestCode(String por, String phone, String code);
 
-        public abstract void registerRequest(String por, String phone, String password, String code,String recommend);
+        public abstract void registerRequest(String por, String phone, String password, String code, String recommend, String username);
 
         public abstract void getCode(String por, String phoneName, String type);
 
