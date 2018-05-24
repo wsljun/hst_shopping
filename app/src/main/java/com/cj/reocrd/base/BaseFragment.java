@@ -60,7 +60,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 
         mPresenter = TUtil.getT(this, 0);
         if (mPresenter != null) {
-            mPresenter.mContext = this.getActivity();
+            mPresenter.mContext = this.getActivity ();
         }
         initPresenter();
     }
