@@ -9,14 +9,20 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.ArrayMap;
 import android.view.View;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.ApiCallback;
+import com.cj.reocrd.api.ApiResponse;
+import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.OrderContract;
+import com.cj.reocrd.model.ApiModel;
+import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.presenter.OrderPresenter;
 import com.cj.reocrd.utils.CollectionUtils;
@@ -26,10 +32,15 @@ import com.cj.reocrd.view.adapter.OrderAdapter;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.Call;
+
+import static com.cj.reocrd.utils.Utils.formatDouble2;
 
 /**
  * Created by Administrator on 2018/3/17.
@@ -66,6 +77,9 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
     private int pageno = 0; // 页码
     LinearLayoutManager layoutManager;
     private boolean loading = false;
+    public static List<OrderBean.OdlistBean> odlist;
+    private String allAmount;
+    private String oid;
 
     public static void actionActivity(Context context, int type) {
         Intent sIntent = new Intent(context, OrderActivity.class);
@@ -173,11 +187,13 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
         int tag = (int) v.getTag();
         switch (tag) {
             case ORDER_STATUS_PAY: // 去支付
-                Bundle b = new Bundle();
-                b.putString(PayActivity.BUNDLE_KEY_OID, orderBeans.get(position).getId());
-                b.putString(PayActivity.BUNDLE_KEY_PRICE, orderBeans.get(position).getAllamount());
-                startActivity(PayActivity.class, b);
-                finish();
+//                Bundle b = new Bundle();
+//                b.putString(PayActivity.BUNDLE_KEY_OID, orderBeans.get(position).getId());
+//                b.putString(PayActivity.BUNDLE_KEY_PRICE, orderBeans.get(position).getAllamount());
+//                startActivity(PayActivity.class, b);
+                oid = orderBeans.get(position).getId();
+                allAmount = orderBeans.get(position).getAllamount();
+                checkOrder(oid);
                 break;
             case ORDER_STATUS_CONFIM: //确认后去评价
                 mPresenter.comfirmTakeGoods(orderBeans.get(position).getId());
@@ -193,6 +209,33 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
             default:
                 break;
         }
+    }
+
+    private void checkOrder(String id) {
+        HashMap<String,Object> baseMap = new HashMap<>();
+        baseMap.put("orderid",id);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_OUT_CHECK_ORDER, baseMap, null, new ApiCallback() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
+                    //todo 去支付
+                    Bundle b = new Bundle();
+                    b.putString(PayActivity.BUNDLE_KEY_OID, oid);
+                    b.putString(PayActivity.BUNDLE_KEY_PRICE, allAmount);
+                    startActivity(PayActivity.class, b);
+//                    finish();
+                }else {
+                    ToastUtil.showShort("订单异常");
+                    // 更新订单列表
+                    updateOrderList();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+            }
+        });
+
     }
 
     private void goComment(String id) {
@@ -221,7 +264,7 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
             int status = Integer.parseInt( orderBeans.get(position).getStatus());
 //             如果订单已经申请退款
             if(ORDER_STATUS_REFUNDING == status || status == ORDER_STATUS_REFUNDOVER
-                  || ORDER_STATUS_NOT_REFUND == status){
+                    || ORDER_STATUS_NOT_REFUND == status){
 //                Bundle bundle = new Bundle();// todo 隐藏退款功能
 //                bundle.putString(OrderDetailActivity.BUNDLE_KEY_OID,orderBeans.get(position).getId());
 //                startActivity(RefundDetailActivity.class,bundle);
