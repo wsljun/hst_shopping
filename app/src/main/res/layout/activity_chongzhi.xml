@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/chognzhi_title"
+        layout="@layout/layout_title" />
+
+    <TextView
+        android:id="@+id/chongzhi_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mymoney_icon"
+        android:layout_marginTop="20dp"
+        android:text="1545451"
+        android:textColor="@color/colorBlack"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/chongzhi_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/price_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@mipmap/beijing2"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <ImageView
+                    android:id="@+id/chongzhi_card_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    android:layout_marginLeft="20dp"
+                    android:background="@mipmap/yinhangka" />
+
+                <TextView
+                    android:id="@+id/chongzhi_card_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mymoney_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="银联"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/chongzhi_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/mymoney_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:text="农业银行"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:background="@mipmap/zhifubao1" />
+
+                <CheckBox
+                    android:id="@+id/chongzhi_zhifubao_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+
+            <View
+                android:id="@+id/chognzhi_cneter"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_centerInParent="true"></View>
+
+            <TextView
+                android:id="@+id/chognzhi_jifen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:layout_toLeftOf="@id/chognzhi_cneter"
+                android:drawablePadding="7dp"
+                android:drawableStart="@mipmap/jifren"
+                android:text="消费积分"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/chognzhi_dianzibi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/chognzhi_cneter"
+                android:drawablePadding="7dp"
+                android:drawableStart="@mipmap/dianzibi"
+                android:text="电子币"
+                android:textColor="@color/colorBlack" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@color/colorTextLineGrey"></View>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/mymoney_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="充值金额"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/textview_home_search">
+
+            <TextView
+                android:id="@+id/chognzhi_fuhao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:text="￥"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/chognzhi_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:maxLength="12"
+                android:layout_toRightOf="@id/chognzhi_fuhao"
+                android:background="@null"
+                android:inputType="number" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/chognzhi_chongzhi"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textSize="14sp"
+            android:layout_margin="20dp"
+            android:background="@drawable/btn_enable_select"
+            android:text="充值"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+</LinearLayout>

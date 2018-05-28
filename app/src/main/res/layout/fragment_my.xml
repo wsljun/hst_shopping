@@ -73,6 +73,20 @@
                     />
             </FrameLayout>
             <FrameLayout
+                android:id="@+id/my_name_money"
+                android:visibility="gone"
+                style="@style/mine_frame">
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="我的钱包" />
+
+                <TextView
+                    style="@style/mine_text_colorsize" />
+            </FrameLayout>
+            <FrameLayout
                 android:id="@+id/my_name_fl"
                 style="@style/mine_frame">
 

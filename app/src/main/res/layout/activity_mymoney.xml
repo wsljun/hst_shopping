@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <include
+        android:id="@+id/mymoney_title"
+        layout="@layout/layout_title" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/mymoney_title"
+        android:layout_marginBottom="200dp">
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp"
+                android:background="@mipmap/beijing1"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/mymoney_icon"
+                    android:layout_width="43dp"
+                    android:layout_height="43dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp" />
+
+                <TextView
+                    android:id="@+id/mymoney_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mymoney_icon"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginTop="20dp"
+                    android:text="name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="17sp" />
+
+                <View
+                    android:id="@+id/mymoney_center"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/mymoney_name"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp"></View>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mymoney_name"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_toLeftOf="@id/mymoney_center"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/mymoney_jifen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="1154.7"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="消费积分"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mymoney_name"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_toRightOf="@id/mymoney_center"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/mymoney_bi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="11.7"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="电子币"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/mymoney_chognzhi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="30dp"
+                        app:cardElevation="3dp"
+                        app:cardPreventCornerOverlap="false"
+                        app:cardUseCompatPadding="true">
+
+                        <RelativeLayout
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_above="@+id/mymoney_chognzhi"
+                            android:layout_alignEnd="@+id/mymoney_chognzhi">
+
+                            <ImageView
+                                android:id="@+id/mymoney_chongzhi_iv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@mipmap/chognzhi" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/mymoney_chongzhi_iv"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="30dp"
+                                android:text="充值"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/mymoney_zhuanzhang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="30dp"
+                        app:cardElevation="3dp"
+                        app:cardPreventCornerOverlap="false"
+                        app:cardUseCompatPadding="true">
+
+                        <RelativeLayout
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/mymoney_zhuanzhang_iv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@mipmap/zhuanzhang" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/mymoney_zhuanzhang_iv"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="30dp"
+                                android:text="转账"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+                    </android.support.v7.widget.CardView>
+
+                </RelativeLayout>
+            </FrameLayout>
+        </FrameLayout>
+    </FrameLayout>
+
+</RelativeLayout>
