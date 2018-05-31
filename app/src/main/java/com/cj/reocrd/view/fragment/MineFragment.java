@@ -186,7 +186,11 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
-                getMainActivity().getViewPager().setCurrentItem(0);
+                if(View.VISIBLE == imgShare.getVisibility()){
+                    imgShare.setVisibility(View.GONE);
+                }else{
+                    getMainActivity().getViewPager().setCurrentItem(0);
+                }
                 break;
             case R.id.mine_all:
                 OrderActivity.actionActivity(mActivity, OrderActivity.ORDER_STATUS_ALL);
@@ -382,8 +386,9 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                             ImageLoaderUtils.displayRound(mActivity, mineIcon, UrlConstants.BASE_URL + userBean.getPhoto());
                         }
                         if (!TextUtils.isEmpty(userBean.getCodeimg())) {
-                            codeImg = userBean.getCodeimg();
-                            saveImage(codeImg);
+                            codeImg = UrlConstants.BASE_URL + userBean.getCodeimg();
+                            ImageLoaderUtils.display(getContext(),imgShare,codeImg);
+                            saveImage(false);
                         }
                         if (!TextUtils.isEmpty(userBean.getName())) {
                             mineUsername.setText(userBean.getName());
@@ -427,18 +432,25 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
 
     }
 
-    private void saveImage(String codeImg) {
+    private void saveImage(boolean isToast) {
         if(TextUtils.isEmpty(codeImg)){
+            if(isToast){
+                ToastUtil.showShort("无法获取图片地址！");
+            }
             return;
         }
-        String imgUri  = UrlConstants.BASE_URL + codeImg;
+//        String imgUri  = UrlConstants.BASE_URL + codeImg;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 if(null == picFile){
-                    Bitmap b = ImageLoaderUtils.getbitmap(imgUri);
+                    Bitmap b = ImageLoaderUtils.getbitmap(codeImg);
                     if(null != b){
                         picFile = ImageLoaderUtils.saveImage(b);
+                    }else{
+                        if(isToast){
+                            ToastUtil.showShort("保存图片失败！");
+                        }
                     }
                 }
             }
@@ -459,13 +471,13 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
 
     @Override
     public void onClick(View v) {
-        // todo ,保存，分享到朋友圈，分享给朋友，取消
+        // 保存，分享到朋友圈，分享给朋友，取消
         int id = v.getId();
         switch (id){
             case R.id.btn_save:
                 if (null == picFile) {
-                    // todo save img
-                    saveImage(codeImg);
+                    //  save img
+                    saveImage(true);
                 }else{
                     ToastUtil.showShort("保存成功");
                     imgShare.setVisibility(View.GONE);

@@ -2,19 +2,13 @@ package com.cj.reocrd.presenter;
 
 import com.cj.reocrd.api.ApiCallback;
 import com.cj.reocrd.api.ApiResponse;
-import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.contract.IndexContract;
 import com.cj.reocrd.model.ApiModel;
-import com.cj.reocrd.model.entity.GirlData;
-import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.model.entity.UserBean;
 
 import java.util.HashMap;
-import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by Lyndon.Li on 2018/3/20.
@@ -71,12 +65,13 @@ public class IndexPresenter extends IndexContract.Presenter {
     }
 
     @Override
-    public void registerRequest(String por, String phone, String password, String code,String recommend) {
+    public void registerRequest(String por, String phone, String password, String code, String recommend, String username) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("phone", phone);
         map.put("password", password);
         map.put("code", code);
         map.put("recommend", recommend);
+        map.put("username", username);
         ApiModel.getInstance().getData(por, map, UserBean.class, new ApiCallback<String>() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {

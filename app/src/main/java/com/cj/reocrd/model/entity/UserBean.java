@@ -20,6 +20,15 @@ public class UserBean implements Serializable {
     private String manlevel; //"manlevel": "0 " ,//0 普通消费者 1主管 2主任3经理4总监
     private String num;//我的团队人数
     private String codeimg; // 分享注册二维码
+    private String type ;   // 1是，2否 （是否消费商）
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
 
     public void setCodeimg(String codeimg) {
         this.codeimg = codeimg;

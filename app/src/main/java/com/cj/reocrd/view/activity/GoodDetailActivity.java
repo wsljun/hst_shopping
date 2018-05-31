@@ -239,8 +239,6 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                 startActivity(WebViewActivity.class,bundle);
                 break;
             case R.id.good_car:
-                ToastUtil.showShort("to cart");
-//                getMainActivity().getViewPager().setCurrentItem(3);
                 BaseFragment.isVisible = true;
                 GO_CART = true;
                 mFrameLayout.setVisibility(View.VISIBLE);
