@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="30dp"
-                android:background="@mipmap/beijing1"/>
+                android:background="@mipmap/beijing1" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -72,7 +72,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="1154.7"
                         android:textColor="@color/colorWhite"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -101,7 +100,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="11.7"
                         android:textColor="@color/colorWhite"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -125,20 +123,22 @@
                     android:layout_height="match_parent">
 
                     <android.support.v7.widget.CardView
-                        android:id="@+id/mymoney_chognzhi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="30dp"
+                        android:background="@color/colorWhite"
                         app:cardElevation="3dp"
                         app:cardPreventCornerOverlap="false"
                         app:cardUseCompatPadding="true">
 
                         <RelativeLayout
+                            android:id="@+id/mymoney_chognzhi"
                             android:layout_width="130dp"
                             android:layout_height="wrap_content"
                             android:layout_above="@+id/mymoney_chognzhi"
-                            android:layout_alignEnd="@+id/mymoney_chognzhi">
+                            android:layout_alignEnd="@+id/mymoney_chognzhi"
+                            android:background="@color/colorWhite">
 
                             <ImageView
                                 android:id="@+id/mymoney_chongzhi_iv"
@@ -154,25 +154,29 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="30dp"
                                 android:text="充值"
+                                android:textColor="@color/colorBlack"
                                 android:textSize="12sp" />
                         </RelativeLayout>
 
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:id="@+id/mymoney_zhuanzhang"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="30dp"
+                        android:background="@color/colorWhite"
                         app:cardElevation="3dp"
                         app:cardPreventCornerOverlap="false"
                         app:cardUseCompatPadding="true">
 
                         <RelativeLayout
+                            android:id="@+id/mymoney_zhuanzhang"
                             android:layout_width="130dp"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorWhite">
 
                             <ImageView
                                 android:id="@+id/mymoney_zhuanzhang_iv"
@@ -188,6 +192,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="30dp"
                                 android:text="转账"
+                                android:textColor="@color/colorBlack"
                                 android:textSize="12sp" />
                         </RelativeLayout>
                     </android.support.v7.widget.CardView>

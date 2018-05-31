@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
@@ -40,6 +41,7 @@ import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.IndexActivity;
 import com.cj.reocrd.view.activity.AddressActivity;
 import com.cj.reocrd.view.activity.MainActivity;
+import com.cj.reocrd.view.activity.MyMoneyActivity;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -93,6 +95,8 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
     private boolean isCreated = false;
     private String sex;
 
+    private UserBean user;
+
     @Override
     protected void initPresenter() {
         mPresenter.setVM(this);
@@ -116,7 +120,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
         titleCenter.setText(getString(R.string.my));
     }
 
-    @OnClick({R.id.my_name_money,R.id.my_recommend_fl, R.id.my_zhifubao_fl, R.id.my_update_ic_fl, R.id.title_left,
+    @OnClick({R.id.my_name_money, R.id.my_recommend_fl, R.id.my_zhifubao_fl, R.id.my_update_ic_fl, R.id.title_left,
             R.id.my_icon_fl, R.id.my_name_fl, R.id.my_sex_fl, R.id.my_phone_fl, R.id.my_update_pwd_fl,
             R.id.my_address_fl, R.id.tv_signout})
     public void onViewClicked(View view) {
@@ -161,7 +165,9 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                 inputZfbDialog();
                 break;
             case R.id.my_name_money:
-
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user",user);
+                startActivity(MyMoneyActivity.class,bundle);
                 break;
         }
     }
@@ -505,6 +511,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                         if (!TextUtils.isEmpty(userBean.getRecommend()) && !"null".equals(userBean.getRecommend())) {
                             myRecommendTv.setText(userBean.getRecommend());
                         }
+                        user = userBean;
                     }
                 } else {
                     ToastUtil.showToastS(mActivity, response.getMessage());
@@ -525,7 +532,7 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
                     UserBean userBean = (UserBean) response.getResults();
                     if (userBean != null && !TextUtils.isEmpty(userBean.getAlipay()) && !"null".equals(userBean.getAlipay())) {
                         myZhifubaoTv.setText(userBean.getAlipay());
-                        SPUtils.put(mActivity, SPUtils.SpKey.ALIPAY_NAME,userBean.getAlipay());
+                        SPUtils.put(mActivity, SPUtils.SpKey.ALIPAY_NAME, userBean.getAlipay());
                     }
                 } else {
                     ToastUtil.showToastS(mActivity, response.getMessage());
@@ -537,12 +544,13 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
 
     /**
      * 0 普通消费者 1主管 2 主任 3 经理 4 总监
+     *
      * @param manlevel
      * @return
      */
     private String switchLevel(String manlevel) {
         String str = "";
-        switch (manlevel){
+        switch (manlevel) {
             case "0":
                 str = "普通消费者";
                 break;
@@ -558,10 +566,10 @@ public class MyFragment extends BaseFragment<MyPrresenter> implements MyContract
             case "4":
                 str = "总监";
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
-        return  str;
+        return str;
     }
 
 

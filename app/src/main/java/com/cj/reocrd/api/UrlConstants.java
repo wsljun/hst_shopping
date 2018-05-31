@@ -113,6 +113,12 @@ public class UrlConstants {
         public static final String URL_GET_YONGJIN="326";
         //我的团队
         public static final String GET_MYTEAM = "327";
+        //删除我的银行卡
+        public static final String DELETE_MYCARD = "328";
+        //查询充值或转账用户是否存在
+        public static final String CHECK_DUIFANG = "329";
+        //转账
+        public static final String TRANSFER_ACCOUNTS  = "330";
         // 订单详情
         public static final String URL_ORDER_LIST = "401";//  order list
         public static final String URL_ORDER_DETAIL = "402";//  order detail

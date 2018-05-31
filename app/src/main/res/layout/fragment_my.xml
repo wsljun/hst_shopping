@@ -58,7 +58,6 @@
             </FrameLayout>
             <FrameLayout
                 android:id="@+id/my_name_money"
-                android:visibility="gone"
                 style="@style/mine_frame">
 
                 <TextView
