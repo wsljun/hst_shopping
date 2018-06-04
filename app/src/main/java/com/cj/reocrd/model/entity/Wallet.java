@@ -10,6 +10,24 @@ public class Wallet {
     private String freeze;
     private String score;
     private String stock;
+    private String gold;
+    private String sellscore;
+
+    public String getGold() {
+        return gold;
+    }
+
+    public void setGold(String gold) {
+        this.gold = gold;
+    }
+
+    public String getSellscore() {
+        return sellscore;
+    }
+
+    public void setSellscore(String sellscore) {
+        this.sellscore = sellscore;
+    }
 
     public String getBalance() {
         return balance;
