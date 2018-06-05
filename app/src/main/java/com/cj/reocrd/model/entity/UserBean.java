@@ -1,10 +1,12 @@
 package com.cj.reocrd.model.entity;
 
+import java.io.Serializable;
+
 /**
  * 用户info
  */
 
-public class UserBean {
+public class UserBean implements Serializable {
     private String id; //用户ID
     private String name;//用户姓名
     private String phone;//手机号  没有名字就填手机号
