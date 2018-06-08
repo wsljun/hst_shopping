@@ -1,5 +1,6 @@
 package com.cj.reocrd.view.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,9 +53,11 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
     TextView walletGet;
     @BindView(R.id.wallet_time)
     TextView walletTime;
+    @BindView(R.id.shanghu)
+    TextView shanghu;
 
     Double blance;
-    Double useableblance;
+    Double useableblance,sh;
     Double freeze;
     int score;
     int stock;
@@ -80,6 +83,7 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
         mPresenter.setVM(this);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onSuccess(Object data) {
         ApiResponse response = (ApiResponse) data;
@@ -88,6 +92,7 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
             if (wallet != null) {
                 blance = Utils.formatDouble2(Double.valueOf(wallet.getBalance())/100);
                 useableblance = Utils.formatDouble2( Double.valueOf(wallet.getUseableblance())/100);
+                sh = Utils.formatDouble2( Double.valueOf(wallet.getSupply())/100);
                 freeze =  Utils.formatDouble2(Double.valueOf(wallet.getFreeze())/100);
 
                 score = Integer.parseInt(wallet.getScore());
@@ -97,6 +102,7 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
                 walletFreeze.setText(freeze + "");
                 walletScore.setText(score + "");
                 walletStock.setText(stock + "");
+                shanghu.setText(sh+"");
             }
         } else {
             ToastUtil.showToastS(this, response.getMessage());
@@ -145,6 +151,7 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
                 if (null!=useableblance && useableblance > 0) {
                     Bundle bundle = new Bundle();
                     bundle.putDouble("useableblance", useableblance);
+                    bundle.putDouble("sh", sh);
                     startActivityForResult(WalletGetActivity.class, bundle, WalletGetActivity.WALLET_GET_REQUEST);
                 } else {
                     return;

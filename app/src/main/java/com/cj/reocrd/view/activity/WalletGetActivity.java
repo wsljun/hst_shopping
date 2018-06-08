@@ -11,6 +11,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
@@ -57,19 +58,21 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
     RecyclerView walletGetRecycler;
     @BindView(R.id.wallet_get_et)
     EditText walletGetEt;
-    @BindView(R.id.wallet_get_use)
-    TextView walletGetUse;
     @BindView(R.id.type_name)
     TextView typeName;
     @BindView(R.id.tvBtnBind)
     TextView tvBtnBind;
+    @BindView(R.id.rb_get_use)
+    RadioButton rbGetUse;
+    @BindView(R.id.rb_shanghu)
+    RadioButton rb_shanghu;
 
 
-    Double useableblance;
+    Double useableblance,sh;
     MyBankAdapter adapter;
     List<BankBean.Bank> banks;
     BankBean.Bank bank;
-    String money;
+    String money,moneyType = "1";
     int type;
     private String aliPayName = "";
     private final String TYPE_BANK = "1";
@@ -89,6 +92,7 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
         aliPayName = (String) SPUtils.get(this,SPUtils.SpKey.ALIPAY_NAME,"");
         Bundle bundle = getIntent().getExtras();
         useableblance = bundle.getDouble("useableblance",0);
+        sh = bundle.getDouble("sh",0);
         type = 1;
         mPresenter.myCard(UrlConstants.UrLType.MY_CARD, uid);
     }
@@ -96,7 +100,8 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
     @Override
     public void initView() {
         titleCenter.setText("提现");
-        walletGetUse.setText("可用余额" + useableblance + "元");
+        rbGetUse.setText("可用余额:" + useableblance + "元");
+        rb_shanghu.setText("商户收入:" + sh + "元");
         // 先默认选择支付宝
         if(!TextUtils.isEmpty(aliPayName)&&!"null".equals(aliPayName)){
             setTypeText("支付宝账号："+aliPayName,false);
@@ -195,7 +200,7 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
 
 
     @OnClick({R.id.tvBtnBind, R.id.wallet_get, R.id.title_left,
-            R.id.type_bank,R.id.type_alipay})
+            R.id.type_bank,R.id.type_alipay,R.id.rb_get_use,R.id.rb_shanghu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.type_bank:
@@ -261,6 +266,12 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                 break;
             case R.id.title_left:
                 finish();
+                break;
+            case R.id.rb_get_use: //yu'e  1
+                moneyType = "1";
+                break;
+            case R.id.rb_shanghu:  //  2
+                moneyType = "2";
                 break;
             default:
                 break;
@@ -336,7 +347,9 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                     public void onClick(DialogInterface dialog, int which) {
                         String inputName = inputServer.getText().toString();
                         String phone = (String) SPUtils.get(WalletGetActivity.this, SPUtils.SpKey.USER_PHONE, "");
-                        loginRequest(UrlConstants.UrLType.LOGIN_PWD, phone, inputName);
+                        if(!TextUtils.isEmpty(inputName)){
+                            loginRequest(UrlConstants.UrLType.LOGIN_PWD, phone, inputName);
+                        }
                     }
                 });
         builder.show();
@@ -354,9 +367,9 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                 if(UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())){
                     type = 2;
                     if(TYPE_ALIPAY.equals(getType)){
-                        mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, null, money,"1");
+                        mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, null, money,"1",moneyType);
                     }else{// 银行卡提现
-                        mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, bank.getId(), money,"2");
+                        mPresenter.walletGet(UrlConstants.UrLType.WALLET_GET, uid, bank.getId(), money,"2",moneyType);
                     }
                 }else{
                     ToastUtil.showShort(apiResponse.getMessage());

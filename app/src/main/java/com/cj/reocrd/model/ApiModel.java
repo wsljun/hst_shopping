@@ -163,7 +163,7 @@ public class ApiModel {
         String msg = "请求错误，请稍后重试！";
         ApiResponse apiResponse = null; // new ApiResponse("2","请求错误，请稍后重试！") ;
         if(jsonStr != null && jsonStr.trim().length() >0 ){
-            JSONObject jsonObject = JSON.parseObject(jsonStr);
+             JSONObject jsonObject = JSON.parseObject(jsonStr);
               if (jsonObject.containsKey("statusCode")){
                 code = jsonObject.getString("statusCode");
                 jsonObject.remove("statusCode");

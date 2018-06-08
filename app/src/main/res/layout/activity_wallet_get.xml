@@ -142,13 +142,34 @@
                     android:layout_margin="14dp"
                     android:background="@color/colorTexthintGrey2"></View>
 
-                <TextView
-                    android:id="@+id/wallet_get_use"
-                    style="@style/setting_item_configure"
-                    android:layout_marginTop="10dp"
-                    android:text="提现金额123213.1元"
-                    android:textSize="16sp" />
 
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="10dp"
+                    >
+                    <RadioButton
+                        android:id="@+id/rb_get_use"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="可用余额："
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:checked="true"
+                        android:layout_weight="1"
+                        />
+                    <RadioButton
+                        android:id="@+id/rb_shanghu"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="商户收入："
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:layout_weight="1"
+                        />
+                </RadioGroup>
                 <TextView
                     android:id="@+id/wallet_get"
                     style="@style/normal_tv_btn"

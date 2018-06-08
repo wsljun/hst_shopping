@@ -5,7 +5,7 @@ package com.cj.reocrd.api;
 
 public class UrlConstants {
     //BaseURl
-    public final static String BASE_URL = "http://www.rendaoyigou.com/"; //"http://mall.xdiandian.cn/mall/";
+    public final static String BASE_URL = "http://www.rdyg.com.cn/"; //"http://mall.xdiandian.cn/mall/";
     //test
 //    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
     public final static String URL_ABOUT = BASE_URL+"api/about";

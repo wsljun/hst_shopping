@@ -74,7 +74,8 @@
             </FrameLayout>
             <FrameLayout
                 android:id="@+id/my_name_money"
-                style="@style/mine_frame">
+                style="@style/mine_frame"
+                >
 
                 <TextView
                     style="@style/setting_item_configure"

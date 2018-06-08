@@ -28,6 +28,7 @@ import butterknife.OnClick;
  */
 
 public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> implements GoodsDetailContract.View {
+
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -124,4 +125,5 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
                 break;
         }
     }
+
 }
