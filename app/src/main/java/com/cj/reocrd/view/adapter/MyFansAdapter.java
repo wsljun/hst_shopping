@@ -54,7 +54,6 @@ public class MyFansAdapter extends RecyclerView.Adapter<MyFansAdapter.MyHolder> 
         }
 
         holder.fansKeep.setVisibility(View.GONE);
-        holder.fansChat.setVisibility(View.VISIBLE);
         holder.fansChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

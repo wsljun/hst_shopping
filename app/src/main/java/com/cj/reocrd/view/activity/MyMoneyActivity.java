@@ -50,6 +50,10 @@ public class MyMoneyActivity extends BaseActivity<GoodsDetailPresenter> implemen
 
     private UserBean user;
 
+    public static  final  String TYPY_RECHARGE ="1";
+    public static  final  String TYPY_TRANSFER_ACCOUNTS ="2";
+    public static  final  String TYPY_EXCHANGE ="3";
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_mymoney;
@@ -59,7 +63,6 @@ public class MyMoneyActivity extends BaseActivity<GoodsDetailPresenter> implemen
     public void initData() {
         super.initData();
         user = (UserBean) getIntent().getSerializableExtra("user");
-        mPresenter.myWallet(uid);
     }
 
     @Override
@@ -82,13 +85,19 @@ public class MyMoneyActivity extends BaseActivity<GoodsDetailPresenter> implemen
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.myWallet(uid);
+    }
+
+    @Override
     public void onSuccess(Object data) {
         ApiResponse response = (ApiResponse) data;
         if (UrlConstants.SUCCESE_CODE.equals(response.getStatusCode())) {
             Wallet wallet = (Wallet) response.getResults();
             if (wallet != null) {
-                mymoneyJifen.setText(wallet.getSellscore());
-                mymoneyBi.setText(wallet.getGold());
+                mymoneyJifen.setText(Utils.strDivide(wallet.getSellscore()));
+                mymoneyBi.setText(Utils.strDivide(wallet.getGold()));
             }
         } else {
             ToastUtil.showToastS(this, response.getMessage());
@@ -106,16 +115,26 @@ public class MyMoneyActivity extends BaseActivity<GoodsDetailPresenter> implemen
     }
 
 
-    @OnClick({R.id.title_left, R.id.mymoney_chognzhi, R.id.mymoney_zhuanzhang})
+    @OnClick({R.id.title_left, R.id.mymoney_chognzhi, R.id.mymoney_zhuanzhang,R.id.mymoney_dh})
     public void onViewClicked(View view) {
+        Bundle b = new Bundle();
         switch (view.getId()) {
             case R.id.title_left:
                 finish();
                 break;
             case R.id.mymoney_chognzhi:
-                startActivity(ChongzhiActivity.class);
+                b.putSerializable("user",user);
+                b.putString("type",TYPY_RECHARGE);
+                startActivity(ChongzhiActivity.class,b);
                 break;
             case R.id.mymoney_zhuanzhang:
+                b.putSerializable("user",user);
+                b.putString("type",TYPY_TRANSFER_ACCOUNTS);
+                startActivity(ChongzhiActivity.class,b);
+                break;
+            case R.id.mymoney_dh:
+                b.putSerializable("user",user);
+                startActivity(ExchangeActivity.class,b);
                 break;
         }
     }

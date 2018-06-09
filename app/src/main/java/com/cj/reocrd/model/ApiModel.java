@@ -83,8 +83,9 @@ public class ApiModel {
                     } catch (Exception e) {
                         e.printStackTrace();
                         LogUtil.d( TAG,"onResponse: result Exception= "+e.toString());
-//                        ToastUtil.showShort("返回数据错误");
                     }
+                }else{
+                    apiCallback.onSuccess(new ApiResponse("1","返回数据为空"));
                 }
             }
 

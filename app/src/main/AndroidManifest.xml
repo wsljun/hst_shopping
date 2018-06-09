@@ -12,7 +12,7 @@
     <!-- <uses-permission android:name="android.permission.READ_SMS" /> -->
     <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
     <!-- 权限声明 -->
-    <!-- 访问网络状态-->
+    <!-- 访问网络状态 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -47,6 +47,7 @@
         android:protectionLevel="signature" />
     <!-- 接收 SDK 消息广播权限， 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
     <uses-permission android:name="com.cj.reocrd.permission.RECEIVE_MSG" />
+
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -72,7 +73,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <!-- 透明主题去掉 android:theme="@style/Theme.MyAppTheme"-->
+        <!-- 透明主题去掉 android:theme="@style/Theme.MyAppTheme" -->
 
         <activity
             android:name=".view.WelcomeActivity"
@@ -83,9 +84,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.IndexActivity"
-            android:screenOrientation="portrait"
-            />
+        <activity
+            android:name=".view.IndexActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".view.activity.MainActivity" />
         <activity android:name=".view.activity.MyActivity" />
         <activity android:name=".view.activity.AddressActivity" />
@@ -115,9 +116,9 @@
         <activity android:name=".view.activity.FuliActivity" />
         <activity android:name=".view.activity.ZPActivity" />
         <activity android:name=".view.activity.YongJinActivity" />
-        <activity android:name=".view.activity.MyTeamActivity"></activity>
-        <activity android:name=".view.activity.MyMoneyActivity"></activity>
-        <activity android:name=".view.activity.ChongzhiActivity"></activity>
+        <activity android:name=".view.activity.MyTeamActivity" />
+        <activity android:name=".view.activity.MyMoneyActivity" />
+        <activity android:name=".view.activity.ChongzhiActivity" />
 
         <receiver android:name=".net.NetworkStateReceiver">
             <intent-filter>
@@ -140,14 +141,13 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".view.activity.PayActivity"></activity>
+        <activity android:name=".view.activity.PayActivity" />
         <!-- 支付宝 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
-
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -205,6 +205,7 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
+        <activity android:name=".view.activity.ExchangeActivity"></activity>
     </application>
 
 </manifest>

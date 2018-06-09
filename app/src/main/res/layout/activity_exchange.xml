@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tv_title"
+        layout="@layout/layout_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorBlack"
+            android:text="金额来源："
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/tv_ye"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="余额"
+                android:textSize="16sp"
+                android:background="@mipmap/beijing2"
+                />
+            <TextView
+                android:id="@+id/tv_dzb"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="电子币"
+                android:textSize="16sp"
+                android:background="@drawable/price_bg"
+                android:textColor="@color/colorBlack"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorBlack"
+            android:text="兑换类型："
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/tv_type_jifen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="消费积分"
+                android:textSize="16sp"
+                android:background="@mipmap/beijing2"
+                />
+
+            <TextView
+                android:id="@+id/tv_type_dzb"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="电子币"
+                android:background="@drawable/price_bg"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/price_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            >
+            <View
+                android:id="@+id/chognzhi_cneter"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                ></View>
+
+            <!--<TextView-->
+            <!--android:id="@+id/chognzhi_jifen"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="30dp"-->
+            <!--android:layout_toLeftOf="@id/chognzhi_cneter"-->
+            <!--android:drawablePadding="7dp"-->
+            <!--android:drawableStart="@mipmap/jifren"-->
+            <!--android:text="消费积分"-->
+            <!--android:textColor="@color/colorBlack" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/chognzhi_dianzibi"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="30dp"-->
+            <!--android:layout_toRightOf="@id/chognzhi_cneter"-->
+            <!--android:drawablePadding="7dp"-->
+            <!--android:drawableStart="@mipmap/dianzibi"-->
+            <!--android:text="电子币"-->
+            <!--android:background="@color/colorTextRed"-->
+            <!--/>-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@color/colorTextLineGrey"></View>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/mymoney_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="兑换金额"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/textview_home_search">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:text="￥"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_money"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:paddingLeft="25dp"
+                android:maxLines="1"
+                android:maxLength="12"
+                android:layout_toRightOf="@id/chognzhi_fuhao"
+                android:textColor="@color/colorBlack"
+                android:background="@null"
+                android:inputType="number" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_btn_dh"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_enable_select"
+            android:text="兑换"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -5,15 +5,16 @@ package com.cj.reocrd.api;
 
 public class UrlConstants {
     //BaseURl
-    public final static String BASE_URL = "http://www.rdyg.com.cn/"; //"http://mall.xdiandian.cn/mall/";
+//    public final static String BASE_URL = "http://www.rdyg.com.cn/"; //"http://mall.xdiandian.cn/mall/";
     //test
-//    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
+    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
     public final static String URL_ABOUT = BASE_URL+"api/about";
     public final static String URL_HELP = BASE_URL+"api/help";
     public final static String URL_GOODS_DETAIL = BASE_URL+"api/meDetail?id=";
     public final static String URL_SHARE_REGISTER = BASE_URL+"api/appRegister?code=";
     public final static String URL = "app/outinterface";
     public final static String URL_ALIPAY_RESULT = BASE_URL+"api/alipayResult";
+    public final static String URL_ALIPAY_RECHARGE = BASE_URL+"api/alipayRecharge";
     public final static String SUCCESE_CODE = "1"; // 返回结果成功
 
     public static class key {
@@ -120,6 +121,8 @@ public class UrlConstants {
         public static final String CHECK_DUIFANG = "329";
         //转账
         public static final String TRANSFER_ACCOUNTS  = "330";
+        //兑换
+        public static final String EXCHANGE  = "331";
         // 订单详情
         public static final String URL_ORDER_LIST = "401";//  order list
         public static final String URL_ORDER_DETAIL = "402";//  order detail
