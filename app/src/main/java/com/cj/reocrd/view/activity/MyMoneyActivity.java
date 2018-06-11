@@ -53,6 +53,7 @@ public class MyMoneyActivity extends BaseActivity<GoodsDetailPresenter> implemen
     public static  final  String TYPY_RECHARGE ="1";
     public static  final  String TYPY_TRANSFER_ACCOUNTS ="2";
     public static  final  String TYPY_EXCHANGE ="3";
+    private Double useableblance ,gold;
 
     @Override
     public int getLayoutId() {
@@ -98,6 +99,8 @@ public class MyMoneyActivity extends BaseActivity<GoodsDetailPresenter> implemen
             if (wallet != null) {
                 mymoneyJifen.setText(Utils.strDivide(wallet.getSellscore()));
                 mymoneyBi.setText(Utils.strDivide(wallet.getGold()));
+                 useableblance = Utils.formatDouble2(Double.valueOf(wallet.getUseableblance()) / 100);
+                 gold = Utils.formatDouble2(Double.valueOf(wallet.getGold()) / 100);
             }
         } else {
             ToastUtil.showToastS(this, response.getMessage());
@@ -130,10 +133,13 @@ public class MyMoneyActivity extends BaseActivity<GoodsDetailPresenter> implemen
             case R.id.mymoney_zhuanzhang:
                 b.putSerializable("user",user);
                 b.putString("type",TYPY_TRANSFER_ACCOUNTS);
+                b.putDouble("gold",gold);
                 startActivity(ChongzhiActivity.class,b);
                 break;
             case R.id.mymoney_dh:
                 b.putSerializable("user",user);
+                b.putDouble("useableblance",useableblance);
+                b.putDouble("gold",gold);
                 startActivity(ExchangeActivity.class,b);
                 break;
         }

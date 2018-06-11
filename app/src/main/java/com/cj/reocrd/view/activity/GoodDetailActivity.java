@@ -3,6 +3,8 @@ package com.cj.reocrd.view.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -24,28 +26,38 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
+import com.cj.reocrd.base.BaseApplication;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.contract.GoodsDetailContract;
 import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.model.entity.GoodsDetailsBean;
 import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.model.entity.SkuBean;
+import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.ActivityUtils;
 import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.ConstantsUtils;
 import com.cj.reocrd.utils.ImageLoaderUtils;
+import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.fragment.CartFragment;
 import com.cj.reocrd.view.view.AmountView.AmountView;
 import com.donkingliang.labels.LabelsView;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.SendMessageToWX;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.sdk.openapi.WXMediaMessage;
+import com.tencent.mm.sdk.openapi.WXWebpageObject;
+import com.tencent.mm.sdk.platformtools.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +69,8 @@ import butterknife.OnClick;
  * Created by Administrator on 2018/3/18.
  */
 
-public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> implements GoodsDetailContract.View {
+public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> implements GoodsDetailContract.View
+        ,View.OnClickListener{
 
     @BindView(R.id.title_left)
     TextView titleLeft;
@@ -115,8 +128,6 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     @BindView(R.id.fl_fragment)
     FrameLayout mFrameLayout;
 
-
-    private Dialog dialog;
     private static String goodsID = "";// 商品ID
     public static GoodsDetailsBean goodsDetailsBean;
     private String sid = ""; // 商品规格id
@@ -137,6 +148,10 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     private  String countPrice; // 最终选择后的总价
     public static  List<GoodsCommentBean> goodsCommentBeans;
     public static  boolean  GO_CART = false;
+    private boolean isTimelineCb;
+    private byte[] bitmapByte;
+    private Bitmap shareGoodBitmap;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_good_detail;
@@ -153,6 +168,8 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     @Override
     public void initView() {
         goodOldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
+        titleRight.setText("分享");
+        titleRight.setVisibility(View.VISIBLE);
     }
 
     private void updateView() {
@@ -170,6 +187,17 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         if("1".equals(goodsDetailsBean.getIscollect())){
             setCollectImg(true);
         }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(null == bitmapByte){
+                     shareGoodBitmap =  ImageLoaderUtils.getbitmap(UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
+                    if(null != shareGoodBitmap){
+                        bitmapByte = ImageLoaderUtils.bitmap2Bytes(shareGoodBitmap,32);
+                    }
+                }
+            }
+        }).start();
     }
 
 
@@ -196,7 +224,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
 
 
     @OnClick({R.id.title_left,R.id.good_conllect_iv, R.id.good_num_rl, R.id.good_buy, R.id.good_addcar,
-    R.id.btn_goods_detail_webview,R.id.btn_comment,R.id.good_car})
+            R.id.btn_goods_detail_webview,R.id.btn_comment,R.id.good_car,R.id.title_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
@@ -243,6 +271,9 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                 GO_CART = true;
                 mFrameLayout.setVisibility(View.VISIBLE);
                 replaceFragment(R.id.fl_fragment, CartFragment.class.getName());
+                break;
+            case R.id.title_right:
+                showDialog();
                 break;
             default:
                 break;
@@ -304,7 +335,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
             return;
         }
         double totalPrice = Utils.countPrice(price,String.valueOf(num));
-         countPrice = String.valueOf(totalPrice);
+        countPrice = String.valueOf(totalPrice);
         tvSkuTotalPrice.setText(ConstantsUtils.RMB+countPrice);
         goodTotalPrice.setText(ConstantsUtils.RMB+countPrice);
     }
@@ -386,12 +417,12 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
 
     @Override
     public void showComment(List<GoodsCommentBean> goodsCommentBeanList) {
-          if(!CollectionUtils.isNullOrEmpty(goodsCommentBeanList)){
-              goodsCommentBeans = goodsCommentBeanList;
-              startActivity(AllCommentActivity.class);
-          }else{
-              ToastUtil.showShort("没有评论");
-          }
+        if(!CollectionUtils.isNullOrEmpty(goodsCommentBeanList)){
+            goodsCommentBeans = goodsCommentBeanList;
+            startActivity(AllCommentActivity.class);
+        }else{
+            ToastUtil.showShort("没有评论");
+        }
     }
     Fragment cartFragment ;
     protected void replaceFragment(int viewResource, String fragmentName) {
@@ -413,6 +444,89 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         ft.commit();
     }
 
+    private Dialog dialog;
+    private void showDialog() {
+        View view = GoodDetailActivity.this.getLayoutInflater().inflate(R.layout.share_choose_dialog, null);
+        Button btn_save = (Button) view.findViewById(R.id.btn_save);
+        Button btn_share_timeline = (Button) view.findViewById(R.id.btn_share_timeline);
+        Button btn_share_fd = (Button) view.findViewById(R.id.btn_share_fd);
+        Button btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
+        btn_save.setVisibility(View.GONE);
+        btn_share_timeline.setOnClickListener(this);
+        btn_share_fd.setOnClickListener(this);
+        btn_cancel.setOnClickListener(this);
+        dialog = new Dialog(GoodDetailActivity.this, R.style.transparentFrameWindowStyle);
+        dialog.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        Window window = dialog.getWindow();
+        // 设置显示动画
+        if (window != null) {
+            window.setWindowAnimations(R.style.main_menu_animstyle);
+            WindowManager.LayoutParams wl = window.getAttributes();
+            wl.x = 0;
+            wl.y = this.getWindowManager().getDefaultDisplay().getHeight();
+            // 以下这两句是为了保证按钮可以水平满屏
+            wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            // 设置显示位置
+            dialog.onWindowAttributesChanged(wl);
+        }
+        // 设置点击外围解散
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+    }
+
+
+
+    @Override
+    public void onClick(View v) {
+        // 保存，分享到朋友圈，分享给朋友，取消
+        int id = v.getId();
+        switch (id){
+            case R.id.btn_share_timeline:
+                isTimelineCb = true;
+                dialog.dismiss();
+                shareWebPage();
+                break;
+            case R.id.btn_share_fd:
+                isTimelineCb = false;
+                dialog.dismiss();
+                shareWebPage();
+                break;
+            case R.id.btn_cancel:
+                dialog.dismiss();
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    /*
+       * 分享链接
+       */
+    private void shareWebPage() {
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = UrlConstants.URL_SHARE+goodsID+"&code="+uid;
+        LogUtil.d("webpageUrl",webpage.webpageUrl);
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = goodsDetailsBean.getName();
+        msg.description = goodPrice.getText().toString() ;
+
+//        Bitmap thumb = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
+        if(bitmapByte == null) {
+            if(null != shareGoodBitmap){
+                bitmapByte = ImageLoaderUtils.bitmap2Bytes(shareGoodBitmap,32);
+            }else{
+                Toast.makeText(mContext, "图片不能为空", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            msg.thumbData = bitmapByte;//Util.bmpToByteArray(thumb, true);
+        }
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.message = msg;
+        req.scene = isTimelineCb ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+        BaseApplication.api.sendReq(req);
+    }
 
 
 

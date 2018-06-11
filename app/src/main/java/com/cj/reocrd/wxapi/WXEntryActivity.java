@@ -1,21 +1,11 @@
 package com.cj.reocrd.wxapi;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseApplication;
-import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
-import com.cj.reocrd.view.fragment.MineFragment;
 import com.tencent.mm.sdk.openapi.BaseReq;
 import com.tencent.mm.sdk.openapi.BaseResp;
-import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 
 /**
@@ -30,7 +20,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler{
 
     @Override
     public void initData() {
-        MineFragment.wxapi.handleIntent(getIntent(), this);
+        BaseApplication.api.handleIntent(getIntent(), this);
     }
 
     @Override

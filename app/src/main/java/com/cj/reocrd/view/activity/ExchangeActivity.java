@@ -13,8 +13,11 @@ import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.model.ApiModel;
 import com.cj.reocrd.model.entity.UserBean;
+import com.cj.reocrd.model.entity.Wallet;
+import com.cj.reocrd.model.entity.YongJINBean;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.utils.Utils;
 
 import java.util.HashMap;
 
@@ -48,6 +51,7 @@ public class ExchangeActivity extends BaseActivity {
      * 金额来源 1余额 2电子币（选了余额，兑换类型： 1和2都有。选了电子币，兑换类型只显示 1）
      * */
     private String fromtype ,totype;
+    Double useableblance , gold;
 
     @Override
     public int getLayoutId() {
@@ -57,6 +61,8 @@ public class ExchangeActivity extends BaseActivity {
     @Override
     public void initView() {
         titleCenter.setText("兑换");
+        tvYe.setText("余额\n"+useableblance);
+        tvDzb.setText("电子币\n"+gold);
     }
 
     @Override
@@ -67,6 +73,8 @@ public class ExchangeActivity extends BaseActivity {
     @Override
     public void initData() {
         user = (UserBean) getIntent().getSerializableExtra("user");
+        useableblance = getIntent().getDoubleExtra("useableblance",0);
+        gold = getIntent().getDoubleExtra("gold",0);
         fromtype = "1";
         totype = "1";
     }

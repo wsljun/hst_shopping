@@ -330,6 +330,20 @@
                         style="@style/mine_text_colorsize" />
                 </FrameLayout>
 
+                <FrameLayout
+                    android:id="@+id/mine_cz"
+                    style="@style/mine_frame"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        style="@style/setting_item_configure"
+                        android:drawableStart="@mipmap/qianbao"
+                        android:text="充值" />
+
+                    <TextView
+                        android:id="@+id/mine_money_cz"
+                        style="@style/mine_text_colorsize" />
+                </FrameLayout>
 
 
                 <FrameLayout

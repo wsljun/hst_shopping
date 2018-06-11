@@ -111,6 +111,7 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
     private String paytype = "1"; //passback_params   uid,充值的手机号，充值类型（ 1消费积分2电子币）
     private String t_phone;
     private String gold_money;
+    private double gold;
 
     @Override
     public int getLayoutId() {
@@ -124,6 +125,7 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
                 t_phone = dest.toString()+source.toString();
                 if (!Utils.checkMobileNumber(t_phone)) {
                     ToastUtil.showShort("请输入正确手机号！");
+                    t_phone = null;
                     return "";
                 }else{
                     checkPhone();
@@ -138,22 +140,26 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
         user = (UserBean) getIntent().getSerializableExtra("user");
         type = getIntent().getExtras().getString("type","");
         phone = (String) SPUtils.get(this, SPUtils.SpKey.USER_PHONE, "");
-//        type = getIntent().getExtras().getString("type","");
+        gold = getIntent().getDoubleExtra("gold",0);
+        et_change_phone.setFilters(new InputFilter[]{filter, new InputFilter.LengthFilter(11)});
         if(MyMoneyActivity.TYPY_RECHARGE.equals(type)){
             title = "充值";
             llTop.setVisibility(View.VISIBLE);
+            et_change_phone.setVisibility(View.VISIBLE);
+            tv_user_name.setVisibility(View.GONE);
+            tv_user_phone.setVisibility(View.GONE);
             tvMoneyType.setText("充值金额");
         }
         if(MyMoneyActivity.TYPY_TRANSFER_ACCOUNTS.equals(type)){
             title = "转账";
-            et_change_phone.setFilters(new InputFilter[]{filter, new InputFilter.LengthFilter(11)});
             llTop.setVisibility(View.GONE);
-            et_change_phone.setVisibility(View.VISIBLE);
             tvMoneyType.setText("转账金额");
+            et_change_phone.setVisibility(View.VISIBLE);
             tv_user_name.setVisibility(View.GONE);
             tv_user_phone.setVisibility(View.GONE);
             rb_chognzhi_dianzibi.setChecked(true);
             rb_chognzhiJifen.setVisibility(View.GONE);
+            rb_chognzhi_dianzibi.setText("电子币："+gold);
         }
         if(MyMoneyActivity.TYPY_EXCHANGE.equals(type)){
             title = "兑换";
@@ -222,15 +228,19 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
             case R.id.chognzhi_fuhao:
                 break;
             case R.id.tv_btn_chongzhi:
+                if(TextUtils.isEmpty(t_phone)){
+                    ToastUtil.showShort("请输入手机号！");
+                    return;
+                }
                 if(MyMoneyActivity.TYPY_RECHARGE.equals(type)){
                     money = et_chognzhi_money.getText().toString();
+                    if(TextUtils.isEmpty(money)){
+                        ToastUtil.showShort("请输入金额");
+                        return;
+                    }
                     reChargeByAlipay();
                 }else{
                     // 转账，
-                    if(TextUtils.isEmpty(t_phone)){
-                        ToastUtil.showShort("请输入转账手机号");
-                        return;
-                    }
                     transferAccounts();
                 }
                 break;
@@ -254,6 +264,8 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
                         tv_user_name.setText(changeName);
                         tv_user_name.setVisibility(View.VISIBLE);
                     }
+                }else{
+                    t_phone = null;
                 }
             }
 
@@ -269,7 +281,7 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
     private void transferAccounts () {
         gold_money = et_chognzhi_money.getText().toString();
         if(TextUtils.isEmpty(gold_money)){
-            ToastUtil.showShort("请输入转账金额");
+            ToastUtil.showShort("请输入金额");
             return;
         }
         HashMap<String, Object> map = new HashMap<>();
@@ -281,11 +293,13 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
             public void onSuccess(ApiResponse apiResponse) {
                 ToastUtil.showShort(apiResponse.getMessage());
                 if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
+                    finish();
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
+                ToastUtil.showShort("转账失败，请退出重试！");
             }
         });
     }
@@ -299,8 +313,8 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
         boolean rsa = true;
         //构造支付订单参数列表
 //        aoid = OutTradeNo;//OrderInfoUtil2_0.getOutTradeNo();
-        OutTradeNo = phone+ System.currentTimeMillis();
-        passbackParam = uid+","+phone+","+paytype;
+        OutTradeNo = t_phone+ System.currentTimeMillis();
+        passbackParam = uid+","+t_phone+","+paytype;
         LogUtil.d("alipay","OutTradeNo= "+OutTradeNo);
         LogUtil.d("alipay","passbackParam= "+passbackParam);
         String bizContent = OrderInfoUtil2_0.buildReChargeConetent(money,OutTradeNo,passbackParam);
@@ -346,7 +360,7 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(ChongzhiActivity.this, "充值成功", Toast.LENGTH_SHORT).show();
-//                        sendPaySuccess();
+                        finish();
                     } else {
 //                        Toast.makeText(PayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                     }

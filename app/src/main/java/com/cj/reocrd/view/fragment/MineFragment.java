@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
+import com.cj.reocrd.base.BaseApplication;
 import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.entity.UserBean;
@@ -36,6 +37,7 @@ import com.cj.reocrd.view.activity.CollectActivity;
 import com.cj.reocrd.view.activity.FuliActivity;
 import com.cj.reocrd.view.activity.MyActivity;
 import com.cj.reocrd.view.activity.MyFansActivity;
+import com.cj.reocrd.view.activity.MyMoneyActivity;
 import com.cj.reocrd.view.activity.MyTeamActivity;
 import com.cj.reocrd.view.activity.OrderActivity;
 import com.cj.reocrd.view.activity.WalletActivity;
@@ -129,17 +131,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     private View qrView;
     private boolean isTimelineCb; // 是否是发送朋友圈
     private File picFile;
-
-    private static final String APP_ID = "wxb02990e3e223e34a";    //这个APP_ID就是注册APP的时候生成的
-
-    private static final String APP_SECRET = "0a77fdf8f447cee2bdecd66d7e6dd266";
-
-    public static IWXAPI wxapi;      //这个对象是专门用来向微信发送数据的一个重要接口,使用强引用持有,所有的信息发送都是基于这个对象的
-
-    public void registerWeChat(Context context) {   //向微信注册app
-        wxapi = WXAPIFactory.createWXAPI(context, APP_ID, true);
-        wxapi.registerApp(APP_ID);
-    }
+    private UserBean userBean;
 
     @Override
     protected void initPresenter() {
@@ -165,7 +157,6 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     @Override
     public void initData() {
         super.initData();
-        registerWeChat(getContext());
         type = 1;
         mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
     }
@@ -182,7 +173,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
             R.id.title_rl, R.id.title_left, R.id.mine_icon, R.id.mine_all, R.id.mine_pay, R.id.mine_send,
             R.id.mine_confim, R.id.mine_evaluate, R.id.mine_return, R.id.mine_money, R.id.mine_collect,
             R.id.mine_history, R.id.mine_help, R.id.mine_about, R.id.mine_serve, R.id.mine_yongjin,
-            R.id.mine_share_url, R.id.mine_userinfo})
+            R.id.mine_share_url, R.id.mine_userinfo,R.id.mine_cz})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
@@ -280,6 +271,11 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
             case R.id.mine_team:
                 startActivity(MyTeamActivity.class);
                 break;
+            case R.id.mine_cz:
+                Bundle bd = new Bundle();
+                bd.putSerializable("user",userBean);
+                startActivity(MyMoneyActivity.class,bd);
+                break;
             default:
                 break;
         }
@@ -360,7 +356,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
 //        req.transaction = buildTransaction("img");
         req.message = msg;
         req.scene = isTimelineCb ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
-        wxapi.sendReq(req);
+        BaseApplication.api.sendReq(req);
         imgShare.setVisibility(View.GONE);
     }
 
@@ -380,7 +376,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
         switch (type) {
             case 1:
                 if ("1".equals(response.getStatusCode())) {
-                    UserBean userBean = (UserBean) response.getResults();
+                    userBean = (UserBean) response.getResults();
                     if (userBean != null) {
                         if (!TextUtils.isEmpty(userBean.getPhoto())) {
                             ImageLoaderUtils.displayRound(mActivity, mineIcon, UrlConstants.BASE_URL + userBean.getPhoto());

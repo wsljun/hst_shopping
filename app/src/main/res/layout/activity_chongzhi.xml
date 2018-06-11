@@ -18,28 +18,30 @@
         android:text="1545451"
         android:textColor="@color/colorBlack"
         android:textSize="17sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone"
+        />
     <EditText
         android:id="@+id/et_change_phone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="20dp"
-        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:padding="10dp"
         android:maxLines="1"
-        android:hint="请输入转账手机号"
+        android:hint="请输入手机号"
         android:textColorHint="@color/colorBlack"
         android:maxLength="11"
         android:textColor="@color/colorBlack"
         android:background="@drawable/textview_home_search"
         android:inputType="number"
-        android:visibility="gone"
         />
     <TextView
         android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="name"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

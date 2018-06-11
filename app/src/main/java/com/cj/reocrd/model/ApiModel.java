@@ -72,8 +72,7 @@ public class ApiModel {
         String data = toJsonStr(map);
         ApiStore.getInstance().getApiService().getData(data).enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                String result = DESedeUtils.getdeCrypt((response.body()), pid);
+            public void onResponse(Call<String> call, Response<String> response) {String result = DESedeUtils.getdeCrypt((response.body()), pid);
                 result = result.replace("\\","/");
                 LogUtil.d( TAG,"onResponse: result 解密= por；"+por+";result= "+result);
                 if (!TextUtils.isEmpty(result)) {
