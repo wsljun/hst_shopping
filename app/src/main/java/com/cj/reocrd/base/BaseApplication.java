@@ -13,6 +13,7 @@ import com.cj.reocrd.R;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.view.WelcomeActivity;
+import com.cj.reocrd.view.activity.MsgToPActivity;
 import com.cj.reocrd.view.activity.MyFansActivity;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.api.model.SimpleCallback;
@@ -136,8 +137,9 @@ public class BaseApplication extends MultiDexApplication {
 
         // 如果将新消息通知提醒托管给SDK完成，需要添加以下配置。否则无需设置。
         // 其中notificationSmallIconId必须提供
+
         StatusBarNotificationConfig config = new StatusBarNotificationConfig();
-        config.notificationEntrance = WelcomeActivity.class;
+        config.notificationEntrance = MsgToPActivity.class;
         config.notificationSmallIconId = R.drawable.ic_stat_notify_msg;
         options.statusBarNotificationConfig = config;
 

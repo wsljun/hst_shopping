@@ -22,6 +22,8 @@ import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.activity.MainActivity;
 import com.cj.reocrd.view.adapter.GuidePageAdapter;
+import com.netease.nimlib.sdk.NimIntent;
+import com.netease.nimlib.sdk.msg.model.IMMessage;
 
 import java.util.ArrayList;
 import java.util.List;
