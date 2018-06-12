@@ -2,7 +2,9 @@ package com.cj.reocrd.base;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Environment;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
@@ -10,18 +12,36 @@ import com.cj.reocrd.BuildConfig;
 import com.cj.reocrd.R;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
+import com.cj.reocrd.view.WelcomeActivity;
+import com.cj.reocrd.view.activity.MyFansActivity;
 import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nim.uikit.api.model.SimpleCallback;
+import com.netease.nim.uikit.api.model.contact.ContactProvider;
+import com.netease.nim.uikit.api.model.user.IUserInfoProvider;
 import com.netease.nim.uikit.business.session.activity.P2PMessageActivity;
+import com.netease.nim.uikit.common.util.sys.ScreenUtil;
+import com.netease.nim.uikit.impl.cache.FriendDataCache;
+import com.netease.nim.uikit.impl.cache.NimUserInfoCache;
+import com.netease.nim.uikit.impl.cache.TeamDataCache;
+import com.netease.nim.uikit.impl.preference.UserPreferences;
+import com.netease.nim.uikit.support.glide.ImageLoaderKit;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.SDKOptions;
 import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 import com.netease.nimlib.sdk.auth.LoginInfo;
+import com.netease.nimlib.sdk.mixpush.NIMPushClient;
+import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
+import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.netease.nimlib.sdk.util.NIMUtil;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zhy.autolayout.config.AutoLayoutConifg;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * MultiDexApplication防止方法数过多
  */
@@ -46,19 +66,20 @@ public class BaseApplication extends MultiDexApplication {
         AutoLayoutConifg.getInstance().useDeviceSize();
 //        ZXingLibrary.initDisplayOpinion(this);
         // SDK初始化（启动后台服务，若已经存在用户登录信息， SDK 将完成自动登录）
-        NIMClient.init(this, null, options());
+        NIMClient.init(this, loginInfo(), options());
         if (NIMUtil.isMainProcess(this)) {
             // 注意：以下操作必须在主进程中进行
             // 1、UI相关初始化操作
-            NimUIKit.init(this);
+            // 初始化，需要传入用户信息提供者
+            NimUIKit.init(this, infoProvider, null);
             // 初始化消息提醒
 //            NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
         }
         //微信分享
         registerWeChat(this);
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             LogUtil.setShow(true);
-        }else{
+        } else {
             LogUtil.setShow(false);
         }
     }
@@ -78,28 +99,58 @@ public class BaseApplication extends MultiDexApplication {
             return null;
         }
     }
-    // 如果返回值为 null，则全部使用默认参数。
+
+    private IUserInfoProvider infoProvider = new IUserInfoProvider() {
+        @Override
+        public UserInfo getUserInfo(String account) {
+            UserInfo user = NimUserInfoCache.getInstance().getUserInfo(account);
+            if (user == null) {
+                NimUserInfoCache.getInstance().getUserInfoFromRemote(account, null);
+            }
+
+            return user;
+        }
+
+        @Override
+        public void getUserInfoAsync(String account, SimpleCallback callback) {
+
+        }
+
+        @Override
+        public void getUserInfoAsync(List accounts, SimpleCallback callback) {
+
+        }
+
+        @Override
+        public List getUserInfo(List accounts) {
+            return null;
+        }
+
+
+    };
+
+
+    // 如果返回值为null，则全部使用默认参数。
     private SDKOptions options() {
         SDKOptions options = new SDKOptions();
 
-        // 如果将新消息通知提醒托管给 SDK 完成，需要添加以下配置。否则无需设置。
+        // 如果将新消息通知提醒托管给SDK完成，需要添加以下配置。否则无需设置。
+        // 其中notificationSmallIconId必须提供
         StatusBarNotificationConfig config = new StatusBarNotificationConfig();
-        config.notificationEntrance = P2PMessageActivity.class; // 点击通知栏跳转到该Activity
-        // 呼吸灯配置
-        config.ledARGB = Color.GREEN;
-        config.ledOnMs = 1000;
-        config.ledOffMs = 1500;
-        // 通知铃声的uri字符串
+        config.notificationEntrance = WelcomeActivity.class;
+        config.notificationSmallIconId = R.drawable.ic_stat_notify_msg;
         options.statusBarNotificationConfig = config;
-        // 配置保存图片，文件，log 等数据的目录
-        // 如果 options 中没有设置这个值，SDK 会使用采用默认路径作为 SDK 的数据目录。
-        // 该目录目前包含 log, file, image, audio, video, thumb 这6个目录。
-        // 如果第三方 APP 需要缓存清理功能， 清理这个目录下面个子目录的内容即可。
-        // 配置是否需要预下载附件缩略图，默认为 true
+
+        // 配置保存图片，文件，log等数据的目录
+        // 如果options中没有设置这个值，SDK会使用下面代码示例中的位置作为sdk的数据目录。
+        // 该目录目前包含log, file, image, audio, video, thumb这6个目录。
+        // 如果第三方APP需要缓存清理功能， 清理这个目录下面个子目录的内容即可。
+        String sdkPath = Environment.getExternalStorageDirectory() + "/" + getPackageName() + "/nim";
+        options.sdkStorageRootPath = sdkPath;
+
+        // 配置是否需要预下载附件缩略图，默认为true
         options.preloadAttach = true;
-        // 配置附件缩略图的尺寸大小。表示向服务器请求缩略图文件的大小
-        // 该值一般应根据屏幕尺寸来确定， 默认值为 Screen.width / 2
-        // 用户资料提供者, 目前主要用于提供用户资料，用于新消息通知栏中显示消息来源的头像和昵称
         return options;
     }
+
 }

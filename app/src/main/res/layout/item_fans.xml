@@ -40,6 +40,5 @@
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@id/fans_keep"
         android:background="@mipmap/liaotian"
-        android:visibility="gone"
         />
 </RelativeLayout>
