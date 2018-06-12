@@ -25,8 +25,10 @@ import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.adapter.FriendsAdapter;
 import com.cj.reocrd.view.adapter.MyFansAdapter;
 import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.LoginInfo;
+import com.netease.nimlib.sdk.msg.SystemMessageObserver;
 
 import java.util.List;
 
