@@ -23,6 +23,7 @@ import com.cj.reocrd.view.view.MViewPager;
 import com.jpeng.jptabbar.JPTabBar;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
+import com.netease.nim.uikit.impl.NimUIKitImpl;
 import com.netease.nim.uikit.impl.preference.UserPreferences;
 import com.netease.nimlib.sdk.AbortableFuture;
 import com.netease.nimlib.sdk.NIMClient;
@@ -233,6 +234,7 @@ public class MainActivity extends BaseActivity {
                 // 启动群聊界面
                 // NimUIKit.startTeamSession(MainActivity.this, "群ID");
                 onLoginDone();
+                NimUIKitImpl.setAccount(account);
                 //开启消息通知
                 initNotificationConfig();
             }
