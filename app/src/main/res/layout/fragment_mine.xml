@@ -337,7 +337,7 @@
 
                     <TextView
                         style="@style/setting_item_configure"
-                        android:drawableStart="@mipmap/qianbao"
+                        android:drawableStart="@mipmap/cz"
                         android:text="充值" />
 
                     <TextView
