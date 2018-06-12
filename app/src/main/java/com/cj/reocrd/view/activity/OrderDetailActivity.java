@@ -133,7 +133,6 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
     }
 
     /**
-     *  支付方式0没有支付 1微信2支付宝3余额
      * @param s
      */
     private void setPayWay(String s) {
@@ -143,10 +142,10 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
                 way = "未支付";
                 break;
             case "1":
-                way = "微信";
+                way = "支付宝";
                 break;
             case "2":
-                way = "支付宝";
+                way = "微信";
                 break;
             case "3":
                 way = "余额";

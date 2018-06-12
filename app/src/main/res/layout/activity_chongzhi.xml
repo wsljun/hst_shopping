@@ -10,7 +10,7 @@
         layout="@layout/layout_title" />
 
     <TextView
-        android:id="@+id/chongzhi_id"
+        android:id="@+id/tv_user_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/mymoney_icon"
@@ -18,15 +18,30 @@
         android:text="1545451"
         android:textColor="@color/colorBlack"
         android:textSize="17sp"
-        android:textStyle="bold" />
-
+        android:textStyle="bold"
+        android:visibility="gone"
+        />
+    <EditText
+        android:id="@+id/et_change_phone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:maxLines="1"
+        android:hint="请输入手机号"
+        android:textColorHint="@color/colorBlack"
+        android:maxLength="11"
+        android:textColor="@color/colorBlack"
+        android:background="@drawable/textview_home_search"
+        android:inputType="number"
+        />
     <TextView
-        android:id="@+id/chongzhi_name"
+        android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="name"
-        android:textSize="14sp" />
-
+        android:textSize="14sp"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,14 +50,18 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_top"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="60dp"
             android:background="@mipmap/beijing2"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="60dp"
+                android:visibility="gone"
+                >
 
                 <ImageView
                     android:id="@+id/chongzhi_card_iv"
@@ -95,43 +114,50 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp" />
+                    android:layout_marginRight="20dp"
+                    android:visibility="gone"
+                    />
             </RelativeLayout>
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp">
-
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            >
             <View
                 android:id="@+id/chognzhi_cneter"
                 android:layout_width="1dp"
                 android:layout_height="1dp"
-                android:layout_centerInParent="true"></View>
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                ></View>
 
-            <TextView
-                android:id="@+id/chognzhi_jifen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="30dp"
-                android:layout_toLeftOf="@id/chognzhi_cneter"
-                android:drawablePadding="7dp"
-                android:drawableStart="@mipmap/jifren"
-                android:text="消费积分"
-                android:textColor="@color/colorBlack" />
+            <!--<TextView-->
+            <!--android:id="@+id/chognzhi_jifen"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="30dp"-->
+            <!--android:layout_toLeftOf="@id/chognzhi_cneter"-->
+            <!--android:drawablePadding="7dp"-->
+            <!--android:drawableStart="@mipmap/jifren"-->
+            <!--android:text="消费积分"-->
+            <!--android:textColor="@color/colorBlack" />-->
 
-            <TextView
-                android:id="@+id/chognzhi_dianzibi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="30dp"
-                android:layout_toRightOf="@id/chognzhi_cneter"
-                android:drawablePadding="7dp"
-                android:drawableStart="@mipmap/dianzibi"
-                android:text="电子币"
-                android:textColor="@color/colorBlack" />
+            <!--<TextView-->
+            <!--android:id="@+id/chognzhi_dianzibi"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="30dp"-->
+            <!--android:layout_toRightOf="@id/chognzhi_cneter"-->
+            <!--android:drawablePadding="7dp"-->
+            <!--android:drawableStart="@mipmap/dianzibi"-->
+            <!--android:text="电子币"-->
+            <!--android:background="@color/colorTextRed"-->
+            <!--/>-->
 
             <View
                 android:layout_width="match_parent"
@@ -143,7 +169,35 @@
 
         </RelativeLayout>
 
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            >
+
+            <RadioButton
+                android:id="@+id/rb_chognzhi_jifen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="消费积分"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:checked="true"
+                android:layout_weight="1"
+                />
+            <RadioButton
+                android:id="@+id/rb_chognzhi_dianzibi"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="电子币"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:layout_weight="1"
+                />
+        </RadioGroup>
         <TextView
+            android:id="@+id/money_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -174,20 +228,21 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/chognzhi_money"
+                android:id="@+id/et_chognzhi_money"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:textStyle="bold"
                 android:maxLines="1"
                 android:maxLength="12"
                 android:layout_toRightOf="@id/chognzhi_fuhao"
+                android:textColor="@color/colorBlack"
                 android:background="@null"
                 android:inputType="number" />
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/chognzhi_chongzhi"
+            android:id="@+id/tv_btn_chongzhi"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"

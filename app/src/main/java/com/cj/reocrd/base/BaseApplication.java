@@ -55,7 +55,7 @@ public class BaseApplication extends MultiDexApplication {
 //            NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
         }
         //微信分享
-//        registerWeChat(this);
+        registerWeChat(this);
         if(BuildConfig.DEBUG){
             LogUtil.setShow(true);
         }else{

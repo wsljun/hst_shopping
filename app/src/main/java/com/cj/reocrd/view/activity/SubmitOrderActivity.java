@@ -3,37 +3,30 @@ package com.cj.reocrd.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
-import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.SubmitOrderContract;
 import com.cj.reocrd.model.entity.GoodsDetailsBean;
 import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.model.entity.OrderDetail;
 import com.cj.reocrd.presenter.SubmitOrderPresenter;
-import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
-import com.cj.reocrd.view.adapter.GalleryAdapter;
 import com.cj.reocrd.view.adapter.SubmitOrderAdapter;
-import com.cj.reocrd.view.fragment.CartFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.cj.reocrd.view.fragment.CartFragment.cartGoodsImgs;
@@ -81,6 +74,8 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     private String type;
     public static final String TYPE_FOR_DETAIL = "1";
     public static final String TYPE_FOR_CART = "2";
+    public static final String TYPE_FOR_PAYING = "3"; // 代付款
+
     public static final String BUNDLE_KEY_OID = "oid";
     public static final String BUNDLE_KEY_TYPE = "type";
     public static final String BUNDLE_KEY_TOTALPRICE = "total_rice";
@@ -119,6 +114,12 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
             goodsNum = cartGoodsImgs.size();
             imgURls.addAll(cartGoodsImgs);
         }
+//        if (TYPE_FOR_PAYING.equals(type)) {
+//            goodsNum = OrderActivity.odlist.size();
+//            for (int i = 0; i <OrderActivity.odlist.size() ; i++) {
+//                imgURls.add(OrderActivity.odlist.get(i).getImgurl());
+//            }
+//        }
 //        mPresenter.getOrderDetail(oid);
     }
 

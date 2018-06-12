@@ -216,4 +216,49 @@ public class OrderInfoUtil2_0 {
         return key;
     }
 
+    /**
+     * 构造充值参数列表
+     * @param app_id
+     * @return
+     */
+    public static Map<String, String> buildReChargeParamMap(String app_id, boolean rsa2,String bizContent) {
+        Map<String, String> keyValues = new HashMap<String, String>();
+
+        keyValues.put("app_id", app_id);
+
+        keyValues.put("biz_content",bizContent);
+
+        keyValues.put("charset", "utf-8");
+
+        keyValues.put("method", "alipay.trade.app.pay");// alipay.trade.app.pay
+
+        keyValues.put("sign_type", rsa2 ? "RSA2" : "RSA");
+
+        keyValues.put("timestamp", TimeUtil.getNowDatetime()); //"2016-07-29 16:55:53"
+        keyValues.put("notify_url", UrlConstants.URL_ALIPAY_RECHARGE); //"2016-07-29 16:55:53"
+
+        keyValues.put("version", "1.0");
+
+        return keyValues;
+    }
+
+    public static String buildReChargeConetent(String totalAmount,String out_trade_no,String passback){
+//        "{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\"300\",
+// \"subject\":\"1\",\"body\":\"我是测试数据\",\"out_trade_no\":\"" + getOutTradeNo() +  "\"}");
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("timeout_express","30m");
+            jsonObject.put("product_code","QUICK_MSECURITY_PAY");
+            jsonObject.put("passback_params",passback);
+            jsonObject.put("total_amount",totalAmount);
+            jsonObject.put("subject", out_trade_no); //UniquePsuedoID.getUniquePsuedoID()
+//            jsonObject.put("body","我是测试数据");
+            jsonObject.put("out_trade_no",out_trade_no);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+
 }

@@ -72,8 +72,7 @@ public class ApiModel {
         String data = toJsonStr(map);
         ApiStore.getInstance().getApiService().getData(data).enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                String result = DESedeUtils.getdeCrypt((response.body()), pid);
+            public void onResponse(Call<String> call, Response<String> response) {String result = DESedeUtils.getdeCrypt((response.body()), pid);
                 result = result.replace("\\","/");
                 LogUtil.d( TAG,"onResponse: result 解密= por；"+por+";result= "+result);
                 if (!TextUtils.isEmpty(result)) {
@@ -83,8 +82,9 @@ public class ApiModel {
                     } catch (Exception e) {
                         e.printStackTrace();
                         LogUtil.d( TAG,"onResponse: result Exception= "+e.toString());
-//                        ToastUtil.showShort("返回数据错误");
                     }
+                }else{
+                    apiCallback.onSuccess(new ApiResponse("1","返回数据为空"));
                 }
             }
 
@@ -163,7 +163,7 @@ public class ApiModel {
         String msg = "请求错误，请稍后重试！";
         ApiResponse apiResponse = null; // new ApiResponse("2","请求错误，请稍后重试！") ;
         if(jsonStr != null && jsonStr.trim().length() >0 ){
-            JSONObject jsonObject = JSON.parseObject(jsonStr);
+             JSONObject jsonObject = JSON.parseObject(jsonStr);
               if (jsonObject.containsKey("statusCode")){
                 code = jsonObject.getString("statusCode");
                 jsonObject.remove("statusCode");

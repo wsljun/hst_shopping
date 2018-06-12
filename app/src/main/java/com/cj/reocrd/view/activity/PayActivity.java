@@ -36,6 +36,7 @@ import com.cj.reocrd.utils.alipay.PayResult;
 import com.cj.reocrd.view.dialog.LoadingDialog;
 
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +63,10 @@ public class PayActivity extends BaseActivity {
     RadioButton rbWechatPay;
     @BindView(R.id.rb_pay_other)
     RadioButton rbPayOther;
+    @BindView(R.id.rb_pay_jifen)
+    RadioButton rbPayJifen;
+    @BindView(R.id.rb_pay_dzb)
+    RadioButton rbPayDzb;
     @BindView(R.id.tv_order_over_payway)
     TextView tvOrderOverPayway;
     @BindView(R.id.tv_order_over_pirce)
@@ -78,7 +83,7 @@ public class PayActivity extends BaseActivity {
     private String oid, orderPrice, payWay;
     private final String TYPE_ALIPAY = "1";
     private final String TYPE_WECHAT = "2";
-    private final String TYPE_YUER = "3";  // 余e
+    private final String TYPE_YUER = "3";  // 余e todo 支付方式 加   5消费积分 6电子币
     public static final String BUNDLE_KEY_OID = "oid";
     public static final String BUNDLE_KEY_PRICE = "price";
 
@@ -94,6 +99,7 @@ public class PayActivity extends BaseActivity {
     private int maxLoadTimes = 3;
     private String phone;
     private String OutTradeNo;
+    private ArrayList<RadioButton> rbs;
 
     @Override
     public int getLayoutId() {
@@ -106,7 +112,26 @@ public class PayActivity extends BaseActivity {
         oid = getIntent().getStringExtra(BUNDLE_KEY_OID);
         orderPrice = getIntent().getStringExtra(BUNDLE_KEY_PRICE);
         phone = (String) SPUtils.get(this, SPUtils.SpKey.USER_PHONE, "");
+        cheeckRadioButtonStatus(0);
         getPayKey();
+    }
+
+    private void cheeckRadioButtonStatus(int index) {
+        if(rbs == null){
+            rbs = new ArrayList<RadioButton>();
+            rbs.add(rbPayAlipay);
+            rbs.add(rbWechatPay);
+            rbs.add(rbPayOther);
+            rbs.add(rbPayJifen);
+            rbs.add(rbPayDzb);
+        }
+        for (int i = 0; i < rbs.size(); i++) {
+            if(index == i){
+                rbs.get(i).setChecked(true);
+            }else{
+                rbs.get(i).setChecked(false);
+            }
+        }
     }
 
     @Override
@@ -148,7 +173,8 @@ public class PayActivity extends BaseActivity {
 
 
     @OnClick({R.id.title_left, R.id.rb_pay_alipay, R.id.rb_wechat_pay, R.id.rb_pay_other
-            , R.id.tv_btn_order_pay, R.id.tv_check_order_detail, R.id.title_right})
+            , R.id.tv_btn_order_pay, R.id.tv_check_order_detail, R.id.title_right,
+            R.id.rb_pay_jifen,R.id.rb_pay_dzb})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_right:
@@ -157,22 +183,49 @@ public class PayActivity extends BaseActivity {
                 break;
             case R.id.rb_pay_alipay:
                 payWay = TYPE_ALIPAY;
-                rbPayAlipay.setChecked(true);
-                rbPayOther.setChecked(false);
-                rbWechatPay.setChecked(false);
+//                rbPayAlipay.setChecked(true);
+//                rbPayOther.setChecked(false);
+//                rbWechatPay.setChecked(false);
+//                rbPayJifen.setChecked(false);
+//                rbPayDzb.setChecked(false);
+                cheeckRadioButtonStatus(0);
                 getOutTradeNo();
                 break;
             case R.id.rb_wechat_pay:
                 payWay = TYPE_WECHAT;
-                rbPayAlipay.setChecked(false);
-                rbPayOther.setChecked(false);
-                rbWechatPay.setChecked(true);
+//                rbPayAlipay.setChecked(false);
+//                rbPayOther.setChecked(false);
+//                rbWechatPay.setChecked(true);
+//                rbPayJifen.setChecked(false);
+//                rbPayDzb.setChecked(false);
+                cheeckRadioButtonStatus(1);
                 break;
             case R.id.rb_pay_other:
                 payWay = TYPE_YUER;
-                rbPayAlipay.setChecked(false);
-                rbPayOther.setChecked(true);
-                rbWechatPay.setChecked(false);
+//                rbPayAlipay.setChecked(false);
+//                rbPayOther.setChecked(true);
+//                rbWechatPay.setChecked(false);
+//                rbPayJifen.setChecked(false);
+//                rbPayDzb.setChecked(false);
+                cheeckRadioButtonStatus(2);
+                break;
+            case R.id.rb_pay_jifen:
+                payWay = "5";
+//                rbPayAlipay.setChecked(false);
+//                rbPayOther.setChecked(false);
+//                rbWechatPay.setChecked(false);
+//                rbPayJifen.setChecked(true);
+//                rbPayDzb.setChecked(false);
+                cheeckRadioButtonStatus(3);
+                break;
+            case R.id.rb_pay_dzb:
+                payWay = "6";
+//                rbPayAlipay.setChecked(false);
+//                rbPayOther.setChecked(false);
+//                rbWechatPay.setChecked(false);
+//                rbPayJifen.setChecked(false);
+//                rbPayDzb.setChecked(true);
+                cheeckRadioButtonStatus(4);
                 break;
             case R.id.tv_btn_order_pay:
                 if (TextUtils.isEmpty(payWay)) {
@@ -182,7 +235,7 @@ public class PayActivity extends BaseActivity {
                         payByAlipay();
                     } else if (payWay.equals(TYPE_WECHAT)) {
                         ToastUtil.showShort("未开通");
-                    } else if (payWay.equals(TYPE_YUER)) {
+                    } else { // 去除 支付宝，微信 支付
                         inputPwdDialog();
                     }
                 }

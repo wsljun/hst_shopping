@@ -12,6 +12,15 @@ public class Wallet {
     private String stock;
     private String gold;
     private String sellscore;
+    private String supply;
+
+    public String getSupply() {
+        return supply;
+    }
+
+    public void setSupply(String supply) {
+        this.supply = supply;
+    }
 
     public String getGold() {
         return gold;

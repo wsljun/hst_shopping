@@ -2,7 +2,6 @@ package com.cj.reocrd.presenter;
 
 import com.cj.reocrd.api.ApiCallback;
 import com.cj.reocrd.api.ApiResponse;
-import com.cj.reocrd.contract.HomeContract;
 import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.ApiModel;
 import com.cj.reocrd.model.entity.BankBean;
@@ -11,7 +10,6 @@ import com.cj.reocrd.model.entity.HomeBean;
 import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.model.entity.Zp;
 
-import java.io.File;
 import java.util.HashMap;
 
 import okhttp3.MultipartBody;
@@ -262,7 +260,7 @@ public class MyPrresenter extends MyContract.Presenter {
     }
 
     @Override
-    public void walletGet(String por, String uid, String bid, String money,String type) {
+    public void walletGet(String por, String uid, String bid, String money, String type, String moneyType) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("uid", uid);
         if(null != bid){
@@ -270,6 +268,7 @@ public class MyPrresenter extends MyContract.Presenter {
         }
         map.put("money", money);
         map.put("type", type);
+        map.put("moneytype", moneyType);
         ApiModel.getInstance().getData(por, map, BankBean.class, new ApiCallback<String>() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
