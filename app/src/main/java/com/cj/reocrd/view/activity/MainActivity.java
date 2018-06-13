@@ -150,7 +150,11 @@ public class MainActivity extends BaseActivity {
         super.initData();
         mainActivity = this;
         RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+        rxPermissions.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.RECORD_AUDIO)
                 .subscribe(new Consumer<Permission>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull Permission permission) throws Exception {
@@ -271,10 +275,12 @@ public class MainActivity extends BaseActivity {
         loginRequest = null;
         DialogMaker.dismissProgressDialog();
     }
+
     private void initNotificationConfig() {
         // 初始化消息提醒
         NIMClient.toggleNotification(true);
     }
+
     // 用来计算返回键的点击间隔时间
     private long exitTime = 0;
 
