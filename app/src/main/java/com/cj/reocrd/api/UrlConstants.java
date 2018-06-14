@@ -17,7 +17,11 @@ public class UrlConstants {
     public final static String URL_ALIPAY_RECHARGE = BASE_URL+"api/alipayRecharge";
     public final static String SUCCESE_CODE = "1"; // 返回结果成功
     public final static String URL_SHARE = BASE_URL+"api/shareMerch?id=";
-
+    public final static String TYPE_ALIPAY = "1";
+    public final static String TYPE_WECHAT = "2";
+    public final static String TYPE_YUER = "3";
+    public final static String TYPE_JIFEN = "5";
+    public final static String TYPE_DZB = "6";
 
     public static class key {
         public static final String USERID = "userid";

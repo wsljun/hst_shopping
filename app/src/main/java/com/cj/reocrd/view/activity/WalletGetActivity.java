@@ -231,6 +231,17 @@ public class WalletGetActivity extends BaseActivity<MyPrresenter> implements MyC
                 }
                 break;
             case R.id.wallet_get:
+                if(moneyType.equals("1")){
+                    if(useableblance == 0){
+                        ToastUtil.showShort("可用余额为零无法提现！");
+                        return;
+                    }
+                }else{
+                    if(sh == 0){
+                        ToastUtil.showShort("商户收入为零无法提现！");
+                        return;
+                    }
+                }
                 if (TYPE_BANK.equals(getType)) {
                     if( bank == null || TextUtils.isEmpty(bank.getId())){
                         ToastUtil.showToastS(this, "请选择银行卡");

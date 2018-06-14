@@ -44,8 +44,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Call;
 
-import static android.provider.Telephony.Mms.Part.CHARSET;
-import static android.provider.UserDictionary.Words.APP_ID;
+import static com.cj.reocrd.api.UrlConstants.TYPE_ALIPAY;
+import static com.cj.reocrd.api.UrlConstants.TYPE_DZB;
+import static com.cj.reocrd.api.UrlConstants.TYPE_JIFEN;
+import static com.cj.reocrd.api.UrlConstants.TYPE_WECHAT;
+import static com.cj.reocrd.api.UrlConstants.TYPE_YUER;
 
 public class PayActivity extends BaseActivity {
 
@@ -81,9 +84,6 @@ public class PayActivity extends BaseActivity {
     TextView tvBtnPay;
 
     private String oid, orderPrice, payWay;
-    private final String TYPE_ALIPAY = "1";
-    private final String TYPE_WECHAT = "2";
-    private final String TYPE_YUER = "3";  // 余e todo 支付方式 加   5消费积分 6电子币
     public static final String BUNDLE_KEY_OID = "oid";
     public static final String BUNDLE_KEY_PRICE = "price";
 
@@ -183,48 +183,23 @@ public class PayActivity extends BaseActivity {
                 break;
             case R.id.rb_pay_alipay:
                 payWay = TYPE_ALIPAY;
-//                rbPayAlipay.setChecked(true);
-//                rbPayOther.setChecked(false);
-//                rbWechatPay.setChecked(false);
-//                rbPayJifen.setChecked(false);
-//                rbPayDzb.setChecked(false);
                 cheeckRadioButtonStatus(0);
                 getOutTradeNo();
                 break;
             case R.id.rb_wechat_pay:
                 payWay = TYPE_WECHAT;
-//                rbPayAlipay.setChecked(false);
-//                rbPayOther.setChecked(false);
-//                rbWechatPay.setChecked(true);
-//                rbPayJifen.setChecked(false);
-//                rbPayDzb.setChecked(false);
                 cheeckRadioButtonStatus(1);
                 break;
             case R.id.rb_pay_other:
                 payWay = TYPE_YUER;
-//                rbPayAlipay.setChecked(false);
-//                rbPayOther.setChecked(true);
-//                rbWechatPay.setChecked(false);
-//                rbPayJifen.setChecked(false);
-//                rbPayDzb.setChecked(false);
                 cheeckRadioButtonStatus(2);
                 break;
             case R.id.rb_pay_jifen:
-                payWay = "5";
-//                rbPayAlipay.setChecked(false);
-//                rbPayOther.setChecked(false);
-//                rbWechatPay.setChecked(false);
-//                rbPayJifen.setChecked(true);
-//                rbPayDzb.setChecked(false);
+                payWay = TYPE_JIFEN;
                 cheeckRadioButtonStatus(3);
                 break;
             case R.id.rb_pay_dzb:
-                payWay = "6";
-//                rbPayAlipay.setChecked(false);
-//                rbPayOther.setChecked(false);
-//                rbWechatPay.setChecked(false);
-//                rbPayJifen.setChecked(false);
-//                rbPayDzb.setChecked(true);
+                payWay = TYPE_DZB;
                 cheeckRadioButtonStatus(4);
                 break;
             case R.id.tv_btn_order_pay:
@@ -424,9 +399,15 @@ public class PayActivity extends BaseActivity {
             tvOrderOverPayway.setText("支付方式:支付宝");
         } else if (TYPE_WECHAT.equals(payWay)) {
             tvOrderOverPayway.setText("支付方式:微信");
-        } else {
+        } else if(TYPE_YUER.equals(payWay) ){
             tvOrderOverPayway.setText("支付方式:余额");
+        } else if(TYPE_JIFEN.equals(payWay) ){
+            tvOrderOverPayway.setText("支付方式:消费积分");
+        } else if(TYPE_DZB.equals(payWay) ){
+            tvOrderOverPayway.setText("支付方式:电子币");
         }
+        setPayWay(payWay);
+
         tvOrderOverPirce.setText("支付金额:" + orderPrice);
         rlOrderPayOver.setVisibility(View.VISIBLE);
     }
@@ -493,6 +474,31 @@ public class PayActivity extends BaseActivity {
             }
         });
     }
+
+    private void setPayWay(String s) {
+        String way = "";
+        switch (s){
+            case TYPE_ALIPAY:
+                way = "支付宝";
+                break;
+            case TYPE_WECHAT:
+                way = "微信";
+                break;
+            case TYPE_YUER:
+                way = "余额";
+                break;
+            case TYPE_JIFEN:
+                way = "消费积分";
+                break;
+            case TYPE_DZB:
+                way = "电子币";
+                break;
+            default:
+                break;
+        }
+        tvOrderOverPayway.setText("支付方式：" +way );
+    }
+
 
 
 }
