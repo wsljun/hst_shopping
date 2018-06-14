@@ -103,9 +103,6 @@ public class MyTeamActivity extends BaseActivity<MyPrresenter> implements MyCont
             HomeBean homeBean = (HomeBean) apiResponse.getResults();
             if (null != homeBean.getFs() && homeBean.getFs().size() > 0) {
                 teamList = homeBean.getFs();
-                for (int i = 0; i < 3 ; i++) {
-                  teamList.addAll(teamList);
-                }
                 if (pageno > 0) {
                     teamAdapter.addData(teamList);
                 } else {
