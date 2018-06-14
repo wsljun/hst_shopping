@@ -23,7 +23,7 @@
     <!-- 外置存储存取权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 多媒体相关 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -48,7 +48,28 @@
         android:protectionLevel="signature" />
     <!-- 接收 SDK 消息广播权限， 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
     <uses-permission android:name="com.cj.reocrd.permission.RECEIVE_MSG" />
+    <!-- SDK权限申明, 第三方APP接入时，请将com.netease.nim.demo替换为自己的包名 -->
+    <!-- 和下面的uses-permission一起加入到你的AndroidManifest文件中。 -->
+    <!-- 小米推送 -->
+    <permission
+        android:name="com.cj.reocrd.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.cj.reocrd.permission.MIPUSH_RECEIVE" />
 
+    <uses-sdk tools:overrideLibrary="com.huawei.android.hms.base,com.huawei.android.hms.push" />
+
+    <!-- 兼容flyme5.0以下版本，魅族内部集成pushSDK必填，不然无法收到消息-->
+    <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
+    <permission
+        android:name="com.cj.reocrd.push.permission.MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.netease.nim.demo.push.permission.MESSAGE" />
+    <!--  兼容flyme3.0配置权限-->
+    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
+    <permission
+        android:name="com.cj.reocrd.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.cj.reocrd.permission.C2D_MESSAGE" />
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
