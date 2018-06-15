@@ -29,6 +29,7 @@ import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.ConstantsUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.view.LuckPan.LuckPanLayout;
 import com.cj.reocrd.view.view.LuckPan.LuckyPanView;
 import com.cj.reocrd.view.view.LuckPan.RotatePan;
@@ -94,7 +95,7 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
                     if ("1".equals(zp.getCan())) {
                         isCan = true;
                         totalMaeny = Integer.parseInt(zp.getTotalmoney());
-                        zpMoney.setText("当前奖池金额：" + zp.getTotalmoney() + "元");
+                        zpMoney.setText("当前奖池金额：" + Utils.strDivide(zp.getTotalmoney()) + "元");
                         moneys = new String[6];
                         moneys[0] = zp.getZero() + " 元";
                         moneys[1] = zp.getOne() + " 元";
@@ -189,6 +190,10 @@ public class ZPActivity extends BaseActivity<MyPrresenter> implements MyContract
                         .show();
                 break;
             case R.id.id_start:
+                if(totalMaeny <= 0){
+                    ToastUtil.showShort("奖金池金额不足，无法抽奖！");
+                    return;
+                }
                 if (isCan) {
                     luckPanLayout.rotate(level, 100);
                     luckPanLayout.setAnimationEndListener(this);

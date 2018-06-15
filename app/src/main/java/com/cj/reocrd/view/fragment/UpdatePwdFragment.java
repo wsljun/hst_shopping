@@ -1,10 +1,7 @@
 package com.cj.reocrd.view.fragment;
 
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,8 +14,6 @@ import com.cj.reocrd.contract.IndexContract;
 import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.presenter.IndexPresenter;
 import com.cj.reocrd.utils.CountDownTimerUtils;
-import com.cj.reocrd.utils.LogUtil;
-import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.IndexActivity;
@@ -27,9 +22,7 @@ import com.cj.reocrd.view.activity.MyActivity;
 import com.cj.reocrd.view.view.VerificationCode.VerificationCodeInput;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * 修改密码，并登陆
@@ -133,7 +126,7 @@ public class UpdatePwdFragment extends BaseFragment<IndexPresenter> implements I
                 }
                 break;
             case R.id.title_left:
-                getIndexActivity().getVpLogin().setCurrentItem(0);
+                getMyActivity().getViewPager().setCurrentItem(0);
                 break;
         }
     }

@@ -260,8 +260,8 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case R.id.mine_zp://大转盘
                 type = 2;
-//                mPresenter.lotteryCan(UrlConstants.UrLType.LOTTERY_CAN, uid);
-                startActivity(ZPActivity.class);
+                mPresenter.lotteryCan(UrlConstants.UrLType.LOTTERY_CAN, uid);
+//                startActivity(ZPActivity.class);
                 break;
             case R.id.mine_keep://以关注
                 Bundle keep = new Bundle();
