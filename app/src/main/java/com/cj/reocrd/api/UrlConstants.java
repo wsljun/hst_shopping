@@ -11,6 +11,7 @@ public class UrlConstants {
     public final static String URL_ABOUT = BASE_URL+"api/about";
     public final static String URL_HELP = BASE_URL+"api/help";
     public final static String URL_GOODS_DETAIL = BASE_URL+"api/meDetail?id=";
+    public final static String URL_WEB_YJ = BASE_URL+"api/history?search_EQ_user.id=";
     public final static String URL_SHARE_REGISTER = BASE_URL+"api/appRegister?code=";
     public final static String URL = "app/outinterface";
     public final static String URL_ALIPAY_RESULT = BASE_URL+"api/alipayResult";
