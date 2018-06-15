@@ -197,22 +197,22 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         UpdateUtil.downloadFile(appInfo.getApkUrl(),mActivity);
                     }
-                })
-                .negativeText("取消")
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        SPUtils.put(mActivity,SPUtils.SpKey.UPDATE_IS_CANCLE,true);
-                        SPUtils.put(mActivity,SPUtils.SpKey.UPDATE_VERSION,appInfo.getVersionCode());
-                    }
                 });
         if("2".equals(appInfo.getIsupdate())){
-            materialDialog.onNegative(new MaterialDialog.SingleButtonCallback(){
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    mActivity.finish();
-                }
-            });
+            materialDialog .negativeText("取消")
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            SPUtils.put(mActivity,SPUtils.SpKey.UPDATE_IS_CANCLE,true);
+                            SPUtils.put(mActivity,SPUtils.SpKey.UPDATE_VERSION,appInfo.getVersionCode());
+                        }
+                    });
+//            materialDialog.onNegative(new MaterialDialog.SingleButtonCallback(){
+//                @Override
+//                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                    mActivity.finish();
+//                }
+//            });
         }
 
         materialDialog .show();
