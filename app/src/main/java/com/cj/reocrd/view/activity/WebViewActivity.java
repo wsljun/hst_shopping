@@ -29,6 +29,7 @@ public class WebViewActivity extends BaseActivity {
     public final static int TYPE_COMMENT = 3;
     public final static int TYPE_GOODS_DETAILS = 4;
     public final static int TYPE_HOME_BANNER= 5;
+    public final static int TYPE_YJ= 6;
 
 
     @Override
@@ -94,6 +95,11 @@ public class WebViewActivity extends BaseActivity {
                 break;
             case TYPE_HOME_BANNER :
                 tvCenter.setText("商品详情");
+                webViewUrl = getIntent().getStringExtra(BUNDLE_WEBVIEW_URL);
+                webView.loadUrl(webViewUrl);
+                break;
+            case TYPE_YJ :
+                tvCenter.setText("记录");
                 webViewUrl = getIntent().getStringExtra(BUNDLE_WEBVIEW_URL);
                 webView.loadUrl(webViewUrl);
                 break;

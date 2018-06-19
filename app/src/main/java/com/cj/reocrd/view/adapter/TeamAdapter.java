@@ -16,8 +16,6 @@ import java.util.List;
 
 
 /**
- * Created by Lyndon.Li on 2018/3/22.
- * login register
  */
 public class TeamAdapter extends BaseQuickAdapter {
 
@@ -37,5 +35,10 @@ public class TeamAdapter extends BaseQuickAdapter {
         }
         helper.setText(R.id.team_phone, data.getPhone());
         helper.setText(R.id.team_p, (position + 1) + "");
+        if("1".equals(data.getType())){
+            helper.setText(R.id.team_type, "消费商");
+        }else{
+            helper.setText(R.id.team_type, "普通会员");
+        }
     }
 }

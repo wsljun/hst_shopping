@@ -11,13 +11,18 @@ public class UrlConstants {
     public final static String URL_ABOUT = BASE_URL+"api/about";
     public final static String URL_HELP = BASE_URL+"api/help";
     public final static String URL_GOODS_DETAIL = BASE_URL+"api/meDetail?id=";
+    public final static String URL_WEB_YJ = BASE_URL+"api/history?search_EQ_user.id=";
     public final static String URL_SHARE_REGISTER = BASE_URL+"api/appRegister?code=";
     public final static String URL = "app/outinterface";
     public final static String URL_ALIPAY_RESULT = BASE_URL+"api/alipayResult";
     public final static String URL_ALIPAY_RECHARGE = BASE_URL+"api/alipayRecharge";
     public final static String SUCCESE_CODE = "1"; // 返回结果成功
     public final static String URL_SHARE = BASE_URL+"api/shareMerch?id=";
-
+    public final static String TYPE_ALIPAY = "1";
+    public final static String TYPE_WECHAT = "2";
+    public final static String TYPE_YUER = "3";
+    public final static String TYPE_JIFEN = "5";
+    public final static String TYPE_DZB = "6";
 
     public static class key {
         public static final String USERID = "userid";

@@ -373,7 +373,6 @@
                 </FrameLayout>
                 <FrameLayout
                     android:id="@+id/mine_zp"
-                    android:visibility="gone"
                     style="@style/mine_frame">
 
 

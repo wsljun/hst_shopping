@@ -30,6 +30,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
+import static com.cj.reocrd.api.UrlConstants.TYPE_ALIPAY;
+import static com.cj.reocrd.api.UrlConstants.TYPE_DZB;
+import static com.cj.reocrd.api.UrlConstants.TYPE_JIFEN;
+import static com.cj.reocrd.api.UrlConstants.TYPE_WECHAT;
+import static com.cj.reocrd.api.UrlConstants.TYPE_YUER;
 import static com.cj.reocrd.view.activity.OrderActivity.mOrderGoodsDatas;
 
 public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements OrderContract.View {
@@ -138,20 +143,22 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
     private void setPayWay(String s) {
         String way = "";
         switch (s){
-            case "0":
-                way = "未支付";
-                break;
-            case "1":
+            case TYPE_ALIPAY:
                 way = "支付宝";
                 break;
-            case "2":
+            case TYPE_WECHAT:
                 way = "微信";
                 break;
-            case "3":
+            case TYPE_YUER:
                 way = "余额";
                 break;
+            case TYPE_JIFEN:
+                way = "消费积分";
+                break;
+            case TYPE_DZB:
+                way = "电子币";
+                break;
             default:
-                way = "未支付";
                 break;
         }
         tvPayWay.setText("支付方式：" +way );

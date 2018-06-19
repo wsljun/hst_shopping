@@ -148,14 +148,17 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
                 finish();
                 break;
             case R.id.wallet_get:
+                Bundle bundle = new Bundle();
+                bundle.putDouble("useableblance", useableblance);
+                bundle.putDouble("sh", sh);
                 if (null!=useableblance && useableblance > 0) {
-                    Bundle bundle = new Bundle();
-                    bundle.putDouble("useableblance", useableblance);
-                    bundle.putDouble("sh", sh);
                     startActivityForResult(WalletGetActivity.class, bundle, WalletGetActivity.WALLET_GET_REQUEST);
-                } else {
-                    return;
+                } else if (null!=sh && sh > 0) {
+                        startActivityForResult(WalletGetActivity.class, bundle, WalletGetActivity.WALLET_GET_REQUEST);
+                    }else{
+                    ToastUtil.showShort("金额不足无法提现！");
                 }
+
                 break;
                 default:
                     break;

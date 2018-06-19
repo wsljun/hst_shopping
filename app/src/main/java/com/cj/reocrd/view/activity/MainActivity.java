@@ -247,7 +247,7 @@ public class MainActivity extends BaseActivity {
             public void onFailed(int i) {
                 switch (i) {
                     case 302:
-                        Toast.makeText(MainActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
                         break;
                     case 408:
                         Toast.makeText(MainActivity.this, "服务器没有相应", Toast.LENGTH_SHORT).show();

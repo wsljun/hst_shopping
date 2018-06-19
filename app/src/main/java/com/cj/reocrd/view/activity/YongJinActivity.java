@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.activity;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ public class YongJinActivity extends BaseActivity<GoodsDetailPresenter> implemen
 
     @BindView(R.id.title_left)
     TextView titleLeft;
+    @BindView(R.id.title_right)
+    TextView titleRight;
     @BindView(R.id.title_center)
     TextView titleCenter;
     @BindView(R.id.tv_xs)
@@ -63,6 +66,8 @@ public class YongJinActivity extends BaseActivity<GoodsDetailPresenter> implemen
     @Override
     public void initView() {
         titleCenter.setText("我的收益");
+        titleRight.setText("记录");
+        titleRight.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -126,11 +131,17 @@ public class YongJinActivity extends BaseActivity<GoodsDetailPresenter> implemen
 
     }
 
-    @OnClick({R.id.title_left})
+    @OnClick({R.id.title_left,R.id.title_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
                 finish();
+                break;
+            case R.id.title_right:
+                Bundle bundle = new Bundle();
+                bundle.putString(WebViewActivity.BUNDLE_WEBVIEW_URL,UrlConstants.URL_WEB_YJ+uid);
+                bundle.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE,WebViewActivity.TYPE_YJ);
+                startActivity(WebViewActivity.class,bundle);
                 break;
             default:
                 break;
