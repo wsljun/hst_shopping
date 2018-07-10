@@ -1,7 +1,13 @@
 package com.cj.reocrd.view.fragment;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -75,6 +81,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     private Bundle goodBundle = new Bundle();
     private List<BannerData> bannerData;
     private  boolean  isCancle = false;
+    private AppInfo appInfo;
 
     @Override
     protected void initPresenter() {
@@ -90,8 +97,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void initData() {
         super.initData();
         // todo 检查更新
-        isCancle = (boolean) SPUtils.get(mActivity,SPUtils.SpKey.UPDATE_IS_CANCLE,false);
-        mPresenter.checkUpdate(String.valueOf(UpdateUtil.getVerCode(mActivity)));
+//        isCancle = (boolean) SPUtils.get(mActivity,SPUtils.SpKey.UPDATE_IS_CANCLE,false);
+//        mPresenter.checkUpdate(String.valueOf(UpdateUtil.getVerCode(mActivity)));
         images = new ArrayList<>();
         images.add("http://pic35.photophoto.cn/20150528/0005018358146030_b.jpg");
         images.add("http://pic28.photophoto.cn/20130827/0005018362405048_b.jpg");
@@ -221,14 +228,15 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void onSuccess(Object data) {
         if(data instanceof AppInfo){
-            AppInfo appInfo = (AppInfo) data;
+            appInfo = (AppInfo) data;
             if(isCancle){
                 String vs = (String) SPUtils.get(mActivity,SPUtils.SpKey.UPDATE_VERSION,"");
                 if(!vs.equals(appInfo.getVersionCode())){
                     isCancle = false;
                 }
             }
-            update(appInfo);
+//            update(appInfo);
+//            checkIsAndroidO();
         }
     }
 
@@ -313,6 +321,63 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         }
         mHomeTabAdapter.loadComplete();
     }
+
+    /**
+     * 判断是否是8.0,8.0需要处理未知应用来源权限问题,否则直接安装
+     */
+    private void checkIsAndroidO() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            boolean b = mActivity.getPackageManager().canRequestPackageInstalls();
+            ToastUtil.showShort("checkIsAndroidO b= "+b);
+            if (b) {
+//                installApk();// todo 安装应用的逻辑(写自己的就可以)
+                update(appInfo);
+            } else {
+                //请求安装未知应用来源的权限
+                ActivityCompat.requestPermissions(mActivity,
+                        new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, 1);
+            }
+        } else {
+//            installApk();
+            update(appInfo);
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    installApk();
+                    update(appInfo);
+                } else {
+                    ToastUtil.showShort("onRequestPermissionsResult  Settings ");
+//                    Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+//                    startActivityForResult(intent, 2);
+                }
+                break;
+                default:
+                    break;
+
+        }
+    }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        switch (requestCode) {
+//            case 2:
+//                checkIsAndroidO();
+//                break;
+//
+//            default:
+//                break;
+//        }
+//    }
+
 
 
 }

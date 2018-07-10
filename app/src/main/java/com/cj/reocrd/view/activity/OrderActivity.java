@@ -293,7 +293,7 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
 
     @Override
     public void showOrderList(List<OrderBean> orderBeanList) {
-        if (orderBeanList.size() > 0) {
+        if (null != orderBeanList) {
             LogUtil.e("showOrderList","orderBeanList.size():"+orderBeanList.size());
             if (loading) {
                 orderAdapter.updateData(orderBeanList);
@@ -302,14 +302,21 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
                 orderBeans = orderBeanList;
                 initRecycleView();
             }
-        } else {
-            ToastUtil.showShort("没有订单！");
         }
+//        else {
+//            ToastUtil.showShort("没有订单！");
+//        }
     }
 
     @Override
     public void updateOrderList() {
         pageno = 0;
         mPresenter.getOrderList(size + "", pageno + "", uid, String.valueOf(type));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateOrderList();
     }
 }

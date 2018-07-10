@@ -59,6 +59,7 @@ import com.tencent.mm.sdk.openapi.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.WXWebpageObject;
 import com.tencent.mm.sdk.platformtools.Util;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,8 +151,8 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     public static  boolean  GO_CART = false;
     private boolean isTimelineCb;
     private byte[] bitmapByte;
-    private Bitmap shareGoodBitmap;
-
+    private static Bitmap shareGoodBitmap;
+    private static File shareFile;
     @Override
     public int getLayoutId() {
         return R.layout.activity_good_detail;
@@ -191,9 +192,10 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
             @Override
             public void run() {
                 if(null == bitmapByte){
-                     shareGoodBitmap =  ImageLoaderUtils.getbitmap(UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
+                    shareGoodBitmap =  ImageLoaderUtils.getbitmap(UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
                     if(null != shareGoodBitmap){
-                        bitmapByte = ImageLoaderUtils.bitmap2Bytes(shareGoodBitmap,32);
+//                        bitmapByte = ImageLoaderUtils.bitmap2Bytes(shareGoodBitmap,32);
+                        shareFile = ImageLoaderUtils.saveImage(shareGoodBitmap,"share");
                     }
                 }
             }
@@ -283,6 +285,15 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     private void setSkuView() {
         if(null != skuView && null != goodsDetailsBean){
             tvGoodsDetailPrice.setText(ConstantsUtils.RMB+goodsDetailsBean.getPrice());
+            if(goodsDetailsBean.getSlist().size()>0){
+                setSkuPrice(goodsDetailsBean.getSlist().get(0));
+            }else{
+                ToastUtil.showShort("没有规格可选");
+                return;
+            }
+            tvSkuAddCart.setOnClickListener(this::onViewClicked);
+            tvSkuBuy.setOnClickListener(this::onViewClicked);
+            ivSkuGoCart.setOnClickListener(this::onViewClicked);
             ImageLoaderUtils.display(this,ivGoodsDetailUrl,UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
             //设置默认选中
             goodsLabelsView.setSelects(0);
@@ -299,12 +310,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                 @Override
                 public void onLabelSelectChange(TextView label, Object data, boolean isSelect, int position) {
                     //label是被选中的标签，data是标签所对应的数据，isSelect是是否选中，position是标签的位置。
-                    SkuBean skuBean = (SkuBean) data;
-                    sid = skuBean.getId();
-                    skuPrice = skuBean.getPrice();
-                    tvGoodsDetailPrice.setText(ConstantsUtils.RMB+skuPrice);
-                    setTextTotalPrice(skuPrice,num);
-                    tvSkuNum.setGoods_storage(Integer.parseInt(skuBean.getStock()));
+                    setSkuPrice((SkuBean) data);
                 }
             });
             btnGoodsDetailClose.setOnClickListener(new View.OnClickListener() {
@@ -323,11 +329,17 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                     setTextTotalPrice(skuPrice,num);
                 }
             });
-            tvSkuAddCart.setOnClickListener(this::onViewClicked);
-            tvSkuBuy.setOnClickListener(this::onViewClicked);
-            ivSkuGoCart.setOnClickListener(this::onViewClicked);
-
+            popWindow.showAtLocation(rlActivityGoodsDetail, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
         }
+    }
+
+    private void setSkuPrice(SkuBean data){
+        SkuBean skuBean = data;
+        sid = skuBean.getId();
+        skuPrice = skuBean.getPrice();
+        tvGoodsDetailPrice.setText(ConstantsUtils.RMB+skuPrice);
+        tvSkuNum.setGoods_storage(Integer.parseInt(skuBean.getStock()));
+        setTextTotalPrice(skuPrice,num);
     }
 
     private void setTextTotalPrice(String price,int num){
@@ -364,7 +376,6 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
             popWindow.setTouchable(true);
         }
         setSkuView();
-        popWindow.showAtLocation(rlActivityGoodsDetail, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
     @Override
@@ -513,15 +524,24 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         msg.description = goodPrice.getText().toString() ;
 
 //        Bitmap thumb = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
-        if(bitmapByte == null) {
-            if(null != shareGoodBitmap){
-                bitmapByte = ImageLoaderUtils.bitmap2Bytes(shareGoodBitmap,32);
-            }else{
-                Toast.makeText(mContext, "图片不能为空", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            msg.thumbData = bitmapByte;//Util.bmpToByteArray(thumb, true);
-        }
+//        if(bitmapByte == null) {
+//            if(null != shareGoodBitmap){
+//                bitmapByte = ImageLoaderUtils.bitmap2Bytes(shareGoodBitmap,32);
+//            }else{
+//                Toast.makeText(mContext, "图片不能为空", Toast.LENGTH_SHORT).show();
+//            }
+//        } else {
+//            if(bitmapByte.length > 32){
+//                bitmapByte = Util.bmpToByteArray(shareGoodBitmap, true);
+//            }
+//            msg.thumbData = bitmapByte;
+//        }
+        if (null == shareFile) {return;}
+        Bitmap bmp = BitmapFactory.decodeFile(shareFile.getAbsolutePath());
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 100, 100, true);
+        bmp.recycle();
+        msg.thumbData = Util.bmpToByteArray(thumbBmp, true);  // 设置所图；
+
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.message = msg;
         req.scene = isTimelineCb ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;

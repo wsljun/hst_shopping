@@ -1,5 +1,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <paths>
         <external-path path="" name="download"/>
+        <!--/storage/emulated/0/Android/data/${applicationId}/files/apk/-->
+        <!--<files-path name="beta_external_files_path" path="Android/data/"/>-->
     </paths>
 </resources>

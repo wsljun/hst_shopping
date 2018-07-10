@@ -110,7 +110,7 @@ public class ImageLoaderUtils {
      */
     public static byte[] bitmap2Bytes(Bitmap bitmap, int maxkb) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
         int options = 100;
         while (output.toByteArray().length > maxkb && options != 10) {
             output.reset(); //清空output
@@ -166,12 +166,12 @@ public class ImageLoaderUtils {
     }
 
 
-    public static File saveImage(Bitmap bmp) {
+    public static File saveImage(Bitmap bmp,String name) {
         File appDir = new File(Environment.getExternalStorageDirectory(), "hst");
         if (!appDir.exists()) {
             appDir.mkdir();
         }
-        String fileName =  "hst.jpg";
+        String fileName =  name+".jpg";
         File file = new File(appDir, fileName);
         try {
             FileOutputStream fos = new FileOutputStream(file);

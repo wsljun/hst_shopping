@@ -1,18 +1,33 @@
 package com.cj.reocrd.view.activity;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseFragment;
+import com.cj.reocrd.contract.HomeContract;
+import com.cj.reocrd.model.entity.AppInfo;
+import com.cj.reocrd.model.entity.HomeBean;
+import com.cj.reocrd.presenter.HomePresenter;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.utils.UpdateUtil;
 import com.cj.reocrd.view.adapter.ViewPagerAdapter;
 import com.cj.reocrd.view.fragment.AllGoodsFragment;
 import com.cj.reocrd.view.fragment.CartFragment;
@@ -44,7 +59,7 @@ import io.reactivex.functions.Consumer;
  * Created by Administrator on 2018/3/16.
  */
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity<HomePresenter>  implements HomeContract.View{
 
     @BindView(R.id.main_viewPager)
     MViewPager viewPager;
@@ -58,6 +73,8 @@ public class MainActivity extends BaseActivity {
     private MineFragment mMineFragment;
     private String TAG = "MainActivity";
     public static MainActivity mainActivity = null;
+    private  boolean  isCancle = false;
+    private AppInfo appInfo;
 
     @Override
     public void initFragment(Bundle savedInstanceState) {
@@ -210,13 +227,14 @@ public class MainActivity extends BaseActivity {
                 .generate();
         tabLayout.setIconSize(19);
         tabLayout.setContainer(viewPager);
-
+        // todo 检查更新
+        isCancle = (boolean) SPUtils.get(this,SPUtils.SpKey.UPDATE_IS_CANCLE,false);
+        mPresenter.checkUpdate(String.valueOf(UpdateUtil.getVerCode(this)));
     }
 
     @Override
     public void initPresenter() {
-        //todo 需要绑定view 时
-//        mPresenter.setVM(this);
+        mPresenter.setVM(this);
     }
 
     @Override
@@ -300,4 +318,122 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
+    /**
+     * 判断是否是8.0,8.0需要处理未知应用来源权限问题,否则直接安装
+     */
+    private void checkIsAndroidO() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            boolean b = getPackageManager().canRequestPackageInstalls();
+            if (b) {
+                 // todo 安装应用的逻辑(写自己的就可以)
+                update(appInfo);
+            } else {
+                //请求安装未知应用来源的权限
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, 1);
+            }
+        } else {
+//            installApk();
+            update(appInfo);
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    update(appInfo);
+                } else {
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+                    startActivityForResult(intent, 2);
+                }
+                break;
+            default:
+                break;
+
+        }
+    }
+
+        @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 2:
+                checkIsAndroidO();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void update(AppInfo appInfo){
+        if(isCancle){
+            return;
+        }
+        MaterialDialog.Builder materialDialog = new MaterialDialog.Builder(MainActivity.this)
+                .title("版本更新")
+                .content("更新内容："+"\n"+appInfo.getDetailDesc()+"\n"+"版本大小："+appInfo.getApkSize())
+                .positiveText("确定")
+                .canceledOnTouchOutside(false)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        UpdateUtil.downloadFile(appInfo.getApkUrl(),MainActivity.this);
+                    }
+                });
+        if("2".equals(appInfo.getIsupdate())){
+            materialDialog .negativeText("取消")
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            SPUtils.put(MainActivity.this,SPUtils.SpKey.UPDATE_IS_CANCLE,true);
+                            SPUtils.put(MainActivity.this,SPUtils.SpKey.UPDATE_VERSION,appInfo.getVersionCode());
+                        }
+                    });
+//            materialDialog.onNegative(new MaterialDialog.SingleButtonCallback(){
+//                @Override
+//                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                    mActivity.finish();
+//                }
+//            });
+        }
+
+        materialDialog .show();
+    }
+
+
+    @Override
+    public void onSuccess(Object data) {
+        if(data instanceof AppInfo){
+            appInfo = (AppInfo) data;
+            if(isCancle){
+                String vs = (String) SPUtils.get(this,SPUtils.SpKey.UPDATE_VERSION,"");
+                if(!vs.equals(appInfo.getVersionCode())){
+                    isCancle = false;
+                }
+            }
+            checkIsAndroidO();
+        }
+    }
+
+    @Override
+    public void onFailureMessage(String msg) {
+         ToastUtil.showShort(msg);
+    }
+
+    @Override
+    public Context getContext() {
+        return this.getApplicationContext();
+    }
+
+    @Override
+    public void onRefreshHomeData(HomeBean homeBean) {
+
+    }
 }

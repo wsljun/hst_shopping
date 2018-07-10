@@ -5,17 +5,17 @@ android {
     defaultConfig {
         applicationId "com.cj.reocrd"
         minSdkVersion 19
-        targetSdkVersion 25
-        versionCode 3
-        versionName "3.0"
+        targetSdkVersion 26
+        versionCode 5
+        versionName "5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //开启分包模式
         multiDexEnabled = true
     }
-    dexOptions {
-        incremental true
-        javaMaxHeapSize "4g"
-    }
+//    dexOptions {
+//        incremental true
+//        javaMaxHeapSize "4g"
+//    }
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
