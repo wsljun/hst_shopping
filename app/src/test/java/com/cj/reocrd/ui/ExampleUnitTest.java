@@ -55,7 +55,7 @@ public class ExampleUnitTest {
         apiResponse.setResults(userList);
 
 //        ApiModel.parse(apiResponse, User.class);
-        ApiResponse apiResponse1 = ApiModel.parseFastJson(JSONObject.toJSONString(apiResponse), User.class);
+//        ApiResponse apiResponse1 = ApiModel.parseFastJson(JSONObject.toJSONString(apiResponse), User.class);
 //        System.out.println("");
     }
 

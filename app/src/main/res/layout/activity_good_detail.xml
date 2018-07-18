@@ -25,13 +25,14 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="220dp"
+                >
 
                 <ImageView
                     android:id="@+id/iv_good_detail"
                     android:layout_width="match_parent"
-                    android:scaleType="fitXY"
                     android:layout_height="match_parent"
+                    android:scaleType="fitXY"
                     />
 
             </FrameLayout>

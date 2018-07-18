@@ -1,11 +1,11 @@
 package com.test;
 
-import com.cj.reocrd.api.UrlConstants;
 
 import org.junit.Test;
 import org.openqa.selenium.internal.Base64Encoder;
 
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -174,5 +174,45 @@ public class DESedeUtils {
 //		dexM.writeTo(File(classesDexFilePath))
 
 	}
+
+	@Test
+	public  void getMD5(){
+		// 840D8E40F41C
+//		String restult = getStringMD5("adc");
+		String txt = "adc";
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(txt.getBytes("UTF-8"));
+			StringBuffer buf = new StringBuffer();
+			for (byte b : md.digest()) {
+				buf.append(String.format("%02x", b & 0xff));
+			}
+			System.out.println(buf);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+//	public static String getStringMD5(String value) {
+//		if (value == null || value.trim().length() < 1) {
+//			return null;
+//		}
+//		try {
+//			return getMD5(value.getBytes("UTF-8"));
+//		} catch (UnsupportedEncodingException e) {
+//			throw new RuntimeException(e.getMessage(), e);
+//		}
+//	}
+
+//	public static String getMD5(byte[] source) {
+//		try {
+//			MessageDigest md5 = MessageDigest.getInstance("MD5");
+//			return HexDump.toHex(md5.digest(source));
+//		} catch (Exception e) {
+//			throw new RuntimeException(e.getMessage(), e);
+//		}
+//	}
+
 
 }

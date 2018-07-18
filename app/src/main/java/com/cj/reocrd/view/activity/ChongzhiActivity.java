@@ -228,8 +228,9 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
             case R.id.chognzhi_fuhao:
                 break;
             case R.id.tv_btn_chongzhi:
+                t_phone = et_change_phone.getText().toString();
                 if(TextUtils.isEmpty(t_phone)){
-                    ToastUtil.showShort("请输入手机号！");
+                    ToastUtil.showShort("请输入正确手机号！");
                     return;
                 }
                 if(MyMoneyActivity.TYPY_RECHARGE.equals(type)){

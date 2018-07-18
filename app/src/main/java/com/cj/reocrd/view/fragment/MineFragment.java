@@ -442,7 +442,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 if(null == picFile){
                     Bitmap b = ImageLoaderUtils.getbitmap(codeImg);
                     if(null != b){
-                        picFile = ImageLoaderUtils.saveImage(b);
+                        picFile = ImageLoaderUtils.saveImage(b,"hst");
                     }else{
                         if(isToast){
                             ToastUtil.showShort("保存图片失败！");

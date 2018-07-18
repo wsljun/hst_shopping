@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 
 import com.cj.reocrd.api.UrlConstants;
@@ -57,7 +58,7 @@ public class UpdateUtil {
                 LogUtil.d(TAG, "downloadFile: 正在下载");
             } else {
                 Log.d(TAG, "downloadFile: 下载地址:"+url);
-                //创建下载请求 "http://down.huixueyuan.com/publish_cs/android/TiFenWang.apk"
+                //创建下载请求
                 DownloadManager.Request down = new DownloadManager.Request(Uri.parse(url));
                 //设置允许使用的网络类型，这里是移动网络和wifi都可以
                 down.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
@@ -67,8 +68,12 @@ public class UpdateUtil {
                 down.setTitle("好膳堂");
                 //显示Notification
                 down.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+                //设置下载文件的类型
+//                down.setMimeType("application/vnd.android.package-archive");
                 //设置下载后文件存放的位置，在SDCard/Android/data/你的应用的包名/files/目录下面
-                down.setDestinationInExternalFilesDir(context, null, DOWNLOAD_FILE_NAME);
+//                down.setDestinationInExternalFilesDir(context, "", DOWNLOAD_FILE_NAME);
+                //设置下载存放的文件夹和文件名字.
+                down.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, DOWNLOAD_FILE_NAME);
                 //将下载请求放入队列,返回值为downloadId
                 downloadId = manager.enqueue(down);
                 Log.d(TAG, "downloadId:" + downloadId);

@@ -112,7 +112,6 @@ public class PayActivity extends BaseActivity {
         oid = getIntent().getStringExtra(BUNDLE_KEY_OID);
         orderPrice = getIntent().getStringExtra(BUNDLE_KEY_PRICE);
         phone = (String) SPUtils.get(this, SPUtils.SpKey.USER_PHONE, "");
-        cheeckRadioButtonStatus(0);
         getPayKey();
     }
 
