@@ -51,6 +51,10 @@ public class YongJinActivity extends BaseActivity<GoodsDetailPresenter> implemen
     LinearLayout llLeader;
     @BindView(R.id.tv_yj_total)
     TextView tvYjTotal;
+    @BindView(R.id.tv_xz)
+    TextView tvXZ;
+    @BindView(R.id.ll_xz)
+    LinearLayout llXZ;
 
     @Override
     public int getLayoutId() {
@@ -87,6 +91,10 @@ public class YongJinActivity extends BaseActivity<GoodsDetailPresenter> implemen
                 tvJq.setText(yj.getJq());
                 tvCj.setText(yj.getCj());
                 tvLeader.setText(yj.getLeader());
+                if("1".equals(yj.getIsxzry())){
+                    llXZ.setVisibility(View.VISIBLE);
+                    tvXZ.setText(yj.getXz());
+                }
                 // 总佣金
                 tvYjTotal.setText(getTotal(yj));
             }

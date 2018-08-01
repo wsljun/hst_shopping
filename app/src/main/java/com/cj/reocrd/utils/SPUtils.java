@@ -27,7 +27,7 @@ public class SPUtils {
         public static final String IM_ACCID = "im_accid";
         public static final String IM_TOKEN = "im_token";
         public static final String UPDATE_IS_CANCLE = "iscancle";
-        public static final String UPDATE_VERSION = "vs";
+        public static final String CANCLE_UPDATE_VERSION = "vs";
 
     }
 

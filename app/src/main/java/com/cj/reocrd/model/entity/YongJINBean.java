@@ -10,6 +10,8 @@ import com.cj.reocrd.utils.Utils;
  "cj": "100"//大转盘
  "leader": "100"，//领导分红
  "isleader": "1"//是否是领导人 1是 0否  如果是1就显示 领导分红
+ "xz": "100"，//行政分红
+ "isxzry": "1"//是否是行政人员 1是 2否  如果是1就显示
  }
  */
 
@@ -21,6 +23,24 @@ public class YongJINBean {
     private String cj;
     private String leader;
     private String isleader;
+    private String xz;
+    private String isxzry;
+
+    public String getXz() {
+        return Utils.strDivide(xz);
+    }
+
+    public void setXz(String xz) {
+        this.xz = xz;
+    }
+
+    public String getIsxzry() {
+        return isxzry;
+    }
+
+    public void setIsxzry(String isxzry) {
+        this.isxzry = isxzry;
+    }
 
     public String getIsleader() {
         return isleader;

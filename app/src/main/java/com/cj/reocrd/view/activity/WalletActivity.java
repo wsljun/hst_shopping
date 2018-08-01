@@ -97,12 +97,18 @@ public class WalletActivity extends BaseActivity<GoodsDetailPresenter> implement
 
                 score = Integer.parseInt(wallet.getScore());
                 stock = Integer.parseInt(wallet.getStock());
-                walletUseableblance.setText(useableblance + "");
-                walletBalance.setText(blance + "");
-                walletFreeze.setText(freeze + "");
+//                walletUseableblance.setText(useableblance + "");
+//                walletBalance.setText(blance + "");
+//                walletFreeze.setText(freeze + "");
                 walletScore.setText(score + "");
                 walletStock.setText(stock + "");
-                shanghu.setText(sh+"");
+//                shanghu.setText(sh+"");
+                walletUseableblance.setText(Utils.strDivide(wallet.getUseableblance()));
+                walletBalance.setText(Utils.strDivide(wallet.getBalance()));
+                walletFreeze.setText(Utils.strDivide(wallet.getFreeze()));
+//                walletScore.setText(Utils.strDivide(wallet.getScore()));
+//                walletStock.setText(Utils.strDivide(wallet.getStock()));
+                shanghu.setText(Utils.strDivide(wallet.getSupply()));
             }
         } else {
             ToastUtil.showToastS(this, response.getMessage());

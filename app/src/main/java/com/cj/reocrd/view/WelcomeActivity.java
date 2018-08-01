@@ -126,12 +126,12 @@ public class WelcomeActivity extends AppCompatActivity implements ViewPager.OnPa
         // 检查userid是否存在
         String userid = (String) SPUtils.get(this, UrlConstants.key.USERID, "");
         //添加到base里，全局用
-        if (TextUtils.isEmpty(userid)) {
-            startActivity(new Intent(this, IndexActivity.class));
-        } else {
+//        if (TextUtils.isEmpty(userid)) {
+//            startActivity(new Intent(this, IndexActivity.class));
+//        } else {
             BaseActivity.uid = userid;
             startActivity(new Intent(this, MainActivity.class));
-        }
+//        }
         finish();
     }
 

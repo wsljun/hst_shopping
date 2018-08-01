@@ -211,7 +211,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             SPUtils.put(mActivity,SPUtils.SpKey.UPDATE_IS_CANCLE,true);
-                            SPUtils.put(mActivity,SPUtils.SpKey.UPDATE_VERSION,appInfo.getVersionCode());
+                            SPUtils.put(mActivity,SPUtils.SpKey.CANCLE_UPDATE_VERSION,appInfo.getVersionCode());
                         }
                     });
 //            materialDialog.onNegative(new MaterialDialog.SingleButtonCallback(){
@@ -227,17 +227,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void onSuccess(Object data) {
-        if(data instanceof AppInfo){
-            appInfo = (AppInfo) data;
-            if(isCancle){
-                String vs = (String) SPUtils.get(mActivity,SPUtils.SpKey.UPDATE_VERSION,"");
-                if(!vs.equals(appInfo.getVersionCode())){
-                    isCancle = false;
-                }
-            }
-//            update(appInfo);
-//            checkIsAndroidO();
-        }
+
     }
 
     @Override

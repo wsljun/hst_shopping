@@ -1,6 +1,7 @@
 package com.cj.reocrd.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -90,17 +91,19 @@ public class Utils {
         return formatDouble2(totalPrice);
     }
 
+    @SuppressLint("DefaultLocale")
     public static String strDivide(String s){
+        //String.format("%.2f",Double.valueOf(s)/100)
         return String.valueOf(formatDouble2(Double.valueOf(s)/100));
     }
 
     public static String newDouble(Double d){
-        DecimalFormat df = new DecimalFormat("######0.00");
+        DecimalFormat df = new DecimalFormat("####.00");
         return df.format(d);
     }
 
     public static Double formatDouble2(double d) {
-        BigDecimal bg = new BigDecimal(d).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal bg = new BigDecimal(d).setScale(2, BigDecimal.ROUND_HALF_UP);
         return bg.doubleValue();
     }
 

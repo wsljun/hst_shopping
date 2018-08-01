@@ -73,8 +73,9 @@ public class MainActivity extends BaseActivity<HomePresenter>  implements HomeCo
     private MineFragment mMineFragment;
     private String TAG = "MainActivity";
     public static MainActivity mainActivity = null;
-    private  boolean  isCancle = false;
+    private  boolean  isCancle = false,isUpdate = false;
     private AppInfo appInfo;
+    private String version_code ;
 
     @Override
     public void initFragment(Bundle savedInstanceState) {
@@ -227,9 +228,10 @@ public class MainActivity extends BaseActivity<HomePresenter>  implements HomeCo
                 .generate();
         tabLayout.setIconSize(19);
         tabLayout.setContainer(viewPager);
-        // todo 检查更新
+        //  检查更新
         isCancle = (boolean) SPUtils.get(this,SPUtils.SpKey.UPDATE_IS_CANCLE,false);
-        mPresenter.checkUpdate(String.valueOf(UpdateUtil.getVerCode(this)));
+        version_code = String.valueOf(UpdateUtil.getVerCode(this));
+        mPresenter.checkUpdate(version_code);
     }
 
     @Override
@@ -326,12 +328,23 @@ public class MainActivity extends BaseActivity<HomePresenter>  implements HomeCo
         if (Build.VERSION.SDK_INT >= 26) {
             boolean b = getPackageManager().canRequestPackageInstalls();
             if (b) {
-                 // todo 安装应用的逻辑(写自己的就可以)
+                // todo 安装应用的逻辑(写自己的就可以)
                 update(appInfo);
             } else {
-                //请求安装未知应用来源的权限
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, 1);
+                MaterialDialog.Builder materialDialog = new MaterialDialog.Builder(MainActivity.this)
+                        .title("版本更新")
+                        .content("请在安装未知应用中将好膳堂设置为允许,"+"\n"+"否则无法正常更新该应用！")
+                        .positiveText("前往")
+                        .canceledOnTouchOutside(false)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                //请求安装未知应用来源的权限
+                                ActivityCompat.requestPermissions(MainActivity.this,
+                                        new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, 1);
+                            }
+                        });
+                materialDialog.show();
             }
         } else {
 //            installApk();
@@ -339,7 +352,6 @@ public class MainActivity extends BaseActivity<HomePresenter>  implements HomeCo
         }
 
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -359,7 +371,7 @@ public class MainActivity extends BaseActivity<HomePresenter>  implements HomeCo
         }
     }
 
-        @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
@@ -373,12 +385,12 @@ public class MainActivity extends BaseActivity<HomePresenter>  implements HomeCo
     }
 
     private void update(AppInfo appInfo){
-        if(isCancle){
-            return;
-        }
+        if(!isUpdate){return;}
         MaterialDialog.Builder materialDialog = new MaterialDialog.Builder(MainActivity.this)
                 .title("版本更新")
-                .content("更新内容："+"\n"+appInfo.getDetailDesc()+"\n"+"版本大小："+appInfo.getApkSize())
+                .content("更新内容："+appInfo.getDetailDesc()
+                        +"\n"+"版本大小："+appInfo.getApkSize()
+                        +"\n"+"版本名："+appInfo.getVersionName())
                 .positiveText("确定")
                 .canceledOnTouchOutside(false)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -393,7 +405,7 @@ public class MainActivity extends BaseActivity<HomePresenter>  implements HomeCo
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             SPUtils.put(MainActivity.this,SPUtils.SpKey.UPDATE_IS_CANCLE,true);
-                            SPUtils.put(MainActivity.this,SPUtils.SpKey.UPDATE_VERSION,appInfo.getVersionCode());
+                            SPUtils.put(MainActivity.this,SPUtils.SpKey.CANCLE_UPDATE_VERSION,appInfo.getVersionCode());
                         }
                     });
 //            materialDialog.onNegative(new MaterialDialog.SingleButtonCallback(){
@@ -412,19 +424,30 @@ public class MainActivity extends BaseActivity<HomePresenter>  implements HomeCo
     public void onSuccess(Object data) {
         if(data instanceof AppInfo){
             appInfo = (AppInfo) data;
-            if(isCancle){
-                String vs = (String) SPUtils.get(this,SPUtils.SpKey.UPDATE_VERSION,"");
-                if(!vs.equals(appInfo.getVersionCode())){
-                    isCancle = false;
+            if(isCancle){// 之前点过取消更新
+                String vs = (String) SPUtils.get(this,SPUtils.SpKey.CANCLE_UPDATE_VERSION,"");
+                if(vs.equals(appInfo.getVersionCode())){ // 判断被取消更新的版本号与当前待更新版本是否一致
+                    isUpdate = false;
+                }else{
+                    isUpdate = true;
+                    checkIsAndroidO();
+                }
+            }else{
+                // 判断版本号是否相同
+                if(version_code.equals(appInfo.getVersionCode())){
+                    isUpdate = false;
+                }else{
+                    isUpdate = true;
+                    checkIsAndroidO();
                 }
             }
-            checkIsAndroidO();
+
         }
     }
 
     @Override
     public void onFailureMessage(String msg) {
-         ToastUtil.showShort(msg);
+        ToastUtil.showShort(msg);
     }
 
     @Override
