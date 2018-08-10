@@ -5,7 +5,6 @@ import com.cj.reocrd.base.BaseView;
 
 
 /**
- * Created by Lyndon.Li on 2018/3/20.
  */
 
 public interface IndexContract {

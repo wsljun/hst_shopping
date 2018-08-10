@@ -3,7 +3,6 @@ package com.cj.reocrd.model.entity;
 import com.cj.reocrd.utils.Utils;
 
 /**
- * Created by Lyndon.Li on 2018/4/27.
  */
 
 public class RefundDetail {

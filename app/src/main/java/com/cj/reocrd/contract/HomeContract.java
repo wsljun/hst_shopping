@@ -6,7 +6,6 @@ import com.cj.reocrd.model.entity.HomeBean;
 
 
 /**
- * Created by Lyndon.Li on 2018/3/20.
  */
 
 public interface HomeContract {

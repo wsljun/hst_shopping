@@ -48,7 +48,7 @@ import java.util.List;
  */
 public class BaseApplication extends MultiDexApplication {
     private static BaseApplication baseApplication;
-    private static final String APP_ID = "wxb02990e3e223e34a";    //这个APP_ID就是注册APP的时候生成的
+    public static final String APP_ID = "wxb02990e3e223e34a";    //这个APP_ID就是注册APP的时候生成的
 
     private static final String APP_SECRET = "0a77fdf8f447cee2bdecd66d7e6dd266";
 

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cj.reocrd">
 
+    <uses-sdk tools:overrideLibrary="com.huawei.android.hms.base,com.huawei.android.hms.push" />
+
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <!-- protection level is dangerous, need request runtime permission -->
@@ -37,7 +39,9 @@
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -55,22 +59,26 @@
     <permission
         android:name="com.cj.reocrd.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.cj.reocrd.permission.MIPUSH_RECEIVE" />
 
-    <uses-sdk tools:overrideLibrary="com.huawei.android.hms.base,com.huawei.android.hms.push" />
-
-    <!-- 兼容flyme5.0以下版本，魅族内部集成pushSDK必填，不然无法收到消息-->
+    <!-- 兼容flyme5.0以下版本，魅族内部集成pushSDK必填，不然无法收到消息 -->
     <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
+
     <permission
         android:name="com.cj.reocrd.push.permission.MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.netease.nim.demo.push.permission.MESSAGE" />
-    <!--  兼容flyme3.0配置权限-->
+    <!-- 兼容flyme3.0配置权限 -->
     <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
+
     <permission
         android:name="com.cj.reocrd.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.cj.reocrd.permission.C2D_MESSAGE" />
+
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -97,11 +105,10 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-
         <!-- 透明主题去掉 android:theme="@style/Theme.MyAppTheme" -->
         <activity
             android:name=".view.activity.MsgToPActivity"
-            android:theme="@style/Theme.MyAppTheme"></activity>
+            android:theme="@style/Theme.MyAppTheme" />
         <activity
             android:name=".view.WelcomeActivity"
             android:screenOrientation="portrait">
@@ -232,7 +239,11 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
-        <activity android:name=".view.activity.ExchangeActivity"></activity>
+        <activity android:name=".view.activity.ExchangeActivity" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

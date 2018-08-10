@@ -1,7 +1,6 @@
 package com.cj.reocrd.model.entity;
 
 /**
- * Created by Lyndon.Li on 2018/3/29.
  * {  // 首页轮播图信息
  　　　　　　"imgurl":"static/upload/attimg/565577896999484187e01caf08d33391.jpg",
  　　　　　　"url":"http://www.baidu.com"

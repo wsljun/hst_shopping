@@ -26,7 +26,6 @@ import static com.cj.reocrd.base.BaseActivity.pid;
 
 
 /**
- * Created by Lyndon.Li on 2018/3/17.
  */
 
 public class ApiModel {
@@ -64,7 +63,6 @@ public class ApiModel {
     public <T> ApiResponse getData(String por, HashMap<String, Object> dMap, final Class<T> clz, ApiCallback apiCallback) {
         ApiResponse apiResponse = new ApiResponse();
         String cipher = DESedeUtils.getDesede(toJsonStr(dMap), pid);
-//        LogUtil.d(TAG, "data:cipher；" + cipher);
         HashMap<String, Object> map = new HashMap<>();
         map.put ("por", por);   // 请求接口
         map.put("pid", pid); // 设备唯一码
@@ -73,10 +71,10 @@ public class ApiModel {
         ApiStore.getInstance().getApiService().getData(data).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {String result = DESedeUtils.getdeCrypt((response.body()), pid);
-                result = result.replace("\\","/");
-                LogUtil.d( TAG,"onResponse: result 解密= por；"+por+";result= "+result);
                 if (!TextUtils.isEmpty(result)) {
                     //todo  apicallback
+                    result = result.replace("\\","/");
+                    LogUtil.d( TAG,"onResponse: result 解密= por；"+por+";result= "+result);
                     try {
                         apiCallback.onSuccess(parseFastJson(result, clz));
                     } catch (Exception e) {

@@ -89,4 +89,15 @@
     <style name="MyCustomTabTextAppearance">
         <item name="android:textSize">17sp</item>
     </style>
+
+    <!-- Navigation Header -->
+    <style name="NavPage">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center_horizontal</item>
+        <!-- <item name="android:background">@drawable/nav_page</item> -->
+        <item name="android:background">#FFE1E8EB</item>
+    </style>
+
 </resources>

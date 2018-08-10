@@ -194,7 +194,6 @@
         </RelativeLayout>
     </ScrollView>
     <RelativeLayout
-        android:id="@id/rl_submit_order_bottom"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_alignParentBottom="true"

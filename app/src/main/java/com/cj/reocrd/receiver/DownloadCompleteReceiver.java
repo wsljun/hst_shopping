@@ -18,7 +18,6 @@ import com.cj.reocrd.utils.UpdateUtil;
 import java.io.File;
 
 /**
- * Created by Lyndon.Li on 2018/4/26.
  */
 
 public class DownloadCompleteReceiver extends BroadcastReceiver {

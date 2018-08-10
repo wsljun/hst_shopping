@@ -20,7 +20,11 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.text.DecimalFormat;
+import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -125,4 +129,52 @@ public class Utils {
         }
         return false;
     }
+
+    public static String getLocalIPAddress() {
+        String ip = "";
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
+                 en.hasMoreElements();) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses();
+                     enumIpAddr.hasMoreElements();) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+                        ip = inetAddress.getHostAddress();
+                        break;
+                    }
+                }
+                if (!TextUtils.isEmpty(ip)) {
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            ip = "";
+        }
+        return ip;
+    }
+
+    /**
+     * 将元为单位的转换为分 替换小数点，支持以逗号区分的金额
+     *
+     * @param amount
+     * @return
+     */
+    public static String changeY2F(String amount){
+        String currency =  amount.replaceAll("\\$|\\￥|\\,", "");  //处理包含, ￥ 或者$的金额
+        int index = currency.indexOf(".");
+        int length = currency.length();
+        Long amLong = 0l;
+        if(index == -1){
+            amLong = Long.valueOf(currency+"00");
+        }else if(length - index >= 3){
+            amLong = Long.valueOf((currency.substring(0, index+3)).replace(".", ""));
+        }else if(length - index == 2){
+            amLong = Long.valueOf((currency.substring(0, index+2)).replace(".", "")+0);
+        }else{
+            amLong = Long.valueOf((currency.substring(0, index+1)).replace(".", "")+"00");
+        }
+        return amLong.toString();
+    }
+
 }

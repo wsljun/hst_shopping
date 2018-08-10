@@ -12,7 +12,6 @@ import java.util.HashMap;
 import retrofit2.Call;
 
 /**
- * Created by Lyndon.Li on 2018/3/20.
  *  login register
  */
 

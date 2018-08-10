@@ -1,5 +1,6 @@
 package com.cj.reocrd.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -172,6 +173,15 @@ public class ToastUtil {
     public static void showToast(final Context pContext, CharSequence message, int duration) {
         Toast toast = Toast.makeText(pContext, message, duration);
         toast.show();
+    }
+
+    public static void shortToastInBackgroundThread(final Activity pContext, final CharSequence message){
+        pContext.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showToast(pContext.getApplicationContext(), message, Toast.LENGTH_SHORT);
+            }
+        });
     }
 
 

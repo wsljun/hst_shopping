@@ -25,8 +25,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
 /**
- * Created by Lyndon.Li on 2018/3/17.
- *
  */
 
 public class ApiStore {

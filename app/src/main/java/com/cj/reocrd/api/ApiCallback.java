@@ -3,10 +3,6 @@ package com.cj.reocrd.api;
 
 import retrofit2.Call;
 
-/**
- * Created by Lyndon.Li on 2018/3/20.
- */
-
 public interface ApiCallback<T>  {
 
     /**

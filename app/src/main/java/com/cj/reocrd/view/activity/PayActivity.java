@@ -24,18 +24,24 @@ import com.cj.reocrd.api.ApiCallback;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
+import com.cj.reocrd.base.BaseApplication;
 import com.cj.reocrd.model.ApiModel;
 import com.cj.reocrd.model.entity.PayKeys;
 import com.cj.reocrd.model.entity.UserBean;
+import com.cj.reocrd.model.entity.WXPayKeys;
 import com.cj.reocrd.utils.ConstantsUtils;
 import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.utils.alipay.OrderInfoUtil2_0;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.alipay.PayResult;
 import com.cj.reocrd.view.dialog.LoadingDialog;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.net.SocketTimeoutException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -188,10 +194,12 @@ public class PayActivity extends BaseActivity {
             case R.id.rb_wechat_pay:
                 payWay = TYPE_WECHAT;
                 cheeckRadioButtonStatus(1);
+                getOutTradeNo();
                 break;
             case R.id.rb_pay_other:
                 payWay = TYPE_YUER;
                 cheeckRadioButtonStatus(2);
+                getOutTradeNo();
                 break;
             case R.id.rb_pay_jifen:
                 payWay = TYPE_JIFEN;
@@ -208,7 +216,7 @@ public class PayActivity extends BaseActivity {
                     if (payWay.equals(TYPE_ALIPAY)) {
                         payByAlipay();
                     } else if (payWay.equals(TYPE_WECHAT)) {
-                        ToastUtil.showShort("未开通");
+                        getWXOrder();
                     } else { // 去除 支付宝，微信 支付
                         inputPwdDialog();
                     }
@@ -498,6 +506,72 @@ public class PayActivity extends BaseActivity {
         tvOrderOverPayway.setText("支付方式：" +way );
     }
 
+    private void getWXOrder() {
+        String totalfen = Utils.changeY2F(orderPrice);
+        HashMap<String, Object> map = new HashMap<>();
+        String ip = Utils.getLocalIPAddress();
+        map.put("out_trade_no", OutTradeNo);
+        map.put("totalFee",totalfen);
+        map.put("spbill_create_ip", ip);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_WX_ORDER, map, WXPayKeys.class, new ApiCallback() {
 
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
+                    WXPayKeys wxPayKeys = (WXPayKeys) apiResponse.getResults();
+                    payWX(wxPayKeys);
+                }
+            }
 
+            @Override
+            public void onFailure(Call call, Throwable t) {
+            }
+        });
+    }
+
+    PayReq  req ;
+    private void payWX(WXPayKeys wxPayKeys){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (null != wxPayKeys) {
+                    req = new PayReq();
+                    //req.appId = "wxf8b4f85f3a794e77";  // 测试用appId
+                    req.appId = wxPayKeys.getAppid();//json.getString("appid");
+                    req.partnerId = wxPayKeys.getPartnerid();//;json.getString("partnerid");
+                    req.prepayId = wxPayKeys.getPrepayid();//json.getString("prepayid");
+                    req.nonceStr = wxPayKeys.getNoncestr();//json.getString("noncestr");
+                    req.timeStamp = wxPayKeys.getTimestamp();//json.getString("timestamp");
+                    req.packageValue = "Sign=WXPay";//wxPayKeys.getPack_age();//json.getString("package");
+                    req.sign = wxPayKeys.getSign();//.getString("sign");
+                    req.extData = "app data"; // optional
+//                    ToastUtil.shortToastInBackgroundThread(PayActivity.this, "正常调起支付");
+                    toPay();
+                } else {
+                    ToastUtil.shortToastInBackgroundThread(PayActivity.this, "返回错误" + wxPayKeys.getMessage());
+                }
+            }}).start();
+
+    }
+
+    private void toPay() {
+        // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+       IWXAPI wxApi = WXAPIFactory.createWXAPI(this.getApplicationContext(), null);
+        wxApi.registerApp(BaseApplication.APP_ID);
+        boolean b = wxApi.sendReq(req);
+//        if(b){
+//            ToastUtil.shortToastInBackgroundThread(PayActivity.this,"请求支付成功！");
+//        }else{
+//            ToastUtil.shortToastInBackgroundThread(PayActivity.this,"请求支付失败！");
+//        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(UrlConstants.WXPAY_CODE == 0){
+            UrlConstants.WXPAY_CODE = 999;
+            showPayOverView();
+        }
+    }
 }

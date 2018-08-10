@@ -7,7 +7,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 /**
- * Created by Lyndon.Li on 2018/7/30.
  */
 
 public class FormatTest {

@@ -23,7 +23,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
- * Created by Lyndon.Li on 2018/3/17.
  * API 定义
  */
 public interface ApiService {

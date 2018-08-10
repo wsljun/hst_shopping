@@ -1,13 +1,12 @@
 package com.cj.reocrd.api;
 
-/**
- */
 
 public class UrlConstants {
     //BaseURl
-    public final static String BASE_URL = "http://www.rdyg.com.cn/"; //"http://mall.xdiandian.cn/mall/";
+//    public final static String BASE_URL = "http://www.rdyg.com.cn/"; //"http://mall.xdiandian.cn/mall/";
     //test
-//    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/";
+//    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/"; //http://110.243.30.72:8101/mall
+    public final static String BASE_URL = "http://110.243.28.89:8101/mall/";
     public final static String URL_ABOUT = BASE_URL+"api/about";
     public final static String URL_HELP = BASE_URL+"api/help";
     public final static String URL_GOODS_DETAIL = BASE_URL+"api/meDetail?id=";
@@ -23,6 +22,7 @@ public class UrlConstants {
     public final static String TYPE_YUER = "3";
     public final static String TYPE_JIFEN = "5";
     public final static String TYPE_DZB = "6";
+    public  static int WXPAY_CODE = 999;
 
     public static class key {
         public static final String USERID = "userid";
@@ -151,6 +151,7 @@ public class UrlConstants {
         public static final String URL_OREDER_PAY_KEY= "418";//  支付key
         public static final String URL_OUT_TRADE_NO = "419";//  OUT_TRADE_NO
         public static final String URL_OUT_CHECK_ORDER= "420";//  OUT_TRADE_NO
+        public static final String URL_WX_ORDER= "421";//
         //关注好友
         public static final String FRIEDNS_KEEP = "501";
         //取消关注

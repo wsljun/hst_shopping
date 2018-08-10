@@ -19,7 +19,6 @@ import retrofit2.Call;
 
 
 /**
- * Created by Lyndon.Li on 2018/4/09.
  */
 
 public class AddressPresenter extends AddressContract.Presenter {
