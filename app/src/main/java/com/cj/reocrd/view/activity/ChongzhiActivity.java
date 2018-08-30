@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,11 +26,13 @@ import com.cj.reocrd.api.ApiCallback;
 import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
+import com.cj.reocrd.base.BaseApplication;
 import com.cj.reocrd.contract.GoodsDetailContract;
 import com.cj.reocrd.model.ApiModel;
 import com.cj.reocrd.model.entity.GoodsCommentBean;
 import com.cj.reocrd.model.entity.PayKeys;
 import com.cj.reocrd.model.entity.UserBean;
+import com.cj.reocrd.model.entity.WXPayKeys;
 import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
@@ -37,6 +40,9 @@ import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.utils.alipay.OrderInfoUtil2_0;
 import com.cj.reocrd.utils.alipay.PayResult;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -73,8 +79,10 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
     TextView chongzhiCardTv;
     @BindView(R.id.chongzhi_card)
     TextView chongzhiCard;
-    @BindView(R.id.chongzhi_zhifubao_cb)
-    CheckBox chongzhiZhifubaoCb;
+    @BindView(R.id.cb_chongzhi_zhifubao)
+    CheckBox cbAlipay;
+    @BindView(R.id.cb_chongzhi_wx)
+    CheckBox cbWXpay;
     @BindView(R.id.chognzhi_cneter)
     View chognzhiCneter;
     @BindView(R.id.rb_chognzhi_jifen)
@@ -104,11 +112,11 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
     public static  String APPID = "";
     private static final int SDK_PAY_FLAG = 1001;
     private String RSA_PRIVATE = "";
-    private   String  aoid;
+    private   String  cz_type; //passback_params   uid,充值的手机号，充值类型（ 1消费积分2电子币）
     private String phone;
     private String OutTradeNo;
     private String passbackParam;
-    private String paytype = "1"; //passback_params   uid,充值的手机号，充值类型（ 1消费积分2电子币）
+    private String paytype = "1";  // 支付类型  1,支付宝；2，微信
     private String t_phone;
     private String gold_money;
     private double gold;
@@ -149,6 +157,8 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
             tv_user_name.setVisibility(View.GONE);
             tv_user_phone.setVisibility(View.GONE);
             tvMoneyType.setText("充值金额");
+            titleRight.setText("充值记录");
+            titleRight.setVisibility(View.VISIBLE);
         }
         if(MyMoneyActivity.TYPY_TRANSFER_ACCOUNTS.equals(type)){
             title = "转账";
@@ -160,6 +170,8 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
             rb_chognzhi_dianzibi.setChecked(true);
             rb_chognzhiJifen.setVisibility(View.GONE);
             rb_chognzhi_dianzibi.setText("电子币："+gold);
+            titleRight.setText("转账记录");
+            titleRight.setVisibility(View.VISIBLE);
         }
         if(MyMoneyActivity.TYPY_EXCHANGE.equals(type)){
             title = "兑换";
@@ -211,19 +223,42 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
     }
 
 
-    @OnClick({R.id.rb_chognzhi_jifen, R.id.rb_chognzhi_dianzibi,R.id.tv_btn_chongzhi,R.id.title_left})
+    @OnClick({R.id.rb_chognzhi_jifen, R.id.rb_chognzhi_dianzibi,R.id.tv_btn_chongzhi,R.id.title_left,
+            R.id.cb_chongzhi_zhifubao, R.id.cb_chongzhi_wx,R.id.title_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
                 finish();
                 break;
-            case R.id.chongzhi_zhifubao_cb:
+            case R.id.title_right:
+                String url ="" ;
+                if(MyMoneyActivity.TYPY_RECHARGE.equals(type)){
+                    url = UrlConstants.URL_WEB_RECHARGE+uid;
+                }
+                if(MyMoneyActivity.TYPY_TRANSFER_ACCOUNTS.equals(type)){
+                    url = UrlConstants.URL_WEB_CONVERTGOLD+uid;
+                }
+                Bundle b = new Bundle();
+                b.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE, WebViewActivity.TYPE_MONEY);
+                b.putString(WebViewActivity.BUNDLE_WEBVIEW_URL, url);
+                b.putString(WebViewActivity.BUNDLE_WEBVIEW_TITLE,titleRight.getText().toString() );
+                startActivity(WebViewActivity.class, b);
                 break;
-            case R.id.rb_chognzhi_jifen:
+            case R.id.cb_chongzhi_zhifubao:
+                cbAlipay.setChecked(true);
+                cbWXpay.setChecked(false);
                 paytype ="1";
                 break;
-            case R.id.rb_chognzhi_dianzibi:
+            case R.id.cb_chongzhi_wx:
+                cbAlipay.setChecked(false);
+                cbWXpay.setChecked(true);
                 paytype ="2";
+                break;
+            case R.id.rb_chognzhi_jifen:
+                cz_type ="1";
+                break;
+            case R.id.rb_chognzhi_dianzibi:
+                cz_type ="2";
                 break;
             case R.id.chognzhi_fuhao:
                 break;
@@ -239,7 +274,11 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
                         ToastUtil.showShort("请输入金额");
                         return;
                     }
-                    reChargeByAlipay();
+                    if("1".equals(paytype)){
+                        reChargeByAlipay();
+                    }else{
+                        reChargeByWX();
+                    }
                 }else{
                     // 转账，
                     transferAccounts();
@@ -391,6 +430,81 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
             public void onFailure(Call call, Throwable t) {
             }
         });
+    }
+
+    /**
+     * 微信充值， todo
+     */
+    private void reChargeByWX() {
+        String totalfen = Utils.changeY2F(money);
+        HashMap<String, Object> map = new HashMap<>();
+        String ip = Utils.getLocalIPAddress();
+        map.put("uid", uid);
+        map.put("phone", t_phone);
+        map.put("type", cz_type);
+        map.put("totalFee",totalfen);
+        map.put("spbill_create_ip", ip);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.REEXCHANGE_WX, map, WXPayKeys.class, new ApiCallback() {
+
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                ToastUtil.showShort(apiResponse.getMessage());
+                if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
+                    WXPayKeys wxPayKeys = (WXPayKeys) apiResponse.getResults();
+                    payWX(wxPayKeys);
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+            }
+        });
+    }
+
+    PayReq req ;
+    private void payWX(WXPayKeys wxPayKeys){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (null != wxPayKeys) {
+                    req = new PayReq();
+                    //req.appId = "wxf8b4f85f3a794e77";  // 测试用appId
+                    req.appId = wxPayKeys.getAppid();//json.getString("appid");
+                    req.partnerId = wxPayKeys.getPartnerid();//;json.getString("partnerid");
+                    req.prepayId = wxPayKeys.getPrepayid();//json.getString("prepayid");
+                    req.nonceStr = wxPayKeys.getNoncestr();//json.getString("noncestr");
+                    req.timeStamp = wxPayKeys.getTimestamp();//json.getString("timestamp");
+                    req.packageValue = "Sign=WXPay";//wxPayKeys.getPack_age();//json.getString("package");
+                    req.sign = wxPayKeys.getSign();//.getString("sign");
+                    req.extData = "app data"; // optional
+//                    ToastUtil.shortToastInBackgroundThread(ChongzhiActivity.this, "正常调起支付");
+                    toPay();
+                } else {
+                    ToastUtil.shortToastInBackgroundThread(ChongzhiActivity.this, "返回错误" + wxPayKeys.getMessage());
+                }
+            }}).start();
+
+    }
+
+    private void toPay() {
+        // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+//        IWXAPI wxApi = WXAPIFactory.createWXAPI(this.getApplicationContext(), null);
+        BaseApplication.api.registerApp(BaseApplication.APP_ID);
+        boolean b = BaseApplication.api.sendReq(req);
+//        if(b){
+//            ToastUtil.shortToastInBackgroundThread(ChongzhiActivity.this,"请求支付成功！");
+//        }else{
+//            ToastUtil.shortToastInBackgroundThread(ChongzhiActivity.this,"请求支付失败！");
+//        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(UrlConstants.WXPAY_CODE == 0){
+            UrlConstants.WXPAY_CODE = 999;
+            finish();
+        }
     }
 
 

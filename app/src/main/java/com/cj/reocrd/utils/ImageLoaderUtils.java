@@ -220,6 +220,28 @@ public class ImageLoaderUtils {
         context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file.getAbsolutePath())));
     }
 
+    public static final int IMAGE_SIZE=32768;//微信分享图片大小限制
+    public static  byte[] getThumbData(Bitmap bitmap) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize=2;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+        int quality = 100;
+        while (output.toByteArray().length > IMAGE_SIZE && quality != 10) {
+            output.reset(); // 清空baos
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, output);// 这里压缩options%，把压缩后的数据存放到baos中
+            quality -= 10;
+        }
+        bitmap.recycle();
+        byte[] result = output.toByteArray();
+        try {
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
 
 }

@@ -51,7 +51,7 @@
         <LinearLayout
             android:id="@+id/ll_top"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@mipmap/beijing2"
             android:orientation="vertical"
             >
@@ -99,20 +99,61 @@
                 android:layout_height="60dp">
 
                 <ImageView
+                    android:id="@+id/img_alipy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:background="@mipmap/zhifubao1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/img_alipy"
+                    android:layout_marginStart="27dp"
+                    android:layout_toEndOf="@+id/img_alipy"
+                    android:text="支付宝支付"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp" />
 
                 <CheckBox
-                    android:id="@+id/chongzhi_zhifubao_cb"
+                    android:id="@+id/cb_chongzhi_zhifubao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:visibility="gone"
+                    android:checked="true"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <ImageView
+                    android:id="@+id/img_wx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:background="@mipmap/weixinzhifu" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/img_wx"
+                    android:layout_marginStart="27dp"
+                    android:layout_toEndOf="@+id/img_wx"
+                    android:text="微信支付"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp" />
+
+                <CheckBox
+                    android:id="@+id/cb_chongzhi_wx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
                     />
             </RelativeLayout>
         </LinearLayout>
