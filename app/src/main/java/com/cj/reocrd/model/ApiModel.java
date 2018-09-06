@@ -70,11 +70,12 @@ public class ApiModel {
         String data = toJsonStr(map);
         ApiStore.getInstance().getApiService().getData(data).enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {String result = DESedeUtils.getdeCrypt((response.body()), pid);
-                if (!TextUtils.isEmpty(result)) {
-                    //todo  apicallback
-                    result = result.replace("\\","/");
-                    LogUtil.d( TAG,"onResponse: result 解密= por；"+por+";result= "+result);
+            public void onResponse(Call<String> call, Response<String> response) {
+                String result = DESedeUtils.getdeCrypt((response.body()), pid);
+                //todo  apicallback
+                result = result.replace("\\","/");
+                LogUtil.d( TAG,"onResponse: result 解密= por；"+por+";result= "+result);
+            if (!TextUtils.isEmpty(result)) {
                     try {
                         apiCallback.onSuccess(parseFastJson(result, clz));
                     } catch (Exception e) {

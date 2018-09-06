@@ -52,12 +52,9 @@ import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.fragment.CartFragment;
 import com.cj.reocrd.view.view.AmountView.AmountView;
 import com.donkingliang.labels.LabelsView;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.SendMessageToWX;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tencent.mm.sdk.openapi.WXMediaMessage;
-import com.tencent.mm.sdk.openapi.WXWebpageObject;
-import com.tencent.mm.sdk.platformtools.Util;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -540,7 +537,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         Bitmap bmp = BitmapFactory.decodeFile(shareFile.getAbsolutePath());
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 100, 100, true);
         bmp.recycle();
-        msg.thumbData = Util.bmpToByteArray(thumbBmp, true);  // 设置所图；
+        msg.thumbData = ImageLoaderUtils.getThumbData(thumbBmp);  // 设置所图；
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.message = msg;

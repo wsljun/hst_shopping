@@ -64,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="$"
-                        android:textColor="@color/colorTextRed"
+                        android:textColor="@color/color2"
                         android:textSize="18sp" />
 
                     <TextView

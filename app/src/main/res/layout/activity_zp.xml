@@ -99,7 +99,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:textColor="@color/colorButton" />
+        android:textColor="@color/colorButton"
+        android:visibility="gone"
+        />
 
     <ImageView
         android:id="@+id/zp_guize"

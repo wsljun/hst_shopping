@@ -3,10 +3,10 @@ package com.cj.reocrd.api;
 
 public class UrlConstants {
     //BaseURl
-//    public final static String BASE_URL = "http://www.rdyg.com.cn/"; //"http://mall.xdiandian.cn/mall/";
+    public final static String BASE_URL = "http://www.rdyg.com.cn/"; //"http://mall.xdiandian.cn/mall/";
     //test
 //    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/"; //http://110.243.30.72:8101/mall
-    public final static String BASE_URL = "http://110.243.28.89:8101/mall/";
+//    public final static String BASE_URL = "http://110.243.28.89:8101/mall/";
     public final static String URL_ABOUT = BASE_URL+"api/about";
     public final static String URL_HELP = BASE_URL+"api/help";
     public final static String URL_GOODS_DETAIL = BASE_URL+"api/meDetail?id=";
@@ -17,6 +17,16 @@ public class UrlConstants {
     public final static String URL_ALIPAY_RECHARGE = BASE_URL+"api/alipayRecharge";
     public final static String SUCCESE_CODE = "1"; // 返回结果成功
     public final static String URL_SHARE = BASE_URL+"api/shareMerch?id=";
+    /**
+     *  添加 webview 跳转
+     * 充值URLapi/recharge?search_EQ_user.id= userid
+     转账URL api/convertGold?search_EQ_fromuser.id= userid
+     兑换 URL api/change?search_EQ_user.id=userid
+     * */
+    public final static String URL_WEB_RECHARGE = BASE_URL+"api/recharge?search_EQ_user.id=";
+    public final static String URL_WEB_CONVERTGOLD = BASE_URL+"api/convertGold?search_EQ_fromuser.id=";
+    public final static String URL_WEB_CHANGE = BASE_URL+"api/change?search_EQ_user.id=";
+
     public final static String TYPE_ALIPAY = "1";
     public final static String TYPE_WECHAT = "2";
     public final static String TYPE_YUER = "3";
@@ -130,6 +140,8 @@ public class UrlConstants {
         public static final String TRANSFER_ACCOUNTS  = "330";
         //兑换
         public static final String EXCHANGE  = "331";
+        //微信充值
+        public static final String REEXCHANGE_WX  = "332";
         // 订单详情
         public static final String URL_ORDER_LIST = "401";//  order list
         public static final String URL_ORDER_DETAIL = "402";//  order detail

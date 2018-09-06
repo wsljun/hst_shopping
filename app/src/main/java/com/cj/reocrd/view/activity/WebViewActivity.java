@@ -24,12 +24,14 @@ public class WebViewActivity extends BaseActivity {
     private String webViewUrl;
     public final static String BUNDLE_WEBVIEW_URL = "web_url";
     public final static String BUNDLE_WEBVIEW_TYPE = "type";
+    public final static String BUNDLE_WEBVIEW_TITLE= "title";
     public final static int TYPE_ABOUT = 1;
     public final static int TYPE_HELP = 2;
     public final static int TYPE_COMMENT = 3;
     public final static int TYPE_GOODS_DETAILS = 4;
     public final static int TYPE_HOME_BANNER= 5;
     public final static int TYPE_YJ= 6;
+    public final static int TYPE_MONEY= 7;
 
 
     @Override
@@ -101,6 +103,12 @@ public class WebViewActivity extends BaseActivity {
             case TYPE_YJ :
                 tvCenter.setText("记录");
                 webViewUrl = getIntent().getStringExtra(BUNDLE_WEBVIEW_URL);
+                webView.loadUrl(webViewUrl);
+                break;
+            case TYPE_MONEY :
+                String title = getIntent().getStringExtra(BUNDLE_WEBVIEW_TITLE);
+                webViewUrl = getIntent().getStringExtra(BUNDLE_WEBVIEW_URL);
+                tvCenter.setText(title);
                 webView.loadUrl(webViewUrl);
                 break;
             default:

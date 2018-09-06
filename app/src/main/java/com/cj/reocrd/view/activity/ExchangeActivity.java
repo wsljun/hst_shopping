@@ -31,6 +31,8 @@ public class ExchangeActivity extends BaseActivity {
 
     @BindView(R.id.title_left)
     TextView titleLeft;
+    @BindView(R.id.title_right)
+    TextView titleRight;
     @BindView(R.id.title_center)
     TextView titleCenter;
     @BindView(R.id.tv_ye)
@@ -63,6 +65,8 @@ public class ExchangeActivity extends BaseActivity {
         titleCenter.setText("兑换");
         tvYe.setText("余额\n"+useableblance);
         tvDzb.setText("电子币\n"+gold);
+        titleRight.setText("兑换记录");
+        titleRight.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -76,21 +80,29 @@ public class ExchangeActivity extends BaseActivity {
         useableblance = getIntent().getDoubleExtra("useableblance",0);
         gold = getIntent().getDoubleExtra("gold",0);
         fromtype = "1";
-        totype = "1";
+        totype = "2";// 修改默认，余额兑换电子币
     }
 
     @OnClick({R.id.title_left, R.id.title_center, R.id.tv_ye, R.id.tv_dzb, R.id.tv_type_jifen,
-            R.id.tv_type_dzb, R.id.et_money, R.id.tv_btn_dh})
+            R.id.tv_type_dzb, R.id.et_money, R.id.tv_btn_dh,R.id.title_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
                 finish();
+                break;
+            case R.id.title_right:
+                Bundle b = new Bundle();
+                b.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE, WebViewActivity.TYPE_MONEY);
+                b.putString(WebViewActivity.BUNDLE_WEBVIEW_URL, UrlConstants.URL_WEB_CHANGE+uid);
+                b.putString(WebViewActivity.BUNDLE_WEBVIEW_TITLE,titleRight.getText().toString() );
+                startActivity(WebViewActivity.class, b);
                 break;
             case R.id.tv_ye:
                 fromtype = "1";
                 break;
             case R.id.tv_dzb:
                 fromtype = "2";
+                totype = "1";
                 break;
             case R.id.tv_type_jifen:
                 totype = "1";
@@ -107,7 +119,7 @@ public class ExchangeActivity extends BaseActivity {
         updateBtnStatus();
     }
 
-    // 转账
+    // 充值，转账，兑换
     private void exchange() {
         String money = etMoney.getText().toString();
         if(TextUtils.isEmpty(money)){
@@ -123,6 +135,9 @@ public class ExchangeActivity extends BaseActivity {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 ToastUtil.showShort(apiResponse.getMessage());
+                if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
+                    finish();
+                }
             }
 
             @Override
