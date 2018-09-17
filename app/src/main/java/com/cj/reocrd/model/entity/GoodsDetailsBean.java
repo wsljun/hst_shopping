@@ -39,7 +39,7 @@ public class GoodsDetailsBean  implements Parcelable{
     private String unit;
     private List<SkuBean> slist;
     private List<CommentBean> clist;
-
+    private String introduct;
     public GoodsDetailsBean(){
 
     }
@@ -55,6 +55,15 @@ public class GoodsDetailsBean  implements Parcelable{
         brand = in.readString();
         imgurl = in.readString();
         unit = in.readString();
+        introduct = in.readString();
+    }
+
+    public String getIntroduct() {
+        return introduct;
+    }
+
+    public void setIntroduct(String introduct) {
+        this.introduct = introduct;
     }
 
     public String getOldprice() {
@@ -186,5 +195,6 @@ public class GoodsDetailsBean  implements Parcelable{
         dest.writeString(unit);
         dest.writeList(slist);
         dest.writeList(clist);
+        dest.writeString(introduct);
     }
 }

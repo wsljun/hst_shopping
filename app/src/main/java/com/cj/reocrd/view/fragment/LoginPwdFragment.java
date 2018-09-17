@@ -5,7 +5,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.cj.reocrd.R;
@@ -43,6 +45,8 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
     EditText loginPhone;
     @BindView(R.id.login_password)
     EditText loginPassword;
+    @BindView(R.id.switch_btn_baseapi)
+    Switch swBtnChangBaseAPI;
     private final String TAG = "LoginPwdFragment";
     private String phone;
     ProgressPopupWindow progressPopupWindow;
@@ -61,6 +65,20 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
     public void initView() {
         titleCenter.setText(R.string.login_title);
         progressPopupWindow = new ProgressPopupWindow(mActivity);
+        swBtnChangBaseAPI.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String str = "";
+                if(isChecked){
+                    str = "已调整为测试环境！";
+                    UrlConstants.BASE_URL = UrlConstants.BASE_URL_MALL;
+                }else{
+                    str = "已调整为正式环境！";
+                    UrlConstants.BASE_URL = UrlConstants.BASE_URL_RDYG;
+                }
+                ToastUtil.showShort(str);
+            }
+        });
     }
 
 
@@ -72,6 +90,7 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
                 break;
             case R.id.login:
                 phone = loginPhone.getText().toString();
+                showBaseApiView(phone);
                 String pwd = loginPassword.getText().toString();
                 if (TextUtils.isEmpty(phone)) {
                     ToastUtil.showToastS(mActivity, R.string.input_phone);
@@ -90,6 +109,19 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
             case R.id.login_code:
                 getIndexActivity().getVpLogin().setCurrentItem(3);
                 break;
+        }
+    }
+
+    private void showBaseApiView(String phone) {
+        if("18811373790".equals(phone)){
+            if(UrlConstants.BASE_URL.equals(UrlConstants.BASE_URL_RDYG)){
+                swBtnChangBaseAPI.setChecked(false);
+            }else{
+                swBtnChangBaseAPI.setChecked(true);
+            }
+            swBtnChangBaseAPI.setVisibility(View.VISIBLE);
+        }else{
+            swBtnChangBaseAPI.setVisibility(View.GONE);
         }
     }
 

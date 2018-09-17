@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:layout_marginBottom="4dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:gravity="center_vertical"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp">
+
+        <CheckBox
+            android:id="@+id/invoice_item_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:drawableStart="@drawable/address_check"
+            android:padding="10dp"
+            android:textColor="@color/colorTexthintGrey2"
+            android:textSize="14sp" />
+
+
+        <LinearLayout
+            android:id="@+id/car_text_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/invoice_item_choose"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/invoice_value"
+                style="@style/setting_item_configure"
+                android:layout_marginStart="0dp"
+                android:maxLength="10"
+                android:minLines="1"
+                android:textSize="16sp"
+                android:text="开票金额：￥50.8"
+                />
+
+            <TextView
+                android:id="@+id/order_num"
+                style="@style/setting_item_configure"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="8dp"
+                android:maxLines="1"
+                android:maxEms="30"
+                android:maxLength="25"
+                android:textSize="16sp"
+                android:text="订单号：987654321"
+                />
+
+            <TextView
+                android:id="@+id/order_time"
+                style="@style/setting_item_configure"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="8dp"
+                android:maxLines="1"
+                android:maxEms="30"
+                android:maxLength="25"
+                android:textSize="16sp"
+                android:text="下单时间：2018-09-10 09::30:45"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/car_text_ll"
+            android:visibility="gone"
+            >
+
+            <ImageButton
+                android:id="@+id/invoice_enter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@mipmap/lajixiang" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>
