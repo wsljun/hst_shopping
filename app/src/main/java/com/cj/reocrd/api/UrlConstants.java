@@ -3,9 +3,9 @@ package com.cj.reocrd.api;
 
 public class UrlConstants {
     //BaseURl
-    public final static String BASE_URL = "http://www.rdyg.com.cn/"; //"http://mall.xdiandian.cn/mall/";
+//    public final static String BASE_URL = "http://www.rdyg.com.cn/"; //"http://mall.xdiandian.cn/mall/";
     //test
-//    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/"; //http://110.243.30.72:8101/mall
+    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/"; //http://110.243.30.72:8101/mall
 //    public final static String BASE_URL = "http://110.243.28.89:8101/mall/";
     public final static String URL_ABOUT = BASE_URL+"api/about";
     public final static String URL_HELP = BASE_URL+"api/help";
@@ -40,11 +40,12 @@ public class UrlConstants {
     }
 
     public static class codeType {
-        //1注册2登录 3修改密码 4修改手机号（如果是注册，该接口判断手机号是否存在）
+        //1注册2登录 3修改密码 4修改手机号（如果是注册，该接口判断手机号是否存在）10二级密码
         public static final String REGISTER = "1";
         public static final String LOGIN = "2";
         public static final String UPDATE_PWD = "3";
         public static final String UPDATE_PHONE = "4";
+        public static final String S_PWD = "10";
     }
 
     public static class UrLType {

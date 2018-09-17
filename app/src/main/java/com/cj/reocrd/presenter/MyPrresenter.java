@@ -426,4 +426,45 @@ public class MyPrresenter extends MyContract.Presenter {
         });
     }
 
+    @Override
+    public void updatePwd(String por, String uid, String code, String pwd) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("code", code);
+        map.put("pwd", pwd);
+        ApiModel.getInstance().getData(por, map, UserBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+        });
+    }
+
+    @Override
+    public void checkPwd(String por, String uid, String pwd) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("pwd", pwd);
+        ApiModel.getInstance().getData(por, map, UserBean.class, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if (null != apiResponse && isViewAttached()) {
+                    mView.onSuccess(apiResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mView.onFailureMessage(t.toString());
+            }
+        });
+    }
+
 }

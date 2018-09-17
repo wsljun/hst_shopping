@@ -1,9 +1,12 @@
 package com.cj.reocrd.view.fragment;
 
+import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.activity.MainActivity;
+import com.cj.reocrd.view.activity.WebViewActivity;
 import com.cj.reocrd.view.view.VerificationCode.VerificationCodeInput;
 
 import butterknife.BindView;
@@ -30,7 +34,7 @@ import butterknife.OnClick;
 import static com.cj.reocrd.utils.Utils.isChinese;
 
 public class RegisterFragment extends BaseFragment<IndexPresenter> implements
-        IndexContract.View, VerificationCodeInput.Listener {
+        IndexContract.View, VerificationCodeInput.Listener ,CompoundButton.OnCheckedChangeListener{
 
     @BindView(R.id.title_left)
     TextView titleLeft;
@@ -60,6 +64,11 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
     TextView registerRecommend;
     @BindView(R.id.et_user_name)
     EditText et_user_name;
+    @BindView(R.id.register_check)
+    CheckBox registerCheck;
+    @BindView(R.id.register_xy)
+    TextView registerXy;
+
     private final String TAG = "RegisterFragment";
     private String phone;
     private String code;
@@ -97,9 +106,10 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
         titleCenter.setText(R.string.register_title);
         registerCode.setOnCompleteListener(this);
         et_user_name.setFilters(new InputFilter[]{filter, new InputFilter.LengthFilter(5)});
+        registerCheck.setOnCheckedChangeListener(this);
     }
 
-    @OnClick({R.id.register, R.id.register_next, R.id.register_getcode, R.id.title_left})
+    @OnClick({R.id.register, R.id.register_next, R.id.register_getcode, R.id.title_left,R.id.register_xy})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.register:
@@ -113,7 +123,7 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                     ToastUtil.showToastS(mActivity, R.string.passwords_match);
                     break;
                 }
-                if (pwd.length() > 8 | pwd.length() < 6) {
+                if (pwd.length() < 6) {
                     ToastUtil.showToastS(mActivity, R.string.password_can_only);
                     break;
                 }
@@ -121,6 +131,10 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                 username = et_user_name.getText().toString();
                 if (TextUtils.isEmpty(username)) {
                     ToastUtil.showToastS(mActivity, "请填写真实姓名");
+                    break;
+                }
+                if(!registerCheck.isChecked()){
+                    ToastUtil.showToastS(mActivity, "请阅读并同意以下协议");
                     break;
                 }
                 if (!TextUtils.isEmpty(recommend)) {
@@ -171,6 +185,13 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
                 }else{
                     getIndexActivity().getVpLogin().setCurrentItem(0);
                 }
+                break;
+            case R.id.register_xy:
+                Bundle b = new Bundle();
+                b.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE, WebViewActivity.TYPE_XY);
+                b.putString(WebViewActivity.BUNDLE_WEBVIEW_URL, "http://www.baidu.com");
+                b.putString(WebViewActivity.BUNDLE_WEBVIEW_TITLE,registerXy.getText().toString());
+                startActivity(WebViewActivity.class, b);
                 break;
         }
     }
@@ -234,6 +255,12 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
     }
 
 
-
-
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if(isChecked){
+            registerCheck.setTextColor(getResources().getColor(R.color.black));
+        }else{
+            registerCheck.setTextColor(getResources().getColor(R.color.colorTexthintGrey));
+        }
+    }
 }

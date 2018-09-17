@@ -46,5 +46,7 @@ public interface MyContract {
         public abstract void bindZfb(String por,String uid,String alipay);
         public abstract void myTeam(String por,int pagesize,int pageno,String uid);
 
+        public abstract void updatePwd(String por,String uid,String code,String pwd);
+        public abstract void checkPwd(String por,String uid,String pwd);
     }
 }
