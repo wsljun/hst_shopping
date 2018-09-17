@@ -56,7 +56,7 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
     @BindView(R.id.tv_person_invoice)
     TextView tvPersonInvoice;
     @BindView(R.id.fl_address)
-    FrameLayout flAddress;
+    LinearLayout flAddress;
     @BindView(R.id.tv_invoice_name)
     TextView tvInvoiceName;
     @BindView(R.id.tv_invoice_phone)
@@ -200,6 +200,9 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
                 invoiceName = strs[0];
                 invoicePhone = strs[1];
                 invoiceFullAddr = strs[2];
+                tvPersonInvoice.setText(invoiceFullAddr);
+                tvInvoiceName.setText(invoiceName);
+                tvInvoicePhone.setText(invoicePhone);
                 break;
             default:
                 break;

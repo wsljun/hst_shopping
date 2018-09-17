@@ -146,56 +146,62 @@
                 android:textColor="@color/black"
                 />
 
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/fl_address"
-                style="@style/mine_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:visibility="gone"
                 >
+                <FrameLayout
+                    style="@style/mine_frame"
+                    >
 
-                <TextView
-                    style="@style/setting_item_configure"
-                    android:layout_gravity="start|center_vertical"
-                    android:layout_marginStart="14dp"
-                    android:text="收件人信息" />
+                    <TextView
+                        style="@style/setting_item_configure"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_marginStart="14dp"
+                        android:text="收件人地址：" />
 
-                <TextView
-                    android:id="@+id/tv_person_invoice"
-                    style="@style/mine_text_colorsize"
-                    android:text="在收货地址管理中选择"
-                    />
-            </FrameLayout>
-            <FrameLayout
-                style="@style/mine_frame"
-                android:visibility="gone"
-                >
+                    <TextView
+                        android:id="@+id/tv_person_invoice"
+                        style="@style/mine_text_colorsize"
+                        android:text="在收货地址管理中选择"
+                        />
+                </FrameLayout>
+                <FrameLayout
+                    style="@style/mine_frame"
+                    >
 
-                <TextView
-                    style="@style/setting_item_configure"
-                    android:layout_gravity="start|center_vertical"
-                    android:layout_marginStart="14dp"
-                    android:text="收件人" />
+                    <TextView
+                        style="@style/setting_item_configure"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_marginStart="14dp"
+                        android:text="收件人姓名：" />
 
-                <TextView
-                    android:id="@+id/tv_invoice_name"
-                    style="@style/mine_text_colorsize"
-                    android:text="姓名"
-                    />
-            </FrameLayout>
-            <FrameLayout
-                android:visibility="gone"
-                style="@style/mine_frame">
-                <TextView
-                    style="@style/setting_item_configure"
-                    android:layout_gravity="start|center_vertical"
-                    android:layout_marginStart="14dp"
-                    android:text="联系电话" />
+                    <TextView
+                        android:id="@+id/tv_invoice_name"
+                        style="@style/mine_text_colorsize"
+                        android:drawableEnd="@null"
+                        android:text=""
+                        />
+                </FrameLayout>
+                <FrameLayout
+                    style="@style/mine_frame">
+                    <TextView
+                        style="@style/setting_item_configure"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_marginStart="14dp"
+                        android:text="联系电话：" />
 
-                <TextView
-                    android:id="@+id/tv_invoice_phone"
-                    style="@style/mine_text_colorsize"
-                    android:text="电话"
-                    />
-            </FrameLayout>
+                    <TextView
+                        android:id="@+id/tv_invoice_phone"
+                        style="@style/mine_text_colorsize"
+                        android:text=""
+                        android:drawableEnd="@null"
+                        />
+                </FrameLayout>
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_email"
                 android:layout_width="match_parent"
