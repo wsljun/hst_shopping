@@ -32,7 +32,7 @@ public class WebViewActivity extends BaseActivity {
     public final static int TYPE_HOME_BANNER= 5;
     public final static int TYPE_YJ= 6;
     public final static int TYPE_MONEY= 7;
-
+    public final static int TYPE_XY=8;
 
     @Override
     public int getLayoutId() {
@@ -109,6 +109,12 @@ public class WebViewActivity extends BaseActivity {
                 String title = getIntent().getStringExtra(BUNDLE_WEBVIEW_TITLE);
                 webViewUrl = getIntent().getStringExtra(BUNDLE_WEBVIEW_URL);
                 tvCenter.setText(title);
+                webView.loadUrl(webViewUrl);
+                break;
+            case TYPE_XY :
+                String t = getIntent().getStringExtra(BUNDLE_WEBVIEW_TITLE);
+                tvCenter.setText(t);
+                webViewUrl = getIntent().getStringExtra(BUNDLE_WEBVIEW_URL);
                 webView.loadUrl(webViewUrl);
                 break;
             default:

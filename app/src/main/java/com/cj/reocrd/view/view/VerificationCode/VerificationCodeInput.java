@@ -48,7 +48,11 @@ public class VerificationCodeInput extends ViewGroup {
     private Drawable boxBgNormal = null;
     private Listener listener;
 
-
+    public VerificationCodeInput(Context context, int box) {
+        super(context);
+        this.box = box;
+        initViews();
+    }
     public VerificationCodeInput(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.vericationCodeInput);
