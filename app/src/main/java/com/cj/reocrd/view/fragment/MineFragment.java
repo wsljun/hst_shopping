@@ -1,12 +1,16 @@
 package com.cj.reocrd.view.fragment;
 
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -41,13 +45,18 @@ import com.cj.reocrd.view.activity.MyFansActivity;
 import com.cj.reocrd.view.activity.MyMoneyActivity;
 import com.cj.reocrd.view.activity.MyTeamActivity;
 import com.cj.reocrd.view.activity.OrderActivity;
+import com.cj.reocrd.view.activity.PasswordActivity;
+import com.cj.reocrd.view.activity.PayActivity;
 import com.cj.reocrd.view.activity.WalletActivity;
 import com.cj.reocrd.view.activity.WebViewActivity;
 import com.cj.reocrd.view.activity.YongJinActivity;
 import com.cj.reocrd.view.activity.ZPActivity;
+import com.cj.reocrd.view.view.VerificationCode.VerificationCodeInput;
+import com.cj.reocrd.view.view.verificationCodeView.VerificationCodeView;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.zhy.autolayout.utils.L;
 
 import java.io.File;
 
@@ -61,7 +70,7 @@ import static com.cj.reocrd.base.BaseActivity.uid;
  */
 
 public class MineFragment extends BaseFragment<MyPrresenter> implements MyContract.View,
-        SwipeRefreshLayout.OnRefreshListener ,View.OnClickListener {
+        SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -120,8 +129,21 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     SwipeRefreshLayout mineSwipe;
     @BindView(R.id.mine_team_num)
     TextView mineTeamNum;
+    @BindView(R.id.mine_userinfo)
+    TextView mineUserinfo;
+    @BindView(R.id.mine_jilu)
+    TextView mineJilu;
     @BindView(R.id.img_share)
     ImageView imgShare;
+    @BindView(R.id.mine_wallet_frame)
+    FrameLayout mineWalletFrame;
+    @BindView(R.id.mine_shouyi_frame)
+    FrameLayout mineShouyiFrame;
+    @BindView(R.id.mine_qb_cv)
+    CardView mineQbCv;
+    @BindView(R.id.mine_dd_cv)
+    CardView mineDdCv;
+
 
     int type;
     private String codeImg;
@@ -130,6 +152,9 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     private boolean isTimelineCb; // 是否是发送朋友圈
     private File picFile;
     private UserBean userBean;
+    WalletFragment walletFragment;
+    YongJinFragment yongJinFragment;
+    int form;//1 钱包  2 收益
 
     @Override
     protected void initPresenter() {
@@ -171,13 +196,13 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
             R.id.title_rl, R.id.title_left, R.id.mine_icon, R.id.mine_all, R.id.mine_pay, R.id.mine_send,
             R.id.mine_confim, R.id.mine_evaluate, R.id.mine_return, R.id.mine_money, R.id.mine_collect,
             R.id.mine_history, R.id.mine_help, R.id.mine_about, R.id.mine_serve, R.id.mine_yongjin,
-            R.id.mine_share_url, R.id.mine_userinfo,R.id.mine_cz})
+            R.id.mine_share_url, R.id.mine_userinfo, R.id.mine_cz, R.id.mine_share_url_iv, R.id.mine_jilu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
-                if(View.VISIBLE == imgShare.getVisibility()){
+                if (View.VISIBLE == imgShare.getVisibility()) {
                     imgShare.setVisibility(View.GONE);
-                }else{
+                } else {
                     getMainActivity().getViewPager().setCurrentItem(0);
                 }
                 break;
@@ -200,10 +225,14 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 OrderActivity.actionActivity(mActivity, OrderActivity.ORDER_STATUS_REFUNDING);
                 break;
             case R.id.mine_money:
-                startActivity(WalletActivity.class);
+//                startActivity(WalletActivity.class);
+                form = 1;
+                showPWDDialog();
                 break;
             case R.id.mine_yongjin:
-                startActivity(YongJinActivity.class);
+//                startActivity(YongJinActivity.class);
+                form = 2;
+                showPWDDialog();
                 break;
             case R.id.mine_collect:
                 Bundle bundleCollect = new Bundle();
@@ -233,6 +262,16 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
 //                cm.setText(UrlConstants.URL_SHARE_REGISTER + BaseActivity.uid);
 //                ToastUtil.showShort("复制成功，可以发给朋友们了。");
 //                ImageLoaderUtils.display(getContext(), imgShare, UrlConstants.BASE_URL + codeImg);
+                imgShare.setVisibility(View.VISIBLE);
+                imgShare.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        showDialog();
+                        return false;
+                    }
+                });
+                break;
+            case R.id.mine_share_url_iv:
                 imgShare.setVisibility(View.VISIBLE);
                 imgShare.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -272,14 +311,66 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case R.id.mine_cz:
                 Bundle bd = new Bundle();
-                bd.putSerializable("user",userBean);
-                startActivity(MyMoneyActivity.class,bd);
+                bd.putSerializable("user", userBean);
+                startActivity(MyMoneyActivity.class, bd);
+                break;
+            case R.id.mine_jilu:
+                Bundle jilu = new Bundle();
+                jilu.putString(WebViewActivity.BUNDLE_WEBVIEW_URL, UrlConstants.URL_WEB_YJ + uid);
+                jilu.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE, WebViewActivity.TYPE_YJ);
+                startActivity(WebViewActivity.class, jilu);
                 break;
             default:
                 break;
         }
     }
+
+    //二级密码对话框
+    public void showPWDDialog() {
+        VerificationCodeView codeView = new VerificationCodeView(mActivity);
+        codeView.setEtNumber(6);
+        codeView.setPwdMode(true);
+        codeView.setmEtWidth(80);
+        new AlertDialog.Builder(mActivity)
+                .setTitle("输入交易密码")
+                .setView(codeView)
+                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        type = 3;
+                        mPresenter.checkPwd("111",uid,codeView.getInputContent());
+                    }
+                })
+                .setNeutralButton("忘记密码", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("phone",userBean.getPhone());
+                        startActivity(PasswordActivity.class,bundle);
+                    }
+                })
+                .show();
+
+    }
+
+    //加载钱包的fragment
+    public void initWalletFragment() {
+        walletFragment = new WalletFragment();
+        android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.mine_wallet_frame, walletFragment, "walletFragment");
+        ft.commit();
+    }
+
+    //加载收益的fragment
+    public void initYongJinFragment() {
+        yongJinFragment = new YongJinFragment();
+        android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.mine_shouyi_frame, yongJinFragment, "yongJinFragment");
+        ft.commit();
+    }
+
     private Dialog dialog;
+
     private void showDialog() {
         View view = mActivity.getLayoutInflater().inflate(R.layout.share_choose_dialog, null);
         Button btn_save = (Button) view.findViewById(R.id.btn_save);
@@ -312,13 +403,12 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     }
 
 
-
     // todo 分享到微信
-    private void showQRCode(){
-        if(null == qrView){
-            qrView = getLayoutInflater().inflate(R.layout.dialog_qrcode, null,false);
-            popWindow=new PopupWindow(qrView, ActivityUtils.getWidth(mActivity),
-                    ActivityUtils.getWidth(mActivity),true);
+    private void showQRCode() {
+        if (null == qrView) {
+            qrView = getLayoutInflater().inflate(R.layout.dialog_qrcode, null, false);
+            popWindow = new PopupWindow(qrView, ActivityUtils.getWidth(mActivity),
+                    ActivityUtils.getWidth(mActivity), true);
 //            popWindow=new PopupWindow(qrView, WindowManager.LayoutParams.MATCH_PARENT,
 //                    WindowManager.LayoutParams.MATCH_PARENT,true);
             ImageView img = qrView.findViewById(R.id.img_qrcode);
@@ -340,7 +430,9 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     }
 
     public void sharePicByFile() {
-        if (null == picFile) {return;}
+        if (null == picFile) {
+            return;
+        }
         Bitmap bmp = BitmapFactory.decodeFile(picFile.getAbsolutePath());
 //        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         WXImageObject imgObj = new WXImageObject(bmp);
@@ -360,12 +452,6 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     }
 
 
-
-
-
-
-
-
     @Override
     public void onSuccess(Object data) {
         if (mineSwipe.isRefreshing()) {
@@ -382,7 +468,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                         }
                         if (!TextUtils.isEmpty(userBean.getCodeimg())) {
                             codeImg = UrlConstants.BASE_URL + userBean.getCodeimg();
-                            ImageLoaderUtils.display(getContext(),imgShare,codeImg);
+                            ImageLoaderUtils.display(getContext(), imgShare, codeImg);
                             saveImage(false);
                         }
                         if (!TextUtils.isEmpty(userBean.getName())) {
@@ -393,9 +479,9 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                         }
                         if (!TextUtils.isEmpty(userBean.getNum())) {
                             int num = Integer.parseInt(userBean.getNum());
-                            if(num>0F){
+                            if (num > 0F) {
                                 mineTeamNum.setText("我的消费商（" + userBean.getNum() + "）人");
-                            }else{
+                            } else {
 
                             }
                         }
@@ -421,6 +507,26 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                     ToastUtil.showToastS(mActivity, response.getMessage());
                 }
                 break;
+            case 3:
+                if ("1".equals(response.getStatusCode())) {
+                    if(form==1){
+                        initWalletFragment();
+                        mineDdCv.setVisibility(View.GONE);
+                        mineQbCv.setVisibility(View.GONE);
+                        mineWalletFrame.setVisibility(View.VISIBLE);
+                    }
+                    if(form==2){
+                        initYongJinFragment();
+                        mineDdCv.setVisibility(View.GONE);
+                        mineQbCv.setVisibility(View.GONE);
+                        mineShouyiFrame.setVisibility(View.VISIBLE);
+                        mineUserinfo.setVisibility(View.GONE);
+                        mineJilu.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    ToastUtil.showToastS(mActivity, response.getMessage());
+                }
+                break;
             default:
                 break;
         }
@@ -428,8 +534,8 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     }
 
     private void saveImage(boolean isToast) {
-        if(TextUtils.isEmpty(codeImg)){
-            if(isToast){
+        if (TextUtils.isEmpty(codeImg)) {
+            if (isToast) {
                 ToastUtil.showShort("无法获取图片地址！");
             }
             return;
@@ -438,12 +544,12 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if(null == picFile){
+                if (null == picFile) {
                     Bitmap b = ImageLoaderUtils.getbitmap(codeImg);
-                    if(null != b){
-                        picFile = ImageLoaderUtils.saveImage(b,"hst");
-                    }else{
-                        if(isToast){
+                    if (null != b) {
+                        picFile = ImageLoaderUtils.saveImage(b, "hst");
+                    } else {
+                        if (isToast) {
                             ToastUtil.showShort("保存图片失败！");
                         }
                     }
@@ -460,6 +566,24 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     @Override
     public void onRefresh() {
         mineSwipe.setRefreshing(true);
+        if (mineQbCv.getVisibility() == View.GONE) {
+            mineQbCv.setVisibility(View.VISIBLE);
+        }
+        if (mineDdCv.getVisibility() == View.GONE) {
+            mineDdCv.setVisibility(View.VISIBLE);
+        }
+        if (mineWalletFrame.getVisibility() == View.VISIBLE) {
+            mineWalletFrame.setVisibility(View.GONE);
+        }
+        if (mineShouyiFrame.getVisibility() == View.VISIBLE) {
+            mineShouyiFrame.setVisibility(View.GONE);
+        }
+        if (mineJilu.getVisibility() == View.VISIBLE) {
+            mineJilu.setVisibility(View.GONE);
+        }
+        if (mineUserinfo.getVisibility() == View.GONE) {
+            mineUserinfo.setVisibility(View.VISIBLE);
+        }
         type = 1;
         mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
     }
@@ -468,12 +592,12 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     public void onClick(View v) {
         // 保存，分享到朋友圈，分享给朋友，取消
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.btn_save:
                 if (null == picFile) {
                     //  save img
                     saveImage(true);
-                }else{
+                } else {
                     ToastUtil.showShort("保存成功");
                     imgShare.setVisibility(View.GONE);
                 }
@@ -497,4 +621,5 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
         }
         dialog.dismiss();
     }
+
 }

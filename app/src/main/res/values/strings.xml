@@ -17,7 +17,7 @@
     <string name="verification_code_fault">验证码错误</string>
     <string name="password_cannot_empty">密码不能为空</string>
     <string name="passwords_match">密码不一致</string>
-    <string name="password_can_only">密码6~8位,只能包含数字字母下划线</string>
+    <string name="password_can_only">密码需要大于6位,只能包含数字字母下划线</string>
     <string name="update_pwd">确认密码</string>
     <string name="next">下一步</string>
     <string name="getcode">获取验证码</string>

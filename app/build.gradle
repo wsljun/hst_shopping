@@ -113,7 +113,6 @@ dependencies {
     //验证码输入框 https://github.com/liuguangli/VerificationCodeInput
 
     //    implementation 'com.github.liuguangli:VerificationCodeInput:1.3'
-
     //控件绑定
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
