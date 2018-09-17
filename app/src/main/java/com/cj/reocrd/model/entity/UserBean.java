@@ -22,6 +22,24 @@ public class UserBean implements Serializable {
     private String codeimg; // 分享注册二维码
     private String type ;   // 1是，2否 （是否消费商）
     private String pwd;//二级密码
+    private String sy;//我的收益
+    private String ye;//我的余额
+
+    public String getSy() {
+        return sy;
+    }
+
+    public void setSy(String sy) {
+        this.sy = sy;
+    }
+
+    public String getYe() {
+        return ye;
+    }
+
+    public void setYe(String ye) {
+        this.ye = ye;
+    }
 
     public String getPwd() {
         return pwd;

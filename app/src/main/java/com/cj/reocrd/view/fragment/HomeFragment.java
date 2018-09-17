@@ -33,6 +33,7 @@ import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.UpdateUtil;
+import com.cj.reocrd.view.activity.CollectActivity;
 import com.cj.reocrd.view.activity.GoodDetailActivity;
 import com.cj.reocrd.view.activity.SearchActivity;
 import com.cj.reocrd.view.activity.WebViewActivity;
@@ -80,7 +81,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     private final static String TAG = "HomeFragment";
     private Bundle goodBundle = new Bundle();
     private List<BannerData> bannerData;
-    private  boolean  isCancle = false;
+    private boolean isCancle = false;
     private AppInfo appInfo;
 
     @Override
@@ -178,7 +179,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     }
 
-    @OnClick({R.id.home_search, R.id.title_right})
+    @OnClick({R.id.home_search, R.id.title_right, R.id.home_index1, R.id.home_index2, R.id.home_index3, R.id.home_index4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.home_search:
@@ -187,31 +188,45 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             case R.id.title_right:
                 getMainActivity().getViewPager().setCurrentItem(3);
                 break;
+            case R.id.home_index1:
+                getMainActivity().getViewPager().setCurrentItem(1);
+                break;
+            case R.id.home_index2:
+                getMainActivity().getViewPager().setCurrentItem(4);
+                break;
+            case R.id.home_index3:
+
+                break;
+            case R.id.home_index4:
+                Bundle bundleCollect = new Bundle();
+                bundleCollect.putString("from", "collect");
+                startActivity(CollectActivity.class, bundleCollect);
+                break;
         }
     }
 
-    private void update(AppInfo appInfo){
-        if(mActivity == null || isCancle){
+    private void update(AppInfo appInfo) {
+        if (mActivity == null || isCancle) {
             return;
         }
         MaterialDialog.Builder materialDialog = new MaterialDialog.Builder(mActivity)
                 .title("版本更新")
-                .content("更新内容："+"\n"+appInfo.getDetailDesc()+"\n"+"版本大小："+appInfo.getApkSize())
+                .content("更新内容：" + "\n" + appInfo.getDetailDesc() + "\n" + "版本大小：" + appInfo.getApkSize())
                 .positiveText("确定")
                 .canceledOnTouchOutside(false)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        UpdateUtil.downloadFile(appInfo.getApkUrl(),mActivity);
+                        UpdateUtil.downloadFile(appInfo.getApkUrl(), mActivity);
                     }
                 });
-        if("2".equals(appInfo.getIsupdate())){
-            materialDialog .negativeText("取消")
+        if ("2".equals(appInfo.getIsupdate())) {
+            materialDialog.negativeText("取消")
                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            SPUtils.put(mActivity,SPUtils.SpKey.UPDATE_IS_CANCLE,true);
-                            SPUtils.put(mActivity,SPUtils.SpKey.CANCLE_UPDATE_VERSION,appInfo.getVersionCode());
+                            SPUtils.put(mActivity, SPUtils.SpKey.UPDATE_IS_CANCLE, true);
+                            SPUtils.put(mActivity, SPUtils.SpKey.CANCLE_UPDATE_VERSION, appInfo.getVersionCode());
                         }
                     });
 //            materialDialog.onNegative(new MaterialDialog.SingleButtonCallback(){
@@ -222,7 +237,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 //            });
         }
 
-        materialDialog .show();
+        materialDialog.show();
     }
 
     @Override
@@ -318,7 +333,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     private void checkIsAndroidO() {
         if (Build.VERSION.SDK_INT >= 26) {
             boolean b = mActivity.getPackageManager().canRequestPackageInstalls();
-            ToastUtil.showShort("checkIsAndroidO b= "+b);
+            ToastUtil.showShort("checkIsAndroidO b= " + b);
             if (b) {
 //                installApk();// todo 安装应用的逻辑(写自己的就可以)
                 update(appInfo);
@@ -349,8 +364,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 //                    startActivityForResult(intent, 2);
                 }
                 break;
-                default:
-                    break;
+            default:
+                break;
 
         }
     }
@@ -367,7 +382,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 //                break;
 //        }
 //    }
-
 
 
 }
