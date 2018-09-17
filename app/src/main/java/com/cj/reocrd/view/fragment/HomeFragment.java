@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -58,20 +59,12 @@ import butterknife.OnClick;
 
 public class HomeFragment extends BaseFragment<HomePresenter> implements HomeContract.View
         , BaseQuickAdapter.RequestLoadMoreListener, RefreshLayout.RefreshLayoutDelegate, OnBannerListener {
-    @BindView(R.id.title_left)
-    TextView titleLeft;
-    @BindView(R.id.title_center)
-    TextView titleCenter;
-    @BindView(R.id.title_right)
-    TextView titleRight;
     @BindView(R.id.refresh)
     RefreshLayout mRefreshLayout;
     @BindView(R.id.rv_content)
     RecyclerView recyclerViewContent;
     @BindView(R.id.banner)
     Banner banner;
-    @BindView(R.id.fl_home_banner)
-    FrameLayout flHomeBannerLyout;
     List<String> images;
     private List<GoodsBean> goodsBeanList = new ArrayList<>();
 
@@ -108,12 +101,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void initView() {
-        LogUtil.e(TAG, "initview");
-        titleLeft.setVisibility(View.GONE);
-        titleCenter.setText(getString(R.string.home));
-        titleRight.setBackgroundResource(R.mipmap.gouwuche);
-        titleRight.setVisibility(View.VISIBLE);
-
         initRecycleView();
     }
 
@@ -144,7 +131,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     private void initRecycleView() {
         mHomeTabAdapter = new HomeAdapter(R.layout.item_good, null);
-        recyclerViewContent.setLayoutManager(new GridLayoutManager(mActivity, 2));
+        recyclerViewContent.setLayoutManager(new LinearLayoutManager(mActivity));
         recyclerViewContent.setHasFixedSize(true);
         //设置适配器加载动画
         mHomeTabAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
@@ -179,14 +166,11 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     }
 
-    @OnClick({R.id.home_search, R.id.title_right, R.id.home_index1, R.id.home_index2, R.id.home_index3, R.id.home_index4})
+    @OnClick({R.id.home_search, R.id.home_index1, R.id.home_index2, R.id.home_index3, R.id.home_index4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.home_search:
                 startActivity(SearchActivity.class);
-                break;
-            case R.id.title_right:
-                getMainActivity().getViewPager().setCurrentItem(3);
                 break;
             case R.id.home_index1:
                 getMainActivity().getViewPager().setCurrentItem(1);
