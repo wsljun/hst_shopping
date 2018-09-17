@@ -47,6 +47,7 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
     private String type;
     private String aid;
     private boolean isPause;
+    private  String consignee,address,phone;
 
 
 
@@ -118,10 +119,13 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
             return;
         }
         aid = addressBeans.get(position).getId();
+        consignee = addressBeans.get(position).getConsignee();
+        address = addressBeans.get(position).getFuladdress();
+        phone = addressBeans.get(position).getPhone();
         SPUtils.put(this, SPUtils.SpKey.DEFAULT_ADDRESS_ID, aid);
-        SPUtils.put(this, SPUtils.SpKey.DEFAULT_ADDRESS_CONSIGNEE, addressBeans.get(position).getConsignee());
-        SPUtils.put(this, SPUtils.SpKey.DEFAULT_ADDRESS_PHONE, addressBeans.get(position).getPhone());
-        SPUtils.put(this, SPUtils.SpKey.DEFAULT_ADDRESS_DETAIL, addressBeans.get(position).getFuladdress());
+        SPUtils.put(this, SPUtils.SpKey.DEFAULT_ADDRESS_CONSIGNEE,consignee );
+        SPUtils.put(this, SPUtils.SpKey.DEFAULT_ADDRESS_PHONE, phone);
+        SPUtils.put(this, SPUtils.SpKey.DEFAULT_ADDRESS_DETAIL, address);
     }
 
     @Override
@@ -184,6 +188,12 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
                 WalletBindActivity.TYPE_BINDBANK.equals(type)){
             Intent intent  = new Intent();
             intent.putExtra("aid",aid);
+            setResult(RESULT_OK,intent);
+        }
+        if(InvoiceSubmitActivity.TAG.equals(type)){
+            String personInfo = consignee+","+phone+","+address;
+            Intent intent  = new Intent();
+            intent.putExtra("personInfo",personInfo);
             setResult(RESULT_OK,intent);
         }
     }

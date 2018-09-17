@@ -170,5 +170,9 @@
     <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>
     <string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
 
+
     <string name="register_xy">《人道易购平台服务协议》《隐私权政策》\n《支付宝协议》</string>
+
+    <string name="tv_btn_submit">提交</string>
+
 </resources>

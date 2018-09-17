@@ -52,7 +52,8 @@
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/login_password"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout">
 
         <TextView
             android:id="@+id/login_lose"
@@ -69,6 +70,20 @@
             android:layout_marginTop="10dp"
             android:hint="@string/login_code" />
     </RelativeLayout>
+
+    <Switch
+        android:id="@+id/switch_btn_baseapi"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@+id/relativeLayout"
+        android:layout_alignStart="@+id/relativeLayout"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginTop="36dp"
+        android:textOn="on"
+        android:textOff="off"
+        android:text="调整为测试环境"
+        android:visibility="gone"
+        />
 
 
 </RelativeLayout>

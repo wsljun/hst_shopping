@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -62,6 +63,8 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     FrameLayout flAddress;
     @BindView(R.id.rl_goods_img)
     RecyclerView rlGoodsImg;
+    @BindView(R.id.rg_exp_time)
+    RadioGroup rgExpTime;
 
     private OrderBean orderBean;
     private String consignee;
@@ -88,6 +91,10 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     private String requestType = "";
     private static final String TYPE_SUBMIT = "SUBMIT_ORDER";
     private SubmitOrderAdapter mAdapter;
+    private final String exp_time_1 = "1";// 工作日
+    private final String exp_time_2 = "2";// 周六日
+    private final String exp_time_3 = "3";// 全部时间
+    private String expTime  = exp_time_3;
 
     @Override
     public int getLayoutId() {
@@ -140,7 +147,23 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
         rlGoodsImg.setLayoutManager(linearLayoutManager);
         mAdapter = new SubmitOrderAdapter(mContext, imgURls);
         rlGoodsImg.setAdapter(mAdapter);
-
+        rgExpTime.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rb_1:
+                        expTime = exp_time_1;
+                        break;
+                    case R.id.rb_2:
+                        expTime = exp_time_2;
+                        break;
+                    case R.id.rb_3:
+                        expTime = exp_time_3;
+                        break;
+                }
+                ToastUtil.showShort(expTime);// TODO: 2018/9/14  422 更新送货时间
+            }
+        });
     }
 
     private void updateAddress() {

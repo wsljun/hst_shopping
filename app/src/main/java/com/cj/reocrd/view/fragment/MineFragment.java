@@ -40,6 +40,7 @@ import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.activity.CollectActivity;
 import com.cj.reocrd.view.activity.FuliActivity;
+import com.cj.reocrd.view.activity.InvoiceActivity;
 import com.cj.reocrd.view.activity.MyActivity;
 import com.cj.reocrd.view.activity.MyFansActivity;
 import com.cj.reocrd.view.activity.MyMoneyActivity;
@@ -296,8 +297,9 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 fans.putInt("type", MyFansActivity.FROM_MYFANS);
                 startActivity(MyFansActivity.class, fans);
                 break;
-            case R.id.mine_fuli://福利
-                startActivity(FuliActivity.class);
+            case R.id.mine_fuli://福利 todo 2018/09/10 add
+//                startActivity(FuliActivity.class);
+                 startActivity(InvoiceActivity.class);
                 break;
             case R.id.mine_zp://大转盘
                 type = 2;

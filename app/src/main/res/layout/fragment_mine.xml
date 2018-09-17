@@ -597,13 +597,13 @@
                         <FrameLayout
                             android:id="@+id/mine_fuli"
                             style="@style/mine_frame"
-                            android:visibility="gone">
+                            >
 
 
                             <TextView
                                 style="@style/setting_item_configure"
                                 android:drawableStart="@mipmap/fuli"
-                                android:text="福利" />
+                                android:text="发票中心" />
 
                             <TextView
                                 android:id="@+id/mine_fuli_tv"

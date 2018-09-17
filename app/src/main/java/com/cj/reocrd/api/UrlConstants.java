@@ -2,11 +2,12 @@ package com.cj.reocrd.api;
 
 
 public class UrlConstants {
-    //BaseURl
-//    public final static String BASE_URL = "http://www.rdyg.com.cn/"; //"http://mall.xdiandian.cn/mall/";
-    //test
-    public final static String BASE_URL = "http://mall.xdiandian.cn/mall/"; //http://110.243.30.72:8101/mall
-//    public final static String BASE_URL = "http://110.243.28.89:8101/mall/";
+    // 正式环境
+    public final static String BASE_URL_RDYG = "http://www.rdyg.com.cn/"; //"http://mall.xdiandian.cn/mall/";
+    // test
+    public final static String BASE_URL_MALL = "http://mall.xdiandian.cn/mall/"; //http://110.243.30.72:8101/mall
+    // BaseURl
+    public static String BASE_URL = BASE_URL_RDYG;
     public final static String URL_ABOUT = BASE_URL+"api/about";
     public final static String URL_HELP = BASE_URL+"api/help";
     public final static String URL_GOODS_DETAIL = BASE_URL+"api/meDetail?id=";
@@ -167,6 +168,7 @@ public class UrlConstants {
         public static final String URL_OUT_TRADE_NO = "419";//  OUT_TRADE_NO
         public static final String URL_OUT_CHECK_ORDER= "420";//  OUT_TRADE_NO
         public static final String URL_WX_ORDER= "421";//
+        public static final String URL_UPDATE_EXPRESSTIME = "422";//todo update expresstime
         //关注好友
         public static final String FRIEDNS_KEEP = "501";
         //取消关注

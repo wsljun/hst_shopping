@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <include
+        android:id="@+id/my_title"
+        layout="@layout/layout_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_title"
+        android:layout_above="@+id/tv_btn_invocie_submit"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/fl_invoice_type"
+                style="@style/mine_frame"
+                android:layout_marginTop="5dp"
+                >
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="发票类型" />
+
+                <TextView
+                    android:id="@+id/tv_invoice_type"
+                    style="@style/mine_text_colorsize"
+                    android:text="电子发票"
+                    />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/fl_invoice_info"
+                style="@style/mine_frame"
+                >
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="发票内容" />
+
+                <TextView
+                    android:id="@+id/tv_invoice_info"
+                    style="@style/mine_text_colorsize"
+                    android:text="商品明细"
+                    />
+            </FrameLayout>
+            <FrameLayout
+                style="@style/mine_frame">
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="发票金额" />
+
+                <TextView
+                    android:id="@+id/tv_invoice_value"
+                    style="@style/mine_text_colorsize"
+                    android:drawableEnd="@null"
+                    android:textColor="@color/colorButton"
+                    android:text="￥50"
+                    />
+            </FrameLayout>
+            <FrameLayout
+                style="@style/mine_frame"
+                android:layout_marginTop="10dp"
+                >
+
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="发票抬头:" />
+
+            </FrameLayout>
+            <FrameLayout
+                style="@style/mine_frame"
+                >
+                <CheckBox
+                    android:id="@+id/cb_invoice_1"
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="个人"
+                    android:button="@null"
+                    android:drawableStart="@drawable/address_check"
+                    android:padding="10dp"
+                    android:checked="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <CheckBox
+                    android:id="@+id/cb_invoice_2"
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="14dp"
+                    android:text="企业"
+                    android:button="@null"
+                    android:drawableStart="@drawable/address_check"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <!-- <TextView
+                     style="@style/setting_item_configure"
+                     android:layout_gravity="start|center_vertical"
+                     android:layout_marginStart="14dp"
+                     android:text="发票内容" />-->
+
+            </FrameLayout>
+
+
+            <EditText
+                android:id="@+id/edit_c_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorWhite"
+                android:layout_margin="3dp"
+                android:paddingLeft="5dp"
+                android:hint="请填写单位名称"
+                android:textColorHint="@color/colorTexthintGrey2"
+                android:visibility="gone"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                />
+            <EditText
+                android:id="@+id/edit_c_num"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorWhite"
+                android:layout_margin="3dp"
+                android:paddingLeft="5dp"
+                android:hint="请在此填写纳税人识别号"
+                android:textColorHint="@color/colorTexthintGrey2"
+                android:visibility="gone"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                />
+
+            <LinearLayout
+                android:id="@+id/fl_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+                <FrameLayout
+                    style="@style/mine_frame"
+                    >
+
+                    <TextView
+                        style="@style/setting_item_configure"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_marginStart="14dp"
+                        android:text="收件人地址：" />
+
+                    <TextView
+                        android:id="@+id/tv_person_invoice"
+                        style="@style/mine_text_colorsize"
+                        android:text="在收货地址管理中选择"
+                        />
+                </FrameLayout>
+                <FrameLayout
+                    style="@style/mine_frame"
+                    >
+
+                    <TextView
+                        style="@style/setting_item_configure"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_marginStart="14dp"
+                        android:text="收件人姓名：" />
+
+                    <TextView
+                        android:id="@+id/tv_invoice_name"
+                        style="@style/mine_text_colorsize"
+                        android:drawableEnd="@null"
+                        android:text=""
+                        />
+                </FrameLayout>
+                <FrameLayout
+                    style="@style/mine_frame">
+                    <TextView
+                        style="@style/setting_item_configure"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_marginStart="14dp"
+                        android:text="联系电话：" />
+
+                    <TextView
+                        android:id="@+id/tv_invoice_phone"
+                        style="@style/mine_text_colorsize"
+                        android:text=""
+                        android:drawableEnd="@null"
+                        />
+                </FrameLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_email"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:orientation="horizontal"
+                android:background="@color/colorWhite"
+                android:layout_marginTop="1dp"
+                >
+                <TextView
+                    style="@style/setting_item_configure"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="14dp"
+                    android:text="邮箱地址:" />
+
+                <EditText
+                    android:id="@+id/edit_invoice_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="3dp"
+                    android:paddingLeft="3dp"
+                    android:hint="请输入接收发票的邮箱地址"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/colorWhite"
+                    android:textColorHint="@color/colorTexthintGrey2"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tv_btn_invocie_submit"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="@string/tv_btn_submit"
+        android:textColor="@color/color2"
+        android:textSize="14sp" />
+</RelativeLayout>
