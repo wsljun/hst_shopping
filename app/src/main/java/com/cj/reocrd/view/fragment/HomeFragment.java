@@ -161,7 +161,7 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
 
     private void initShhh() {
         homeShhhAdapter = new HomeShhhAdapter(mActivity, shhhList);
-        homeShhhRecycler.setLayoutManager(new GridLayoutManager(mActivity, 1));
+        homeShhhRecycler.setLayoutManager(new LinearLayoutManager(mActivity));
         homeShhhRecycler.setNestedScrollingEnabled(false);
         homeShhhRecycler.setAdapter(homeShhhAdapter);
         homeShhhAdapter.setOnItemListener(new HomeShhhAdapter.OnItemListener() {
@@ -200,6 +200,7 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
             }
         });
         homeMdssRecycler.setLayoutManager(gridLayoutManager);
+        homeMdssRecycler.setNestedScrollingEnabled(false);
         homeMdssRecycler.setAdapter(homeMdssAdapter);
         homeMdssAdapter.setOnItemListener(new HomeMdssAdapter.OnItemListener() {
             @Override
@@ -228,6 +229,7 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
             }
         });
         homePzshRecycler.setLayoutManager(gridLayoutManager);
+        homePzshRecycler.setNestedScrollingEnabled(false);
         homePzshRecycler.setAdapter(homeMdssAdapter);
         homePzshAdapter.setOnItemListener(new HomeMdssAdapter.OnItemListener() {
             @Override
@@ -256,6 +258,7 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
             }
         });
         homeChwlRecycler.setLayoutManager(gridLayoutManager);
+        homeChwlRecycler.setNestedScrollingEnabled(false);
         homeChwlRecycler.setAdapter(homeChwlAdapter);
         homeChwlAdapter.setOnItemListener(new HomeMdssAdapter.OnItemListener() {
             @Override
