@@ -113,7 +113,7 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
     }
 
     private void showBaseApiView(String phone) {
-        if("18822484800".equals(phone)){
+        if("".equals(phone)){
             if(UrlConstants.BASE_URL.equals(UrlConstants.BASE_URL_RDYG)){
                 swBtnChangBaseAPI.setChecked(false);
             }else{

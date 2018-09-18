@@ -518,7 +518,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         LogUtil.d("webpageUrl",webpage.webpageUrl);
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = goodsDetailsBean.getName();
-        msg.description = goodPrice.getText().toString() ;
+        msg.description = goodsDetailsBean.getIntroduct() ;
 
 //        Bitmap thumb = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
 //        if(bitmapByte == null) {
