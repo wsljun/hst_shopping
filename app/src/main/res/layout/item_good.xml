@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    android:background="@drawable/price_bg"
     android:orientation="vertical"
     android:padding="2dp">
 
@@ -22,8 +21,8 @@
         <TextView
             android:id="@+id/good_name"
             android:layout_width="wrap_content"
-            android:layout_marginRight="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="100dp"
             android:layout_marginStart="10dp"
             android:maxLines="2"
             android:text="大米"
@@ -37,7 +36,8 @@
             android:layout_below="@id/good_name"
             android:layout_marginLeft="10dp"
             android:background="@color/colorBlack"
-            android:text="会员价：000"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
             android:textColor="@color/colorWhite"
             android:textSize="13sp" />
 
@@ -48,7 +48,6 @@
             android:layout_below="@id/good_name"
             android:layout_marginStart="10dp"
             android:layout_toRightOf="@id/good_price"
-            android:text="零售价122"
             android:textColor="@color/colorTexthintGrey2"
             android:textSize="12sp" />
 

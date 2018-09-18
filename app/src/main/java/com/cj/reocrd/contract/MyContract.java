@@ -48,5 +48,8 @@ public interface MyContract {
 
         public abstract void updatePwd(String por,String uid,String code,String pwd);
         public abstract void checkPwd(String por,String uid,String pwd);
+
+        public abstract  void getHomeData(int pageSize,int pageno);
+        public abstract  void checkUpdate(String version);
     }
 }

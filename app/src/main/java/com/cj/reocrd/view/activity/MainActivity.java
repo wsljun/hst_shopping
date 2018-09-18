@@ -1,7 +1,6 @@
 package com.cj.reocrd.view.activity;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,10 +19,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseFragment;
-import com.cj.reocrd.contract.HomeContract;
+import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.entity.AppInfo;
 import com.cj.reocrd.model.entity.HomeBean;
-import com.cj.reocrd.presenter.HomePresenter;
+import com.cj.reocrd.presenter.MyPrresenter;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
@@ -39,11 +38,9 @@ import com.jpeng.jptabbar.JPTabBar;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.impl.NimUIKitImpl;
-import com.netease.nim.uikit.impl.preference.UserPreferences;
 import com.netease.nimlib.sdk.AbortableFuture;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
-import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -59,7 +56,7 @@ import io.reactivex.functions.Consumer;
  * Created by Administrator on 2018/3/16.
  */
 
-public class MainActivity extends BaseActivity<HomePresenter>  implements HomeContract.View{
+public class MainActivity extends BaseActivity<MyPrresenter>  implements MyContract.View{
 
     @BindView(R.id.main_viewPager)
     MViewPager viewPager;
@@ -455,8 +452,4 @@ public class MainActivity extends BaseActivity<HomePresenter>  implements HomeCo
         return this.getApplicationContext();
     }
 
-    @Override
-    public void onRefreshHomeData(HomeBean homeBean) {
-
-    }
 }
