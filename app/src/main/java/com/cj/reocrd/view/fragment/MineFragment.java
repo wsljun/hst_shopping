@@ -37,6 +37,7 @@ import com.cj.reocrd.utils.ActivityUtils;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.activity.CollectActivity;
 import com.cj.reocrd.view.activity.FuliActivity;
 import com.cj.reocrd.view.activity.InvoiceActivity;
@@ -143,6 +144,10 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     CardView mineQbCv;
     @BindView(R.id.mine_dd_cv)
     CardView mineDdCv;
+    @BindView(R.id.mine_sy)
+    TextView mineSy;
+    @BindView(R.id.mine_ye)
+    TextView mineYe;
 
 
     int type;
@@ -338,15 +343,15 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         type = 3;
-                        mPresenter.checkPwd("111",uid,codeView.getInputContent());
+                        mPresenter.checkPwd("111", uid, codeView.getInputContent());
                     }
                 })
                 .setNeutralButton("忘记密码", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("phone",userBean.getPhone());
-                        startActivity(PasswordActivity.class,bundle);
+                        bundle.putString("phone", userBean.getPhone());
+                        startActivity(PasswordActivity.class, bundle);
                     }
                 })
                 .show();
@@ -485,7 +490,16 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
 
                             }
                         }
-
+                        if (!TextUtils.isEmpty(userBean.getSy())) {
+                            mineSy.setText(Utils.strDivide(userBean.getSy()));
+                        } else {
+                            mineSy.setText("0.0");
+                        }
+                        if (!TextUtils.isEmpty(userBean.getYe())) {
+                            mineYe.setText(Utils.strDivide(userBean.getYe()));
+                        } else {
+                            mineYe.setText("0.0");
+                        }
                     }
                 } else {
                     ToastUtil.showToastS(mActivity, response.getMessage());
@@ -509,13 +523,13 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case 3:
                 if ("1".equals(response.getStatusCode())) {
-                    if(form==1){
+                    if (form == 1) {
                         initWalletFragment();
                         mineDdCv.setVisibility(View.GONE);
                         mineQbCv.setVisibility(View.GONE);
                         mineWalletFrame.setVisibility(View.VISIBLE);
                     }
-                    if(form==2){
+                    if (form == 2) {
                         initYongJinFragment();
                         mineDdCv.setVisibility(View.GONE);
                         mineQbCv.setVisibility(View.GONE);

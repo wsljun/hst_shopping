@@ -31,6 +31,16 @@ public class GoodsBean {
     private String createtime;
     private boolean isShowDate ; // 是否显示时间，浏览记录页使用
     private boolean  isChecked;  // 是否被选中，购物车计算价格使用
+    private String oldprice;//老价格
+
+    public String getOldprice() {
+        return oldprice;
+    }
+
+    public void setOldprice(String oldprice) {
+        oldprice = Utils.strDivide(oldprice);
+        this.oldprice = oldprice;
+    }
 
     public void setIsChecked(boolean checked) {
         isChecked = checked;

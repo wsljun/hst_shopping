@@ -32,6 +32,5 @@ public class HomeAdapter extends BaseQuickAdapter {
         ImageLoaderUtils.display(mContext,  helper.getView(R.id.good_pic), UrlConstants.BASE_URL+data.getImgurl());
         helper.setText(R.id.good_name,data.getName());
         helper.setText(R.id.good_price,"￥"+data.getPrice());
-        helper.setText(R.id.good_out,"已售"+data.getBlocknum());
     }
 }
