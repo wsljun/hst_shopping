@@ -4,50 +4,71 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    android:padding="2dp"
     android:background="@drawable/price_bg"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="2dp">
 
     <ImageView
         android:id="@+id/good_pic"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_gravity="center_horizontal"
-        android:scaleType="fitXY"
-        android:background="#FF00ff"
-        />
-
-    <TextView
-        android:id="@+id/good_name"
-        style="@style/setting_item_configure"
-        android:layout_marginStart="10dp"
-        android:gravity="center"
-        android:minLines="2"
-        android:maxLines="2"
-        android:text="大米"
-        android:textColor="@color/colorBlack" />
+        android:scaleType="fitXY" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
-            android:id="@+id/good_out"
+            android:id="@+id/good_name"
             android:layout_width="wrap_content"
+            android:layout_marginRight="100dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:text="2"
-            android:textColor="@color/colorTexthintGrey2"
-            android:textSize="12sp" />
+            android:maxLines="2"
+            android:text="大米"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/good_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/good_name"
+            android:layout_marginLeft="10dp"
+            android:background="@color/colorBlack"
+            android:text="会员价：000"
+            android:textColor="@color/colorWhite"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/good_old_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/good_name"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@id/good_price"
+            android:text="零售价122"
+            android:textColor="@color/colorTexthintGrey2"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/home_car"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="80"
-            android:textColor="@color/colorTextRed"
-            android:textSize="17sp" />
+            android:background="@drawable/no" />
+
+        <ImageView
+            android:id="@+id/home_share"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/home_car"
+            android:background="@drawable/no" />
     </RelativeLayout>
+
+
 </LinearLayout>

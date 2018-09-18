@@ -62,7 +62,7 @@ public class ImageLoaderUtils {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
 //                .centerCrop()
                 .placeholder(R.mipmap.ic_image_loading)
-                .error(R.mipmap.ic_empty_picture);
+                .error(R.mipmap.ic_image_loading);
         Glide.with(context)
                 .load(url)
                 .apply(requestOptions)

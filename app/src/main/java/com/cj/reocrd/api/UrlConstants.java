@@ -18,6 +18,8 @@ public class UrlConstants {
     public final static String URL_ALIPAY_RECHARGE = BASE_URL+"api/alipayRecharge";
     public final static String SUCCESE_CODE = "1"; // 返回结果成功
     public final static String URL_SHARE = BASE_URL+"api/shareMerch?id=";
+    public final static String URL_AGREE = BASE_URL + "api/agreement";
+
     /**
      *  添加 webview 跳转
      * 充值URLapi/recharge?search_EQ_user.id= userid

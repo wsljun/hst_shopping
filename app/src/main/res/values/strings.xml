@@ -122,7 +122,9 @@
     <string name="no_net">网络不可用,请检查你的网络</string>
 
 
-    <string name="home_tv">/&#160;&#160;商&#160;&#160;品&#160;&#160;推&#160;&#160;荐&#160;&#160;/</string>
+    <string name="home_tv">/&#160;&#160;实&#160;·&#160;惠&#160;·&#160;好&#160;·&#160;货&#160;&#160;/</string>
+    <string name="home_tv2">/&#160;&#160;摩&#160;·&#160;登&#160;·&#160;时&#160;·&#160;尚&#160;&#160;/</string>
+    <string name="home_tv3">/&#160;&#160;品&#160;·&#160;质&#160;·&#160;生&#160;·&#160;活&#160;&#160;/</string>
     <string name="home_search">请输入您想搜索的内容</string>
 
     <string name="search_price">价格</string>
@@ -169,5 +171,10 @@
     <string name="app_tip">提示</string>
     <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>
     <string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
+
+
+    <string name="register_xy">《人道易购平台服务协议》《隐私权政策》\n《支付宝协议》</string>
+
     <string name="tv_btn_submit">提交</string>
+
 </resources>

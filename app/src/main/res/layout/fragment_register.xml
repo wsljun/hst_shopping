@@ -74,7 +74,6 @@
         android:id="@+id/register_pwd_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_marginBottom="20dp">
 
         <TextView
@@ -163,7 +162,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/register_check"
             android:layout_marginTop="8dp"
+            android:textColor="@color/colorBlack"
             android:layout_centerHorizontal="true"
-            android:text="《人道易购平台服务协议》" />
+            android:text="@string/register_xy" />
     </RelativeLayout>
 </RelativeLayout>

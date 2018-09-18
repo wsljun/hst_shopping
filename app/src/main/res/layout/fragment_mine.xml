@@ -185,6 +185,7 @@
                                     android:orientation="horizontal">
 
                                     <TextView
+                                        android:id="@+id/mine_sy"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/colorBlack"
@@ -223,6 +224,7 @@
                                     android:orientation="horizontal">
 
                                     <TextView
+                                        android:id="@+id/mine_ye"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/colorBlack"

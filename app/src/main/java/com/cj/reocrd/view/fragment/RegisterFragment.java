@@ -189,8 +189,8 @@ public class RegisterFragment extends BaseFragment<IndexPresenter> implements
             case R.id.register_xy:
                 Bundle b = new Bundle();
                 b.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE, WebViewActivity.TYPE_XY);
-                b.putString(WebViewActivity.BUNDLE_WEBVIEW_URL, "http://www.baidu.com");
-                b.putString(WebViewActivity.BUNDLE_WEBVIEW_TITLE,registerXy.getText().toString());
+                b.putString(WebViewActivity.BUNDLE_WEBVIEW_URL, UrlConstants.URL_AGREE);
+                b.putString(WebViewActivity.BUNDLE_WEBVIEW_TITLE,"协议");
                 startActivity(WebViewActivity.class, b);
                 break;
         }
