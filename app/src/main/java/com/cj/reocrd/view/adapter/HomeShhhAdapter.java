@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,8 @@ public class HomeShhhAdapter extends RecyclerView.Adapter<HomeShhhAdapter.MyHold
         ImageLoaderUtils.display(mContext, holder.goodPic, UrlConstants.BASE_URL + goodsBean.getImgurl());
         holder.goodName.setText(goodsBean.getName());
         holder.goodPrice.setText("会员价￥" + goodsBean.getPrice());
-        holder.goodOldPrice.setText(goodsBean.getOldprice());
+        holder.goodOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.goodOldPrice.setText("零售价："+goodsBean.getOldprice());
         holder.goodPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
