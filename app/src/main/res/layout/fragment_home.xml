@@ -5,187 +5,265 @@
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/home_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/load_yellow">
-
-                <ImageView
-                    android:id="@+id/home_icon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/no" />
-
-                <ImageView
-                    android:id="@+id/home_type"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/no" />
-
-                <TextView
-                    android:id="@+id/home_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/home_type"
-                    android:layout_toRightOf="@id/home_icon"
-                    android:background="@drawable/textview_home_search"
-                    android:drawableLeft="@mipmap/sousuo"
-                    android:drawablePadding="10dp"
-                    android:paddingBottom="6dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="6dp"
-                    android:text="@string/home_search" />
-
-            </RelativeLayout>
-
-            <com.youth.banner.Banner
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="150dp" />
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/home_index1"
-                    android:layout_width="0dp"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:background="@color/load_yellow">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@mipmap/ic_launcher" />
+                        android:id="@+id/home_icon"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp" />
+
+                    <ImageView
+                        android:id="@+id/home_share"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:background="@mipmap/home_share" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/home_search"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="分类" />
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/home_share"
+                        android:layout_toRightOf="@id/home_icon"
+                        android:background="@drawable/textview_home_search"
+                        android:drawableLeft="@mipmap/sousuo"
+                        android:drawablePadding="10dp"
+                        android:paddingBottom="6dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="6dp"
+                        android:text="@string/home_search" />
+
+                </RelativeLayout>
+
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/home_index1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:background="@mipmap/home_index1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="分类" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_index2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:background="@mipmap/home_index2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="充值" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_index3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:background="@mipmap/home_index3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="大转盘" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_index4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:background="@mipmap/home_index4" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="我的收藏" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/home_index2"
-                    android:layout_width="0dp"
+                    android:id="@+id/home_shhh"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@mipmap/ic_launcher" />
+                    android:layout_margin="10dp"
+                    android:background="@drawable/price_bg"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="充值" />
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="14dp"
+                        android:text="@string/home_tv"
+                        android:textColor="@color/colorButton"
+                        android:textSize="16sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:descendantFocusability="blocksDescendants">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/home_shhh_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"></android.support.v7.widget.RecyclerView>
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/home_index3"
-                    android:layout_width="0dp"
+                    android:id="@+id/home_mdss"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@mipmap/ic_launcher" />
+                    android:layout_margin="10dp"
+                    android:background="@drawable/price_bg"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="大转盘" />
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="14dp"
+                        android:text="@string/home_tv2"
+                        android:textColor="@color/colorButton"
+                        android:textSize="16sp" />
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/home_mdss_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"></android.support.v7.widget.RecyclerView>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/home_index4"
-                    android:layout_width="0dp"
+                    android:id="@+id/home_pzsh"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@mipmap/ic_launcher" />
+                    android:layout_margin="10dp"
+                    android:background="@drawable/price_bg"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="我的收藏" />
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="14dp"
+                        android:text="@string/home_tv3"
+                        android:textColor="@color/colorButton"
+                        android:textSize="16sp" />
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/home_pzsh_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"></android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/home_chwl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/price_bg"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="14dp"
+                        android:text="@string/home_tv4"
+                        android:textColor="@color/colorButton"
+                        android:textSize="16sp" />
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/home_chwl_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"></android.support.v7.widget.RecyclerView>
                 </LinearLayout>
             </LinearLayout>
-
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="14dp"
-                android:text="@string/home_tv"
-                android:textColor="@color/colorButton"
-                android:textSize="16sp" />
-
-            <!--加载页面显示不全，加一个这个lelative-->
-            <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:descendantFocusability="blocksDescendants">-->
-
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/home_recycler"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginRight="10dp">-->
-
-            <!--</android.support.v7.widget.RecyclerView>-->
-
-            <!--</RelativeLayout>-->
-
-            <com.cj.reocrd.view.refresh.RefreshLayout
-                android:id="@+id/refresh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
-            </com.cj.reocrd.view.refresh.RefreshLayout>
-
-        </LinearLayout>
-    </ScrollView>
-
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

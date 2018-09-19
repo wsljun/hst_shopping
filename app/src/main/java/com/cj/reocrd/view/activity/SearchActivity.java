@@ -1,9 +1,7 @@
 package com.cj.reocrd.view.activity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -18,22 +16,18 @@ import android.widget.TextView;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseActivity;
-import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.OnItemClickListener;
-import com.cj.reocrd.contract.HomeContract;
-import com.cj.reocrd.model.entity.FirstBean;
+import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.model.entity.HomeBean;
-import com.cj.reocrd.presenter.HomePresenter;
+import com.cj.reocrd.presenter.MyPrresenter;
 import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
-import com.cj.reocrd.view.adapter.GoodsAdapter;
 import com.cj.reocrd.view.adapter.HomeAdapter;
 import com.cj.reocrd.view.refresh.NormalRefreshViewHolder;
 import com.cj.reocrd.view.refresh.RefreshLayout;
-import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +39,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2018/3/19.
  */
 
-public class SearchActivity extends BaseActivity<HomePresenter> implements HomeContract.View
+public class SearchActivity extends BaseActivity<MyPrresenter> implements MyContract.View
         , BaseQuickAdapter.RequestLoadMoreListener, RefreshLayout.RefreshLayoutDelegate {
     @BindView(R.id.title_left)
     TextView titleLeft;
@@ -96,13 +90,13 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton radioButton = findViewById(checkedId);
-                radioButton.setTextColor(getColor(R.color.colorButton));
+                radioButton.setTextColor(getResources().getColor(R.color.colorButton));
                 if(!radioButtons.contains(radioButton)){
                     radioButtons.add(radioButton);
                 }
                 for (RadioButton rb : radioButtons){
                     if(rb.getId()!=radioButton.getId()){
-                        rb.setTextColor(getColor(R.color.colorBlack));
+                        rb.setTextColor(getResources().getColor(R.color.colorBlack));
                         rb.setCompoundDrawables(null,null,null,null);
                     }else{
                         drawableLabel.setBounds(0,0,30,30);
@@ -226,8 +220,4 @@ public class SearchActivity extends BaseActivity<HomePresenter> implements HomeC
         return false;
     }
 
-    @Override
-    public void onRefreshHomeData(HomeBean homeBean) {
-        mHomeTabAdapter.loadComplete();
-    }
 }

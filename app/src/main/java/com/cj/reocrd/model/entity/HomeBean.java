@@ -17,6 +17,43 @@ public class HomeBean {
     private List<GoodsCommentBean> clist; // 商品详情页评论
     private List<Team> fs;
 
+    private List<GoodsBean> shhh; //实惠好货
+    private List<GoodsBean> mdss; //摩登时尚
+    private List<GoodsBean> pzsh; //品质生活
+    private List<GoodsBean> chwl; //
+
+    public List<GoodsBean> getShhh() {
+        return shhh;
+    }
+
+    public void setShhh(List<GoodsBean> shhh) {
+        this.shhh = shhh;
+    }
+
+    public List<GoodsBean> getMdss() {
+        return mdss;
+    }
+
+    public void setMdss(List<GoodsBean> mdss) {
+        this.mdss = mdss;
+    }
+
+    public List<GoodsBean> getPzsh() {
+        return pzsh;
+    }
+
+    public void setPzsh(List<GoodsBean> pzsh) {
+        this.pzsh = pzsh;
+    }
+
+    public List<GoodsBean> getChwl() {
+        return chwl;
+    }
+
+    public void setChwl(List<GoodsBean> chwl) {
+        this.chwl = chwl;
+    }
+
     public List<Team> getFs() {
         return fs;
     }

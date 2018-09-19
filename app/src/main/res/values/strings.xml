@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">好膳堂</string>
+    <string name="app_name">人道易购</string>
 
     <string name="lead_login">用户登录</string>
     <string name="lead_register">新用户注册</string>
@@ -125,6 +125,7 @@
     <string name="home_tv">/&#160;&#160;实&#160;·&#160;惠&#160;·&#160;好&#160;·&#160;货&#160;&#160;/</string>
     <string name="home_tv2">/&#160;&#160;摩&#160;·&#160;登&#160;·&#160;时&#160;·&#160;尚&#160;&#160;/</string>
     <string name="home_tv3">/&#160;&#160;品&#160;·&#160;质&#160;·&#160;生&#160;·&#160;活&#160;&#160;/</string>
+    <string name="home_tv4">/&#160;&#160;吃&#160;·&#160;喝&#160;·&#160;玩&#160;·&#160;乐&#160;&#160;/</string>
     <string name="home_search">请输入您想搜索的内容</string>
 
     <string name="search_price">价格</string>
