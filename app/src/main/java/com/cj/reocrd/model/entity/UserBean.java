@@ -20,10 +20,19 @@ public class UserBean implements Serializable {
     private String manlevel; //"manlevel": "0 " ,//0 普通消费者 1主管 2主任3经理4总监
     private String num;//我的团队人数
     private String codeimg; // 分享注册二维码
-    private String type ;   // 1是，2否 （是否消费商）
+    private String type;   // 1是，2否 （是否消费商）
     private String pwd;//二级密码
     private String sy;//我的收益
     private String ye;//我的余额
+    private String ispaypwd;
+
+    public String getIspaypwd() {
+        return ispaypwd;
+    }
+
+    public void setIspaypwd(String ispaypwd) {
+        this.ispaypwd = ispaypwd;
+    }
 
     public String getSy() {
         return sy;
