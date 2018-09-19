@@ -72,6 +72,8 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
     TextView titleLeft;
     @BindView(R.id.rl_expinInfos)
     RecyclerView rlExpinInfos;
+    @BindView(R.id.tv_exp_time)
+    TextView tvExpTime;
 
     private String oid;
     public static final String BUNDLE_KEY_OID = "oid";
@@ -133,6 +135,14 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
         tvAddress.setText("收货地址：" + orderDetail.getFuladdress());
         tvSubmitOrderTime.setText("下单时间：" + orderDetail.getCreatetime());
 //        tvArriveTime.setText("预计送达：" + null);
+        String exp = orderDetail.getExpresstime();
+        if("1".equals(exp)){
+            tvExpTime.setText("送货时间：仅工作日配送");
+        }else if("2".equals(exp)){
+            tvExpTime.setText("送货时间：仅周六日配送");
+        }else{
+            tvExpTime.setText("送货时间：周一到周日皆可配送");
+        }
         setPayWay(orderDetail.getWay());
         setOrderStatus(orderDetail.getStatus());
     }
@@ -159,6 +169,7 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
                 way = "电子币";
                 break;
             default:
+                way = "暂无";
                 break;
         }
         tvPayWay.setText("支付方式：" +way );

@@ -98,7 +98,6 @@
                     android:text="@string/title_freight"
                     android:layout_below="@id/tv_title_price"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone"
                     />
                 <TextView
                     android:id="@+id/tv_freight"
@@ -106,7 +105,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignBaseline="@+id/tv_title_freight"
                     android:text="¥ "
-                    android:visibility="gone"
                     />
                 <TextView
                     android:id="@+id/tv_title_total_price"
@@ -153,7 +151,13 @@
                     android:text="收货地址："
                     android:maxLines="2"
                     />
-
+                <TextView
+                    android:id="@+id/tv_exp_time"
+                    style="@style/setting_item_configure"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="送货时间："
+                    />
 
                 <TextView
                     android:id="@+id/tv_pay_way"

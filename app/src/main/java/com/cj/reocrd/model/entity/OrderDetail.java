@@ -16,11 +16,12 @@ public class OrderDetail {
      * statusCode : 1
      * message : 获取成功
      * id : a3796d4a-32c6-4755-b614-fcf690c3cffb
-     * amount : 30000
-     * examount : 0
-     * allamount : 30000
+     * amount : 30000  商品金额
+     * examount : 0    运费
+     * allamount : 30000  全部金额
      * createtime : 2018-04-21 2124:27:10
      * status : 1
+     * expresstime ： 送货时间
      * fuladdress : null
      * consignee : null
      * phone : null
@@ -45,6 +46,7 @@ public class OrderDetail {
     private String opinion;
     private String isdel;
     private List<OrderBean.OdlistBean> odlist;
+    private String expresstime;
     /**
      * expname : 百世快递
      * expinfo : {"message":"ok","state":"3","data":[{"context":"北京市|北京市【金盏分部】，拍照签收 已签收","time":"2018-04-22 12:53:39","ftime":"2018-04-22 12:53:39"},{"context":"北京市|北京市【金盏分部】，【闫长登/17710705604】正在派件","time":"2018-04-22 07:32:09","ftime":"2018-04-22 07:32:09"},{"context":"北京市|到北京市【金盏分部】","time":"2018-04-21 23:42:44","ftime":"2018-04-21 23:42:44"},{"context":"北京市|北京市【北京转运中心】，正发往【金盏分部】","time":"2018-04-21 09:04:40","ftime":"2018-04-21 09:04:40"},{"context":"北京市|到北京市【北京转运中心】","time":"2018-04-21 08:42:59","ftime":"2018-04-21 08:42:59"},{"context":"太原市|太原市【太原转运中心】，正发往【北京转运中心】","time":"2018-04-20 23:38:15","ftime":"2018-04-20 23:38:15"},{"context":"太原市|到太原市【太原转运中心】","time":"2018-04-20 19:45:16","ftime":"2018-04-20 19:45:16"},{"context":"太原市|太原市【清徐县】，正发往【太原转运中心】","time":"2018-04-20 17:15:43","ftime":"2018-04-20 17:15:43"},{"context":"太原市|太原市【清徐县】，【程永刚/18534572555】已揽收","time":"2018-04-20 16:56:21","ftime":"2018-04-20 16:56:21"}],"condition":"F00","status":"200","ischeck":"1","com":"huitongkuaidi","nu":"50905742808412"}
@@ -53,6 +55,13 @@ public class OrderDetail {
     private String expname;
     private ExpinfoBean expinfo;
 
+    public String getExpresstime() {
+        return expresstime;
+    }
+
+    public void setExpresstime(String expresstime) {
+        this.expresstime = expresstime;
+    }
 
     public String getSn() {
         return sn;

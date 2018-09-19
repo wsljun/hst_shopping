@@ -242,7 +242,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void onRefreshLayoutBeginRefreshing(RefreshLayout refreshLayout) {
         // 开始刷新
-        System.out.println("onRefreshLayoutBeginRefreshing===");
+//        System.out.println("onRefreshLayoutBeginRefreshing===");
 //        mPresenter.getListDataTest(size,1);
     }
 

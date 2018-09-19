@@ -23,6 +23,10 @@ import java.util.zip.GZIPOutputStream;
  "unit": "KG"， //单位
  slist:
  clist :
+ "invoice":"0",
+ "merAtt":"红五谷代餐粉大礼包@#@红五谷代餐粉大礼包@#@红五谷代餐粉大礼包红五谷代餐粉大礼包@#@红五谷代餐粉大礼包红五谷代餐粉大礼包",
+ "imgUrlL":"static/upload/attimg/fbf34d9a8d6f4a8fbe8dc5c03b731520.jpg@#@static/upload/attimg/4e6fcdff4ad34e23b4704ae80346d2f6.jpg@#@static/upload/attimg/516c8c96a68e4b8aa75a691c2b54fa6d.jpg@#@static/upload/attimg/7f901dd875db444aa172d837defb8b16.jpg",
+ "detail":"养生功效：补血养颜,降脂降压,养心安神。产品配方：红香米、红小豆、红芸豆、红花生、红枣、红枸杞、 玫瑰花、酸枣仁、菊粉多糖。适用人群：失眠多梦者、面色无华者、四肢冰凉者、血色素低下者、高血压高血脂者、大病初愈者、长期熬夜者。",
  */
 
 public class GoodsDetailsBean  implements Parcelable{
@@ -40,6 +44,10 @@ public class GoodsDetailsBean  implements Parcelable{
     private List<SkuBean> slist;
     private List<CommentBean> clist;
     private String introduct;
+    private String invoice;
+    private String merAtt;
+    private String imgUrlL;
+    private String detail;
     public GoodsDetailsBean(){
 
     }
@@ -56,6 +64,42 @@ public class GoodsDetailsBean  implements Parcelable{
         imgurl = in.readString();
         unit = in.readString();
         introduct = in.readString();
+        invoice = in.readString();
+        merAtt = in.readString();
+        imgUrlL = in.readString();
+        detail = in.readString();
+    }
+
+    public String getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(String invoice) {
+        this.invoice = invoice;
+    }
+
+    public String getMerAtt() {
+        return merAtt;
+    }
+
+    public void setMerAtt(String merAtt) {
+        this.merAtt = merAtt;
+    }
+
+    public String getImgUrlL() {
+        return imgUrlL;
+    }
+
+    public void setImgUrlL(String imgUrlL) {
+        this.imgUrlL = imgUrlL;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public String getIntroduct() {
@@ -196,5 +240,9 @@ public class GoodsDetailsBean  implements Parcelable{
         dest.writeList(slist);
         dest.writeList(clist);
         dest.writeString(introduct);
+        dest.writeString(invoice);
+        dest.writeString(merAtt);
+        dest.writeString(imgUrlL);
+        dest.writeString(detail);
     }
 }
