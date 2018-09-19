@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\Users\Administrator\Desktop\hst\hst_shopping\uikit\src\main\shaders"/></dataSet><dataSet config="debug"><source path="C:\Users\Administrator\Desktop\hst\hst_shopping\uikit\src\debug\shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\GitWorkSpace\A-Shopping\A-HaoShanTang\hst\uikit\src\main\shaders"/></dataSet><dataSet config="debug"><source path="D:\GitWorkSpace\A-Shopping\A-HaoShanTang\hst\uikit\src\debug\shaders"/></dataSet></merger>

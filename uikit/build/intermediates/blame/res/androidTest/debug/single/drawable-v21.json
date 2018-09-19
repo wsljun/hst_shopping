@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "D:\\GitWorkSpace\\A-Shopping\\A-HaoShanTang\\hst\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\notification_action_background.xml",
+        "source": "C:\\Users\\Lyndon.Li\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\c9869bcf637278271a2a9f61fd8ef6ae\\res\\drawable-v21\\notification_action_background.xml"
+    },
+    {
+        "merged": "D:\\GitWorkSpace\\A-Shopping\\A-HaoShanTang\\hst\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\avd_hide_password.xml",
+        "source": "C:\\Users\\Lyndon.Li\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\b2baa24d01ee7676332c0f546b6744ca\\res\\drawable-v21\\avd_hide_password.xml"
+    },
+    {
+        "merged": "D:\\GitWorkSpace\\A-Shopping\\A-HaoShanTang\\hst\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\nim_touch_bg.xml",
+        "source": "D:\\GitWorkSpace\\A-Shopping\\A-HaoShanTang\\hst\\uikit\\build\\intermediates\\bundles\\debug\\res\\drawable-v21\\nim_touch_bg.xml"
+    },
+    {
+        "merged": "D:\\GitWorkSpace\\A-Shopping\\A-HaoShanTang\\hst\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\Lyndon.Li\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\cd634fed96d254ec870a4743e0a6956b\\res\\drawable-v21\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "D:\\GitWorkSpace\\A-Shopping\\A-HaoShanTang\\hst\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_password_eye.xml",
+        "source": "C:\\Users\\Lyndon.Li\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\b2baa24d01ee7676332c0f546b6744ca\\res\\drawable-v21\\design_password_eye.xml"
+    },
+    {
+        "merged": "D:\\GitWorkSpace\\A-Shopping\\A-HaoShanTang\\hst\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\avd_show_password.xml",
+        "source": "C:\\Users\\Lyndon.Li\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\b2baa24d01ee7676332c0f546b6744ca\\res\\drawable-v21\\avd_show_password.xml"
+    },
+    {
+        "merged": "D:\\GitWorkSpace\\A-Shopping\\A-HaoShanTang\\hst\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
+        "source": "C:\\Users\\Lyndon.Li\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\b2baa24d01ee7676332c0f546b6744ca\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
+    },
+    {
+        "merged": "D:\\GitWorkSpace\\A-Shopping\\A-HaoShanTang\\hst\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\Lyndon.Li\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\cd634fed96d254ec870a4743e0a6956b\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "D:\\GitWorkSpace\\A-Shopping\\A-HaoShanTang\\hst\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "C:\\Users\\Lyndon.Li\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\cd634fed96d254ec870a4743e0a6956b\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
+    }
+]
