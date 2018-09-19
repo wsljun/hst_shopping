@@ -307,29 +307,44 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
 
     //二级密码对话框
     public void showPWDDialog() {
-        VerificationCodeView codeView = new VerificationCodeView(mActivity);
-        codeView.setEtNumber(6);
-        codeView.setPwdMode(true);
-        codeView.setmEtWidth(80);
-        new AlertDialog.Builder(mActivity)
-                .setTitle("输入交易密码")
-                .setView(codeView)
-                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        type = 3;
-                        mPresenter.checkPwd("111", uid, codeView.getInputContent());
-                    }
-                })
-                .setNeutralButton("忘记密码", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("phone", userBean.getPhone());
-                        startActivity(PasswordActivity.class, bundle);
-                    }
-                })
-                .show();
+        if ("1".equals(userBean.getIspaypwd())) {
+            VerificationCodeView codeView = new VerificationCodeView(mActivity);
+            codeView.setEtNumber(6);
+            codeView.setPwdMode(true);
+            codeView.setmEtWidth(80);
+            new AlertDialog.Builder(mActivity)
+                    .setTitle("输入交易密码")
+                    .setView(codeView)
+                    .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            type = 3;
+                            mPresenter.checkPwd("111", uid, codeView.getInputContent());
+                        }
+                    })
+                    .setNeutralButton("忘记密码", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("phone", userBean.getPhone());
+                            startActivity(PasswordActivity.class, bundle);
+                        }
+                    })
+                    .show();
+        } else {
+            new AlertDialog.Builder(mActivity)
+                    .setMessage("为保障您的资金安全，请先设置交易密码")
+                    .setNegativeButton("设置密码", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("phone", userBean.getPhone());
+                            startActivity(PasswordActivity.class, bundle);
+                        }
+                    })
+                    .setNeutralButton("取消", null)
+                    .show();
+        }
 
     }
 
