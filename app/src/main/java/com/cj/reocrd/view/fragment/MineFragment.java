@@ -48,6 +48,7 @@ import com.cj.reocrd.view.activity.MyTeamActivity;
 import com.cj.reocrd.view.activity.OrderActivity;
 import com.cj.reocrd.view.activity.PasswordActivity;
 import com.cj.reocrd.view.activity.PayActivity;
+import com.cj.reocrd.view.activity.ShareActivity;
 import com.cj.reocrd.view.activity.WalletActivity;
 import com.cj.reocrd.view.activity.WebViewActivity;
 import com.cj.reocrd.view.activity.YongJinActivity;
@@ -71,7 +72,7 @@ import static com.cj.reocrd.base.BaseActivity.uid;
  */
 
 public class MineFragment extends BaseFragment<MyPrresenter> implements MyContract.View,
-        SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+        SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.title_left)
     TextView titleLeft;
     @BindView(R.id.title_center)
@@ -134,8 +135,6 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     TextView mineUserinfo;
     @BindView(R.id.mine_jilu)
     TextView mineJilu;
-    @BindView(R.id.img_share)
-    ImageView imgShare;
     @BindView(R.id.mine_wallet_frame)
     FrameLayout mineWalletFrame;
     @BindView(R.id.mine_shouyi_frame)
@@ -148,7 +147,8 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     TextView mineSy;
     @BindView(R.id.mine_ye)
     TextView mineYe;
-
+    @BindView(R.id.mine_share_url_iv)
+    ImageView mineShareUrlIv;
 
     int type;
     private String codeImg;
@@ -201,15 +201,11 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
             R.id.title_rl, R.id.title_left, R.id.mine_icon, R.id.mine_all, R.id.mine_pay, R.id.mine_send,
             R.id.mine_confim, R.id.mine_evaluate, R.id.mine_return, R.id.mine_money, R.id.mine_collect,
             R.id.mine_history, R.id.mine_help, R.id.mine_about, R.id.mine_serve, R.id.mine_yongjin,
-            R.id.mine_share_url, R.id.mine_userinfo, R.id.mine_cz, R.id.mine_share_url_iv, R.id.mine_jilu})
+            R.id.mine_userinfo, R.id.mine_cz, R.id.mine_share_url_iv, R.id.mine_jilu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
-                if (View.VISIBLE == imgShare.getVisibility()) {
-                    imgShare.setVisibility(View.GONE);
-                } else {
-                    getMainActivity().getViewPager().setCurrentItem(0);
-                }
+                getMainActivity().getViewPager().setCurrentItem(0);
                 break;
             case R.id.mine_all:
                 OrderActivity.actionActivity(mActivity, OrderActivity.ORDER_STATUS_ALL);
@@ -261,30 +257,10 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case R.id.mine_serve:
                 break;
-            case R.id.mine_share_url:
-//                ClipboardManager cm = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
-//                // 将文本内容放到系统剪贴板里。
-//                cm.setText(UrlConstants.URL_SHARE_REGISTER + BaseActivity.uid);
-//                ToastUtil.showShort("复制成功，可以发给朋友们了。");
-//                ImageLoaderUtils.display(getContext(), imgShare, UrlConstants.BASE_URL + codeImg);
-                imgShare.setVisibility(View.VISIBLE);
-                imgShare.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        showDialog();
-                        return false;
-                    }
-                });
-                break;
             case R.id.mine_share_url_iv:
-                imgShare.setVisibility(View.VISIBLE);
-                imgShare.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        showDialog();
-                        return false;
-                    }
-                });
+                Bundle shareImage = new Bundle();
+                shareImage.putString("shareImage", userBean.getCodeimg());
+                startActivity(ShareActivity.class, shareImage);
                 break;
             case R.id.mine_userinfo:
             case R.id.mine_icon:
@@ -299,7 +275,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case R.id.mine_fuli://福利 todo 2018/09/10 add
 //                startActivity(FuliActivity.class);
-                 startActivity(InvoiceActivity.class);
+                startActivity(InvoiceActivity.class);
                 break;
             case R.id.mine_zp://大转盘
                 type = 2;
@@ -315,9 +291,8 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 startActivity(MyTeamActivity.class);
                 break;
             case R.id.mine_cz:
-                Bundle bd = new Bundle();
-                bd.putSerializable("user", userBean);
-                startActivity(MyMoneyActivity.class, bd);
+                form = 3;
+                showPWDDialog();
                 break;
             case R.id.mine_jilu:
                 Bundle jilu = new Bundle();
@@ -374,88 +349,6 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
         ft.commit();
     }
 
-    private Dialog dialog;
-
-    private void showDialog() {
-        View view = mActivity.getLayoutInflater().inflate(R.layout.share_choose_dialog, null);
-        Button btn_save = (Button) view.findViewById(R.id.btn_save);
-        Button btn_share_timeline = (Button) view.findViewById(R.id.btn_share_timeline);
-        Button btn_share_fd = (Button) view.findViewById(R.id.btn_share_fd);
-        Button btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
-
-        btn_save.setOnClickListener(this);
-        btn_share_timeline.setOnClickListener(this);
-        btn_share_fd.setOnClickListener(this);
-        btn_cancel.setOnClickListener(this);
-        dialog = new Dialog(getContext(), R.style.transparentFrameWindowStyle);
-        dialog.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        Window window = dialog.getWindow();
-        // 设置显示动画
-        if (window != null) {
-            window.setWindowAnimations(R.style.main_menu_animstyle);
-            WindowManager.LayoutParams wl = window.getAttributes();
-            wl.x = 0;
-            wl.y = mActivity.getWindowManager().getDefaultDisplay().getHeight();
-            // 以下这两句是为了保证按钮可以水平满屏
-            wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            // 设置显示位置
-            dialog.onWindowAttributesChanged(wl);
-        }
-        // 设置点击外围解散
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-    }
-
-
-    // todo 分享到微信
-    private void showQRCode() {
-        if (null == qrView) {
-            qrView = getLayoutInflater().inflate(R.layout.dialog_qrcode, null, false);
-            popWindow = new PopupWindow(qrView, ActivityUtils.getWidth(mActivity),
-                    ActivityUtils.getWidth(mActivity), true);
-//            popWindow=new PopupWindow(qrView, WindowManager.LayoutParams.MATCH_PARENT,
-//                    WindowManager.LayoutParams.MATCH_PARENT,true);
-            ImageView img = qrView.findViewById(R.id.img_qrcode);
-            ImageLoaderUtils.display(getContext(), img, UrlConstants.BASE_URL + codeImg);
-            ImageView close = qrView.findViewById(R.id.img_qr_close);
-            close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popWindow.dismiss();
-                }
-            });
-//            popWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            // 设置PopupWindow是否能响应外部点击事件
-            popWindow.setOutsideTouchable(true);
-            // 设置PopupWindow是否能响应点击事件
-            popWindow.setTouchable(true);
-        }
-        popWindow.showAtLocation(mActivity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
-    }
-
-    public void sharePicByFile() {
-        if (null == picFile) {
-            return;
-        }
-        Bitmap bmp = BitmapFactory.decodeFile(picFile.getAbsolutePath());
-//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        WXImageObject imgObj = new WXImageObject(bmp);
-        WXMediaMessage msg = new WXMediaMessage();
-        msg.mediaObject = imgObj;
-
-        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 100, 100, true);
-        bmp.recycle();
-        msg.thumbData = ImageLoaderUtils.getThumbData(thumbBmp);  // 设置所图；
-
-        SendMessageToWX.Req req = new SendMessageToWX.Req();
-//        req.transaction = buildTransaction("img");
-        req.message = msg;
-        req.scene = isTimelineCb ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
-        BaseApplication.api.sendReq(req);
-        imgShare.setVisibility(View.GONE);
-    }
-
 
     @Override
     public void onSuccess(Object data) {
@@ -472,9 +365,9 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                             ImageLoaderUtils.displayRound(mActivity, mineIcon, UrlConstants.BASE_URL + userBean.getPhoto());
                         }
                         if (!TextUtils.isEmpty(userBean.getCodeimg())) {
-                            codeImg = UrlConstants.BASE_URL + userBean.getCodeimg();
-                            ImageLoaderUtils.display(getContext(), imgShare, codeImg);
-                            saveImage(false);
+                            mineShareUrlIv.setVisibility(View.VISIBLE);
+                        } else {
+                            mineShareUrlIv.setVisibility(View.GONE);
                         }
                         if (!TextUtils.isEmpty(userBean.getName())) {
                             mineUsername.setText(userBean.getName());
@@ -537,6 +430,11 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                         mineUserinfo.setVisibility(View.GONE);
                         mineJilu.setVisibility(View.VISIBLE);
                     }
+                    if (form == 3) {
+                        Bundle bd = new Bundle();
+                        bd.putSerializable("user", userBean);
+                        startActivity(MyMoneyActivity.class, bd);
+                    }
                 } else {
                     ToastUtil.showToastS(mActivity, response.getMessage());
                 }
@@ -545,31 +443,6 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
         }
 
-    }
-
-    private void saveImage(boolean isToast) {
-        if (TextUtils.isEmpty(codeImg)) {
-            if (isToast) {
-                ToastUtil.showShort("无法获取图片地址！");
-            }
-            return;
-        }
-//        String imgUri  = UrlConstants.BASE_URL + codeImg;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (null == picFile) {
-                    Bitmap b = ImageLoaderUtils.getbitmap(codeImg);
-                    if (null != b) {
-                        picFile = ImageLoaderUtils.saveImage(b, "hst");
-                    } else {
-                        if (isToast) {
-                            ToastUtil.showShort("保存图片失败！");
-                        }
-                    }
-                }
-            }
-        }).start();
     }
 
     @Override
@@ -602,38 +475,5 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
         mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
     }
 
-    @Override
-    public void onClick(View v) {
-        // 保存，分享到朋友圈，分享给朋友，取消
-        int id = v.getId();
-        switch (id) {
-            case R.id.btn_save:
-                if (null == picFile) {
-                    //  save img
-                    saveImage(true);
-                } else {
-                    ToastUtil.showShort("保存成功");
-                    imgShare.setVisibility(View.GONE);
-                }
-//                File appDir = new File(Environment.getExternalStorageDirectory(), "hst");
-//                File [] fs = appDir.listFiles();
-//                picFile = fs[0];
-                break;
-            case R.id.btn_share_timeline:
-                isTimelineCb = true;
-                sharePicByFile();
-                break;
-            case R.id.btn_share_fd:
-                isTimelineCb = false;
-                sharePicByFile();
-                break;
-            case R.id.btn_cancel:
-                imgShare.setVisibility(View.GONE);
-                break;
-            default:
-                break;
-        }
-        dialog.dismiss();
-    }
 
 }

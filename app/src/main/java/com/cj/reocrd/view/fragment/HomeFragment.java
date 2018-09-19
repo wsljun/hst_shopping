@@ -1,47 +1,44 @@
 package com.cj.reocrd.view.fragment;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.cj.reocrd.R;
+import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseFragment;
-import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
-import com.cj.reocrd.base.baseadapter.OnItemClickListener;
-import com.cj.reocrd.contract.HomeContract;
-import com.cj.reocrd.model.entity.AppInfo;
+import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.entity.BannerData;
 import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.model.entity.HomeBean;
-import com.cj.reocrd.presenter.HomePresenter;
+import com.cj.reocrd.model.entity.UserBean;
+import com.cj.reocrd.model.entity.Zp;
+import com.cj.reocrd.presenter.MyPrresenter;
 import com.cj.reocrd.utils.GlideImageLoader;
-import com.cj.reocrd.utils.LogUtil;
+import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
-import com.cj.reocrd.utils.UpdateUtil;
+import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.activity.CollectActivity;
 import com.cj.reocrd.view.activity.GoodDetailActivity;
+import com.cj.reocrd.view.activity.MyMoneyActivity;
+import com.cj.reocrd.view.activity.PasswordActivity;
 import com.cj.reocrd.view.activity.SearchActivity;
+import com.cj.reocrd.view.activity.ShareActivity;
 import com.cj.reocrd.view.activity.WebViewActivity;
-import com.cj.reocrd.view.adapter.HomeAdapter;
-import com.cj.reocrd.view.adapter.OnRecyclerItemClickListener;
-import com.cj.reocrd.view.refresh.NormalRefreshViewHolder;
-import com.cj.reocrd.view.refresh.RefreshLayout;
+import com.cj.reocrd.view.activity.ZPActivity;
+import com.cj.reocrd.view.adapter.HomeMdssAdapter;
+import com.cj.reocrd.view.adapter.HomeShhhAdapter;
+import com.cj.reocrd.view.view.verificationCodeView.VerificationCodeView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -52,30 +49,56 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.cj.reocrd.base.BaseActivity.uid;
+
 
 /**
  * Created by Administrator on 2018/3/16.
  */
 
-public class HomeFragment extends BaseFragment<HomePresenter> implements HomeContract.View
-        , BaseQuickAdapter.RequestLoadMoreListener, RefreshLayout.RefreshLayoutDelegate, OnBannerListener {
-    @BindView(R.id.refresh)
-    RefreshLayout mRefreshLayout;
-    @BindView(R.id.rv_content)
-    RecyclerView recyclerViewContent;
+public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContract.View, OnBannerListener {
     @BindView(R.id.banner)
     Banner banner;
-    List<String> images;
-    private List<GoodsBean> goodsBeanList = new ArrayList<>();
+    @BindView(R.id.home_shhh)
+    LinearLayout homeShhh;
+    @BindView(R.id.home_shhh_recycler)
+    RecyclerView homeShhhRecycler;
+    @BindView(R.id.home_mdss)
+    LinearLayout homeMdss;
+    @BindView(R.id.home_mdss_recycler)
+    RecyclerView homeMdssRecycler;
+    @BindView(R.id.home_pzsh)
+    LinearLayout homePzsh;
+    @BindView(R.id.home_pzsh_recycler)
+    RecyclerView homePzshRecycler;
+    @BindView(R.id.home_chwl)
+    LinearLayout homeChwl;
+    @BindView(R.id.home_chwl_recycler)
+    RecyclerView homeChwlRecycler;
+    @BindView(R.id.home_icon)
+    ImageView homeIcon;
+    @BindView(R.id.home_refresh)
+    SwipeRefreshLayout homeRefresh;
+    @BindView(R.id.home_share)
+    ImageView homeShare;
 
-    private HomeAdapter mHomeTabAdapter;
+    private HomeShhhAdapter homeShhhAdapter;
+    private List<GoodsBean> shhhList;
+    private HomeMdssAdapter homeMdssAdapter;
+    private List<GoodsBean> mdssList;
+    private HomeMdssAdapter homePzshAdapter;
+    private List<GoodsBean> pzshList;
+    private HomeMdssAdapter homeChwlAdapter;
+    private List<GoodsBean> chwlList;
+
     private int size = 20;  //pageSize
     private int pageno = 0; // 页码
     private final static String TAG = "HomeFragment";
     private Bundle goodBundle = new Bundle();
     private List<BannerData> bannerData;
-    private boolean isCancle = false;
-    private AppInfo appInfo;
+    List<String> images;
+    int type;
+    private UserBean userBean;
 
     @Override
     protected void initPresenter() {
@@ -90,18 +113,25 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void initData() {
         super.initData();
-        // todo 检查更新
-//        isCancle = (boolean) SPUtils.get(mActivity,SPUtils.SpKey.UPDATE_IS_CANCLE,false);
-//        mPresenter.checkUpdate(String.valueOf(UpdateUtil.getVerCode(mActivity)));
+        shhhList = new ArrayList<>();
+        mdssList = new ArrayList<>();
+        pzshList = new ArrayList<>();
+        chwlList = new ArrayList<>();
         images = new ArrayList<>();
-        images.add("http://pic35.photophoto.cn/20150528/0005018358146030_b.jpg");
-        images.add("http://pic28.photophoto.cn/20130827/0005018362405048_b.jpg");
-        images.add("http://pic28.photophoto.cn/20130827/0005018371946994_b.jpg");
     }
 
     @Override
     public void initView() {
-        initRecycleView();
+        homeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                type = 1;
+                mPresenter.getHomeData(size, pageno);
+            }
+        });
+        type = 1;
+        mPresenter.getHomeData(size, pageno);
+        homeRefresh.setRefreshing(true);
     }
 
     @Override
@@ -129,46 +159,130 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         banner.start();
     }
 
-    private void initRecycleView() {
-        mHomeTabAdapter = new HomeAdapter(R.layout.item_good, null);
-        recyclerViewContent.setLayoutManager(new LinearLayoutManager(mActivity));
-        recyclerViewContent.setHasFixedSize(true);
-        //设置适配器加载动画
-        mHomeTabAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
-        recyclerViewContent.setAdapter(mHomeTabAdapter);
-        //设置适配器可以上拉加载
-        mHomeTabAdapter.setOnLoadMoreListener(this);
-        //设置下拉、上拉
-        mRefreshLayout.setDelegate(this);
-        mRefreshLayout.setRefreshViewHolder(new NormalRefreshViewHolder(mActivity, true));
-        recyclerViewContent.addOnItemTouchListener(new OnRecyclerItemClickListener(recyclerViewContent) {
+    private void initShhh() {
+        homeShhhAdapter = new HomeShhhAdapter(mActivity, shhhList);
+        homeShhhRecycler.setLayoutManager(new LinearLayoutManager(mActivity));
+        homeShhhRecycler.setNestedScrollingEnabled(false);
+        homeShhhRecycler.setAdapter(homeShhhAdapter);
+        homeShhhAdapter.setOnItemListener(new HomeShhhAdapter.OnItemListener() {
             @Override
-            public void onItemClick(RecyclerView.ViewHolder viewHolder) {
+            public void doDetailClick(int position) {
                 goodBundle.clear();
-                goodBundle.putString("goodsID", goodsBeanList.get(viewHolder.getAdapterPosition()).getId());
+                goodBundle.putString("goodsID", shhhList.get(position).getId());
                 startActivity(GoodDetailActivity.class, goodBundle);
             }
 
             @Override
-            public void onLongClick(RecyclerView.ViewHolder viewHolder) {
+            public void doCarClick(int position) {
+
+            }
+
+            @Override
+            public void doShareClick(int position) {
 
             }
         });
-//        //条目的点击事件
-//        recyclerViewContent.addOnItemTouchListener(new OnItemClickListener() {
-//            @Override
-//            public void SimpleOnItemClick(BaseQuickAdapter adapter, View view, int position) {
-//
-//            }
-//        });
-
-        mPresenter.getHomeData(size, pageno);
-
     }
 
-    @OnClick({R.id.home_search, R.id.home_index1, R.id.home_index2, R.id.home_index3, R.id.home_index4})
+    private void initMdss() {
+        homeMdssAdapter = new HomeMdssAdapter(mActivity, mdssList);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 4, GridLayoutManager.VERTICAL, false);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position < 4) {
+                    return 2;
+                }
+                if (position >= 4) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+        homeMdssRecycler.setLayoutManager(gridLayoutManager);
+        homeMdssRecycler.setNestedScrollingEnabled(false);
+        homeMdssRecycler.setAdapter(homeMdssAdapter);
+        homeMdssAdapter.setOnItemListener(new HomeMdssAdapter.OnItemListener() {
+            @Override
+            public void doDetailClick(int position) {
+                goodBundle.clear();
+                goodBundle.putString("goodsID", mdssList.get(position).getId());
+                startActivity(GoodDetailActivity.class, goodBundle);
+            }
+
+        });
+    }
+
+    private void initPzsh() {
+        homePzshAdapter = new HomeMdssAdapter(mActivity, pzshList);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 4, GridLayoutManager.VERTICAL, false);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position < 4) {
+                    return 2;
+                }
+                if (position >= 4) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+        homePzshRecycler.setLayoutManager(gridLayoutManager);
+        homePzshRecycler.setNestedScrollingEnabled(false);
+        homePzshRecycler.setAdapter(homeMdssAdapter);
+        homePzshAdapter.setOnItemListener(new HomeMdssAdapter.OnItemListener() {
+            @Override
+            public void doDetailClick(int position) {
+                goodBundle.clear();
+                goodBundle.putString("goodsID", pzshList.get(position).getId());
+                startActivity(GoodDetailActivity.class, goodBundle);
+            }
+
+        });
+    }
+
+    private void initChwl() {
+        homeChwlAdapter = new HomeMdssAdapter(mActivity, chwlList);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 4, GridLayoutManager.VERTICAL, false);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position < 4) {
+                    return 2;
+                }
+                if (position >= 4) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+        homeChwlRecycler.setLayoutManager(gridLayoutManager);
+        homeChwlRecycler.setNestedScrollingEnabled(false);
+        homeChwlRecycler.setAdapter(homeChwlAdapter);
+        homeChwlAdapter.setOnItemListener(new HomeMdssAdapter.OnItemListener() {
+            @Override
+            public void doDetailClick(int position) {
+                goodBundle.clear();
+                goodBundle.putString("goodsID", chwlList.get(position).getId());
+                startActivity(GoodDetailActivity.class, goodBundle);
+            }
+
+        });
+    }
+
+
+    @OnClick({R.id.home_icon, R.id.home_share, R.id.home_search, R.id.home_index1, R.id.home_index2, R.id.home_index3, R.id.home_index4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.home_icon:
+                getMainActivity().getViewPager().setCurrentItem(4);
+                break;
+            case R.id.home_share:
+                Bundle shareImage = new Bundle();
+                shareImage.putString("shareImage", userBean.getCodeimg());
+                startActivity(ShareActivity.class, shareImage);
+                break;
             case R.id.home_search:
                 startActivity(SearchActivity.class);
                 break;
@@ -176,10 +290,11 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 getMainActivity().getViewPager().setCurrentItem(1);
                 break;
             case R.id.home_index2:
-                getMainActivity().getViewPager().setCurrentItem(4);
+                showPWDDialog();
                 break;
             case R.id.home_index3:
-
+                type = 3;
+                mPresenter.lotteryCan(UrlConstants.UrLType.LOTTERY_CAN, uid);
                 break;
             case R.id.home_index4:
                 Bundle bundleCollect = new Bundle();
@@ -189,43 +304,135 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         }
     }
 
-    private void update(AppInfo appInfo) {
-        if (mActivity == null || isCancle) {
-            return;
-        }
-        MaterialDialog.Builder materialDialog = new MaterialDialog.Builder(mActivity)
-                .title("版本更新")
-                .content("更新内容：" + "\n" + appInfo.getDetailDesc() + "\n" + "版本大小：" + appInfo.getApkSize())
-                .positiveText("确定")
-                .canceledOnTouchOutside(false)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
+    //二级密码对话框
+    public void showPWDDialog() {
+        VerificationCodeView codeView = new VerificationCodeView(mActivity);
+        codeView.setEtNumber(6);
+        codeView.setPwdMode(true);
+        codeView.setmEtWidth(80);
+        new AlertDialog.Builder(mActivity)
+                .setTitle("输入交易密码")
+                .setView(codeView)
+                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        UpdateUtil.downloadFile(appInfo.getApkUrl(), mActivity);
+                    public void onClick(DialogInterface dialog, int which) {
+                        type = 4;
+                        mPresenter.checkPwd("111", uid, codeView.getInputContent());
                     }
-                });
-        if ("2".equals(appInfo.getIsupdate())) {
-            materialDialog.negativeText("取消")
-                    .onNegative(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            SPUtils.put(mActivity, SPUtils.SpKey.UPDATE_IS_CANCLE, true);
-                            SPUtils.put(mActivity, SPUtils.SpKey.CANCLE_UPDATE_VERSION, appInfo.getVersionCode());
-                        }
-                    });
-//            materialDialog.onNegative(new MaterialDialog.SingleButtonCallback(){
-//                @Override
-//                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                    mActivity.finish();
-//                }
-//            });
-        }
+                })
+                .setNeutralButton("忘记密码", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("phone", userBean.getPhone());
+                        startActivity(PasswordActivity.class, bundle);
+                    }
+                })
+                .show();
 
-        materialDialog.show();
     }
 
     @Override
     public void onSuccess(Object data) {
+        if (homeRefresh.isRefreshing()) {
+            homeRefresh.setRefreshing(false);
+        }
+        ApiResponse response = (ApiResponse) data;
+        switch (type) {
+            case 1:
+                if ("1".equals(response.getStatusCode())) {
+                    HomeBean homeBean = (HomeBean) response.getResults();
+                    //实惠好货
+                    if (null != homeBean.getShhh() && homeBean.getShhh().size() > 0) {
+                        shhhList.clear();
+                        shhhList.addAll(homeBean.getShhh());
+                        initShhh();
+                        homeShhh.setVisibility(View.VISIBLE);
+                    } else {
+                        homeShhh.setVisibility(View.GONE);
+                    }
+                    //摩登时尚
+                    if (null != homeBean.getMdss() && homeBean.getMdss().size() > 0) {
+                        mdssList.clear();
+                        mdssList.addAll(homeBean.getMdss());
+                        initMdss();
+                        homeMdss.setVisibility(View.VISIBLE);
+                    } else {
+                        homeMdss.setVisibility(View.GONE);
+                    }
+                    //品质生活
+                    if (null != homeBean.getPzsh() && homeBean.getPzsh().size() > 0) {
+                        pzshList.clear();
+                        pzshList.addAll(homeBean.getPzsh());
+                        initPzsh();
+                        homePzsh.setVisibility(View.VISIBLE);
+                    } else {
+                        homePzsh.setVisibility(View.GONE);
+                    }
+                    //吃喝玩乐
+                    if (null != homeBean.getChwl() && homeBean.getChwl().size() > 0) {
+                        chwlList.clear();
+                        chwlList.addAll(homeBean.getChwl());
+                        initChwl();
+                        homeChwl.setVisibility(View.VISIBLE);
+                    } else {
+                        homeChwl.setVisibility(View.GONE);
+                    }
+                    //轮播图
+                    if (null != homeBean.getBlist() && homeBean.getBlist().size() > 0) {
+                        images.clear();
+                        bannerData = homeBean.getBlist();
+                        for (BannerData uri : homeBean.getBlist()) {
+                            images.add(UrlConstants.BASE_URL + uri.getImgurl());
+                        }
+                        setBannerView(images);
+                    }
+                    //请求个人信息
+                    type = 2;
+                    mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
+                }
+                break;
+            case 2:
+                if ("1".equals(response.getStatusCode())) {
+                    userBean = (UserBean) response.getResults();
+                    if (userBean != null) {
+                        if (!TextUtils.isEmpty(userBean.getPhoto())) {
+                            ImageLoaderUtils.displayRound(mActivity, homeIcon, UrlConstants.BASE_URL + userBean.getPhoto());
+                        }
+                        if (!TextUtils.isEmpty(userBean.getCodeimg())) {
+                            homeShare.setVisibility(View.VISIBLE);
+                        } else {
+                            homeShare.setVisibility(View.GONE);
+                        }
+                    }
+                }
+                break;
+            case 3:
+                if ("1".equals(response.getStatusCode())) {
+                    Zp zp = (Zp) response.getResults();
+                    if (zp != null && !TextUtils.isEmpty(zp.getCan())) {
+                        if ("1".equals(zp.getCan())) {
+                            startActivity(ZPActivity.class);
+                        }
+                        if ("2".equals(zp.getCan())) {
+                            ToastUtil.showToastS(mActivity, "奖池金额不足");
+                        }
+                    }
+
+                } else {
+                    ToastUtil.showToastS(mActivity, response.getMessage());
+                }
+                break;
+            case 4:
+                if ("1".equals(response.getStatusCode())) {
+                    Bundle bd = new Bundle();
+                    bd.putSerializable("user", userBean);
+                    startActivity(MyMoneyActivity.class, bd);
+                } else {
+                    ToastUtil.showToastS(mActivity, response.getMessage());
+                }
+                break;
+        }
 
     }
 
@@ -235,137 +442,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     }
 
     @Override
-    public void onLoadMoreRequested() {
-        //  加载更多 BaseQuickAdapter的上拉加载更多方法，和onRefreshLayoutBeginLoadingMore使用其中一个就可以
-    }
-
-    @Override
-    public void onRefreshLayoutBeginRefreshing(RefreshLayout refreshLayout) {
-        // 开始刷新
-        System.out.println("onRefreshLayoutBeginRefreshing===");
-//        mPresenter.getListDataTest(size,1);
-    }
-
-    @Override
-    public boolean onRefreshLayoutBeginLoadingMore(RefreshLayout refreshLayout) {
-        if (goodsBeanList.size() <= size * pageno) {
-            pageno++;
-            mPresenter.getHomeData(size, pageno);
-        }
-        return false;
-    }
-
-    @Override
     public void OnBannerClick(int position) {
         Bundle b = new Bundle();
         b.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE, WebViewActivity.TYPE_HOME_BANNER);
         b.putString(WebViewActivity.BUNDLE_WEBVIEW_URL, bannerData.get(position).getUrl());
         startActivity(WebViewActivity.class, b);
     }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        LogUtil.e(TAG, "onCreate");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        LogUtil.e(TAG, "onStart");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        LogUtil.e(TAG, "onStart");
-    }
-
-    @Override
-    public void onRefreshHomeData(HomeBean homeBean) {
-        if (null != homeBean.getMlist() && homeBean.getMlist().size() > 0) {
-            goodsBeanList.clear();
-            goodsBeanList.addAll(homeBean.getMlist());
-            if (pageno > 0) {
-                mHomeTabAdapter.addData(homeBean.getMlist());
-            } else {
-                mHomeTabAdapter.setNewData(homeBean.getMlist());
-            }
-            mRefreshLayout.endRefreshing();
-            mRefreshLayout.endLoadingMore();
-        } else {
-            ToastUtil.showShort("暂时没有商品信息");
-            mHomeTabAdapter.loadComplete();
-            mRefreshLayout.endRefreshing();
-            mRefreshLayout.endLoadingMore();
-        }
-        if (null != homeBean.getBlist() && homeBean.getBlist().size() > 0) {
-            images.clear();
-            bannerData = homeBean.getBlist();
-            for (BannerData uri : homeBean.getBlist()) {
-                images.add(UrlConstants.BASE_URL + uri.getImgurl());
-            }
-            setBannerView(images);
-        }
-        mHomeTabAdapter.loadComplete();
-    }
-
-    /**
-     * 判断是否是8.0,8.0需要处理未知应用来源权限问题,否则直接安装
-     */
-    private void checkIsAndroidO() {
-        if (Build.VERSION.SDK_INT >= 26) {
-            boolean b = mActivity.getPackageManager().canRequestPackageInstalls();
-            ToastUtil.showShort("checkIsAndroidO b= " + b);
-            if (b) {
-//                installApk();// todo 安装应用的逻辑(写自己的就可以)
-                update(appInfo);
-            } else {
-                //请求安装未知应用来源的权限
-                ActivityCompat.requestPermissions(mActivity,
-                        new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, 1);
-            }
-        } else {
-//            installApk();
-            update(appInfo);
-        }
-
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 1:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    installApk();
-                    update(appInfo);
-                } else {
-                    ToastUtil.showShort("onRequestPermissionsResult  Settings ");
-//                    Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
-//                    startActivityForResult(intent, 2);
-                }
-                break;
-            default:
-                break;
-
-        }
-    }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        switch (requestCode) {
-//            case 2:
-//                checkIsAndroidO();
-//                break;
-//
-//            default:
-//                break;
-//        }
-//    }
 
 
 }

@@ -154,6 +154,7 @@
         <activity android:name=".view.activity.MyMoneyActivity" />
         <activity android:name=".view.activity.ChongzhiActivity" />
         <activity android:name=".view.activity.PasswordActivity"/>
+        <activity android:name=".view.activity.ShareActivity"/>
         <receiver android:name=".net.NetworkStateReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
