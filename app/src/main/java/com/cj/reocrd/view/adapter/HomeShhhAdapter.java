@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.cj.reocrd.model.entity.FuliBean;
 import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,6 +30,8 @@ public class HomeShhhAdapter extends RecyclerView.Adapter<HomeShhhAdapter.MyHold
     private List<GoodsBean> list;
     private Context mContext;
     private LayoutInflater inflater;
+    private byte [] bitmapByte;
+    private Bitmap shareGoodBitmap;
 
     public HomeShhhAdapter(Context context, List<GoodsBean> list) {
         this.mContext = context;
@@ -66,6 +70,19 @@ public class HomeShhhAdapter extends RecyclerView.Adapter<HomeShhhAdapter.MyHold
                 mOnItemListener.doShareClick(position);
             }
         });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(null == bitmapByte){
+                    shareGoodBitmap =  ImageLoaderUtils.getbitmap(
+                            UrlConstants.BASE_URL+goodsBean.getImgurl());
+                    if(null != shareGoodBitmap){
+                        File shareFile = ImageLoaderUtils.saveImage(shareGoodBitmap,"homeshare"+position);
+                        goodsBean.setImgSharePath(shareFile.getAbsolutePath());
+                    }
+                }
+            }
+        }).start();
     }
 
     private OnItemListener mOnItemListener;
@@ -107,6 +124,21 @@ public class HomeShhhAdapter extends RecyclerView.Adapter<HomeShhhAdapter.MyHold
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    private void saveImg(String imgurl){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                        if(null == bitmapByte){
+                            shareGoodBitmap =  ImageLoaderUtils.getbitmap(
+                                    UrlConstants.BASE_URL+imgurl);
+                            if(null != shareGoodBitmap){
+                                File shareFile = ImageLoaderUtils.saveImage(shareGoodBitmap,"share");
+                            }
+                        }
+            }
+        }).start();
     }
 
 }

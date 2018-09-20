@@ -20,6 +20,7 @@ import com.cj.reocrd.contract.InvoiceContract;
 import com.cj.reocrd.presenter.InvoicePresenter;
 import com.cj.reocrd.utils.ConstantsUtils;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -72,7 +73,7 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
     TextView tvBtnInvocieSubmit;
 
     private String invoiceType ,invoiceInfo,invoiceValue,email,
-            invoiceName,invoicePhone,invoiceFullAddr,head;
+            invoiceName,invoicePhone,invoiceFullAddr,head = "1";
     private final int IN_TYPE = 1;
     private final int IN_INFO = 2;
     private  int  type = 0;
@@ -82,7 +83,7 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
     private String sn;// 订单号
     public static final String KEY_SN = "SN";
     public static final String KEY_MONEY = "money";
-    private String corp, code;
+    private String corp="", code="";
 
 
     @Override
@@ -151,12 +152,12 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
             case R.id.tv_btn_invocie_submit:
                 // TODO: 2018/9/11 提交
                 email = edInvoiceEmail.getText().toString();
-                if (TextUtils.isEmpty(email)) {
-                    ToastUtil.showShort("邮箱必须填写！");
+                if (!Utils.emailFormat(email)) {
+                    ToastUtil.showShort("请填写正确的邮箱地址！");
                     return;
                 }
-                if (TextUtils.isEmpty(invoiceInfo)) {
-                    ToastUtil.showShort("请选择收件人！");
+                if (TextUtils.isEmpty(invoiceFullAddr)) {
+                    ToastUtil.showShort("请选择收件人信息！");
                     return;
                 }
                 if("2".equals(head)){
@@ -171,7 +172,7 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
                         return;
                     }
                 }
-                mPresenter.subimitInvoiceInfo(uid,sn,head,corp,code,invoiceInfo,invoiceName,invoicePhone,email);
+                mPresenter.subimitInvoiceInfo(uid,sn,head,corp,code,invoiceFullAddr,invoiceName,invoicePhone,email);
                 break;
         }
     }
@@ -245,12 +246,12 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
 
     @Override
     public void onSuccess(Object data) {
-
+          ToastUtil.showShort("提交成功");
     }
 
     @Override
     public void onFailureMessage(String msg) {
-
+          ToastUtil.showShort(msg);
     }
 
     @Override

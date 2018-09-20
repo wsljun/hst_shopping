@@ -177,4 +177,48 @@ public class Utils {
         return amLong.toString();
     }
 
+    /**
+     * @Title: changeF2Y
+     * @Description: 将分为单位的转换为元 （除100）
+     * @param amount
+     * @throws Exception
+     * @return: String
+     */
+    /** 金额为分的格式 */
+    public static final String CURRENCY_FEN_REGEX = "\\-?[0-9]+";
+    public static String changeF2Y(String amount){
+        if (!amount.matches(CURRENCY_FEN_REGEX)) {
+            try {
+                throw new Exception("金额格式有误");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return BigDecimal.valueOf(Long.valueOf(amount)).divide(new BigDecimal(100)).toString();
+    }
+
+    /**
+     * @Title: changeY2F
+     * @Description: 将元为单位的转换为分 （乘100）
+     * @param amount
+     * @return: String
+     */
+    public static String changeY2F(Long amount) {
+        return BigDecimal.valueOf(amount).multiply(new BigDecimal(100)).toString();
+    }
+
+    /**
+     * 校验EMAIL格式，真为正确
+     * @param email
+     * @return true 为格式正确 false 为格式错误
+     */
+    public static boolean emailFormat(String email) {
+        boolean tag = true;
+        if (!email.matches("[\\w\\.\\-]+@([\\w\\-]+\\.)+[\\w\\-]+")) {
+            tag = false;
+        }
+        return tag;
+    }
+
+
 }

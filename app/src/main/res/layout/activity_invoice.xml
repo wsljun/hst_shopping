@@ -15,8 +15,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/title"
-        android:background="#76ff8c00"
-        android:visibility="gone"
         >
         <TextView
             android:id="@+id/tv_invoice_msg"
@@ -25,6 +23,7 @@
             android:padding="5dp"
             android:text="即日起，北京订单开票时间调整为订单完成30天内，请及时开票！"
             android:textSize="16sp"
+            android:textColor="@color/color2"
             />
     </LinearLayout>
 

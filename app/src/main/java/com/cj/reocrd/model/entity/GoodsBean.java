@@ -32,6 +32,36 @@ public class GoodsBean {
     private boolean isShowDate ; // 是否显示时间，浏览记录页使用
     private boolean  isChecked;  // 是否被选中，购物车计算价格使用
     private String oldprice;//老价格
+    private String imgSharePath;
+    private String introduct;
+
+    public void setIntroduct(String introduct) {
+        this.introduct = introduct;
+    }
+
+    public String getIntroduct() {
+        return introduct;
+    }
+
+    public boolean isShowDate() {
+        return isShowDate;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public String getImgSharePath() {
+        return imgSharePath;
+    }
+
+    public void setImgSharePath(String imgSharePath) {
+        this.imgSharePath = imgSharePath;
+    }
 
     public String getOldprice() {
         return oldprice;

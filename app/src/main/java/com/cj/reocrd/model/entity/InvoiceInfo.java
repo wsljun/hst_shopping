@@ -1,5 +1,7 @@
 package com.cj.reocrd.model.entity;
 
+import com.cj.reocrd.utils.Utils;
+
 /**
  * 发票信息
  * "list": [{
@@ -57,7 +59,7 @@ public class InvoiceInfo {
     }
 
     public void setInvoicemoney(String invoicemoney) {
-        this.invoicemoney = invoicemoney;
+        this.invoicemoney = Utils.changeF2Y(invoicemoney);
     }
 
     public String getCreatetime() {

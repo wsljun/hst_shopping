@@ -37,7 +37,7 @@ public class InvoiceAdapter extends BaseQuickAdapter {
 
     @Override
     protected void convert(BaseViewHolder helper, Object item, int position) {
-         InvoiceInfo invoiceInfo = (InvoiceInfo) item;
+        InvoiceInfo invoiceInfo = (InvoiceInfo) item;
         helper.setText(R.id.invoice_value,"开票金额：￥"+invoiceInfo.getInvoicemoney());
         helper.setText(R.id.order_num,"订单号: "+invoiceInfo.getSn());
         helper.setText(R.id.order_time,"订单时间: "+invoiceInfo.getCreatetime());
@@ -50,17 +50,22 @@ public class InvoiceAdapter extends BaseQuickAdapter {
 //        });
         CheckBox checkBox =  helper.getView(R.id.invoice_item_choose);
         checkBox.setTag(position);
-        if(!checkBoxList.contains(checkBox)){
-            checkBoxList.add(checkBox);
-        }
+//        if(!checkBoxList.contains(checkBox)){
+//            checkBoxList.add(checkBox);
+//        }
+        checkBox.setChecked(invoiceInfo.isChecked());
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int i = (int) v.getTag();
+                invoiceInfo.setChecked(checkBox.isChecked());
                 mBaseItemClickListener.onAdapterItemClickListener(v,i);
-                ToastUtil.showShort("invoice_item_choose");
+//                ToastUtil.showShort("invoice_item_choose");
             }
         });
+        if("2".equals(invoiceInfo.getIsapply())){
+
+        }
 
 
     }

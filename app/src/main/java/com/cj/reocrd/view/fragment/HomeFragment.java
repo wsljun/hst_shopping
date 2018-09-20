@@ -28,6 +28,7 @@ import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.Utils;
+import com.cj.reocrd.utils.wechat.WeChatUtils;
 import com.cj.reocrd.view.activity.CollectActivity;
 import com.cj.reocrd.view.activity.GoodDetailActivity;
 import com.cj.reocrd.view.activity.MyMoneyActivity;
@@ -179,7 +180,9 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
 
             @Override
             public void doShareClick(int position) {
-
+                // TODO: 2018/9/20
+                WeChatUtils.getInstance().showDialog(getBaseActivity(),shhhList.get(position),uid);
+                // shhhList.get(position).getId()
             }
         });
     }
