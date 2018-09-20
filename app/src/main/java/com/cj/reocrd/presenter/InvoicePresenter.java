@@ -65,6 +65,7 @@ public class InvoicePresenter extends InvoiceContract.Presenter {
         }
         baseMap.clear();
         baseMap.put("uid",uid);
+        baseMap.put("oid",oid);
         baseMap.put("head",head);
         baseMap.put("corp",corp);
         baseMap.put("code",code);
@@ -72,11 +73,15 @@ public class InvoicePresenter extends InvoiceContract.Presenter {
         baseMap.put("username",username);
         baseMap.put("userphone",userphone);
         baseMap.put("usereamil",usereamil);
-        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_INVOICE_LIST, baseMap, InvoiceInfo.class, new ApiCallback() {
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_SUBMIT_INVOICE, baseMap, InvoiceInfo.class, new ApiCallback() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
-
+                    if(UrlConstants.SUCCESE_CODE.contains(apiResponse.getStatusCode())){
+                        mView.onSuccess(apiResponse);
+                    }else{
+                        mView.onFailureMessage(apiResponse.getMessage());
+                    }
                 }
             }
 
