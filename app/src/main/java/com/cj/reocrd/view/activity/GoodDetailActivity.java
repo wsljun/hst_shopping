@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.TextureView;
 import android.view.TouchDelegate;
@@ -44,6 +45,7 @@ import com.cj.reocrd.presenter.GoodsDetailPresenter;
 import com.cj.reocrd.utils.ActivityUtils;
 import com.cj.reocrd.utils.CollectionUtils;
 import com.cj.reocrd.utils.ConstantsUtils;
+import com.cj.reocrd.utils.GlideImageLoader;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
@@ -55,6 +57,8 @@ import com.donkingliang.labels.LabelsView;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -125,6 +129,8 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     Button btnGoodsDetailWeb;
     @BindView(R.id.fl_fragment)
     FrameLayout mFrameLayout;
+    @BindView(R.id.banner_detail)
+    Banner banner;
 
     private static String goodsID = "";// 商品ID
     public static GoodsDetailsBean goodsDetailsBean;
@@ -150,6 +156,8 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     private byte[] bitmapByte;
     private static Bitmap shareGoodBitmap;
     private static File shareFile;
+    private List<String> images = new ArrayList<>();
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_good_detail;
@@ -181,10 +189,11 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         goodSales.setText("销量："+goodsDetailsBean.getBlocknum());
         goodAddress.setText(goodsDetailsBean.getPlace());
         goodTotalPrice.setText(ConstantsUtils.RMB+price);
-        ImageLoaderUtils.display(getContext(),imgGoodDetail, UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
+//        ImageLoaderUtils.display(getContext(),imgGoodDetail, UrlConstants.BASE_URL+goodsDetailsBean.getImgurl());
         if("1".equals(goodsDetailsBean.getIscollect())){
             setCollectImg(true);
         }
+        setBannerView(goodsDetailsBean.getImgUrlL());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -198,6 +207,25 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
             }
         }).start();
     }
+
+    private void setBannerView(String imgUrlL) {
+        if(TextUtils.isEmpty(imgUrlL)){   return; }
+        String [] urls = imgUrlL.split("@#@");
+        for (String s: urls) {
+//            Log.e("imgUrlL", "setBannerView: " + UrlConstants.BASE_URL + s );
+            images.add(UrlConstants.BASE_URL + s);
+        }
+
+        //轮播图
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+        banner.setIndicatorGravity(BannerConfig.CENTER);
+        banner.setImageLoader(new GlideImageLoader());
+        banner.setImages(images);
+        banner.setIndicatorGravity(BannerConfig.CENTER);
+//        banner.setOnBannerListener(this);
+        banner.start();
+    }
+
 
 
     @Override
@@ -518,7 +546,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         LogUtil.d("webpageUrl",webpage.webpageUrl);
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = goodsDetailsBean.getName();
-        msg.description = goodPrice.getText().toString() ;
+        msg.description = goodsDetailsBean.getIntroduct() ;
 
 //        Bitmap thumb = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
 //        if(bitmapByte == null) {

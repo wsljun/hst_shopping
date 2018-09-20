@@ -21,6 +21,15 @@ public class HomeBean {
     private List<GoodsBean> mdss; //摩登时尚
     private List<GoodsBean> pzsh; //品质生活
     private List<GoodsBean> chwl; //
+    private List<InvoiceInfo> list; //
+
+    public List<InvoiceInfo> getList() {
+        return list;
+    }
+
+    public void setList(List<InvoiceInfo> list) {
+        this.list = list;
+    }
 
     public List<GoodsBean> getShhh() {
         return shhh;

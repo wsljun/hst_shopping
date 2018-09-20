@@ -33,6 +33,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
+                    android:visibility="gone"
+                    />
+                <com.youth.banner.Banner
+                    android:id="@+id/banner_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     />
 
             </FrameLayout>
@@ -240,7 +246,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
+                    android:paddingTop="10dp"
+                    android:visibility="gone"
+                    >
 
                     <TextView
                         android:id="@+id/good_address"

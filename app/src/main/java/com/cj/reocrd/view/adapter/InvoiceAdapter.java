@@ -8,6 +8,7 @@ import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.baseadapter.BaseQuickAdapter;
 import com.cj.reocrd.base.baseadapter.BaseViewHolder;
 import com.cj.reocrd.model.entity.GoodsBean;
+import com.cj.reocrd.model.entity.InvoiceInfo;
 import com.cj.reocrd.utils.ConstantsUtils;
 import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.ToastUtil;
@@ -36,10 +37,10 @@ public class InvoiceAdapter extends BaseQuickAdapter {
 
     @Override
     protected void convert(BaseViewHolder helper, Object item, int position) {
-         String d = (String) item;
-        helper.setText(R.id.invoice_value,"开票金额：￥50."+d);
-        helper.setText(R.id.order_num,"订单号:9876543321");
-        helper.setText(R.id.order_time,"订单时间:2018-09-10 10:37:45");
+         InvoiceInfo invoiceInfo = (InvoiceInfo) item;
+        helper.setText(R.id.invoice_value,"开票金额：￥"+invoiceInfo.getInvoicemoney());
+        helper.setText(R.id.order_num,"订单号: "+invoiceInfo.getSn());
+        helper.setText(R.id.order_time,"订单时间: "+invoiceInfo.getCreatetime());
 //        helper.getView(R.id.invoice_enter).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

@@ -20,5 +20,7 @@ public interface SubmitOrderContract {
     abstract static class Presenter extends BasePresenter<View> {
         public abstract void getOrderDetail(String oid);
         public abstract void updateOrderAddress(String oid ,String aid);
+        public abstract void updateExpTimr(String oid ,String expresstime);
+
     }
 }

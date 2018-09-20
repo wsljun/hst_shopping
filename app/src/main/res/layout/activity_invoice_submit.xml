@@ -36,11 +36,13 @@
                     android:id="@+id/tv_invoice_type"
                     style="@style/mine_text_colorsize"
                     android:text="电子发票"
+                    android:drawableEnd="@null"
                     />
             </FrameLayout>
             <FrameLayout
                 android:id="@+id/fl_invoice_info"
                 style="@style/mine_frame"
+                android:visibility="gone"
                 >
 
                 <TextView
@@ -151,7 +153,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
                 >
                 <FrameLayout
                     style="@style/mine_frame"
