@@ -1,6 +1,7 @@
 package com.cj.reocrd.view.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -25,11 +26,14 @@ import com.cj.reocrd.api.ApiResponse;
 import com.cj.reocrd.api.UrlConstants;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.base.BaseApplication;
+import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.ApiModel;
 import com.cj.reocrd.model.entity.PayKeys;
 import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.model.entity.WXPayKeys;
+import com.cj.reocrd.presenter.MyPrresenter;
 import com.cj.reocrd.utils.ConstantsUtils;
+import com.cj.reocrd.utils.ImageLoaderUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.utils.alipay.OrderInfoUtil2_0;
@@ -37,6 +41,7 @@ import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.utils.alipay.PayResult;
 import com.cj.reocrd.view.dialog.LoadingDialog;
+import com.cj.reocrd.view.view.verificationCodeView.VerificationCodeView;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -56,7 +61,7 @@ import static com.cj.reocrd.api.UrlConstants.TYPE_JIFEN;
 import static com.cj.reocrd.api.UrlConstants.TYPE_WECHAT;
 import static com.cj.reocrd.api.UrlConstants.TYPE_YUER;
 
-public class PayActivity extends BaseActivity {
+public class PayActivity extends BaseActivity<MyPrresenter> implements MyContract.View {
 
     @BindView(R.id.title_left)
     TextView titleLeft;
@@ -86,7 +91,7 @@ public class PayActivity extends BaseActivity {
     RelativeLayout rlOrderPayOver;
     @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView( R.id.tv_btn_order_pay)
+    @BindView(R.id.tv_btn_order_pay)
     TextView tvBtnPay;
 
     private String oid, orderPrice, payWay;
@@ -97,15 +102,18 @@ public class PayActivity extends BaseActivity {
     private long countTime = 30 * 60 * 1000;
     private int time_M = 29;
     private int time_S = 59;
-    public static  String APPID = "";
+    public static String APPID = "";
     private static final int SDK_PAY_FLAG = 1001;
     private String RSA_PRIVATE = "";
-    private   String  aoid;
+    private String aoid;
     private int serversLoadTimes = 0;
     private int maxLoadTimes = 3;
     private String phone;
     private String OutTradeNo;
     private ArrayList<RadioButton> rbs;
+
+    private int type = 1;
+    private UserBean userBean;
 
     @Override
     public int getLayoutId() {
@@ -122,7 +130,7 @@ public class PayActivity extends BaseActivity {
     }
 
     private void cheeckRadioButtonStatus(int index) {
-        if(rbs == null){
+        if (rbs == null) {
             rbs = new ArrayList<RadioButton>();
             rbs.add(rbPayAlipay);
             rbs.add(rbWechatPay);
@@ -131,9 +139,9 @@ public class PayActivity extends BaseActivity {
             rbs.add(rbPayDzb);
         }
         for (int i = 0; i < rbs.size(); i++) {
-            if(index == i){
+            if (index == i) {
                 rbs.get(i).setChecked(true);
-            }else{
+            } else {
                 rbs.get(i).setChecked(false);
             }
         }
@@ -179,7 +187,7 @@ public class PayActivity extends BaseActivity {
 
     @OnClick({R.id.title_left, R.id.rb_pay_alipay, R.id.rb_wechat_pay, R.id.rb_pay_other
             , R.id.tv_btn_order_pay, R.id.tv_check_order_detail, R.id.title_right,
-            R.id.rb_pay_jifen,R.id.rb_pay_dzb})
+            R.id.rb_pay_jifen, R.id.rb_pay_dzb})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_right:
@@ -218,7 +226,10 @@ public class PayActivity extends BaseActivity {
                     } else if (payWay.equals(TYPE_WECHAT)) {
                         getWXOrder();
                     } else { // 去除 支付宝，微信 支付
-                        inputPwdDialog();
+//                        inputPwdDialog();
+                        //请求个人信息
+                        type = 1;
+                        mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
                     }
                 }
                 break;
@@ -243,16 +254,16 @@ public class PayActivity extends BaseActivity {
         boolean rsa = true;
         //构造支付订单参数列表
         aoid = OutTradeNo;//OrderInfoUtil2_0.getOutTradeNo();
-        LogUtil.d("alipay","aoid= "+aoid);
-        String bizContent = OrderInfoUtil2_0.buildBizConetent(orderPrice,aoid);
-        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(APPID, rsa,bizContent);
+        LogUtil.d("alipay", "aoid= " + aoid);
+        String bizContent = OrderInfoUtil2_0.buildBizConetent(orderPrice, aoid);
+        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(APPID, rsa, bizContent);
         //构造支付订单参数信息
         String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
         //对支付参数信息进行签名
         String sign = OrderInfoUtil2_0.getSign(params, RSA_PRIVATE, rsa);
         //订单信息
         final String orderInfo = orderParam + "&" + sign;
-        LogUtil.d("alipay",orderInfo);
+        LogUtil.d("alipay", orderInfo);
         //异步处理
         Runnable payRunnable = new Runnable() {
 
@@ -357,10 +368,10 @@ public class PayActivity extends BaseActivity {
      * orderid 订单id(如果有多个订单 用逗号分割)
      * uid     用户ID
      * payType  1支付宝 2微信 3余额
-     *  : 余额支付时提示属于支付密码（登陆密码），需先判断余额是否充足（需在本地保存余额）
+     * : 余额支付时提示属于支付密码（登陆密码），需先判断余额是否充足（需在本地保存余额）
      */
     private void sendPaySuccess() {
-        LoadingDialog.showDialogForLoading(PayActivity.this,"正在同步支付信息",false);
+        LoadingDialog.showDialogForLoading(PayActivity.this, "正在同步支付信息", false);
         HashMap<String, Object> map = new HashMap<>();
         map.put("orderid", oid);
         map.put("uid", uid);
@@ -376,7 +387,7 @@ public class PayActivity extends BaseActivity {
                 if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
                     Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                     showPayOverView();
-                }else{
+                } else {
                     ToastUtil.showShort(apiResponse.getMessage());
                     tvBtnPay.setClickable(true);
                 }
@@ -386,10 +397,10 @@ public class PayActivity extends BaseActivity {
             public void onFailure(Call call, Throwable e) {
                 //如果超时并未超过指定次数，则重新连接
                 LoadingDialog.cancelDialogForLoading();
-                if(e.toString().equals("java.net.SocketTimeoutException")
-                        && serversLoadTimes<maxLoadTimes){
+                if (e.toString().equals("java.net.SocketTimeoutException")
+                        && serversLoadTimes < maxLoadTimes) {
                     serversLoadTimes++;
-                    LogUtil.e("onFailure","serversLoadTimes= "+serversLoadTimes);
+                    LogUtil.e("onFailure", "serversLoadTimes= " + serversLoadTimes);
                     sendPaySuccess();
                 }
                 rlOrderPayOver.setVisibility(View.GONE);
@@ -406,11 +417,11 @@ public class PayActivity extends BaseActivity {
             tvOrderOverPayway.setText("支付方式:支付宝");
         } else if (TYPE_WECHAT.equals(payWay)) {
             tvOrderOverPayway.setText("支付方式:微信");
-        } else if(TYPE_YUER.equals(payWay) ){
+        } else if (TYPE_YUER.equals(payWay)) {
             tvOrderOverPayway.setText("支付方式:余额");
-        } else if(TYPE_JIFEN.equals(payWay) ){
+        } else if (TYPE_JIFEN.equals(payWay)) {
             tvOrderOverPayway.setText("支付方式:消费积分");
-        } else if(TYPE_DZB.equals(payWay) ){
+        } else if (TYPE_DZB.equals(payWay)) {
             tvOrderOverPayway.setText("支付方式:电子币");
         }
         setPayWay(payWay);
@@ -434,10 +445,10 @@ public class PayActivity extends BaseActivity {
             public void onSuccess(ApiResponse apiResponse) {
                 if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
                     PayKeys payKeys = (PayKeys) apiResponse.getResults();
-                    if(!TextUtils.isEmpty(payKeys.getAppid())){
+                    if (!TextUtils.isEmpty(payKeys.getAppid())) {
                         APPID = payKeys.getAppid();
                     }
-                    if(!TextUtils.isEmpty(payKeys.getPrivatekey())){
+                    if (!TextUtils.isEmpty(payKeys.getPrivatekey())) {
                         RSA_PRIVATE = payKeys.getPrivatekey();
                     }
                 }
@@ -448,7 +459,6 @@ public class PayActivity extends BaseActivity {
             }
         });
     }
-
 
 
     @Override
@@ -470,7 +480,7 @@ public class PayActivity extends BaseActivity {
             public void onSuccess(ApiResponse apiResponse) {
                 if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
                     PayKeys payKeys = (PayKeys) apiResponse.getResults();
-                    if(!TextUtils.isEmpty(payKeys.getOutTradeNo())){
+                    if (!TextUtils.isEmpty(payKeys.getOutTradeNo())) {
                         OutTradeNo = payKeys.getOutTradeNo();
                     }
                 }
@@ -484,7 +494,7 @@ public class PayActivity extends BaseActivity {
 
     private void setPayWay(String s) {
         String way = "";
-        switch (s){
+        switch (s) {
             case TYPE_ALIPAY:
                 way = "支付宝";
                 break;
@@ -503,7 +513,7 @@ public class PayActivity extends BaseActivity {
             default:
                 break;
         }
-        tvOrderOverPayway.setText("支付方式：" +way );
+        tvOrderOverPayway.setText("支付方式：" + way);
     }
 
     private void getWXOrder() {
@@ -511,7 +521,7 @@ public class PayActivity extends BaseActivity {
         HashMap<String, Object> map = new HashMap<>();
         String ip = Utils.getLocalIPAddress();
         map.put("out_trade_no", OutTradeNo);
-        map.put("totalFee",totalfen);
+        map.put("totalFee", totalfen);
         map.put("spbill_create_ip", ip);
         ApiModel.getInstance().getData(UrlConstants.UrLType.URL_WX_ORDER, map, WXPayKeys.class, new ApiCallback() {
 
@@ -529,8 +539,9 @@ public class PayActivity extends BaseActivity {
         });
     }
 
-    PayReq  req ;
-    private void payWX(WXPayKeys wxPayKeys){
+    PayReq req;
+
+    private void payWX(WXPayKeys wxPayKeys) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -550,13 +561,14 @@ public class PayActivity extends BaseActivity {
                 } else {
                     ToastUtil.shortToastInBackgroundThread(PayActivity.this, "返回错误" + wxPayKeys.getMessage());
                 }
-            }}).start();
+            }
+        }).start();
 
     }
 
     private void toPay() {
         // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
-       IWXAPI wxApi = WXAPIFactory.createWXAPI(this.getApplicationContext(), null);
+        IWXAPI wxApi = WXAPIFactory.createWXAPI(this.getApplicationContext(), null);
         wxApi.registerApp(BaseApplication.APP_ID);
         boolean b = wxApi.sendReq(req);
 //        if(b){
@@ -569,9 +581,88 @@ public class PayActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(UrlConstants.WXPAY_CODE == 0){
+        if (UrlConstants.WXPAY_CODE == 0) {
             UrlConstants.WXPAY_CODE = 999;
             showPayOverView();
         }
     }
+
+    @Override
+    public void onSuccess(Object data) {
+        ApiResponse response = (ApiResponse) data;
+        switch (type) {
+            case 1:
+                if ("1".equals(response.getStatusCode())) {
+                    userBean = (UserBean) response.getResults();
+                    if (userBean != null && !TextUtils.isEmpty(userBean.getIspaypwd())) {
+                        showPWDDialog();
+                    }
+                }
+                break;
+            case 2:
+                if ("1".equals(response.getStatusCode())) {
+                    Bundle bd = new Bundle();
+                    bd.putSerializable("user", userBean);
+                    startActivity(MyMoneyActivity.class, bd);
+                } else {
+                    ToastUtil.showToastS(this, response.getMessage());
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onFailureMessage(String msg) {
+        ToastUtil.showShort(msg);
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    //二级密码对话框
+    public void showPWDDialog() {
+        if ("1".equals(userBean.getIspaypwd())) {
+            VerificationCodeView codeView = new VerificationCodeView(this);
+            codeView.setEtNumber(6);
+            codeView.setPwdMode(true);
+            codeView.setmEtWidth(80);
+            new android.support.v7.app.AlertDialog.Builder(this)
+                    .setTitle("输入交易密码")
+                    .setView(codeView)
+                    .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            type = 2;
+                            mPresenter.checkPwd("111", uid, codeView.getInputContent());
+                        }
+                    })
+                    .setNeutralButton("忘记密码", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("phone", userBean.getPhone());
+                            startActivity(PasswordActivity.class, bundle);
+                        }
+                    })
+                    .show();
+        } else {
+            new android.support.v7.app.AlertDialog.Builder(this)
+                    .setMessage("为保障您的资金安全，请先设置交易密码")
+                    .setNegativeButton("设置密码", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("phone", userBean.getPhone());
+                            startActivity(PasswordActivity.class, bundle);
+                        }
+                    })
+                    .setNeutralButton("取消", null)
+                    .show();
+        }
+
+
+    }
+
 }
