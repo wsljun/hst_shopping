@@ -5,6 +5,44 @@
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/load_yellow">
+
+        <ImageView
+            android:id="@+id/home_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp" />
+
+        <ImageView
+            android:id="@+id/home_share"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:background="@mipmap/home_share" />
+
+        <TextView
+            android:id="@+id/home_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/home_share"
+            android:layout_toRightOf="@id/home_icon"
+            android:background="@drawable/textview_home_search"
+            android:drawableLeft="@mipmap/sousuo"
+            android:drawablePadding="10dp"
+            android:paddingBottom="6dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="6dp"
+            android:text="@string/home_search" />
+
+    </RelativeLayout>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/home_refresh"
         android:layout_width="wrap_content"
@@ -20,44 +58,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/load_yellow">
-
-                    <ImageView
-                        android:id="@+id/home_icon"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="10dp" />
-
-                    <ImageView
-                        android:id="@+id/home_share"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="10dp"
-                        android:background="@mipmap/home_share" />
-
-                    <TextView
-                        android:id="@+id/home_search"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/home_share"
-                        android:layout_toRightOf="@id/home_icon"
-                        android:background="@drawable/textview_home_search"
-                        android:drawableLeft="@mipmap/sousuo"
-                        android:drawablePadding="10dp"
-                        android:paddingBottom="6dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="6dp"
-                        android:text="@string/home_search" />
-
-                </RelativeLayout>
 
 
                 <com.youth.banner.Banner
