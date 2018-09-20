@@ -161,7 +161,8 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
                         expTime = exp_time_3;
                         break;
                 }
-                ToastUtil.showShort(expTime);// TODO: 2018/9/14  422 更新送货时间
+//                ToastUtil.showShort(expTime);// TODO: 2018/9/14  422 更新送货时间
+                mPresenter.updateExpTimr(oid,expTime);
             }
         });
     }

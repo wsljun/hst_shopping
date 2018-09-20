@@ -74,5 +74,30 @@ public class SubmitOrderPresenter extends SubmitOrderContract.Presenter {
         });
     }
 
+    @Override
+    public void updateExpTimr(String oid, String expresstime) {
+        if(TextUtils.isEmpty(oid)||TextUtils.isEmpty(expresstime)){
+            return;
+        }
+        baseMap.clear();
+        baseMap.put("oid",oid);
+        baseMap.put("expresstime",expresstime);
+        ApiModel.getInstance().getData(UrlConstants.UrLType.URL_UPDATE_EXPRESSTIME, baseMap, AddressBean.class, new ApiCallback() {
+            @Override
+            public void onSuccess(ApiResponse apiResponse) {
+                if(null != apiResponse && isViewAttached()){
+                    // TODO: 2018/9/19 exptime
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                if(isViewAttached()){
+                    mView.onFailureMessage(t.toString());
+                }
+            }
+        });
+    }
+
 
 }

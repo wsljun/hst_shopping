@@ -2,13 +2,22 @@ package com.cj.reocrd.model.entity;
 
 /**
  * 发票信息
+ * "list": [{
+ “id”:”订单ID”,
+ “sn”:”订单编号”,
+ “isapply”:” 1已申请 2未申请 ”
+ “invoicemoney”:”发票金额   分”
+ “createtime”:”下单时间”
+ },{},{}...]
  */
 
 public class InvoiceInfo {
 
-    String invoiceValue; // 发票金额
-    String orderNum ; // 订单号
-    String orderTime; // 订单时间
+    private String id;
+    private String sn ; // 订单号
+    private String isapply;
+    private String invoicemoney; // 发票金额
+    private String createtime; // 订单时间
     private boolean isChecked;
 
     public boolean isChecked() {
@@ -19,30 +28,43 @@ public class InvoiceInfo {
         isChecked = checked;
     }
 
-    public String getInvoiceValue() {
-        return invoiceValue;
+    public String getId() {
+        return id;
     }
 
-    public void setInvoiceValue(String invoiceValue) {
-        this.invoiceValue = invoiceValue;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getOrderNum() {
-        return orderNum;
+    public String getSn() {
+        return sn;
     }
 
-    public void setOrderNum(String orderNum) {
-        this.orderNum = orderNum;
+    public void setSn(String sn) {
+        this.sn = sn;
     }
 
-    public String getOrderTime() {
-        return orderTime;
+    public String getIsapply() {
+        return isapply;
     }
 
-    public void setOrderTime(String orderTime) {
-        this.orderTime = orderTime;
+    public void setIsapply(String isapply) {
+        this.isapply = isapply;
     }
 
+    public String getInvoicemoney() {
+        return invoicemoney;
+    }
 
+    public void setInvoicemoney(String invoicemoney) {
+        this.invoicemoney = invoicemoney;
+    }
 
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
+    }
 }

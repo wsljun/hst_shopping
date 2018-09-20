@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.InvoiceContract;
+import com.cj.reocrd.model.entity.InvoiceInfo;
 import com.cj.reocrd.presenter.InvoicePresenter;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
@@ -65,8 +66,9 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
     private final String TAG = "InvoiceActivity";
     public static Map<Integer,Boolean> isCheckedMap = new HashMap<>();
     private InvoiceAdapter invoiceAdapter;
-    private List invoiceList;
     private String totalInvoiceValue = "523.1"; // 发票总金额
+    private List<InvoiceInfo> invoiceInfoList;
+    private int pageno = 0;
 
 
     @Override
@@ -77,10 +79,8 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
     @Override
     public void initData() {
         super.initData();
-        invoiceList = new ArrayList();
-        invoiceList.add("1");
-        invoiceList.add("2");
-        invoiceList.add("3");
+        invoiceInfoList  = new ArrayList<>();
+        mPresenter.getInvoiceList(uid,String.valueOf(pageno));
     }
 
     @Override
@@ -115,9 +115,9 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
                 break;
             case R.id.next:
                 // todo 进入开票界面
-                ToastUtil.showShort("next");
                 Bundle b = new Bundle();
-                b.putString(InvoiceSubmitActivity.KEY_INVALUE,totalInvoiceValue);
+                b.putString(InvoiceSubmitActivity.KEY_MONEY,totalInvoiceValue);
+                b.putString(InvoiceSubmitActivity.KEY_SN,totalInvoiceValue);
                 startActivity(InvoiceSubmitActivity.class,b);
                 break;
         }
@@ -125,7 +125,7 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
 
 
     private void initRecycleView() {
-        invoiceAdapter = new InvoiceAdapter(R.layout.item_invoice, invoiceList);
+        invoiceAdapter = new InvoiceAdapter(R.layout.item_invoice, invoiceInfoList);
         invoiceAdapter.setOnBaseAdapterItemClickListener(this);
         rvInvoiceContent.setLayoutManager(new LinearLayoutManager(this));
 //        rvCartContent.setHasFixedSize(true);
@@ -202,12 +202,15 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
 
     @Override
     public void onSuccess(Object data) {
+        invoiceInfoList  = (List<InvoiceInfo>) data;
+//        invoiceAdapter.notifyDataSetChanged();
+        invoiceAdapter.notify();
 
     }
 
     @Override
     public void onFailureMessage(String msg) {
-
+       ToastUtil.showShort(msg);
     }
 
     @Override

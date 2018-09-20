@@ -168,7 +168,9 @@ public class UrlConstants {
         public static final String URL_OUT_TRADE_NO = "419";//  OUT_TRADE_NO
         public static final String URL_OUT_CHECK_ORDER= "420";//  OUT_TRADE_NO
         public static final String URL_WX_ORDER= "421";//
-        public static final String URL_UPDATE_EXPRESSTIME = "422";//todo update expresstime
+        public static final String URL_UPDATE_EXPRESSTIME = "422";//更新送货时间
+        public static final String URL_INVOICE_LIST = "423";//发票列表
+        public static final String URL_SUBMIT_INVOICE= "424";//提交发票申请
         //关注好友
         public static final String FRIEDNS_KEEP = "501";
         //取消关注

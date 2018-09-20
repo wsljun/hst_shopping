@@ -16,6 +16,7 @@
         android:orientation="horizontal"
         android:layout_below="@+id/title"
         android:background="#76ff8c00"
+        android:visibility="gone"
         >
         <TextView
             android:id="@+id/tv_invoice_msg"

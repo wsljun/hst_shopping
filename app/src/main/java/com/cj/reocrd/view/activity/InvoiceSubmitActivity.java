@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -17,6 +18,8 @@ import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.InvoiceContract;
 import com.cj.reocrd.presenter.InvoicePresenter;
+import com.cj.reocrd.utils.ConstantsUtils;
+import com.cj.reocrd.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -69,14 +72,17 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
     TextView tvBtnInvocieSubmit;
 
     private String invoiceType ,invoiceInfo,invoiceValue,email,
-    invoiceName,invoicePhone,invoiceFullAddr;
-    public  final static String KEY_INVALUE = "INVALUE";
+            invoiceName,invoicePhone,invoiceFullAddr,head;
     private final int IN_TYPE = 1;
     private final int IN_INFO = 2;
     private  int  type = 0;
     public final static String TAG = "INVOICE_SUBMIT";
     private final  String IN_DZ = "电子发票";
     private final  String IN_ZZ = "纸质发票";
+    private String sn;// 订单号
+    public static final String KEY_SN = "SN";
+    public static final String KEY_MONEY = "money";
+    private String corp, code;
 
 
     @Override
@@ -87,13 +93,14 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
     @Override
     public void initData() {
         super.initData();
-        invoiceValue = getIntent().getStringExtra(KEY_INVALUE);
+        invoiceValue = getIntent().getStringExtra(KEY_MONEY);
+        sn = getIntent().getStringExtra(KEY_SN);
     }
 
     @Override
     public void initView() {
         titleCenter.setText("开票信息");
-        tvInvoiceValue.setText(invoiceValue);
+        tvInvoiceValue.setText(ConstantsUtils.RMB+invoiceValue);
     }
 
     @Override
@@ -112,15 +119,16 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
             case R.id.fl_invoice_type:
                 //  发票类型
                 type = IN_TYPE;
-                chooseDialog("请选择发票类型",IN_DZ,IN_ZZ);
+//                chooseDialog("请选择发票类型",IN_DZ,IN_ZZ);
                 break;
             case R.id.fl_invoice_info:
                 //  发票内容
                 type = IN_INFO;
-                chooseDialog("请选择发票内容","商品明细","商品类别");
+//                chooseDialog("请选择发票内容","商品明细","商品类别");
                 break;
             case R.id.cb_invoice_1:
                 //  抬头 个人
+                head = "1";
                 cbInvoice1.setChecked(true);
                 cbInvoice2.setChecked(false);
                 editCName.setVisibility(View.GONE);
@@ -128,19 +136,42 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
                 break;
             case R.id.cb_invoice_2:
                 // : 2018/9/11  企业
+                head = "2";
                 cbInvoice1.setChecked(false);
                 cbInvoice2.setChecked(true);
                 editCName.setVisibility(View.VISIBLE);
                 editCNum.setVisibility(View.VISIBLE);
                 break;
             case R.id.fl_address:
-                // TODO: 2018/9/11  收件人信息，姓名，地址，电话。
+                // : 2018/9/11  收件人信息，姓名，地址，电话。
                 Bundle bundle = new Bundle();
                 bundle.putString("type", TAG);
                 startActivityForResult(AddressActivity.class, bundle, 1);
                 break;
             case R.id.tv_btn_invocie_submit:
                 // TODO: 2018/9/11 提交
+                email = edInvoiceEmail.getText().toString();
+                if (TextUtils.isEmpty(email)) {
+                    ToastUtil.showShort("邮箱必须填写！");
+                    return;
+                }
+                if (TextUtils.isEmpty(invoiceInfo)) {
+                    ToastUtil.showShort("请选择收件人！");
+                    return;
+                }
+                if("2".equals(head)){
+                    corp = editCName.getText().toString();
+                    code = editCNum.getText().toString();
+                    if (TextUtils.isEmpty(corp)) {
+                        ToastUtil.showShort("请填写单位名称！");
+                        return;
+                    }
+                    if (TextUtils.isEmpty(code)) {
+                        ToastUtil.showShort("请填写纳税识别号！");
+                        return;
+                    }
+                }
+                mPresenter.subimitInvoiceInfo(uid,sn,head,corp,code,invoiceInfo,invoiceName,invoicePhone,email);
                 break;
         }
     }
@@ -196,6 +227,9 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
             case RESULT_OK:
                 Bundle b = data.getExtras();
                 String str = b.getString("personInfo");
+                if(str.contains("null")){
+                    return;
+                }
                 String [] strs = str.split(",");
                 invoiceName = strs[0];
                 invoicePhone = strs[1];
