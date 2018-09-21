@@ -131,6 +131,8 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     FrameLayout mFrameLayout;
     @BindView(R.id.banner_detail)
     Banner banner;
+    @BindView(R.id.tv_merAtt)
+    TextView tvMerAtt;
 
     private static String goodsID = "";// 商品ID
     public static GoodsDetailsBean goodsDetailsBean;
@@ -183,6 +185,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         unit = goodsDetailsBean.getUnit();
         goodOldPrice.setText(ConstantsUtils.RMB+goodsDetailsBean.getOldprice());
         titleCenter.setText(goodsDetailsBean.getName());
+        titleCenter.setMaxEms(10);
         goodName.setText(goodsDetailsBean.getName());
         goodBrandTv.setText(goodsDetailsBean.getBrand());
         goodPrice.setText(ConstantsUtils.RMB+price);
@@ -193,6 +196,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         if("1".equals(goodsDetailsBean.getIscollect())){
             setCollectImg(true);
         }
+        tvMerAtt.setText(goodsDetailsBean.getMerAtt());
         setBannerView(goodsDetailsBean.getImgUrlL());
         new Thread(new Runnable() {
             @Override
@@ -326,7 +330,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                 @Override
                 public CharSequence getLabelText(TextView label, int position, SkuBean data) {
                     //根据data和position返回label需要显示的数据。
-                    String s = data.getNum()+unit;
+                    String s = data.getNum();//+unit;
                     return s;
                 }
             });

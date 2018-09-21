@@ -101,7 +101,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    >
 
                     <ImageView
                         android:id="@+id/good_conllect_iv"
@@ -136,7 +137,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/view1"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    >
 
                     <TextView
                         android:id="@+id/good_act_tv"
@@ -165,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="@string/good_detail_num"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorButton"
                     android:textSize="14sp" />
 
             </RelativeLayout>
@@ -185,6 +188,7 @@
                     android:background="@color/colorWhite"
                     android:gravity="center_vertical"
                     android:text="@string/good_detail_shit"
+                    android:paddingLeft="10dp"
                     android:textSize="14sp" />
                 <Button
                     android:id="@+id/btn_comment"
@@ -247,15 +251,13 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
-                    android:visibility="gone"
                     >
 
                     <TextView
-                        android:id="@+id/good_address"
+                        android:id="@+id/tv_merAtt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="@string/good_detail_address"
                         android:textSize="12sp" />
 
                     <TextView
@@ -263,9 +265,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
-                        android:layout_toRightOf="@id/good_address"
+                        android:layout_toRightOf="@id/tv_merAtt"
                         android:text="@string/good_detail_address"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        />
 
                 </RelativeLayout>
                 <Button

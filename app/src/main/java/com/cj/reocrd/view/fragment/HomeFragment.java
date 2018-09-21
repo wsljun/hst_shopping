@@ -66,8 +66,12 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
     RecyclerView homeShhhRecycler;
     @BindView(R.id.home_mdss)
     LinearLayout homeMdss;
+    @BindView(R.id.home_lmsj)
+    LinearLayout homeLmsj;
     @BindView(R.id.home_mdss_recycler)
     RecyclerView homeMdssRecycler;
+    @BindView(R.id.home_lmsj_recycler)
+    RecyclerView homeLmsjRecycler;
     @BindView(R.id.home_pzsh)
     LinearLayout homePzsh;
     @BindView(R.id.home_pzsh_recycler)
@@ -91,6 +95,8 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
     private List<GoodsBean> pzshList;
     private HomeMdssAdapter homeChwlAdapter;
     private List<GoodsBean> chwlList;
+    private HomeMdssAdapter homeLmsjAdapter;
+    private List<GoodsBean> lmsjList;
 
     private int size = 20;  //pageSize
     private int pageno = 0; // 页码
@@ -119,6 +125,7 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
         pzshList = new ArrayList<>();
         chwlList = new ArrayList<>();
         images = new ArrayList<>();
+        lmsjList = new ArrayList<>();
     }
 
     @Override
@@ -210,6 +217,34 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
             public void doDetailClick(int position) {
                 goodBundle.clear();
                 goodBundle.putString("goodsID", mdssList.get(position).getId());
+                startActivity(GoodDetailActivity.class, goodBundle);
+            }
+
+        });
+    }
+    private void initLmsj() {
+        homeLmsjAdapter = new HomeMdssAdapter(mActivity, lmsjList);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 4, GridLayoutManager.VERTICAL, false);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position < 4) {
+                    return 2;
+                }
+                if (position >= 4) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+        homeLmsjRecycler.setLayoutManager(gridLayoutManager);
+        homeLmsjRecycler.setNestedScrollingEnabled(false);
+        homeLmsjRecycler.setAdapter(homeLmsjAdapter);
+        homeLmsjAdapter.setOnItemListener(new HomeMdssAdapter.OnItemListener() {
+            @Override
+            public void doDetailClick(int position) {
+                goodBundle.clear();
+                goodBundle.putString("goodsID", lmsjList.get(position).getId());
                 startActivity(GoodDetailActivity.class, goodBundle);
             }
 
@@ -369,6 +404,15 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
                         homeShhh.setVisibility(View.VISIBLE);
                     } else {
                         homeShhh.setVisibility(View.GONE);
+                    }
+                    //联盟商家
+                    if (null != homeBean.getMdss() && homeBean.getMdss().size() > 0) {
+                        lmsjList.clear();
+                        lmsjList.addAll(homeBean.getMdss());
+                        initLmsj();
+                        homeLmsj.setVisibility(View.VISIBLE);
+                    } else {
+                        homeLmsj.setVisibility(View.GONE);
                     }
                     //摩登时尚
                     if (null != homeBean.getMdss() && homeBean.getMdss().size() > 0) {
