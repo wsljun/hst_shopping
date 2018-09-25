@@ -36,6 +36,7 @@ public class VerificationCodeInput extends ViewGroup {
     private final static String TYPE_TEXT = "text";
     private final static String TYPE_PASSWORD = "password";
     private final static String TYPE_PHONE = "phone";
+    private final static String TYPE_NUMBERPASSWORD = "numberPassord";
 
     private static final String TAG = "VerificationCodeInput";
     private int box = 4;
@@ -44,8 +45,8 @@ public class VerificationCodeInput extends ViewGroup {
     private int childHPadding = 14;
     private int childVPadding = 14;
     private String inputType = TYPE_PASSWORD;
-    private Drawable boxBgFocus = null;
     private Drawable boxBgNormal = null;
+    private Drawable boxBgFocus = null;
     private Listener listener;
 
     public VerificationCodeInput(Context context, int box) {
@@ -146,7 +147,9 @@ public class VerificationCodeInput extends ViewGroup {
                 editText.setInputType(InputType.TYPE_CLASS_TEXT);
             } else if (TYPE_PHONE.equals(inputType)){
                 editText.setInputType(InputType.TYPE_CLASS_PHONE);
-
+            } else if (TYPE_NUMBERPASSWORD.equals(inputType)){
+                editText.setInputType(InputType. TYPE_CLASS_NUMBER);
+                editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
             editText.setId(i);
             editText.setEms(1);
