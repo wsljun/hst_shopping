@@ -127,7 +127,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
 //                imgURls.add(OrderActivity.odlist.get(i).getImgurl());
 //            }
 //        }
-//        mPresenter.getOrderDetail(oid);
+        mPresenter.getOrderDetail(oid);
     }
 
     @Override
@@ -136,8 +136,9 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
         updateAddress();
 //        if (null != goodsDetails) {
         tvGoodsNum.setText(goodsNum + "件商品");
-        tvGoodsPrice.setText("￥"+totalPrice);
-        goodTotalPrice.setText("￥"+totalPrice);
+//        tvGoodsPrice.setText("￥"+totalPrice);
+//        goodTotalPrice.setText("￥"+totalPrice);
+//        tvFreight.setText("￥");
 //            ImageLoaderUtils.display(this, ivGoodsImg, UrlConstants.BASE_URL + goodsDetails.getImgurl());
 //        }
 
@@ -252,12 +253,15 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
 
     @Override
     public void updateOrderInfo(OrderDetail orderDetail) {
-        for (int i = 0; i < orderDetail.getOdlist().size(); i++) {
-            imgURls.add(orderDetail.getOdlist().get(i).getImgurl());
-        }
-        goodsNum = imgURls.size();
-        tvGoodsNum.setText(goodsNum + "件商品");
-        mAdapter.notifyDataSetChanged();
+//        for (int i = 0; i < orderDetail.getOdlist().size(); i++) {
+//            imgURls.add(orderDetail.getOdlist().get(i).getImgurl());
+//        }
+//        mAdapter.notifyDataSetChanged();
+//        goodsNum = imgURls.size();
+//        tvGoodsNum.setText(goodsNum + "件商品");
+        tvGoodsPrice.setText("￥"+orderDetail.getAmount());
+        goodTotalPrice.setText("￥"+orderDetail.getAllamount());
+        tvFreight.setText("￥"+orderDetail.getExamount());
     }
 
 }

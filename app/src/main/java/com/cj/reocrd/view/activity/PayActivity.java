@@ -181,7 +181,7 @@ public class PayActivity extends BaseActivity<MyPrresenter> implements MyContrac
 
     @Override
     public void initPresenter() {
-
+        mPresenter.setVM(this);
     }
 
 
@@ -601,10 +601,13 @@ public class PayActivity extends BaseActivity<MyPrresenter> implements MyContrac
                 break;
             case 2:
                 if ("1".equals(response.getStatusCode())) {
-                    Bundle bd = new Bundle();
-                    bd.putSerializable("user", userBean);
-                    startActivity(MyMoneyActivity.class, bd);
+//                    Bundle bd = new Bundle();
+//                    bd.putSerializable("user", userBean);
+//                    startActivity(MyMoneyActivity.class, bd);
+                    tvBtnPay.setClickable(false);
+                    sendPaySuccess();
                 } else {
+                    tvBtnPay.setClickable(true);
                     ToastUtil.showToastS(this, response.getMessage());
                 }
                 break;

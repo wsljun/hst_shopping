@@ -19,9 +19,18 @@ public class HomeBean {
 
     private List<GoodsBean> shhh; //实惠好货
     private List<GoodsBean> mdss; //摩登时尚
+    private List<GoodsBean> lmsj; //联盟商家
     private List<GoodsBean> pzsh; //品质生活
     private List<GoodsBean> chwl; //
     private List<InvoiceInfo> list; //
+
+    public List<GoodsBean> getLmsj() {
+        return lmsj;
+    }
+
+    public void setLmsj(List<GoodsBean> lmsj) {
+        this.lmsj = lmsj;
+    }
 
     public List<InvoiceInfo> getList() {
         return list;

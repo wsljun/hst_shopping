@@ -497,7 +497,9 @@
 
                         <FrameLayout
                             android:id="@+id/mine_zp"
-                            style="@style/mine_frame">
+                            style="@style/mine_frame"
+                            android:visibility="gone"
+                            >
 
 
                             <TextView

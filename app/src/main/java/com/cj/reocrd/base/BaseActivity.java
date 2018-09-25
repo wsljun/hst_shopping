@@ -109,7 +109,7 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
         // 设置竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        translucentStatusBar();
+//        translucentStatusBar();
 //        initState();
     }
     private void translucentStatusBar() {

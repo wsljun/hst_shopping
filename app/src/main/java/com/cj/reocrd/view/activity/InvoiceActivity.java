@@ -89,7 +89,6 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
 
     @Override
     public void initView() {
-        // todo
         titleCenter.setText("发票开具");
 //        titleRight.setText("发票规则");
 //        titleRight.setVisibility(View.VISIBLE);
@@ -99,7 +98,6 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
 
     @Override
     public void initPresenter() {
-        // todo p
         mPresenter.setVM(this);
     }
 
@@ -114,14 +112,14 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
 
                 break;
             case R.id.all_choose_invoice:
-                // todo 开票全选
+                //  开票全选
                 setTotalPrice(true,0);
                 break;
             case R.id.next:
                 if(!isCan){
                     return;
                 }
-                // todo 进入开票界面
+                //  进入开票界面
                 Bundle b = new Bundle();
                 b.putString(InvoiceSubmitActivity.KEY_MONEY,String.valueOf(totalInvoiceValue));
                 b.putString(InvoiceSubmitActivity.KEY_SN,countSN);
@@ -148,6 +146,8 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
         LogUtil.d(TAG,"onResume");
         if(isPause){
             isPause = false;
+            invoiceInfoList.clear();
+            pageno = 0;
             updateList();
         }
     }
@@ -169,7 +169,6 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
 
     @Override
     public void onAdapterItemClickListener(View view, int position) {
-        // todo 列表子项被选中，更新发票价格
         if(view.getId() == R.id.invoice_item_choose){
             setTotalPrice(false,0);
         }
@@ -201,7 +200,7 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
             next.setBackgroundColor(getResources().getColor(R.color.color2));
         }else{
             isCan = false;
-            next.setBackgroundColor(getResources().getColor(R.color.colorTexthintGrey2));
+            next.setBackgroundColor(getResources().getColor(R.color.colorTexthintGrey));
         }
     }
 
