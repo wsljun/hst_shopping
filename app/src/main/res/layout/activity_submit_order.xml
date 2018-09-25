@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/rl_address"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:background="@drawable/price_bg"
         android:layout_below="@+id/submit_order_title"
         android:layout_marginBottom="2dp"
@@ -62,7 +62,7 @@
     <FrameLayout
         android:id="@+id/fl_address"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:background="@drawable/price_bg"
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="8dp"
@@ -139,6 +139,16 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:text="全部时间"
+                android:layout_weight="1"
+                android:checked="true"
+                android:textColor="@color/black"
+                />
+            <RadioButton
+                android:id="@+id/rb_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="自提"
                 android:layout_weight="1"
                 android:checked="true"
                 android:textColor="@color/black"

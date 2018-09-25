@@ -19,6 +19,7 @@ import com.cj.reocrd.utils.CountDownTimerUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.view.view.VerificationCode.VerificationCodeInput;
 import com.cj.reocrd.view.view.verificationCodeView.VerificationCodeView;
 
 import butterknife.BindView;

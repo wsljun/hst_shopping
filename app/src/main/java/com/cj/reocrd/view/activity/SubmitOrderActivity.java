@@ -107,7 +107,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
 //        orderBean = getIntent().getParcelableExtra("orderBean");
         oid = getIntent().getStringExtra(BUNDLE_KEY_OID); // 511cbafb-1b74-476d-a3bf-05908d3a0f21
         type = getIntent().getStringExtra(BUNDLE_KEY_TYPE);
-        totalPrice = getIntent().getStringExtra(BUNDLE_KEY_TOTALPRICE);
+//        totalPrice = getIntent().getStringExtra(BUNDLE_KEY_TOTALPRICE);
         // init photo list
         imgURls = new ArrayList<>();
         if (TYPE_FOR_DETAIL.equals(type)) {
@@ -259,8 +259,9 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
 //        mAdapter.notifyDataSetChanged();
 //        goodsNum = imgURls.size();
 //        tvGoodsNum.setText(goodsNum + "件商品");
+        totalPrice = orderDetail.getAllamount();
         tvGoodsPrice.setText("￥"+orderDetail.getAmount());
-        goodTotalPrice.setText("￥"+orderDetail.getAllamount());
+        goodTotalPrice.setText("￥"+totalPrice);
         tvFreight.setText("￥"+orderDetail.getExamount());
     }
 
