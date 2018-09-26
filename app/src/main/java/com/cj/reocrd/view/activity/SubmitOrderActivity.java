@@ -94,6 +94,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     private final String exp_time_1 = "1";// 工作日
     private final String exp_time_2 = "2";// 周六日
     private final String exp_time_3 = "3";// 全部时间
+    private final String exp_time_4 = "4";// 自提
     private String expTime  = exp_time_3;
 
     @Override
@@ -107,7 +108,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
 //        orderBean = getIntent().getParcelableExtra("orderBean");
         oid = getIntent().getStringExtra(BUNDLE_KEY_OID); // 511cbafb-1b74-476d-a3bf-05908d3a0f21
         type = getIntent().getStringExtra(BUNDLE_KEY_TYPE);
-        totalPrice = getIntent().getStringExtra(BUNDLE_KEY_TOTALPRICE);
+//        totalPrice = getIntent().getStringExtra(BUNDLE_KEY_TOTALPRICE);
         // init photo list
         imgURls = new ArrayList<>();
         if (TYPE_FOR_DETAIL.equals(type)) {
@@ -160,6 +161,9 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
                         break;
                     case R.id.rb_3:
                         expTime = exp_time_3;
+                        break;
+                    case R.id.rb_4:
+                        expTime = exp_time_4;
                         break;
                 }
 //                ToastUtil.showShort(expTime);// TODO: 2018/9/14  422 更新送货时间
@@ -259,8 +263,9 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
 //        mAdapter.notifyDataSetChanged();
 //        goodsNum = imgURls.size();
 //        tvGoodsNum.setText(goodsNum + "件商品");
+        totalPrice = orderDetail.getAllamount();
         tvGoodsPrice.setText("￥"+orderDetail.getAmount());
-        goodTotalPrice.setText("￥"+orderDetail.getAllamount());
+        goodTotalPrice.setText("￥"+totalPrice);
         tvFreight.setText("￥"+orderDetail.getExamount());
     }
 

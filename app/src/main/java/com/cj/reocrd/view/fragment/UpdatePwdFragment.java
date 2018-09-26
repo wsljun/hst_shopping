@@ -126,7 +126,7 @@ public class UpdatePwdFragment extends BaseFragment<IndexPresenter> implements I
                 }
                 break;
             case R.id.title_left:
-                getMyActivity().getViewPager().setCurrentItem(0);
+                getIndexActivity().getVpLogin().setCurrentItem(1);
                 break;
         }
     }

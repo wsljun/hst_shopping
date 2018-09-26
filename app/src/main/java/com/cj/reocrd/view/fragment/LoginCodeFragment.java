@@ -115,7 +115,7 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
     }
 
 
-    @OnClick({R.id.login, R.id.login_getcode})
+    @OnClick({R.id.login, R.id.login_getcode,R.id.title_left})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login:
@@ -147,6 +147,9 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
                 } else {
                     ToastUtil.showToastS(mActivity, R.string.input_phone);
                 }
+                break;
+            case R.id.title_left:
+                getIndexActivity().getVpLogin().setCurrentItem(1);
                 break;
         }
     }
