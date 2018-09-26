@@ -94,6 +94,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     private final String exp_time_1 = "1";// 工作日
     private final String exp_time_2 = "2";// 周六日
     private final String exp_time_3 = "3";// 全部时间
+    private final String exp_time_4 = "4";// 自提
     private String expTime  = exp_time_3;
 
     @Override
@@ -160,6 +161,9 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
                         break;
                     case R.id.rb_3:
                         expTime = exp_time_3;
+                        break;
+                    case R.id.rb_4:
+                        expTime = exp_time_4;
                         break;
                 }
 //                ToastUtil.showShort(expTime);// TODO: 2018/9/14  422 更新送货时间
