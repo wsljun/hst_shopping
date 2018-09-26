@@ -62,13 +62,13 @@ public class SearchActivity extends BaseActivity<MyPrresenter> implements MyCont
     private int pageno = 0;
     private String label = "0";  // 价格0，热门1，新品2，促销3
     private final String SORT_ASC = "asc"; // 升序
-    private final String SORT_DESC= "desc"; // 降序
+    private final String SORT_DESC = "desc"; // 降序
     private String sort_label = SORT_ASC; // 默认值
     private String searchStr = "好货";
     private final String TAG = "SearchActivity";
     private List<RadioButton> radioButtons = new ArrayList<>();
     private Drawable drawableLabel;
-    private List<GoodsBean > goodsBeanList;
+    private List<GoodsBean> goodsBeanList;
 
     @Override
     public int getLayoutId() {
@@ -78,29 +78,29 @@ public class SearchActivity extends BaseActivity<MyPrresenter> implements MyCont
     @Override
     public void initData() {
         super.initData();
-        drawableLabel =getResources().getDrawable(R.mipmap.zonghexuanze);
-        mPresenter.getSearchData(searchStr,sort_label,label,pagesize, pageno);
+        drawableLabel = getResources().getDrawable(R.mipmap.zonghexuanze);
+        mPresenter.getSearchData(searchStr, sort_label, label, pagesize, pageno);
     }
 
     @Override
     public void initView() {
-        titleCenter.setText("五谷杂粮");
+        titleCenter.setText("搜索");
         rgSearchLabel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton radioButton = findViewById(checkedId);
                 radioButton.setTextColor(getResources().getColor(R.color.colorButton));
-                if(!radioButtons.contains(radioButton)){
+                if (!radioButtons.contains(radioButton)) {
                     radioButtons.add(radioButton);
                 }
-                for (RadioButton rb : radioButtons){
-                    if(rb.getId()!=radioButton.getId()){
+                for (RadioButton rb : radioButtons) {
+                    if (rb.getId() != radioButton.getId()) {
                         rb.setTextColor(getResources().getColor(R.color.colorBlack));
-                        rb.setCompoundDrawables(null,null,null,null);
-                    }else{
-                        drawableLabel.setBounds(0,0,30,30);
-                        radioButton.setCompoundDrawables(null,null, drawableLabel, null);
+                        rb.setCompoundDrawables(null, null, null, null);
+                    } else {
+                        drawableLabel.setBounds(0, 0, 30, 30);
+                        radioButton.setCompoundDrawables(null, null, drawableLabel, null);
                     }
                 }
                 label = String.valueOf(radioButton.getTag());
@@ -112,7 +112,7 @@ public class SearchActivity extends BaseActivity<MyPrresenter> implements MyCont
     }
 
     private void initRecycleView() {
-        mHomeTabAdapter = new HomeAdapter(R.layout.item_good, null);
+        mHomeTabAdapter = new HomeAdapter(R.layout.item_good_search, null);
         recyclerViewContent.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewContent.setHasFixedSize(true);
         //设置适配器加载动画
@@ -143,7 +143,7 @@ public class SearchActivity extends BaseActivity<MyPrresenter> implements MyCont
         mPresenter.setVM(this);
     }
 
-    @OnClick({R.id.search_iv,R.id.title_right,R.id.title_left})
+    @OnClick({R.id.search_iv, R.id.title_right, R.id.title_left})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.search_iv:
@@ -161,27 +161,27 @@ public class SearchActivity extends BaseActivity<MyPrresenter> implements MyCont
 
     private void setSearchStr() {
         String et_str = editTextSearch.getText().toString();
-        if("".equals(et_str)) {
+        if ("".equals(et_str)) {
             searchStr = "";
-        }else{
+        } else {
             searchStr = et_str;
             updateData();
         }
     }
 
-    private void  updateData(){
-        mPresenter.getSearchData(searchStr,sort_label,label,pagesize, pageno);
+    private void updateData() {
+        mPresenter.getSearchData(searchStr, sort_label, label, pagesize, pageno);
     }
 
 
     @Override
     public void onSuccess(Object data) {
         HomeBean homeBean = (HomeBean) data;
-        if(!CollectionUtils.isNullOrEmpty(homeBean.getMlist())){
+        if (!CollectionUtils.isNullOrEmpty(homeBean.getMlist())) {
             goodsBeanList = new ArrayList<>();
             goodsBeanList.addAll(homeBean.getMlist());
             mHomeTabAdapter.setNewData(goodsBeanList);
-        }else{
+        } else {
             ToastUtil.showShort("暂时没有数据！");
         }
         mRefreshLayout.endRefreshing();
@@ -202,9 +202,9 @@ public class SearchActivity extends BaseActivity<MyPrresenter> implements MyCont
 
     @Override
     public void onLoadMoreRequested() {
-        LogUtil.d(TAG,"onLoadMoreRequested");
+        LogUtil.d(TAG, "onLoadMoreRequested");
 //        pagesize += 20;
-        mPresenter.getSearchData(searchStr,sort_label,label,pagesize, pageno);
+        mPresenter.getSearchData(searchStr, sort_label, label, pagesize, pageno);
     }
 
     @Override

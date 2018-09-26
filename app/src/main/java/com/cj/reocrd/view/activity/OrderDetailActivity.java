@@ -83,7 +83,7 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
     private OrderDetailAdapter mAdapter;
     private OrderExpinInfoAdapter mExpinInfoAdapter;
     private List<OrderBean.OdlistBean> mOrderDetailGoodsDatas;
-    private List<OrderDetail.ExpinfoBean.DataBean> expinfos ; // 快递信息
+    private List<OrderDetail.ExpinfoBean.DataBean> expinfos; // 快递信息
 
     @Override
     public int getLayoutId() {
@@ -106,12 +106,12 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
     public void initView() {
         titleCenter.setText("订单详情");
         mAdapter = new OrderDetailAdapter(this, mOrderDetailGoodsDatas);
-        mExpinInfoAdapter = new OrderExpinInfoAdapter(R.layout.item_order_expininfos,expinfos);
+        mExpinInfoAdapter = new OrderExpinInfoAdapter(R.layout.item_order_expininfos, expinfos);
         // 订单中 不同商品图片展示
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(VERTICAL);
         rlGoodsImg.setLayoutManager(linearLayoutManager);
-        LinearLayoutManager layoutManager =  new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(VERTICAL);
         rlExpinInfos.setLayoutManager(layoutManager);
         //设置适配器
@@ -136,12 +136,17 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
         tvSubmitOrderTime.setText("下单时间：" + orderDetail.getCreatetime());
 //        tvArriveTime.setText("预计送达：" + null);
         String exp = orderDetail.getExpresstime();
-        if("1".equals(exp)){
+        if ("1".equals(exp)) {
             tvExpTime.setText("送货时间：仅工作日配送");
-        }else if("2".equals(exp)){
+        }
+        if ("2".equals(exp)) {
             tvExpTime.setText("送货时间：仅周六日配送");
-        }else{
+        }
+        if ("3".equals(exp)) {
             tvExpTime.setText("送货时间：周一到周日皆可配送");
+        }
+        if ("4".equals(exp)) {
+            tvExpTime.setText("自提");
         }
         setPayWay(orderDetail.getWay());
         setOrderStatus(orderDetail.getStatus());
@@ -152,7 +157,7 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
      */
     private void setPayWay(String s) {
         String way = "";
-        switch (s){
+        switch (s) {
             case TYPE_ALIPAY:
                 way = "支付宝";
                 break;
@@ -172,11 +177,12 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
                 way = "暂无";
                 break;
         }
-        tvPayWay.setText("支付方式：" +way );
+        tvPayWay.setText("支付方式：" + way);
     }
 
     /**
-     *    1.未付款   2 待发货  3待收货，4待评价 5完成  6退货中 7 退货完成 8自行取消 9退货被拒绝
+     * 1.未付款   2 待发货  3待收货，4待评价 5完成  6退货中 7 退货完成 8自行取消 9退货被拒绝
+     *
      * @param s
      */
     private void setOrderStatus(String s) {
@@ -217,8 +223,8 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
                 break;
         }
         tvOrderStatus.setText(str_status);
-        if(!CollectionUtils.isNullOrEmpty(orderDetail.getExpinfo().getData())
-                && isExpinInfo){
+        if (!CollectionUtils.isNullOrEmpty(orderDetail.getExpinfo().getData())
+                && isExpinInfo) {
             expinfos = orderDetail.getExpinfo().getData();
             rlExpinInfos.setVisibility(View.VISIBLE);
             mExpinInfoAdapter.setNewData(expinfos);

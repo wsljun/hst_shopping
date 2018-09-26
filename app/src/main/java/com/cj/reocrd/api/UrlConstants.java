@@ -7,7 +7,7 @@ public class UrlConstants {
     // test
     public final static String BASE_URL_MALL = "http://mall.xdiandian.cn/mall/"; //http://110.243.30.72:8101/mall
     // BaseURl
-    public static String BASE_URL = BASE_URL_RDYG;
+    public static String BASE_URL = BASE_URL_MALL;
     public final static String URL_ABOUT = BASE_URL+"api/about";
     public final static String URL_HELP = BASE_URL+"api/help";
     public final static String URL_GOODS_DETAIL = BASE_URL+"api/meDetail?id=";

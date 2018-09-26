@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.TextureView;
@@ -24,6 +25,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -219,7 +221,11 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
 //            Log.e("imgUrlL", "setBannerView: " + UrlConstants.BASE_URL + s );
             images.add(UrlConstants.BASE_URL + s);
         }
-
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) banner.getLayoutParams();
+        params.height = dm.widthPixels;
+        params.width = dm.widthPixels;
+        banner.setLayoutParams(params);
         //轮播图
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         banner.setIndicatorGravity(BannerConfig.CENTER);
