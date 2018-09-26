@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ public class HomeShhhAdapter extends RecyclerView.Adapter<HomeShhhAdapter.MyHold
     private List<GoodsBean> list;
     private Context mContext;
     private LayoutInflater inflater;
-    private byte [] bitmapByte;
+    private byte[] bitmapByte;
     private Bitmap shareGoodBitmap;
 
     public HomeShhhAdapter(Context context, List<GoodsBean> list) {
@@ -47,11 +48,17 @@ public class HomeShhhAdapter extends RecyclerView.Adapter<HomeShhhAdapter.MyHold
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
         GoodsBean goodsBean = list.get(position);
+        DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) holder.goodPic.getLayoutParams();
+        params.width = dm.widthPixels;
+        params.height = params.width-100;
+        holder.goodPic.setLayoutParams(params);
         ImageLoaderUtils.display(mContext, holder.goodPic, UrlConstants.BASE_URL + goodsBean.getImgurl());
+
         holder.goodName.setText(goodsBean.getName());
         holder.goodPrice.setText("会员价￥" + goodsBean.getPrice());
         holder.goodOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.goodOldPrice.setText("零售价："+goodsBean.getOldprice());
+        holder.goodOldPrice.setText("零售价：" + goodsBean.getOldprice());
         holder.goodPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,11 +80,11 @@ public class HomeShhhAdapter extends RecyclerView.Adapter<HomeShhhAdapter.MyHold
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if(null == bitmapByte){
-                    shareGoodBitmap =  ImageLoaderUtils.getbitmap(
-                            UrlConstants.BASE_URL+goodsBean.getImgurl());
-                    if(null != shareGoodBitmap){
-                        File shareFile = ImageLoaderUtils.saveImage(shareGoodBitmap,"homeshare"+position);
+                if (null == bitmapByte) {
+                    shareGoodBitmap = ImageLoaderUtils.getbitmap(
+                            UrlConstants.BASE_URL + goodsBean.getImgurl());
+                    if (null != shareGoodBitmap) {
+                        File shareFile = ImageLoaderUtils.saveImage(shareGoodBitmap, "homeshare" + position);
                         goodsBean.setImgSharePath(shareFile.getAbsolutePath());
                     }
                 }
@@ -126,17 +133,17 @@ public class HomeShhhAdapter extends RecyclerView.Adapter<HomeShhhAdapter.MyHold
         }
     }
 
-    private void saveImg(String imgurl){
+    private void saveImg(String imgurl) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                        if(null == bitmapByte){
-                            shareGoodBitmap =  ImageLoaderUtils.getbitmap(
-                                    UrlConstants.BASE_URL+imgurl);
-                            if(null != shareGoodBitmap){
-                                File shareFile = ImageLoaderUtils.saveImage(shareGoodBitmap,"share");
-                            }
-                        }
+                if (null == bitmapByte) {
+                    shareGoodBitmap = ImageLoaderUtils.getbitmap(
+                            UrlConstants.BASE_URL + imgurl);
+                    if (null != shareGoodBitmap) {
+                        File shareFile = ImageLoaderUtils.saveImage(shareGoodBitmap, "share");
+                    }
+                }
             }
         }).start();
     }

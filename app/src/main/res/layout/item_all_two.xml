@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:background="@color/colorWhite"
@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/itme_all_goods_pic"
         android:layout_width="110dp"
-        android:layout_height="80dp"
+        android:layout_height="110dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="4dp"
         android:scaleType="fitXY" />
@@ -19,10 +19,9 @@
         android:id="@+id/item_all_goods_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
         android:textColor="@color/colorBlack"
         android:textSize="14sp"
-        android:text="eeed"
+        android:layout_margin="4dp"
         android:maxLines="2"
         android:minLines="2" />
 

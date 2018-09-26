@@ -2,6 +2,7 @@ package com.cj.reocrd.view.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,17 @@ public class HomeMdssAdapter extends RecyclerView.Adapter<HomeMdssAdapter.MyHold
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
         GoodsBean goodsBean = list.get(position);
+        DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) holder.mdssPic.getLayoutParams();
+        if (position < 4) {
+            params.width = (dm.widthPixels - 100) / 2;
+            params.height = params.width;
+        }
+        if (position >= 4) {
+            params.width = (dm.widthPixels - 200) / 4;
+            params.height = params.width;
+        }
+        holder.mdssPic.setLayoutParams(params);
         ImageLoaderUtils.display(mContext, holder.mdssPic, UrlConstants.BASE_URL + goodsBean.getImgurl());
         holder.mdssPic.setOnClickListener(new View.OnClickListener() {
             @Override

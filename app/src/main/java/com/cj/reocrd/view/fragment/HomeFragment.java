@@ -88,22 +88,22 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
     ImageView homeShare;
 
     private HomeShhhAdapter homeShhhAdapter;
-    private List<GoodsBean> shhhList;
+    private List<GoodsBean> shhhList = new ArrayList<>();
     private HomeMdssAdapter homeMdssAdapter;
-    private List<GoodsBean> mdssList;
+    private List<GoodsBean> mdssList = new ArrayList<>();
     private HomeMdssAdapter homePzshAdapter;
-    private List<GoodsBean> pzshList;
+    private List<GoodsBean> pzshList = new ArrayList<>();
     private HomeMdssAdapter homeChwlAdapter;
-    private List<GoodsBean> chwlList;
+    private List<GoodsBean> chwlList = new ArrayList<>();
     private HomeMdssAdapter homeLmsjAdapter;
-    private List<GoodsBean> lmsjList;
+    private List<GoodsBean> lmsjList = new ArrayList<>();
 
     private int size = 20;  //pageSize
     private int pageno = 0; // 页码
     private final static String TAG = "HomeFragment";
     private Bundle goodBundle = new Bundle();
     private List<BannerData> bannerData;
-    List<String> images;
+    List<String> images = new ArrayList<>();
     int type;
     private UserBean userBean;
 
@@ -115,17 +115,6 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home;
-    }
-
-    @Override
-    public void initData() {
-        super.initData();
-        shhhList = new ArrayList<>();
-        mdssList = new ArrayList<>();
-        pzshList = new ArrayList<>();
-        chwlList = new ArrayList<>();
-        images = new ArrayList<>();
-        lmsjList = new ArrayList<>();
     }
 
     @Override
@@ -268,7 +257,7 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
         });
         homePzshRecycler.setLayoutManager(gridLayoutManager);
         homePzshRecycler.setNestedScrollingEnabled(false);
-        homePzshRecycler.setAdapter(homeMdssAdapter);
+        homePzshRecycler.setAdapter(homePzshAdapter);
         homePzshAdapter.setOnItemListener(new HomeMdssAdapter.OnItemListener() {
             @Override
             public void doDetailClick(int position) {
@@ -406,9 +395,9 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
                         homeShhh.setVisibility(View.GONE);
                     }
                     //联盟商家
-                    if (null != homeBean.getMdss() && homeBean.getMdss().size() > 0) {
+                    if (null != homeBean.getLmsj() && homeBean.getLmsj().size() > 0) {
                         lmsjList.clear();
-                        lmsjList.addAll(homeBean.getMdss());
+                        lmsjList.addAll(homeBean.getLmsj());
                         initLmsj();
                         homeLmsj.setVisibility(View.VISIBLE);
                     } else {
