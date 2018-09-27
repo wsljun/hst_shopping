@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -46,12 +47,8 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
     TextView titleCenter;
     @BindView(R.id.title_right)
     TextView titleRight;
-    @BindView(R.id.tv_invoice_msg)
-    TextView tvInvoiceMsg;
     @BindView(R.id.ll_invoice_msg)
     LinearLayout llInvoiceMsg;
-    @BindView(R.id.img_none)
-    ImageView imgNone;
     @BindView(R.id.rv_invoice_content)
     RecyclerView rvInvoiceContent;
     @BindView(R.id.refresh_layout)
@@ -64,8 +61,10 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
     TextView next;
     @BindView(R.id.rl_invoice_bottom)
     RelativeLayout rlInvoiceBottom;
+    @BindView(R.id.rg_ivoice)
+    RadioGroup rgInvoice;
+
     private final String TAG = "InvoiceActivity";
-    public static Map<Integer,Boolean> isCheckedMap = new HashMap<>();
     private InvoiceAdapter invoiceAdapter;
     private double totalInvoiceValue = 0; // 发票总金额
     private List<InvoiceInfo> invoiceInfoList;
@@ -73,6 +72,7 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
     private boolean loading;
     private String countSN;
     private boolean isCan = false;
+    private String isapply ="2";
 
 
     @Override
@@ -94,6 +94,24 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
 //        titleRight.setVisibility(View.VISIBLE);
 //        titleRight.setTextColor(getResources().getColor(R.color.colorWhite));
         initRecycleView();
+        rgInvoice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                isapply = (String) group.findViewById(checkedId).getTag();
+                switch (checkedId){
+                    case R.id.rb_isapply1: // 已开票
+                        rlInvoiceBottom.setVisibility(View.GONE);
+                        next.setBackgroundColor(getResources().getColor(R.color.colorTexthintGrey));
+                        break;
+                    case R.id.rb_isapply2: // 未开票
+                        rlInvoiceBottom.setVisibility(View.VISIBLE);
+                        break;
+                }
+                invoiceInfoList.clear();
+                invoiceAdapter.notifyDataSetChanged();
+                updateList();
+            }
+        });
     }
 
     @Override
@@ -197,7 +215,7 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
         invoiceAdapter.notifyDataSetChanged();
         if(totalInvoiceValue>0){
             isCan = true;
-            next.setBackgroundColor(getResources().getColor(R.color.color2));
+            next.setBackgroundColor(getResources().getColor(R.color.color1));
         }else{
             isCan = false;
             next.setBackgroundColor(getResources().getColor(R.color.colorTexthintGrey));
@@ -246,6 +264,6 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
     }
 
     private void updateList(){
-        mPresenter.getInvoiceList(uid,String.valueOf(pageno));
+        mPresenter.getInvoiceList(uid,String.valueOf(pageno),isapply);
     }
 }
