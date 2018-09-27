@@ -150,7 +150,6 @@
                 android:textSize="14sp"
                 android:text="自提"
                 android:layout_weight="1"
-                android:checked="true"
                 android:textColor="@color/black"
                 />
         </RadioGroup>

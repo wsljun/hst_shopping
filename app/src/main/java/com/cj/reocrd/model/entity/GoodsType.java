@@ -8,6 +8,15 @@ package com.cj.reocrd.model.entity;
 public class GoodsType {
        private String id ; // 类型id
        private String name ; // 类型名称
+       private boolean isCheck;
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+    }
 
     public String getId() {
         return id;

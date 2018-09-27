@@ -10,8 +10,6 @@ import com.cj.reocrd.base.baseadapter.BaseViewHolder;
 import com.cj.reocrd.model.entity.GoodsBean;
 import com.cj.reocrd.utils.ConstantsUtils;
 import com.cj.reocrd.utils.ImageLoaderUtils;
-import com.cj.reocrd.utils.ToastUtil;
-import com.cj.reocrd.view.fragment.CartFragment;
 import com.cj.reocrd.view.view.AmountView.AmountView;
 
 import java.util.ArrayList;
@@ -53,22 +51,11 @@ public class CarAdapter extends BaseQuickAdapter implements AmountView.OnAmountC
         });
         CheckBox checkBox =  helper.getView(R.id.car_choose);
         checkBox.setTag(position);
-//        if(CartFragment.isCheckedMap.containsKey(position)){
-//            if(CartFragment.isCheckedMap.get(position) ){
-//                checkBox.setChecked(true);
-//            }
-//        }
-//        if(cartGoods.getIsChecked() ){
-//            checkBox.setChecked(true);
-//        }
-        if(!checkBoxList.contains(checkBox)){
-            checkBoxList.add(checkBox);
-        }
+        checkBox.setChecked(cartGoods.isChecked());
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int i = (int) v.getTag();
-//                checkBoxList.get(i).setChecked(checkBoxList.get(i).isChecked());
                 mBaseItemClickListener.onAdapterItemClickListener(v,i);
             }
         });

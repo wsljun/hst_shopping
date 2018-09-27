@@ -34,8 +34,8 @@ public class SubmitOrderPresenter extends SubmitOrderContract.Presenter {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
-                    OrderDetail orderDetail = (OrderDetail) apiResponse.getResults();
-                    mView.updateOrderInfo(orderDetail);
+//                    OrderDetail orderDetail = (OrderDetail) apiResponse.getResults();
+//                    mView.updateOrderInfo(orderDetail);
                 }
             }
 
@@ -61,7 +61,7 @@ public class SubmitOrderPresenter extends SubmitOrderContract.Presenter {
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
                     AddressBean addressBean = (AddressBean) apiResponse.getResults();
-//                    mView.updateOrderInfo(orderDetail);
+                    mView.updateOrderAds(addressBean);
                 }
             }
 
@@ -86,7 +86,8 @@ public class SubmitOrderPresenter extends SubmitOrderContract.Presenter {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
-                    // TODO: 2018/9/19 exptime
+                    AddressBean addressBean = (AddressBean) apiResponse.getResults();
+                    mView.updateOrderAds(addressBean);
                 }
             }
 

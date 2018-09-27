@@ -31,7 +31,7 @@ public class AllTypeAdapter extends RecyclerView.Adapter<AllTypeAdapter.MyHolder
     private List<TextView> toolsTextViews;
 
     public interface  OnItemClickListener  {
-       void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
 
@@ -40,6 +40,7 @@ public class AllTypeAdapter extends RecyclerView.Adapter<AllTypeAdapter.MyHolder
         this.mDatas = datas;
         inflater = LayoutInflater.from(mContext);
         toolsTextViews = new ArrayList<>();
+//        mDatas.get(0).setCheck(true);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -55,19 +56,23 @@ public class AllTypeAdapter extends RecyclerView.Adapter<AllTypeAdapter.MyHolder
     @Override
     public void onBindViewHolder(MyHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.tvTypeName.setText(mDatas.get(position).getName());
-        if(!toolsTextViews.contains(holder.tvTypeName)){
-            holder.tvTypeName.setTag(holder.getLayoutPosition());
-            toolsTextViews.add(holder.tvTypeName);
-        }
-        if(position == 0){
-            changeTextColor(position);
+//        if(!toolsTextViews.contains(holder.tvTypeName)){
+//            holder.tvTypeName.setTag(holder.getLayoutPosition());
+//            toolsTextViews.add(holder.tvTypeName);
+//        }
+//        changeTextColor(position);
+        boolean isCheck = mDatas.get(position).isCheck();
+        if (!isCheck) {
+            holder.tvTypeName.setBackgroundResource(android.R.color.transparent);
+            holder.tvTypeName.setTextColor(0xff000000);
+        }else{
+            holder.tvTypeName.setBackgroundResource(android.R.color.white);
         }
         if (mOnItemClickListener != null) {
             holder.tvTypeName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = holder.getLayoutPosition();
-                    changeTextColor((Integer) holder.tvTypeName.getTag());
                     mOnItemClickListener.onItemClick(holder.itemView, position);
                 }
             });
@@ -95,15 +100,15 @@ public class AllTypeAdapter extends RecyclerView.Adapter<AllTypeAdapter.MyHolder
      * @param tag
      */
     private void changeTextColor(int tag) {
-        for (int i = 0; i < toolsTextViews.size(); i++) {
-            int t = (int) toolsTextViews.get(i).getTag();
-            if (t != tag) {
-                toolsTextViews.get(i).setBackgroundResource(android.R.color.transparent);
-                toolsTextViews.get(i).setTextColor(0xff000000);
-            }else{
-                toolsTextViews.get(i).setBackgroundResource(android.R.color.white);
-            }
-        }
+//        for (int i = 0; i < toolsTextViews.size(); i++) {
+//            int t = (int) toolsTextViews.get(i).getTag();
+//            if (t != tag) {
+//                toolsTextViews.get(i).setBackgroundResource(android.R.color.transparent);
+//                toolsTextViews.get(i).setTextColor(0xff000000);
+//            }else{
+//                toolsTextViews.get(i).setBackgroundResource(android.R.color.white);
+//            }
+//        }
 //        toolsTextViews.get(id).setTextColor(0xffff5d5e);
     }
 }

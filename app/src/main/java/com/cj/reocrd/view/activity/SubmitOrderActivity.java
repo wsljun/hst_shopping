@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.cj.reocrd.R;
 import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.SubmitOrderContract;
+import com.cj.reocrd.model.entity.AddressBean;
 import com.cj.reocrd.model.entity.GoodsDetailsBean;
 import com.cj.reocrd.model.entity.OrderBean;
 import com.cj.reocrd.model.entity.OrderDetail;
@@ -72,7 +73,7 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     private String addressDetital;
     private String totalPrice = "";
     private GoodsDetailsBean goodsDetails;
-    private String oid, aid;
+    private String oid, aid,goodPrice;
     private OrderDetail orderDetail;
     private String type;
     public static final String TYPE_FOR_DETAIL = "1";
@@ -105,10 +106,9 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     @Override
     public void initData() {
         super.initData();
-//        orderBean = getIntent().getParcelableExtra("orderBean");
         oid = getIntent().getStringExtra(BUNDLE_KEY_OID); // 511cbafb-1b74-476d-a3bf-05908d3a0f21
         type = getIntent().getStringExtra(BUNDLE_KEY_TYPE);
-//        totalPrice = getIntent().getStringExtra(BUNDLE_KEY_TOTALPRICE);
+        goodPrice = getIntent().getStringExtra(BUNDLE_KEY_TOTALPRICE);
         // init photo list
         imgURls = new ArrayList<>();
         if (TYPE_FOR_DETAIL.equals(type)) {
@@ -122,23 +122,15 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
             goodsNum = cartGoodsImgs.size();
             imgURls.addAll(cartGoodsImgs);
         }
-//        if (TYPE_FOR_PAYING.equals(type)) {
-//            goodsNum = OrderActivity.odlist.size();
-//            for (int i = 0; i <OrderActivity.odlist.size() ; i++) {
-//                imgURls.add(OrderActivity.odlist.get(i).getImgurl());
-//            }
-//        }
-        mPresenter.getOrderDetail(oid);
+        mPresenter.updateExpTimr(oid,expTime);
     }
 
     @Override
     public void initView() {
         titleCenter.setText("提交订单");
         updateAddress();
-//        if (null != goodsDetails) {
         tvGoodsNum.setText(goodsNum + "件商品");
-//        tvGoodsPrice.setText("￥"+totalPrice);
-//        goodTotalPrice.setText("￥"+totalPrice);
+        tvGoodsPrice.setText("￥"+goodPrice);
 //        tvFreight.setText("￥");
 //            ImageLoaderUtils.display(this, ivGoodsImg, UrlConstants.BASE_URL + goodsDetails.getImgurl());
 //        }
@@ -166,7 +158,6 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
                         expTime = exp_time_4;
                         break;
                 }
-//                ToastUtil.showShort(expTime);// TODO: 2018/9/14  422 更新送货时间
                 mPresenter.updateExpTimr(oid,expTime);
             }
         });
@@ -186,8 +177,8 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
             flAddress.setVisibility(View.INVISIBLE);
             rlAddress.setVisibility(View.VISIBLE);
         }
-        requestType = TYPE_SUBMIT;
         mPresenter.updateOrderAddress(oid, aid);
+//        mPresenter.updateExpTimr(oid,expTime);
     }
 
     @Override
@@ -240,7 +231,6 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     @Override
     public void onSuccess(Object data) {
         if (requestType.equals(TYPE_SUBMIT)) {
-//            todo 去支付
 //            finish();
         }
     }
@@ -256,17 +246,11 @@ public class SubmitOrderActivity extends BaseActivity<SubmitOrderPresenter> impl
     }
 
     @Override
-    public void updateOrderInfo(OrderDetail orderDetail) {
-//        for (int i = 0; i < orderDetail.getOdlist().size(); i++) {
-//            imgURls.add(orderDetail.getOdlist().get(i).getImgurl());
-//        }
-//        mAdapter.notifyDataSetChanged();
-//        goodsNum = imgURls.size();
-//        tvGoodsNum.setText(goodsNum + "件商品");
-        totalPrice = orderDetail.getAllamount();
-        tvGoodsPrice.setText("￥"+orderDetail.getAmount());
+    public void updateOrderAds(AddressBean addressBean) {
+        totalPrice = addressBean.getOrdermoney();
+        tvFreight.setText("￥"+addressBean.getFeemoney());
         goodTotalPrice.setText("￥"+totalPrice);
-        tvFreight.setText("￥"+orderDetail.getExamount());
     }
+
 
 }
