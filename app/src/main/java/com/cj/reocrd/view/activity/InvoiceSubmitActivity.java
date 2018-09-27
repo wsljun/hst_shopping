@@ -247,6 +247,7 @@ public class InvoiceSubmitActivity extends BaseActivity<InvoicePresenter> implem
     @Override
     public void onSuccess(Object data) {
           ToastUtil.showShort("提交成功");
+          finish();
     }
 
     @Override

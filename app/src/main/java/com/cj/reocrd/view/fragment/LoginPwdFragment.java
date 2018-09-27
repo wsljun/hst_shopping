@@ -90,7 +90,7 @@ public class LoginPwdFragment extends BaseFragment<IndexPresenter> implements In
                 break;
             case R.id.login:
                 phone = loginPhone.getText().toString();
-                showBaseApiView(phone);
+//                showBaseApiView(phone);
                 String pwd = loginPassword.getText().toString();
                 if (TextUtils.isEmpty(phone)) {
                     ToastUtil.showToastS(mActivity, R.string.input_phone);

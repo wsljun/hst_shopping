@@ -73,6 +73,7 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
     private String countSN;
     private boolean isCan = false;
     private String isapply ="2";
+    private int num;
 
 
     @Override
@@ -100,6 +101,8 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
                 isapply = (String) group.findViewById(checkedId).getTag();
                 switch (checkedId){
                     case R.id.rb_isapply1: // 已开票
+                        num = 0;
+                        totalInvoiceValue = 0;
                         rlInvoiceBottom.setVisibility(View.GONE);
                         next.setBackgroundColor(getResources().getColor(R.color.colorTexthintGrey));
                         break;
@@ -197,7 +200,7 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
      * @param isAll  是否点击了全选按钮
      */
     private void setTotalPrice(boolean isAll,int position){
-        int num = 0;
+        num = 0;
         countSN = "";
         totalInvoiceValue = 0;
         for (int i = 0; i <invoiceInfoList.size() ; i++) {

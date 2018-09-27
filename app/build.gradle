@@ -6,8 +6,8 @@ android {
         applicationId "com.cj.reocrd"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 5
-        versionName "5.0" // 7.0
+        versionCode 8
+        versionName "8.0" // 7.0
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //开启分包模式
         multiDexEnabled = true
@@ -37,7 +37,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 //        debug {
