@@ -109,7 +109,7 @@ public class MyTeamActivity extends BaseActivity<MyPrresenter> implements MyCont
                     teamAdapter.setNewData(teamList);
                 }
             } else {
-                ToastUtil.showShort("暂时没有商品信息");
+                ToastUtil.showShort("暂时没有消费商");
             }
             refresh.endRefreshing();
             refresh.endLoadingMore();

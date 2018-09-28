@@ -300,7 +300,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@id/title_total_price"
-            android:text="¥213.21"
+            android:text="¥"
             android:textColor="@color/colorTextRed"
             android:textSize="14sp" />
 

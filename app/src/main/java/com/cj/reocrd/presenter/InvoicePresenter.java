@@ -43,9 +43,11 @@ public class InvoicePresenter extends InvoiceContract.Presenter {
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
                     HomeBean homeBean = (HomeBean) apiResponse.getResults();
-                    if(!CollectionUtils.isNullOrEmpty(homeBean.getList())){
+//                    if(!CollectionUtils.isNullOrEmpty(homeBean.getList())){
                         mView.onSuccess(homeBean.getList());
-                    }
+//                    }else{
+//                        mView.onFailureMessage("已全部加载！");
+//                    }
                 }
             }
 

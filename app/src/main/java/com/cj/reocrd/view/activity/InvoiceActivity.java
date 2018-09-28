@@ -21,6 +21,7 @@ import com.cj.reocrd.model.entity.InvoiceInfo;
 import com.cj.reocrd.presenter.InvoicePresenter;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.adapter.InvoiceAdapter;
 import com.cj.reocrd.view.refresh.RefreshLayout;
 
@@ -104,7 +105,7 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
                         num = 0;
                         totalInvoiceValue = 0;
                         rlInvoiceBottom.setVisibility(View.GONE);
-                        next.setBackgroundColor(getResources().getColor(R.color.colorTexthintGrey));
+                        setBottomView();
                         break;
                     case R.id.rb_isapply2: // 未开票
                         rlInvoiceBottom.setVisibility(View.VISIBLE);
@@ -112,6 +113,7 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
                 }
                 invoiceInfoList.clear();
                 invoiceAdapter.notifyDataSetChanged();
+                pageno = 0;
                 updateList();
             }
         });
@@ -155,7 +157,7 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
         invoiceAdapter.setOnBaseAdapterItemClickListener(this);
         rvInvoiceContent.setLayoutManager(new LinearLayoutManager(this));
         rvInvoiceContent.setAdapter(invoiceAdapter);
-//        invoiceAdapter.setOnLoadMoreListener(this);
+        invoiceAdapter.setOnLoadMoreListener(this);
         invoiceAdapter.loadComplete();
     }
 
@@ -168,7 +170,10 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
         if(isPause){
             isPause = false;
             invoiceInfoList.clear();
+            num = 0;
+            totalInvoiceValue = 0;
             pageno = 0;
+            setBottomView();
             updateList();
         }
     }
@@ -210,12 +215,20 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
             if(invoiceInfoList.get(i).isChecked()){
                 num ++;
                 totalInvoiceValue = totalInvoiceValue + countPrice(invoiceInfoList.get(i).getInvoicemoney(), "1");
-                countSN = countSN+","+invoiceInfoList.get(i).getSn();
+                if(i == 0){
+                    countSN = invoiceInfoList.get(i).getSn();
+                }else{
+                    countSN = countSN+","+invoiceInfoList.get(i).getSn();
+                }
             }
         }
-        // 0个订单,共￥0
-        tvTotalInvoice.setText(num+"个订单，共￥"+totalInvoiceValue);
         invoiceAdapter.notifyDataSetChanged();
+        setBottomView();
+    }
+
+    private void setBottomView(){
+        // 0个订单,共￥0
+        tvTotalInvoice.setText(num+"个订单，共￥"+ Utils.formatDouble2(totalInvoiceValue));
         if(totalInvoiceValue>0){
             isCan = true;
             next.setBackgroundColor(getResources().getColor(R.color.color1));
@@ -241,12 +254,22 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
     @Override
     public void onSuccess(Object data) {
         List<InvoiceInfo> invoiceInfos = (List<InvoiceInfo>) data;
-//        if(invoiceInfos.size()<10){
-            invoiceAdapter.loadComplete();
+        if(null != invoiceInfos && invoiceInfos.size()>0){
+            if(invoiceInfos.size()<20){
+                loading = false;
+                refreshLayout.endLoadingMore();
+                invoiceAdapter.loadComplete();
+                ToastUtil.showShort("已全部加载！");
+            }
+            loading = true;
+            invoiceInfoList.addAll(invoiceInfos);
+            invoiceAdapter.setNewData(invoiceInfoList);
+        }else{
+            loading = false;
             refreshLayout.endLoadingMore();
-//        }
-        invoiceInfoList.addAll(invoiceInfos);
-        invoiceAdapter.setNewData(invoiceInfoList);
+            invoiceAdapter.loadComplete();
+            ToastUtil.showShort("已全部加载！");
+        }
     }
 
     @Override
@@ -261,9 +284,10 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
 
     @Override
     public void onLoadMoreRequested() {
-        loading = true;
-        pageno++;
-        updateList();
+        if(loading){
+            pageno++;
+            updateList();
+        }
     }
 
     private void updateList(){

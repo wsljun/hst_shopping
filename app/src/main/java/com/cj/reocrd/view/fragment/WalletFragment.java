@@ -38,6 +38,12 @@ public class WalletFragment extends BaseFragment<GoodsDetailPresenter> implement
     TextView walletFreeze;
     @BindView(R.id.wallet_time)
     TextView walletTime;
+    @BindView(R.id.tv_wallet_income)
+    TextView walletIncome;
+    @BindView(R.id.tv_wallet_score)
+    TextView walletScore;
+    @BindView(R.id.tv_wallet_stock)
+    TextView walletStock;
 
     Double useableblance, sh;
 
@@ -68,6 +74,9 @@ public class WalletFragment extends BaseFragment<GoodsDetailPresenter> implement
                 walletUseableblance.setText(Utils.strDivide(wallet.getUseableblance()));
                 walletBalance.setText(Utils.strDivide(wallet.getBalance()));
                 walletFreeze.setText(Utils.strDivide(wallet.getFreeze()));
+                walletIncome.setText(Utils.strDivide(wallet.getSupply()));
+                walletScore.setText(Utils.strDivide(wallet.getScore()));
+                walletStock.setText(Utils.strDivide(wallet.getStock()));
             }
         } else {
             ToastUtil.showToastS(mActivity, response.getMessage());
