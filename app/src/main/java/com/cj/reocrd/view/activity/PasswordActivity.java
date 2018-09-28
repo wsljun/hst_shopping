@@ -104,7 +104,7 @@ public class PasswordActivity extends BaseActivity<MyPrresenter> implements MyCo
                 mCountDownTimerUtils.start();
                 break;
             case R.id.password_next1:
-                if (TextUtils.isEmpty(passwordGetcode.getText().toString())) {
+                if (TextUtils.isEmpty(passwordCode.getText().toString())) {
                     ToastUtil.showToastS(mContext, "验证码未填写");
                     return;
                 }
