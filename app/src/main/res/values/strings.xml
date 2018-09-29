@@ -107,12 +107,12 @@
     <string name="refund_detail_online">在线支付:</string>
 
     <string name="wallet">钱包</string>
-    <string name="wallet_useableblance">可用余额</string>
-    <string name="wallet_balance">账户余额</string>
-    <string name="wallet_freeze">冻结金额</string>
-    <string name="wallet_income">商户收入</string>
-    <string name="wallet_score">积分</string>
-    <string name="wallet_stock">股份</string>
+    <string name="wallet_useableblance">可用余额:&#8195;</string>
+    <string name="wallet_balance">账户余额:&#8195;</string>
+    <string name="wallet_freeze">冻结金额:&#8195;</string>
+    <string name="wallet_income">商户收入:&#8195;</string>
+    <string name="wallet_score">积&#8195;&#8195;分:&#8195;</string>
+    <string name="wallet_stock">股&#8195;&#8195;份:&#8195;</string>
     <string name="wallet_yuan">元</string>
     <string name="wallet_get">提现</string>
     <string name="wallet_rule">*提现规则</string>
