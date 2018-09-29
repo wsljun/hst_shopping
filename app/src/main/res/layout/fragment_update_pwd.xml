@@ -98,6 +98,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="48dp"
             android:drawableBottom="@drawable/editview_line"
+            ver:inputType ="number"
             ver:child_h_padding="5dp" />
 
         <TextView

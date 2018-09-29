@@ -107,7 +107,7 @@
     <string name="refund_detail_online">在线支付:</string>
 
     <string name="wallet">钱包</string>
-    <string name="wallet_useableblance">可用余额:</string>
+    <string name="wallet_useableblance">可用余额</string>
     <string name="wallet_balance">账户余额</string>
     <string name="wallet_freeze">冻结金额</string>
     <string name="wallet_income">商户收入</string>

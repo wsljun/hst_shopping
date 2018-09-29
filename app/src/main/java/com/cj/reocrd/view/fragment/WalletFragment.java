@@ -75,8 +75,8 @@ public class WalletFragment extends BaseFragment<GoodsDetailPresenter> implement
                 walletBalance.setText(Utils.strDivide(wallet.getBalance()));
                 walletFreeze.setText(Utils.strDivide(wallet.getFreeze()));
                 walletIncome.setText(Utils.strDivide(wallet.getSupply()));
-                walletScore.setText(Utils.strDivide(wallet.getScore()));
-                walletStock.setText(Utils.strDivide(wallet.getStock()));
+                walletScore.setText(wallet.getScore());
+                walletStock.setText(wallet.getStock());
             }
         } else {
             ToastUtil.showToastS(mActivity, response.getMessage());

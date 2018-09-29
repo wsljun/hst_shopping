@@ -223,9 +223,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:text="@string/wallet_yuan"
+                    android:text="分"
                     android:textColor="@color/colorBlack"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    />
             </LinearLayout>
 
             <TextView
@@ -265,9 +266,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/wallet_yuan"
+                    android:text="份"
                     android:textColor="@color/colorBlack"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    />
             </LinearLayout>
 
             <TextView

@@ -198,7 +198,7 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
         if("1".equals(goodsDetailsBean.getIscollect())){
             setCollectImg(true);
         }
-        tvMerAtt.setText(goodsDetailsBean.getMerAtt());
+        setMertts();
         setBannerView(goodsDetailsBean.getImgUrlL());
         new Thread(new Runnable() {
             @Override
@@ -212,6 +212,15 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
                 }
             }
         }).start();
+    }
+
+    private void setMertts() {
+        String [] merAtts = goodsDetailsBean.getMerAtt().split("@#@");
+        String merattt ="";
+        for (String s: merAtts){
+            merattt += s+"\b\b\b\b";
+        }
+        tvMerAtt.setText(merattt);
     }
 
     private void setBannerView(String imgUrlL) {
