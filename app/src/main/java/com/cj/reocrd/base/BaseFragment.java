@@ -20,6 +20,7 @@ import com.cj.reocrd.utils.ToastUtil;
 import com.cj.reocrd.view.IndexActivity;
 import com.cj.reocrd.view.activity.MainActivity;
 import com.cj.reocrd.view.activity.MyActivity;
+import com.cj.reocrd.view.view.MViewPager;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -175,7 +176,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         }
         return null;
     }
-
 
     /**
      * 通过Class跳转界面
