@@ -223,9 +223,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/wallet_get"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
             android:text="每周提现一次"
             android:textColor="@color/colorTexthintGrey2"
+            android:layout_marginTop="3dp"
             android:textSize="12sp" />
     </RelativeLayout>
 </LinearLayout>

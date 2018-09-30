@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">人道易购</string>
+    <string name="app_name">好膳堂</string>
 
     <string name="lead_login">用户登录</string>
     <string name="lead_register">新用户注册</string>
@@ -112,7 +112,7 @@
     <string name="wallet_freeze">冻结金额:&#8195;</string>
     <string name="wallet_income">商户收入:&#8195;</string>
     <string name="wallet_score">积&#8195;&#8195;分:&#8195;</string>
-    <string name="wallet_stock">股&#8195;&#8195;份:</string>
+    <string name="wallet_stock">股&#8195;&#8195;份:&#8195;</string>
     <string name="wallet_yuan">元</string>
     <string name="wallet_get">提现</string>
     <string name="wallet_rule">*提现规则</string>
