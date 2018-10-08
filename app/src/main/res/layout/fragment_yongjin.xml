@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-
     android:layout_marginTop="20dp"
     android:orientation="vertical">
     <LinearLayout
@@ -15,28 +14,20 @@
         android:background="@drawable/textview_home_search"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="销售提成: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp" />
                     <TextView
                         android:id="@+id/tv_xs"
                         android:layout_width="wrap_content"
@@ -55,29 +46,18 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="销售提成"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="管理津贴: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_gl"
@@ -96,36 +76,23 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="管理津贴"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="代理收益: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp" />
                     <TextView
                         android:id="@+id/tv_dl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
                         android:textColor="@color/colorBlack"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -133,42 +100,24 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
                         android:text="@string/wallet_yuan"
                         android:textColor="@color/colorBlack"
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="代理收益"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="股份分红: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_jq"
@@ -188,29 +137,19 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="股份分红"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="抽奖收益: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_cj"
@@ -229,36 +168,24 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="抽奖收益"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="领导分红: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_leader"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
                         android:textColor="@color/colorBlack"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -268,18 +195,39 @@
                         android:layout_height="wrap_content"
                         android:text="@string/wallet_yuan"
                         android:textColor="@color/colorBlack"
+                        android:layout_marginLeft="6dp"
                         android:textSize="12sp" />
                 </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="领导分红"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="行政分红: "
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
 
-            </LinearLayout>
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_xz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wallet_yuan"
+                android:textColor="@color/colorBlack"
+                android:layout_marginLeft="6dp"
+                android:textSize="12sp" />
+        </LinearLayout>
 
     </LinearLayout>
 

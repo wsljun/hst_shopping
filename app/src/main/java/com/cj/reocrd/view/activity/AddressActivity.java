@@ -67,7 +67,7 @@ public class AddressActivity extends BaseActivity<AddressPresenter> implements A
     @Override
     public void initView() {
         titleCenter.setText(getString(R.string.address));
-        titleLeft.setText(getString(R.string.back));
+        titleLeft.setText(getString(R.string.confirm));
         addressAdapter = new AddressAdapter(this, addressBeans);
         addressAdapter.setOnItemListener(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

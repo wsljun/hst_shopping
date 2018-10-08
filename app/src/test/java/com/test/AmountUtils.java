@@ -1,5 +1,7 @@
 package com.test;
 
+import com.cj.reocrd.utils.Utils;
+
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -107,11 +109,11 @@ public class AmountUtils {
 ////          return e.getErrorCode();
 //        }
 //      System.out.println("结果："+changeY2F("1.00000000001E10"));
-         String y = "400.1";
-        String  y2f = AmountUtils.changeY2F(y);
-        System.out.println("Y2F = "+y2f);
+         String y = "96960";
+//        String  y2f = AmountUtils.changeY2F(y);
+//        System.out.println("Y2F = "+y2f);
         try {
-            System.out.println("F2Y = "+AmountUtils.changeF2Y(y2f));
+            System.out.println("F2Y = "+AmountUtils.changeF2Y(y));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,7 +121,9 @@ public class AmountUtils {
 //        System.out.println(Integer.parseInt(AmountUtils.changeY2F("10000000")));
 //        System.out.println(Integer.MIN_VALUE);
 //        long a = 0;
-//        System.out.println(a);
+        double d =  0;
+        System.out.println("fD2: "+Utils.formatDouble2(d));
+        System.out.println("newD: "+Utils.newDouble(d));
 
     }
 }

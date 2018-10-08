@@ -159,7 +159,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     private UserBean userBean;
     WalletFragment walletFragment;
     YongJinFragment yongJinFragment;
-    int form;//1 钱包  2 收益
+    int form = 0;//1 钱包  2 收益
 
     @Override
     protected void initPresenter() {
@@ -273,9 +273,9 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 fans.putInt("type", MyFansActivity.FROM_MYFANS);
                 startActivity(MyFansActivity.class, fans);
                 break;
-            case R.id.mine_fuli://福利 todo 2018/09/10 add
+            case R.id.mine_fuli://福利  2018/09/10 add
 //                startActivity(FuliActivity.class);
-                startActivity(InvoiceActivity.class);
+//                startActivity(InvoiceActivity.class);
                 break;
             case R.id.mine_zp://大转盘
                 type = 2;

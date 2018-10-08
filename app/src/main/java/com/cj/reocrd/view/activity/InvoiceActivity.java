@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import com.cj.reocrd.model.entity.InvoiceInfo;
 import com.cj.reocrd.presenter.InvoicePresenter;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.ToastUtil;
+import com.cj.reocrd.utils.Utils;
 import com.cj.reocrd.view.adapter.InvoiceAdapter;
 import com.cj.reocrd.view.refresh.RefreshLayout;
 
@@ -46,12 +48,8 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
     TextView titleCenter;
     @BindView(R.id.title_right)
     TextView titleRight;
-    @BindView(R.id.tv_invoice_msg)
-    TextView tvInvoiceMsg;
     @BindView(R.id.ll_invoice_msg)
     LinearLayout llInvoiceMsg;
-    @BindView(R.id.img_none)
-    ImageView imgNone;
     @BindView(R.id.rv_invoice_content)
     RecyclerView rvInvoiceContent;
     @BindView(R.id.refresh_layout)
@@ -64,8 +62,10 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
     TextView next;
     @BindView(R.id.rl_invoice_bottom)
     RelativeLayout rlInvoiceBottom;
+    @BindView(R.id.rg_ivoice)
+    RadioGroup rgInvoice;
+
     private final String TAG = "InvoiceActivity";
-    public static Map<Integer,Boolean> isCheckedMap = new HashMap<>();
     private InvoiceAdapter invoiceAdapter;
     private double totalInvoiceValue = 0; // 发票总金额
     private List<InvoiceInfo> invoiceInfoList;
@@ -73,6 +73,8 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
     private boolean loading;
     private String countSN;
     private boolean isCan = false;
+    private String isapply ="2";
+    private int num;
 
 
     @Override
@@ -94,6 +96,27 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
 //        titleRight.setVisibility(View.VISIBLE);
 //        titleRight.setTextColor(getResources().getColor(R.color.colorWhite));
         initRecycleView();
+        rgInvoice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                isapply = (String) group.findViewById(checkedId).getTag();
+                switch (checkedId){
+                    case R.id.rb_isapply1: // 已开票
+                        num = 0;
+                        totalInvoiceValue = 0;
+                        rlInvoiceBottom.setVisibility(View.GONE);
+                        setBottomView();
+                        break;
+                    case R.id.rb_isapply2: // 未开票
+                        rlInvoiceBottom.setVisibility(View.VISIBLE);
+                        break;
+                }
+                invoiceInfoList.clear();
+                invoiceAdapter.notifyDataSetChanged();
+                pageno = 0;
+                updateList();
+            }
+        });
     }
 
     @Override
@@ -134,7 +157,7 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
         invoiceAdapter.setOnBaseAdapterItemClickListener(this);
         rvInvoiceContent.setLayoutManager(new LinearLayoutManager(this));
         rvInvoiceContent.setAdapter(invoiceAdapter);
-//        invoiceAdapter.setOnLoadMoreListener(this);
+        invoiceAdapter.setOnLoadMoreListener(this);
         invoiceAdapter.loadComplete();
     }
 
@@ -147,7 +170,10 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
         if(isPause){
             isPause = false;
             invoiceInfoList.clear();
+            num = 0;
+            totalInvoiceValue = 0;
             pageno = 0;
+            setBottomView();
             updateList();
         }
     }
@@ -179,7 +205,7 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
      * @param isAll  是否点击了全选按钮
      */
     private void setTotalPrice(boolean isAll,int position){
-        int num = 0;
+        num = 0;
         countSN = "";
         totalInvoiceValue = 0;
         for (int i = 0; i <invoiceInfoList.size() ; i++) {
@@ -189,15 +215,23 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
             if(invoiceInfoList.get(i).isChecked()){
                 num ++;
                 totalInvoiceValue = totalInvoiceValue + countPrice(invoiceInfoList.get(i).getInvoicemoney(), "1");
-                countSN = countSN+","+invoiceInfoList.get(i).getSn();
+                if(i == 0){
+                    countSN = invoiceInfoList.get(i).getSn();
+                }else{
+                    countSN = countSN+","+invoiceInfoList.get(i).getSn();
+                }
             }
         }
-        // 0个订单,共￥0
-        tvTotalInvoice.setText(num+"个订单，共￥"+totalInvoiceValue);
         invoiceAdapter.notifyDataSetChanged();
+        setBottomView();
+    }
+
+    private void setBottomView(){
+        // 0个订单,共￥0
+        tvTotalInvoice.setText(num+"个订单，共￥"+ Utils.formatDouble2(totalInvoiceValue));
         if(totalInvoiceValue>0){
             isCan = true;
-            next.setBackgroundColor(getResources().getColor(R.color.color2));
+            next.setBackgroundColor(getResources().getColor(R.color.color1));
         }else{
             isCan = false;
             next.setBackgroundColor(getResources().getColor(R.color.colorTexthintGrey));
@@ -220,12 +254,22 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
     @Override
     public void onSuccess(Object data) {
         List<InvoiceInfo> invoiceInfos = (List<InvoiceInfo>) data;
-//        if(invoiceInfos.size()<10){
-            invoiceAdapter.loadComplete();
+        if(null != invoiceInfos && invoiceInfos.size()>0){
+            if(invoiceInfos.size()<20){
+                loading = false;
+                refreshLayout.endLoadingMore();
+                invoiceAdapter.loadComplete();
+                ToastUtil.showShort("已全部加载！");
+            }
+            loading = true;
+            invoiceInfoList.addAll(invoiceInfos);
+            invoiceAdapter.setNewData(invoiceInfoList);
+        }else{
+            loading = false;
             refreshLayout.endLoadingMore();
-//        }
-        invoiceInfoList.addAll(invoiceInfos);
-        invoiceAdapter.setNewData(invoiceInfoList);
+            invoiceAdapter.loadComplete();
+            ToastUtil.showShort("已全部加载！");
+        }
     }
 
     @Override
@@ -240,12 +284,13 @@ public class InvoiceActivity extends BaseActivity<InvoicePresenter> implements I
 
     @Override
     public void onLoadMoreRequested() {
-        loading = true;
-        pageno++;
-        updateList();
+        if(loading){
+            pageno++;
+            updateList();
+        }
     }
 
     private void updateList(){
-        mPresenter.getInvoiceList(uid,String.valueOf(pageno));
+        mPresenter.getInvoiceList(uid,String.valueOf(pageno),isapply);
     }
 }

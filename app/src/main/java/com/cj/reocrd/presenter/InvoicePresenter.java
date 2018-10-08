@@ -30,21 +30,24 @@ public class InvoicePresenter extends InvoiceContract.Presenter {
 
 
     @Override
-    public void getInvoiceList(String uid, String pageno) {
+    public void getInvoiceList(String uid, String pageno, String isapply) {
         if(TextUtils.isEmpty(uid)||TextUtils.isEmpty(pageno)){
             return;
         }
         baseMap.clear();
         baseMap.put("uid",uid);
         baseMap.put("pageno",pageno);
+        baseMap.put("isapply",isapply);
         ApiModel.getInstance().getData(UrlConstants.UrLType.URL_INVOICE_LIST, baseMap, HomeBean.class, new ApiCallback() {
             @Override
             public void onSuccess(ApiResponse apiResponse) {
                 if(null != apiResponse && isViewAttached()){
                     HomeBean homeBean = (HomeBean) apiResponse.getResults();
-                    if(!CollectionUtils.isNullOrEmpty(homeBean.getList())){
+//                    if(!CollectionUtils.isNullOrEmpty(homeBean.getList())){
                         mView.onSuccess(homeBean.getList());
-                    }
+//                    }else{
+//                        mView.onFailureMessage("已全部加载！");
+//                    }
                 }
             }
 

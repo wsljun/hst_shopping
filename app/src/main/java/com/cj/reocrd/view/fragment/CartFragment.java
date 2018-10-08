@@ -109,20 +109,19 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
                 }
                 break;
             case R.id.car_all_choose:
+                isChooseAll = cbCartAllChoose.isChecked();
                 setTotalPrice(true,0);
                 break;
             case R.id.tv_submit_order:
                 String cartID = "";
                 int n = 0;
-                for (int i = 0; i <checkBoxList.size() ; i++) {
-                    if(checkBoxList.get(i).isChecked()){
+                for (int i = 0; i <cartGoodsList.size() ; i++) {
+                    if(cartGoodsList.get(i).isChecked()){
                         n++;
-                        if(i<cartGoodsList.size()){
-                            if(n>1){
-                                cartID = cartID+","+cartGoodsList.get(i).getBid();
-                            }else{
-                                cartID = cartGoodsList.get(i).getBid();
-                            }
+                        if(n>1){
+                            cartID = cartID+","+cartGoodsList.get(i).getBid();
+                        }else{
+                            cartID = cartGoodsList.get(i).getBid();
                         }
                     }
                 }
@@ -145,18 +144,26 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     private void setTotalPrice(boolean isAll,int position){
         totalPrice = 0;
         cartGoodsImgs.clear();
-        for (int i = 0; i <checkBoxList.size() ; i++) {
+        int cnum = 0;
+        for (int i = 0; i <cartGoodsList.size() ; i++) {
             if(isAll){
-                checkBoxList.get(i).setChecked(cbCartAllChoose.isChecked());
+                cartGoodsList.get(i).setChecked(cbCartAllChoose.isChecked());
             }
-            if(checkBoxList.get(i).isChecked()){
-                if(i<cartGoodsList.size()){
-                    totalPrice = totalPrice + countPrice(cartGoodsList.get(i).getPrice(),cartGoodsList.get(i).getBuynum());
-                    cartGoodsImgs.add(cartGoodsList.get(i).getImgurl());
-                }
+            if(cartGoodsList.get(i).isChecked()){
+                cnum ++;
+                totalPrice = totalPrice + countPrice(cartGoodsList.get(i).getPrice(),cartGoodsList.get(i).getBuynum());
+                cartGoodsImgs.add(cartGoodsList.get(i).getImgurl());
             }
         }
         tvGoodsTotalPrice.setText(getString(R.string.RMB)+formatDouble2(totalPrice));
+        carAdapter.notifyDataSetChanged();
+//        if(cnum == cartGoodsList.size()){
+//            isChooseAll = true;
+//            cbCartAllChoose.setChecked(true);
+//        }else{
+//            isChooseAll = false;
+//            cbCartAllChoose.setChecked(false);
+//        }
     }
 
     //计算价格
@@ -186,9 +193,9 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
 
     @Override
     public void showCartData(List<GoodsBean> goodsBeanList) {
-        cartGoodsList  = goodsBeanList;
-        setTotalPrice(false,0);
+        cartGoodsList = goodsBeanList;
         carAdapter.setNewData(cartGoodsList);
+        setTotalPrice(isChooseAll,0);
         if(!CollectionUtils.isNullOrEmpty(cartGoodsList)){
             imgNone.setVisibility(View.GONE);
         }else{
@@ -208,7 +215,7 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
         // "oid":"d25c66f5-ae37-420b-b4a5-354a6462cb04"
         // ,"message":"操作成功","aid":"北京市北京市平谷区45623","statusCode":"1"}
         if(TextUtils.isEmpty(addressBean.getOid())){
-//            ToastUtil.showShort("oid == null ");
+            ToastUtil.showShort("结算失败！");// : 2018/9/26 oid = null  403
             return;
         }else{
             Bundle b = new Bundle();
@@ -237,12 +244,12 @@ public class CartFragment extends BaseFragment<CartPresenter> implements CartCon
     public void onAdapterItemClickListener(View view, int position) {
         switch (view.getId()){
             case R.id.car_delete:
-                checkBoxList.remove(position);
+//                checkBoxList.remove(position);
                 mPresenter.delCartGoods(cartGoodsList.get(position).getBid());
                 break;
             case R.id.car_choose:
                 CheckBox checkBox = (CheckBox) view;
-                isCheckedMap.put(position,checkBox.isChecked());
+                cartGoodsList.get(position).setChecked(checkBox.isChecked());
                 setTotalPrice(false,position);
                 break;
             case R.id.car_amount:

@@ -64,6 +64,7 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
     private List<GoodsType> goodsTypes  = new ArrayList<>();
     private List<GoodsBean> goodsBeanList = new ArrayList<>();
     private Bundle goodBundle;
+    private int index = 0;
 
     @Override
     protected void initPresenter() {
@@ -94,7 +95,6 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
         if(CollectionUtils.isNullOrEmpty(goodsTypes)){
             return;
         }
-        mPresenter.getGoodsData(goodsTypes.get(0).getId(),pageno,pagesize);
         allTypeAdapter = new AllTypeAdapter(mActivity, goodsTypes);
         rvGoodsType.setLayoutManager(new LinearLayoutManager(mActivity));
         rvGoodsType.setAdapter(allTypeAdapter);
@@ -103,9 +103,24 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
             @Override
             public void onItemClick(View view, int position) {
                 LogUtil.d("onItemClick",goodsTypes.get(position).getName());
+                changeTextColor(position);
                 mPresenter.getGoodsData(goodsTypes.get(position).getId(),pageno,pagesize);
             }
         });
+        changeTextColor(index);
+        mPresenter.getGoodsData(goodsTypes.get(index).getId(),pageno,pagesize);
+    }
+
+    private void changeTextColor(int position) {
+        index = position;
+        for (int i = 0; i < goodsTypes.size(); i++) {
+            if (i != position) {
+                goodsTypes.get(i).setCheck(false);
+            }else{
+                goodsTypes.get(i).setCheck(true);
+            }
+        }
+        allTypeAdapter.notifyDataSetChanged();
     }
 
     private void initRecycleView() {
@@ -158,6 +173,9 @@ public class AllGoodsFragment extends BaseFragment<GoodsPresenter> implements Go
     @Override
     public void onFailureMessage(String msg) {
         ToastUtil.showShort(msg);
+        goodsBeanList.clear();
+        mGoodsAdapter.notifyDataSetChanged();
+        mGoodsAdapter.loadComplete();
     }
 
 

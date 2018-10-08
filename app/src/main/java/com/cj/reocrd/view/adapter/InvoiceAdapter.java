@@ -2,6 +2,7 @@ package com.cj.reocrd.view.adapter;
 
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import com.cj.reocrd.R;
 import com.cj.reocrd.api.UrlConstants;
@@ -41,18 +42,8 @@ public class InvoiceAdapter extends BaseQuickAdapter {
         helper.setText(R.id.invoice_value,"开票金额：￥"+invoiceInfo.getInvoicemoney());
         helper.setText(R.id.order_num,"订单号: "+invoiceInfo.getSn());
         helper.setText(R.id.order_time,"订单时间: "+invoiceInfo.getCreatetime());
-//        helper.getView(R.id.invoice_enter).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                mBaseItemClickListener.onAdapterItemClickListener(v,position);
-////                ToastUtil.showShort("invoice_enter");
-//            }
-//        });
         CheckBox checkBox =  helper.getView(R.id.invoice_item_choose);
         checkBox.setTag(position);
-//        if(!checkBoxList.contains(checkBox)){
-//            checkBoxList.add(checkBox);
-//        }
         checkBox.setChecked(invoiceInfo.isChecked());
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,11 +51,15 @@ public class InvoiceAdapter extends BaseQuickAdapter {
                 int i = (int) v.getTag();
                 invoiceInfo.setChecked(checkBox.isChecked());
                 mBaseItemClickListener.onAdapterItemClickListener(v,i);
-//                ToastUtil.showShort("invoice_item_choose");
             }
         });
-        if("2".equals(invoiceInfo.getIsapply())){
-
+        TextView isapply2 = helper.getView(R.id.tv_apply);
+        if("1".equals(invoiceInfo.getIsapply())){
+            checkBox.setVisibility(View.GONE);
+            isapply2.setVisibility(View.VISIBLE);
+        }else{
+            checkBox.setVisibility(View.VISIBLE);
+            isapply2.setVisibility(View.GONE);
         }
 
 

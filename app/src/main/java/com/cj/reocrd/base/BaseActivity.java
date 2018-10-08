@@ -252,4 +252,6 @@ public abstract class BaseActivity <T extends  BasePresenter >extends AutoLayout
     public void onDisConnect() {
         showNetErrorTip();
     }
+
+
 }

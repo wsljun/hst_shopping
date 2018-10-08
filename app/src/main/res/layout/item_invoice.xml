@@ -9,8 +9,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:paddingLeft="5dp"
         android:paddingBottom="20dp"
         android:paddingTop="20dp">
 
@@ -28,7 +29,7 @@
 
         <LinearLayout
             android:id="@+id/car_text_ll"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/invoice_item_choose"
@@ -38,10 +39,9 @@
                 android:id="@+id/invoice_value"
                 style="@style/setting_item_configure"
                 android:layout_marginStart="0dp"
-                android:maxLength="10"
                 android:minLines="1"
                 android:textSize="16sp"
-                android:text="开票金额：￥50.8"
+                android:text="开票金额：￥0.0"
                 />
 
             <TextView
@@ -53,7 +53,7 @@
                 android:maxEms="30"
                 android:maxLength="25"
                 android:textSize="16sp"
-                android:text="订单号：987654321"
+                android:text="订单号："
                 />
 
             <TextView
@@ -65,29 +65,21 @@
                 android:maxEms="30"
                 android:maxLength="25"
                 android:textSize="16sp"
-                android:text="下单时间：2018-09-10 09::30:45"
+                android:text="下单时间："
+                />
+            <TextView
+                android:id="@+id/tv_apply"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="已开票"
+                android:background="@drawable/bg_tv_invoice_apply"
+                android:visibility="gone"
                 />
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/car_text_ll"
-            android:visibility="gone"
-            >
-
-            <ImageButton
-                android:id="@+id/invoice_enter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:background="@mipmap/lajixiang" />
-
-
-        </RelativeLayout>
     </RelativeLayout>
 
 

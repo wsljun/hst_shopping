@@ -16,6 +16,7 @@ import com.cj.reocrd.base.BaseFragment;
 import com.cj.reocrd.contract.IndexContract;
 import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.presenter.IndexPresenter;
+import com.cj.reocrd.utils.ConstantsUtils;
 import com.cj.reocrd.utils.CountDownTimerUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
@@ -139,7 +140,7 @@ public class LoginCodeFragment extends BaseFragment<IndexPresenter> implements I
                         // todo get code
                         type = 1;
                         mPresenter.getCode(UrlConstants.UrLType.GET_CODE, phone, UrlConstants.codeType.LOGIN);
-                        CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(loginGetcode, 60000, 1000);
+                        CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(loginGetcode, ConstantsUtils.millisInFuture, 1000);
                         mCountDownTimerUtils.start();
                     } else {
                         ToastUtil.showToastS(mActivity, R.string.format_not_correct);

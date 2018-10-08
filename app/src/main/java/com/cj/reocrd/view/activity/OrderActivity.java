@@ -104,6 +104,8 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
 
     @Override
     public void initView() {
+        titleRight.setText("开发票");
+        titleRight.setVisibility(View.VISIBLE);
         switch (type) {
             case 0:
                 titleCenter.setText(getString(R.string.mine_order_all));
@@ -165,11 +167,14 @@ public class OrderActivity extends BaseActivity<OrderPresenter> implements Order
     }
 
 
-    @OnClick({R.id.title_left})
+    @OnClick({R.id.title_left,R.id.title_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_left:
                 finish();
+                break;
+            case R.id.title_right:
+                startActivity(InvoiceActivity.class);
                 break;
         }
     }

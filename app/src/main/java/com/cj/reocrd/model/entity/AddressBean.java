@@ -3,6 +3,8 @@ package com.cj.reocrd.model.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.cj.reocrd.utils.Utils;
+
 import java.util.List;
 
 /**
@@ -23,6 +25,24 @@ public class AddressBean {
     private List<Regions> regions ; //
     private String oid;
     private String aid;
+    private String feemoney;
+    private String ordermoney;
+
+    public String getFeemoney() {
+        return feemoney;
+    }
+
+    public void setFeemoney(String feemoney) {
+        this.feemoney = Utils.strDivide(feemoney);
+    }
+
+    public String getOrdermoney() {
+        return ordermoney;
+    }
+
+    public void setOrdermoney(String ordermoney) {
+        this.ordermoney = Utils.strDivide(ordermoney);
+    }
 
     public String getOid() {
         return oid;

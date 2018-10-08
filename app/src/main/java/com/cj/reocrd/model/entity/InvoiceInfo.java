@@ -59,7 +59,7 @@ public class InvoiceInfo {
     }
 
     public void setInvoicemoney(String invoicemoney) {
-        this.invoicemoney = Utils.changeF2Y(invoicemoney);
+        this.invoicemoney = Utils.strDivide(invoicemoney);
     }
 
     public String getCreatetime() {

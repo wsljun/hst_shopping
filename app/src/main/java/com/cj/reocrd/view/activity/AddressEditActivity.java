@@ -205,6 +205,7 @@ public class AddressEditActivity extends BaseActivity<AddressPresenter> implemen
             rid  = districtCode ;
         }
         addressDz.setText(address);
+        addressDzDetail.setText("");
         dialog.dismiss();
     }
     String pid = "";

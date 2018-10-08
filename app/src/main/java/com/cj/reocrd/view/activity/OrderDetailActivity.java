@@ -146,7 +146,7 @@ public class OrderDetailActivity extends BaseActivity<OrderPresenter> implements
             tvExpTime.setText("送货时间：周一到周日皆可配送");
         }
         if ("4".equals(exp)) {
-            tvExpTime.setText("自提");
+            tvExpTime.setText("送货时间：自提");
         }
         setPayWay(orderDetail.getWay());
         setOrderStatus(orderDetail.getStatus());

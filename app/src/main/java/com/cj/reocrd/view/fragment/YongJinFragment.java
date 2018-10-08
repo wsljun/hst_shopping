@@ -45,6 +45,8 @@ public class YongJinFragment extends BaseFragment<GoodsDetailPresenter> implemen
     TextView tvLeader;
     @BindView(R.id.tv_yj_total)
     TextView tvYjTotal;
+    @BindView(R.id.tv_xz)
+    TextView tvXZ;
 
     @Override
     public int getLayoutId() {
@@ -74,6 +76,7 @@ public class YongJinFragment extends BaseFragment<GoodsDetailPresenter> implemen
                 tvJq.setText(yj.getJq());
                 tvCj.setText(yj.getCj());
                 tvLeader.setText(yj.getLeader());
+                tvXZ.setText(yj.getXz());
                 // 总佣金
                 tvYjTotal.setText("总收益:"+getTotal(yj)+"元");
             }

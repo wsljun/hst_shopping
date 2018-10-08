@@ -13,29 +13,46 @@
         android:id="@+id/ll_invoice_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_below="@+id/title"
+        android:background="@color/colorBackground"
         >
-        <TextView
-            android:id="@+id/tv_invoice_msg"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/rg_ivoice"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="即日起，北京订单开票时间调整为订单完成30天内，请及时开票！"
-            android:textSize="16sp"
-            android:textColor="@color/color2"
-            />
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:background="@color/colorBackground"
+            >
+            <RadioButton
+                android:id="@+id/rb_isapply2"
+                 android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:text="未开票"
+                android:gravity="center"
+                android:button="@null"
+                android:background="@drawable/rb_invoice_check"
+                android:tag="2"
+                android:checked="true"
+                />
+            <RadioButton
+                android:id="@+id/rb_isapply1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:background="@drawable/rb_invoice_check"
+                android:gravity="center"
+                android:text="已开票"
+                android:button="@null"
+                android:tag="1"
+                />
+        </RadioGroup>
 
-    <ImageView
-        android:id="@+id/img_none"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/zanwushangpin"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        >
-    </ImageView>
+    </LinearLayout>
 
     <com.cj.reocrd.view.refresh.RefreshLayout
         android:id="@+id/refresh_layout"

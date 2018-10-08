@@ -20,7 +20,7 @@ public interface InvoiceContract {
     }
 
     abstract static class Presenter extends BasePresenter<View> {
-        public  abstract void getInvoiceList(String uid,String pageno);
+        public  abstract void getInvoiceList(String uid,String pageno,String isapply);
          public abstract void subimitInvoiceInfo(String uid,String oid,String head,String corp,String code,
                                            String userinfo,String username,String userphone,String usereamil);
     }

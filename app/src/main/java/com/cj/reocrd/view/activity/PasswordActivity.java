@@ -15,6 +15,7 @@ import com.cj.reocrd.base.BaseActivity;
 import com.cj.reocrd.contract.MyContract;
 import com.cj.reocrd.model.entity.UserBean;
 import com.cj.reocrd.presenter.MyPrresenter;
+import com.cj.reocrd.utils.ConstantsUtils;
 import com.cj.reocrd.utils.CountDownTimerUtils;
 import com.cj.reocrd.utils.LogUtil;
 import com.cj.reocrd.utils.SPUtils;
@@ -100,11 +101,11 @@ public class PasswordActivity extends BaseActivity<MyPrresenter> implements MyCo
             case R.id.password_getcode:
                 type = 1;
                 mPresenter.getCode(UrlConstants.UrLType.GET_CODE, phone, UrlConstants.codeType.S_PWD);
-                CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(passwordGetcode, 60000, 1000);
+                CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(passwordGetcode, ConstantsUtils.millisInFuture, 1000);
                 mCountDownTimerUtils.start();
                 break;
             case R.id.password_next1:
-                if (TextUtils.isEmpty(passwordGetcode.getText().toString())) {
+                if (TextUtils.isEmpty(passwordCode.getText().toString())) {
                     ToastUtil.showToastS(mContext, "验证码未填写");
                     return;
                 }
