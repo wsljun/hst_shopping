@@ -112,7 +112,7 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
     public static  String APPID = "";
     private static final int SDK_PAY_FLAG = 1001;
     private String RSA_PRIVATE = "";
-    private   String  cz_type; //passback_params   uid,充值的手机号，充值类型（ 1消费积分2电子币）
+    private   String  cz_type = "1"; //passback_params   uid,充值的手机号，充值类型（ 1消费积分2电子币）
     private String phone;
     private String OutTradeNo;
     private String passbackParam;
@@ -354,7 +354,7 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
         //构造支付订单参数列表
 //        aoid = OutTradeNo;//OrderInfoUtil2_0.getOutTradeNo();
         OutTradeNo = t_phone+ System.currentTimeMillis();
-        passbackParam = uid+","+t_phone+","+paytype;
+        passbackParam = uid+","+t_phone+","+cz_type;
         LogUtil.d("alipay","OutTradeNo= "+OutTradeNo);
         LogUtil.d("alipay","passbackParam= "+passbackParam);
         String bizContent = OrderInfoUtil2_0.buildReChargeConetent(money,OutTradeNo,passbackParam);
@@ -448,10 +448,11 @@ public class ChongzhiActivity extends BaseActivity<GoodsDetailPresenter> impleme
 
             @Override
             public void onSuccess(ApiResponse apiResponse) {
-                ToastUtil.showShort(apiResponse.getMessage());
                 if (UrlConstants.SUCCESE_CODE.equals(apiResponse.getStatusCode())) {
                     WXPayKeys wxPayKeys = (WXPayKeys) apiResponse.getResults();
                     payWX(wxPayKeys);
+                }else{
+                    ToastUtil.showShort(apiResponse.getMessage());
                 }
             }
 

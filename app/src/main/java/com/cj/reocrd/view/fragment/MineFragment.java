@@ -160,6 +160,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     WalletFragment walletFragment;
     YongJinFragment yongJinFragment;
     int form = 0;//1 钱包  2 收益
+    private boolean isPause;
 
     @Override
     protected void initPresenter() {
@@ -492,5 +493,19 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
         mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        isPause = true;
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(isPause){
+            isPause = false;
+            type = 1;
+            mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
+        }
+    }
 }
