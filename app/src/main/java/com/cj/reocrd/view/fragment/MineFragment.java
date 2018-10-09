@@ -265,7 +265,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case R.id.mine_userinfo:
             case R.id.mine_icon:
-            case R.id.mine_userinfo_rl:
+//            case R.id.mine_userinfo_rl:
                 Intent intent = new Intent(mActivity, MyActivity.class);
                 startActivity(intent);
                 break;

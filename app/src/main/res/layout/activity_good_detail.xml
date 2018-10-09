@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@id/good_price"
+                        android:layout_below="@id/good_price"
                         android:text="$"
                         android:textSize="14sp" />
                 </RelativeLayout>
