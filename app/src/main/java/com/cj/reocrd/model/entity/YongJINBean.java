@@ -25,6 +25,24 @@ public class YongJINBean {
     private String isleader;
     private String xz;
     private String isxzry;
+    private String total;
+    private String ghsztr;
+
+    public String getTotal() {
+        return Utils.strDivide(total);
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
+    public String getGhsztr() {
+        return Utils.strDivide(ghsztr);
+    }
+
+    public void setGhsztr(String ghsztr) {
+        this.ghsztr = ghsztr;
+    }
 
     public String getXz() {
         return Utils.strDivide(xz);

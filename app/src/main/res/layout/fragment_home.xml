@@ -211,6 +211,33 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/home_chwl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/price_bg"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="14dp"
+                        android:text="@string/home_tv4"
+                        android:textColor="@color/colorButton"
+                        android:textSize="16sp" />
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/home_chwl_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"></android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/home_mdss"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -264,32 +291,7 @@
                         android:layout_marginRight="2dp"></android.support.v7.widget.RecyclerView>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/home_chwl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/price_bg"
-                    android:orientation="vertical"
-                    android:visibility="gone">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="14dp"
-                        android:text="@string/home_tv4"
-                        android:textColor="@color/colorButton"
-                        android:textSize="16sp" />
-
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/home_chwl_recycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginRight="2dp"></android.support.v7.widget.RecyclerView>
-                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
