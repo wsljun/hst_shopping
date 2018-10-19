@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#cc000000"
-    android:orientation="vertical"
     android:layout_gravity="bottom"
-    >
+    android:background="#cc000000"
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_alignParentBottom="true"
-        >
+        android:layout_height="450dp"
+        android:layout_alignParentBottom="true">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -44,8 +42,7 @@
                     android:text="$232"
                     android:textSize="14sp"
 
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/good_detail_close"
@@ -84,31 +81,42 @@
                 <!--</android.support.v7.widget.RecyclerView>-->
 
 
-                <com.donkingliang.labels.LabelsView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/goods_labels"
+                <ScrollView
+                    android:id="@+id/goods_labels_sv"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_below="@id/good_detail_title1"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    app:labelBackground="@color/colorWhite"
-                    app:labelTextSize="14sp"
-                    app:labelTextColor="@drawable/label_text_color"
-                    app:labelTextPaddingBottom="5dp"
-                    app:labelTextPaddingLeft="10dp"
-                    app:labelTextPaddingRight="10dp"
-                    app:labelTextPaddingTop="5dp"
-                    app:lineMargin="10dp"
-                    app:wordMargin="10dp"
-                    app:selectType="SINGLE"
-                    app:maxSelect="5" />
+                    android:layout_height="200dp"
+                    android:layout_below="@id/good_detail_title1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <com.donkingliang.labels.LabelsView xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/goods_labels"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            app:labelBackground="@color/colorWhite"
+                            app:labelTextColor="@drawable/label_text_color"
+                            app:labelTextPaddingBottom="5dp"
+                            app:labelTextPaddingLeft="5dp"
+                            app:labelTextPaddingRight="5dp"
+                            app:labelTextPaddingTop="5dp"
+                            app:labelTextSize="14sp"
+                            app:lineMargin="4dp"
+                            app:maxSelect="5"
+                            app:selectType="SINGLE"
+                            app:wordMargin="10dp" />
+                    </LinearLayout>
+                </ScrollView>
 
                 <View
-                    android:id="@+id/view2"
+                    android:id="@id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@id/goods_labels"
+                    android:layout_below="@id/goods_labels_sv"
                     android:layout_margin="20dp"
                     android:background="@color/colorTextLineGrey"></View>
 
@@ -123,6 +131,7 @@
                     android:text="@string/good_detail_buynum"
                     android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
+
                 <com.cj.reocrd.view.view.AmountView.AmountView
                     android:id="@+id/good_detail_num"
                     android:layout_width="wrap_content"
@@ -137,6 +146,7 @@
                     app:tvWidth="22dp">
 
                 </com.cj.reocrd.view.view.AmountView.AmountView>
+
                 <RelativeLayout
                     android:id="@+id/rl_goods_detail_bottom"
                     android:layout_width="match_parent"
@@ -156,8 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="12dp"
-                        android:background="@mipmap/gouwucje2"
-                        />
+                        android:background="@mipmap/gouwucje2" />
 
                     <TextView
                         android:id="@+id/good_buy"
@@ -192,8 +201,7 @@
                         android:text=""
                         android:textColor="@color/colorTextRed"
                         android:textSize="14sp"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -202,8 +210,7 @@
                         android:layout_toLeftOf="@id/good_total_price"
                         android:text="@string/good_detail_total"
                         android:textSize="14sp"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -213,9 +220,8 @@
             android:id="@+id/iv_goods_detail_url"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:scaleType="fitXY"
             android:layout_marginLeft="20dp"
-            />
+            android:scaleType="fitXY" />
     </FrameLayout>
 
 </RelativeLayout>

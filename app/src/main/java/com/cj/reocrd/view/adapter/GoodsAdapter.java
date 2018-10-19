@@ -44,7 +44,7 @@ public class GoodsAdapter extends BaseQuickAdapter {
         } else {
             oldprice = data.getOldprice();
         }
-        opTextView.setText(oldprice);
+        opTextView.setText("￥"+oldprice);
     }
 
 }

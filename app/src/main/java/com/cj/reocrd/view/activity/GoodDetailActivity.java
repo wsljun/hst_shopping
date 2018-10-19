@@ -185,12 +185,12 @@ public class GoodDetailActivity extends BaseActivity<GoodsDetailPresenter> imple
     private void updateView() {
         countPrice = price = goodsDetailsBean.getPrice();
         unit = goodsDetailsBean.getUnit();
-        goodOldPrice.setText(ConstantsUtils.RMB+goodsDetailsBean.getOldprice());
+        goodOldPrice.setText("零售价："+ConstantsUtils.RMB+goodsDetailsBean.getOldprice());
         titleCenter.setText(goodsDetailsBean.getName());
         titleCenter.setMaxEms(10);
         goodName.setText(goodsDetailsBean.getName());
         goodBrandTv.setText(goodsDetailsBean.getBrand());
-        goodPrice.setText(ConstantsUtils.RMB+price);
+        goodPrice.setText("会员价："+ConstantsUtils.RMB+price);
         goodSales.setText("销量："+goodsDetailsBean.getBlocknum());
         goodAddress.setText(goodsDetailsBean.getPlace());
         goodTotalPrice.setText(ConstantsUtils.RMB+price);

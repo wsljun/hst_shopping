@@ -19,35 +19,38 @@
         android:id="@+id/item_all_goods_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorBlack"
-        android:textSize="14sp"
         android:layout_margin="4dp"
         android:maxLines="2"
-        android:minLines="2" />
+        android:minLines="2"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp">
 
+        <TextView
+            android:id="@+id/item_all_goods_price"
+            android:layout_width="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/load_yellow"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/item_all_goods_oldprice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_below="@id/item_all_goods_price"
             android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/item_all_goods_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="6dp"
-            android:layout_toLeftOf="@id/item_all_goods_oldprice"
-            android:textColor="@color/load_yellow"
-            android:textSize="14sp" />
+
     </RelativeLayout>
 
 

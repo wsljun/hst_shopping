@@ -6,47 +6,48 @@
     android:orientation="vertical">
 
     <include layout="@layout/layout_title" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
         android:text="选择提现方式:"
         android:textColor="@color/colorBlack"
-        android:textStyle="bold"
         android:textSize="16sp"
-        android:gravity="center_vertical"
-        android:layout_marginTop="5dp"
-        />
+        android:textStyle="bold" />
+
     <RadioGroup
         android:id="@+id/choose_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="5dp"
-        android:paddingLeft="10dp"
-        >
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
+
         <RadioButton
             android:id="@+id/type_alipay"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:checked="true"
+            android:gravity="center"
             android:text="支付宝提现"
             android:textColor="@color/colorBlack"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:checked="true"
-            android:layout_marginTop="5dp"
-            />
+            android:textSize="16sp" />
+
         <RadioButton
             android:id="@+id/type_bank"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="银行卡提现"
             android:layout_marginLeft="30dp"
-            android:textColor="@color/colorBlack"
             android:layout_marginTop="5dp"
-            android:textSize="16sp"
             android:gravity="center"
-            />
+            android:text="银行卡提现"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp" />
     </RadioGroup>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -54,8 +55,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <FrameLayout
                 android:id="@+id/wallet_get_bind"
@@ -83,8 +83,7 @@
                 android:id="@+id/wallet_get_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                >
+                android:visibility="gone">
 
             </android.support.v7.widget.RecyclerView>
 
@@ -130,10 +129,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="14dp"
-                        android:textColor="@color/colorBlack"
                         android:background="@null"
                         android:inputType="number"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:textColor="@color/colorBlack" />
                 </LinearLayout>
 
                 <View
@@ -146,30 +145,28 @@
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="5dp"
-                    android:paddingLeft="10dp"
-                    >
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp">
+
                     <RadioButton
                         android:id="@+id/rb_get_use"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:checked="true"
                         android:text="可用余额："
                         android:textColor="@color/colorBlack"
-                        android:textSize="16sp"
-                        android:checked="true"
-                        android:layout_weight="1"
-                        />
+                        android:textSize="16sp" />
+
                     <RadioButton
                         android:id="@+id/rb_shanghu"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="商户收入："
                         android:textColor="@color/colorBlack"
-                        android:textSize="16sp"
-                        android:layout_weight="1"
-                        />
+                        android:textSize="16sp" />
                 </RadioGroup>
+
                 <TextView
                     android:id="@+id/wallet_get"
                     style="@style/normal_tv_btn"

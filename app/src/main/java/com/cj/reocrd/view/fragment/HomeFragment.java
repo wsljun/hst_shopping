@@ -43,6 +43,7 @@ import com.cj.reocrd.view.view.verificationCodeView.VerificationCodeView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
+import com.zhy.autolayout.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -498,6 +499,7 @@ public class HomeFragment extends BaseFragment<MyPrresenter> implements MyContra
         Bundle b = new Bundle();
         b.putInt(WebViewActivity.BUNDLE_WEBVIEW_TYPE, WebViewActivity.TYPE_HOME_BANNER);
         b.putString(WebViewActivity.BUNDLE_WEBVIEW_URL, bannerData.get(position).getUrl());
+        L.e("OnBannerClick:"+bannerData.get(position).getUrl());
         startActivity(WebViewActivity.class, b);
     }
 

@@ -228,13 +228,23 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case R.id.mine_money:
 //                startActivity(WalletActivity.class);
-                form = 1;
-                showPWDDialog();
+//                form = 1;
+//                showPWDDialog();
+                initWalletFragment();
+                mineDdCv.setVisibility(View.GONE);
+                mineQbCv.setVisibility(View.GONE);
+                mineWalletFrame.setVisibility(View.VISIBLE);
                 break;
             case R.id.mine_yongjin:
 //                startActivity(YongJinActivity.class);
-                form = 2;
-                showPWDDialog();
+//                form = 2;
+//                showPWDDialog();
+                initYongJinFragment();
+                mineDdCv.setVisibility(View.GONE);
+                mineQbCv.setVisibility(View.GONE);
+                mineShouyiFrame.setVisibility(View.VISIBLE);
+                mineUserinfo.setVisibility(View.GONE);
+                mineJilu.setVisibility(View.VISIBLE);
                 break;
             case R.id.mine_collect:
                 Bundle bundleCollect = new Bundle();
@@ -265,7 +275,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case R.id.mine_userinfo:
             case R.id.mine_icon:
-            case R.id.mine_userinfo_rl:
+//            case R.id.mine_userinfo_rl:
                 Intent intent = new Intent(mActivity, MyActivity.class);
                 startActivity(intent);
                 break;
@@ -503,9 +513,7 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
     public void onResume() {
         super.onResume();
         if(isPause){
-            isPause = false;
-            type = 1;
-            mPresenter.getMYHome(UrlConstants.UrLType.MY_HOME, uid);
+            onRefresh();
         }
     }
 }
