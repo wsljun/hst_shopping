@@ -6,8 +6,8 @@ android {
         applicationId "com.cj.reocrd"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 13
-        versionName "13.0" // 7.0
+        versionCode 14
+        versionName "14.0" // 7.0
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //开启分包模式
         multiDexEnabled = true
