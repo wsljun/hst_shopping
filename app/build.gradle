@@ -28,12 +28,12 @@ android {
             keyPassword "123456"
             v2SigningEnabled false
         }
-//        debug {  //这里配置的就是debug的签名配置了
-//            storeFile file("hst.jks")
-//            storePassword "123456"
-//            keyAlias "hst"
-//            keyPassword "123456"
-//        }
+        debug {  //这里配置的就是debug的签名配置了
+            storeFile file("hst.jks")
+            storePassword "123456"
+            keyAlias "hst"
+            keyPassword "123456"
+        }
     }
 
     buildTypes {
