@@ -82,7 +82,7 @@
     <string name="address_dz_detail">详细地址</string>
     <string name="address_logo">邮编&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
 
-    <string name="update_name_hint">*必须和支付宝登记的姓名一致(小于5个字符)。以供提现使用</string>
+    <string name="update_name_hint">*必须和支付宝登记的姓名一致(小于50个字符)。以供提现使用</string>
     <string name="update_name_hint2">昵称不能为空</string>
     <string name="phone_number">当前手机号</string>
     <string name="phone_number_new">新的手机号</string>

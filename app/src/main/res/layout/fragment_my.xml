@@ -72,9 +72,12 @@
                     android:drawableEnd="@null"
                     />
             </FrameLayout>
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/my_name_fl"
-                style="@style/mine_frame">
+                style="@style/mine_frame"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
 
                 <TextView
                     style="@style/setting_item_configure"
@@ -84,8 +87,15 @@
 
                 <TextView
                     android:id="@+id/my_name_tv"
-                    style="@style/mine_text_colorsize" />
-            </FrameLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:paddingRight="10dp"
+                    android:gravity="end|center_vertical"
+                    android:drawableEnd="@mipmap/quanbuyou"
+                    android:drawablePadding="5dp"
+                    />
+            </LinearLayout>
 
             <FrameLayout
                 android:id="@+id/my_sex_fl"

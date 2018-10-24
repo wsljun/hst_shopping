@@ -65,7 +65,7 @@ public class UpdateNameFragment extends BaseFragment<MyPrresenter> implements My
         titleCenter.setText(getString(R.string.my_update_name));
         titleRight.setText(getString(R.string.confirm));
         titleRight.setVisibility(View.VISIBLE);
-        updateNameEt.setFilters(new InputFilter[]{filter, new InputFilter.LengthFilter(5)});
+        updateNameEt.setFilters(new InputFilter[]{filter, new InputFilter.LengthFilter(50)});
     }
 
 

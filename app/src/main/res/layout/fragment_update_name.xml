@@ -42,8 +42,8 @@
             android:layout_toLeftOf="@id/update_name_ib"
             android:layout_toRightOf="@id/update_name_label"
             android:background="@null"
-            android:maxLength="8"
-            android:textColor="@color/colorTexthintGrey" />
+            android:maxLength="50"
+            android:textColor="@color/colorTexthintGrey2" />
     </RelativeLayout>
 
     <TextView
