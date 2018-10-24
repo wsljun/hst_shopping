@@ -47,6 +47,8 @@ public class YongJinFragment extends BaseFragment<GoodsDetailPresenter> implemen
     TextView tvYjTotal;
     @BindView(R.id.tv_xz)
     TextView tvXZ;
+    @BindView(R.id.tv_ghsztr)
+    TextView tvGhsztr;
 
     @Override
     public int getLayoutId() {
@@ -77,8 +79,9 @@ public class YongJinFragment extends BaseFragment<GoodsDetailPresenter> implemen
                 tvCj.setText(yj.getCj());
                 tvLeader.setText(yj.getLeader());
                 tvXZ.setText(yj.getXz());
+                tvGhsztr.setText(yj.getGhsztr());
                 // 总佣金
-                tvYjTotal.setText("总收益:"+getTotal(yj)+"元");
+                tvYjTotal.setText("总收益:" + yj.getTotal() + "元");
             }
 
         } else {
@@ -87,11 +90,11 @@ public class YongJinFragment extends BaseFragment<GoodsDetailPresenter> implemen
     }
 
     private String getTotal(YongJINBean yj) {
-        Double total =  Double.valueOf(yj.getXs())+
-                Double.valueOf(yj.getGl())+
-                Double.valueOf(yj.getDl())+
-                Double.valueOf(yj.getJq())+
-                Double.valueOf(yj.getCj())+
+        Double total = Double.valueOf(yj.getXs()) +
+                Double.valueOf(yj.getGl()) +
+                Double.valueOf(yj.getDl()) +
+                Double.valueOf(yj.getJq()) +
+                Double.valueOf(yj.getCj()) +
                 Double.valueOf(yj.getLeader());
         return String.valueOf(total);
     }
