@@ -35,7 +35,7 @@ public class GoodsAdapter extends BaseQuickAdapter {
         GoodsBean data = (GoodsBean) item;
         ImageLoaderUtils.display(mContext, (ImageView) helper.getView(R.id.itme_all_goods_pic), UrlConstants.BASE_URL + data.getImgurl());
         helper.setText(R.id.item_all_goods_name, data.getName());
-        helper.setText(R.id.item_all_goods_price, "￥" + data.getPrice());
+        helper.setText(R.id.item_all_goods_price, "会员价:￥" + data.getPrice());
         TextView opTextView = helper.getView(R.id.item_all_goods_oldprice);
         opTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         String oldprice;
@@ -44,7 +44,7 @@ public class GoodsAdapter extends BaseQuickAdapter {
         } else {
             oldprice = data.getOldprice();
         }
-        opTextView.setText("￥"+oldprice);
+        opTextView.setText("零售价:￥"+oldprice);
     }
 
 }

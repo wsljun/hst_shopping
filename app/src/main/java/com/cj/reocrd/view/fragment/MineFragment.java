@@ -228,23 +228,23 @@ public class MineFragment extends BaseFragment<MyPrresenter> implements MyContra
                 break;
             case R.id.mine_money:
 //                startActivity(WalletActivity.class);
-//                form = 1;
-//                showPWDDialog();
-                initWalletFragment();
-                mineDdCv.setVisibility(View.GONE);
-                mineQbCv.setVisibility(View.GONE);
-                mineWalletFrame.setVisibility(View.VISIBLE);
+                form = 1;
+                showPWDDialog();
+//                initWalletFragment();
+//                mineDdCv.setVisibility(View.GONE);
+//                mineQbCv.setVisibility(View.GONE);
+//                mineWalletFrame.setVisibility(View.VISIBLE);
                 break;
             case R.id.mine_yongjin:
 //                startActivity(YongJinActivity.class);
-//                form = 2;
-//                showPWDDialog();
-                initYongJinFragment();
-                mineDdCv.setVisibility(View.GONE);
-                mineQbCv.setVisibility(View.GONE);
-                mineShouyiFrame.setVisibility(View.VISIBLE);
-                mineUserinfo.setVisibility(View.GONE);
-                mineJilu.setVisibility(View.VISIBLE);
+                form = 2;
+                showPWDDialog();
+//                initYongJinFragment();
+//                mineDdCv.setVisibility(View.GONE);
+//                mineQbCv.setVisibility(View.GONE);
+//                mineShouyiFrame.setVisibility(View.VISIBLE);
+//                mineUserinfo.setVisibility(View.GONE);
+//                mineJilu.setVisibility(View.VISIBLE);
                 break;
             case R.id.mine_collect:
                 Bundle bundleCollect = new Bundle();
